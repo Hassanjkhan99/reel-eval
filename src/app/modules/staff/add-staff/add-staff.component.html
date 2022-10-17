@@ -1,1 +1,133 @@
-<p>add-staff works!</p>
+<div class="row">
+  <div class="col-12">
+    <h2>Add Coach</h2>
+    <hr>
+  </div>
+</div>
+<div [nzGutter]="16" nz-row>
+  <div [nzLg]="16" [nzMd]="16" [nzSm]="24" [nzXl]="16" [nzXs]="24" nz-col>
+
+    <form (ngSubmit)="submitForm(coachForm.value)" [formGroup]="coachForm" nz-form>
+      <div nz-row>
+        <div [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXl]="12" [nzXs]="24" nz-col>
+          <nz-form-item nz-row>
+            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
+              <nz-form-label>First name</nz-form-label>
+            </div>
+            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+              <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
+                <input formControlName="firstName" nz-input placeholder="First Name"/>
+                <ng-template #userErrorTpl let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    Please enter your First Name!
+                  </ng-container>
+                </ng-template>
+              </nz-form-control>
+            </div>
+          </nz-form-item>
+          <nz-form-item>
+            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
+              <nz-form-label>Username</nz-form-label>
+            </div>
+            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+              <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
+                <input formControlName="userName" nz-input placeholder="Username"/>
+                <ng-template #userErrorTpl let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    Please input your username!
+                  </ng-container>
+                </ng-template>
+              </nz-form-control>
+            </div>
+          </nz-form-item>
+          <nz-form-item>
+            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
+              <nz-form-label>Password</nz-form-label>
+            </div>
+            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+              <nz-form-control nzErrorTip="Please input your password!" nzHasFeedback>
+                <input (ngModelChange)="validateConfirmPassword()" formControlName="password" nz-input
+                       placeholder="Password" type="password"/>
+              </nz-form-control>
+            </div>
+          </nz-form-item>
+        </div>
+        <div [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXl]="12" [nzXs]="24" nz-col>
+          <nz-form-item>
+            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
+              <nz-form-label>Last Name</nz-form-label>
+            </div>
+            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+              <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
+                <input formControlName="lastName" nz-input placeholder="Last Name"/>
+                <ng-template #userErrorTpl let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    Please enter your Last Name!
+                  </ng-container>
+                </ng-template>
+              </nz-form-control>
+            </div>
+          </nz-form-item>
+          <nz-form-item>
+            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
+              <nz-form-label>E-mail</nz-form-label>
+            </div>
+            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+              <nz-form-control [nzErrorTip]="emailErrorTpl" nzHasFeedback>
+                <input formControlName="email" nz-input placeholder="email" type="email"/>
+                <ng-template #emailErrorTpl let-control>
+                  <ng-container *ngIf="control.hasError('email')">
+                    The input is not valid E-mail!
+                  </ng-container>
+                  <ng-container *ngIf="control.hasError('required')">
+                    Please input your E-mail!
+                  </ng-container>
+                </ng-template>
+              </nz-form-control>
+
+            </div>
+          </nz-form-item>
+          <nz-form-item>
+            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" nz-col>
+              <nz-form-label>Confirm Password</nz-form-label>
+
+            </div>
+            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+              <nz-form-control [nzErrorTip]="passwordErrorTpl" nzHasFeedback>
+                <input formControlName="confirm" nz-input placeholder="confirm your password" type="password"/>
+                <ng-template #passwordErrorTpl let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    Please confirm your password!
+                  </ng-container>
+                  <ng-container *ngIf="control.hasError('confirm')">
+                    Password is inconsistent!
+                  </ng-container>
+                </ng-template>
+              </nz-form-control>
+
+            </div>
+          </nz-form-item>
+          <nz-form-item nz-row>
+            <nz-form-control>
+              <button [disabled]="!coachForm.valid" nz-button nzType="primary">Submit</button>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+      </div>
+
+    </form>
+  </div>
+  <div [nzLg]="8" [nzMd]="8" [nzSm]="24" [nzXl]="8" [nzXs]="24" nz-col>
+    <nz-card [nzBordered]="false" nzTitle="Permissions" style="width:100%; display: block">
+      <label (ngModelChange)="updateAllChecked()" [(ngModel)]="allChecked" nz-checkbox>
+        Admin
+      </label>
+      <nz-checkbox-group (ngModelChange)="updateSingleChecked()" [(ngModel)]="checkOptionsOne"
+                         class="d-flex flex-column"></nz-checkbox-group>
+    </nz-card>
+  </div>
+
+
+</div>
+
