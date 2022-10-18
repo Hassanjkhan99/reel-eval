@@ -16,7 +16,7 @@
             </div>
             <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
               <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
-                <input formControlName="firstName" nz-input placeholder="First Name"/>
+                <input formControlName="first_name" nz-input placeholder="First Name"/>
                 <ng-template #userErrorTpl let-control>
                   <ng-container *ngIf="control.hasError('required')">
                     Please enter your First Name!
@@ -31,7 +31,7 @@
             </div>
             <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
               <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
-                <input formControlName="userName" nz-input placeholder="Username"/>
+                <input formControlName="username" nz-input placeholder="Username"/>
                 <ng-template #userErrorTpl let-control>
                   <ng-container *ngIf="control.hasError('required')">
                     Please input your username!
@@ -46,7 +46,7 @@
             </div>
             <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
               <nz-form-control nzErrorTip="Please input your password!" nzHasFeedback>
-                <input (ngModelChange)="validateConfirmPassword()" formControlName="password" nz-input
+                <input (ngModelChange)="validateConfirmPassword()" formControlName="password1" nz-input
                        placeholder="Password" type="password"/>
               </nz-form-control>
             </div>
@@ -59,7 +59,7 @@
             </div>
             <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
               <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
-                <input formControlName="lastName" nz-input placeholder="Last Name"/>
+                <input formControlName="last_name" nz-input placeholder="Last Name"/>
                 <ng-template #userErrorTpl let-control>
                   <ng-container *ngIf="control.hasError('required')">
                     Please enter your Last Name!
@@ -94,7 +94,7 @@
             </div>
             <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
               <nz-form-control [nzErrorTip]="passwordErrorTpl" nzHasFeedback>
-                <input formControlName="confirm" nz-input placeholder="confirm your password" type="password"/>
+                <input formControlName="password2" nz-input placeholder="confirm your password" type="password"/>
                 <ng-template #passwordErrorTpl let-control>
                   <ng-container *ngIf="control.hasError('required')">
                     Please confirm your password!
