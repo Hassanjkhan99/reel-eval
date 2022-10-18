@@ -7,6 +7,13 @@ export const ROUTES: SideNavInterface[] = [
         iconTheme: 'outline',
         icon: 'dashboard',
         submenu: []
+    },    {
+        path: 'authentication/login',
+        title: 'Dashboard',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'dashboard',
+        submenu: []
     },
     {
         path: '',
