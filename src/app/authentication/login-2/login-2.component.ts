@@ -20,8 +20,8 @@ export class Login2Component {
       this.loginForm.controls[i].updateValueAndValidity();
     }
     this.authService.proceedLogin(value).subscribe(
-      x => {
-        console.log(x);
+      response=>{
+        console.log(response);
       }
     );
   }

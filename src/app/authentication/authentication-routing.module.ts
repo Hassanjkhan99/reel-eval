@@ -8,17 +8,17 @@ import { Error2Component } from './error-2/error-2.component';
 
 const routes: Routes = [
     {
-        path: 'login-2',
+        path: 'login',
         component: Login2Component,
         data: {
-            title: 'Login 2'
+            title: 'Login'
         }
     },
     {
-        path: 'sign-up-2',
+        path: 'sign-up',
         component: SignUp2Component,
         data: {
-            title: 'Sign Up 2'
+            title: 'Sign Up'
         }
     },
 
@@ -35,7 +35,11 @@ const routes: Routes = [
         data: {
             title: 'Error 2'
         }
-    }
+    },
+  {
+    path: '**',
+    redirectTo: 'login'
+  }
 ];
 
 @NgModule({

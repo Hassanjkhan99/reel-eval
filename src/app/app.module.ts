@@ -16,6 +16,8 @@ import {AppComponent} from './app.component';
 import {NgChartjsModule} from 'ng-chartjs';
 import {ThemeConstantService} from './shared/services/theme-constant.service';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {JwtInterceptor} from "./shared/interceptor/token.interceptor";
 
 registerLocaleData(en);
 
@@ -42,7 +44,8 @@ registerLocaleData(en);
             provide: LocationStrategy,
             useClass: PathLocationStrategy
         },
-        ThemeConstantService
+      { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+      ThemeConstantService
     ],
     bootstrap: [AppComponent]
 })
