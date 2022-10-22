@@ -44,12 +44,13 @@ export class SignUp2Component {
     for (const i in this.signUpForm.controls) {
       this.signUpForm.controls[i].markAsDirty();
       this.signUpForm.controls[i].updateValueAndValidity();
-      this.authService.postSignup(value).subscribe(
-        x => {
-          console.log(x);
-        }
-      );
+
     }
+    this.authService.postSignup(value).subscribe(
+      x => {
+        console.log(x);
+      }
+    );
 
   }
 

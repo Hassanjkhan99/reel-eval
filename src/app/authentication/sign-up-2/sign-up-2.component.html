@@ -12,7 +12,7 @@
                         <nz-card>
                           <h2 class="m-t-20">Sign Up</h2>
                           <p class="m-b-30">Create your account to get access</p>
-                          <form (ngSubmit)="submitForm(signUpForm.value)" [formGroup]="signUpForm" class="login-form"
+                          <form  [formGroup]="signUpForm" class="login-form"
                                 nz-form nzLayout="vertical">
                             <nz-form-item>
                               <nz-form-label nzFor="first_name" nzRequired>First name</nz-form-label>
@@ -73,7 +73,7 @@
                                   <nz-form-item>
                                     <nz-form-control>
                                       <div>
-                                        <button nz-button class="login-form-button" [nzType]="'primary'">Sign Up
+                                        <button nz-button class="login-form-button" (click)="submitForm(signUpForm.value)" [nzType]="'primary'">Sign Up
                                         </button>
                                       </div>
                                     </nz-form-control>
