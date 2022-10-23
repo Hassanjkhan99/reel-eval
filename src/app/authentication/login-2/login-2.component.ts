@@ -1,6 +1,8 @@
 import {Component} from '@angular/core'
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthenticationService} from "../../shared/services/authentication.service";
+import {Router} from "@angular/router";
+import {main_url} from "../../../environments/environment";
 
 
 @Component({
@@ -13,7 +15,7 @@ export class Login2Component {
   passwordVisible = false;
   password: string;
 
-  constructor(private fb: FormBuilder, private authService: AuthenticationService) {
+  constructor(private fb: FormBuilder, private authService: AuthenticationService, private router: Router) {
   }
 
   submitForm(value: { username: string; password: string; }): void {
@@ -24,8 +26,10 @@ export class Login2Component {
     this.authService.proceedLogin(value).subscribe(
       response=>{
         console.log(response);
+        this.router.navigateByUrl(`prospect/view`);
       }
     );
+
   }
 
   ngOnInit(): void {

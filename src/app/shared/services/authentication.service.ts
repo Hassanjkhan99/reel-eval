@@ -27,13 +27,8 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string) {
-      const httpOptions = {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-        //this is required so that Angular returns the Cookies received from the server. The server sends cookies in Set-Cookie header. Without this, Angular will ignore the Set-Cookie header,
-        withCredentials: true,
-         observe: 'response' as 'response'
-      };
-        return this.http.post<any>(USER_AUTH_API_URL, { username, password },httpOptions)
+
+      return this.http.post<any>(USER_AUTH_API_URL, {username, password})
 
     }
 
@@ -46,9 +41,9 @@ export class AuthenticationService {
     return this.http.post<SignUp>(`${main_url}core/register/`, payload);
   }
 
-  proceedLogin(payload: Login): Observable<HttpResponse<Login>> {
+  proceedLogin(payload: Login): Observable<Login> {
 
-    return this.http.post<Login>(`${main_url}dj-rest-auth/login/`, payload, { observe: 'response' as 'response' ,  withCredentials: true});
+    return this.http.post<Login>(`${main_url}dj-rest-auth/login/`, payload)
   }
 }
 

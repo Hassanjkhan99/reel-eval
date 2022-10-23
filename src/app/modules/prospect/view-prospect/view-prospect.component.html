@@ -77,10 +77,10 @@
       </span>
     </td>
     <td class="d-flex justify-content-center">
-      <a (click)="isEdit(i)" class="p-2">
+      <a (click)="isEdit(i)" *ngIf="currentEditIndex != i" class="p-2">
         <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
       </a>
-      <a (click)="isSave(i)" class="p-2">
+      <a (click)="isSave(i)" *ngIf="currentEditIndex == i" class="p-2">
         <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#46c40a'" nz-icon nzType="save"></i>
       </a>
       <a class="p-2">

@@ -26,15 +26,39 @@ export const ROUTES: SideNavInterface[] = [
                 path: 'staff/add',
                 title: 'Add Staff Member',
                 iconType: '',
-                icon: '',
+              icon: '',
               submenu: []
-            },            {
-                path: 'staff/view',
-                title: 'View Staff Members',
-                iconType: '',
-                icon: '',
-              submenu: []
-            },
+            }, {
+            path: 'staff/view',
+            title: 'View Staff Members',
+            iconType: '',
+            icon: '',
+            submenu: []
+          },
         ]
-    }
+    },
+
+  {
+    path: '',
+    title: 'Prospect',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'user',
+    submenu: [
+      {
+        path: 'prospect/add',
+        title: 'Add Prospect',
+        iconType: '',
+        icon: '',
+        submenu: []
+      }, {
+        path: 'prospect/view',
+        title: 'View Prospect',
+        iconType: '',
+        icon: '',
+        submenu: []
+      },
+    ]
+  }
+
 ]
