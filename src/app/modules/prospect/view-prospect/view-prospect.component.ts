@@ -57,7 +57,6 @@ export class ViewProspectComponent implements OnInit {
   }
 
   isSave(i: number) {
-    console.log(this.prospectForm.value);
     this.prospectSer.editProspect(this.dataSet[1].id, this.prospectForm.value).subscribe(
       x => {
         console.log(x);

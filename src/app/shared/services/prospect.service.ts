@@ -13,10 +13,10 @@ export class ProspectService {
   }
 
   getProspects(): Observable<Prospect> {
-    return this.http.get<Prospect>(`${main_url}prospects/`, {withCredentials: true});
+    return this.http.get<Prospect>(`${main_url}prospects/`);
   }
 
   editProspect(id: number, payload): Observable<Prospect> {
-    return this.http.put<Prospect>(`${main_url}prospects/${id}/`, payload, {withCredentials: true});
+    return this.http.put<Prospect>(`${main_url}prospects/${id}/`, payload );
   }
 }

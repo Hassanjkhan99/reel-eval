@@ -3,6 +3,7 @@ import {HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpHeaders} from 
 import { Observable } from 'rxjs';
 
 import { AuthenticationService } from '../services/authentication.service';
+import {main_url} from "../../../environments/environment";
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -10,6 +11,14 @@ export class JwtInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
+      if(request.url.replace(main_url,'').includes('dj-rest-auth/login/')){
         return next.handle(request);
+      }else{
+        const  clone = request.clone({
+          withCredentials: true
+        })
+        return next.handle(clone);
+      }
+
     }
 }
