@@ -1,0 +1,92 @@
+<nz-table #borderedTable [nzData]="dataSet" nzBordered nzTitle="List of Prospects">
+  <thead>
+  <tr>
+    <th class="text-center">First Name</th>
+    <th class="text-center">Last Name</th>
+    <th class="text-center">Position</th>
+    <th class="text-center">Classification/Year</th>
+    <th class="text-center">State/Province</th>
+    <th class="text-center">School/Team</th>
+    <th class="text-center">Video Link</th>
+    <th class="text-center">Action</th>
+
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of borderedTable.data; let i = index" [formGroup]="prospectForm" class="text-center">
+    <td>
+        <span *ngIf="currentEditIndex != i">
+          {{ data.first_name }}
+        </span>
+      <span *ngIf="currentEditIndex == i">
+        <input [value]="data.first_name" formControlName="first_name" nz-input>
+      </span>
+    </td>
+    <td>
+
+      <span *ngIf="currentEditIndex != i">
+           {{ data.last_name }}
+        </span>
+      <span *ngIf="currentEditIndex == i">
+        <input formControlName="last_name" nz-input>
+      </span>
+    </td>
+    <td>
+
+      <span *ngIf="currentEditIndex != i">
+           {{ data.position_name }}
+        </span>
+      <span *ngIf="currentEditIndex == i">
+        <input formControlName="position_name" nz-input>
+      </span>
+    </td>
+    <td>
+      <span *ngIf="currentEditIndex != i">
+         {{ data.classification }}
+
+        </span>
+      <span *ngIf="currentEditIndex == i">
+        <input formControlName="classification" nz-input>
+      </span>
+    </td>
+    <td>
+      <span *ngIf="currentEditIndex != i">
+         {{ data.state }}
+
+        </span>
+      <span *ngIf="currentEditIndex == i">
+        <input formControlName="state" nz-input>
+      </span>
+    </td>
+    <td>
+      <span *ngIf="currentEditIndex != i">
+         {{ data.school }}
+
+        </span>
+      <span *ngIf="currentEditIndex == i">
+        <input formControlName="school" nz-input>
+      </span>
+
+    <td>
+      <span *ngIf="currentEditIndex != i">
+         {{ data.video_link }}
+
+        </span>
+      <span *ngIf="currentEditIndex == i">
+        <input formControlName="video_link" nz-input>
+      </span>
+    </td>
+    <td class="d-flex justify-content-center">
+      <a (click)="isEdit(i)" class="p-2">
+        <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
+      </a>
+      <a (click)="isSave(i)" class="p-2">
+        <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#46c40a'" nz-icon nzType="save"></i>
+      </a>
+      <a class="p-2">
+        <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#c00206'" nz-icon nzType="delete"></i>
+      </a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>

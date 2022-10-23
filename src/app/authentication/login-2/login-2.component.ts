@@ -10,6 +10,8 @@ import {AuthenticationService} from "../../shared/services/authentication.servic
 
 export class Login2Component {
   loginForm: FormGroup;
+  passwordVisible = false;
+  password: string;
 
   constructor(private fb: FormBuilder, private authService: AuthenticationService) {
   }
