@@ -1,0 +1,133 @@
+<div class="row">
+  <div class="col-12">
+    <h2>Add Prospect</h2>
+    <hr>
+  </div>
+</div>
+<div [nzGutter]="16" nz-row>
+  <div [nzLg]="16" [nzMd]="16" [nzSm]="24" [nzXl]="16" [nzXs]="24" nz-col>
+
+    <form (ngSubmit)="submitForm(prospectForm.value)" [formGroup]="prospectForm" nz-form>
+      <div nz-row>
+        <div [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXl]="12" [nzXs]="24" nz-col>
+          <nz-form-item nz-row>
+            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
+              <nz-form-label>First name</nz-form-label>
+            </div>
+            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+              <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
+                <input formControlName="first_name" nz-input placeholder="First Name"/>
+                <ng-template #userErrorTpl let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    Please enter your First Name!
+                  </ng-container>
+                </ng-template>
+              </nz-form-control>
+            </div>
+          </nz-form-item>
+          <nz-form-item>
+            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
+              <nz-form-label>Position</nz-form-label>
+            </div>
+            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+              <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
+                <nz-select [(ngModel)]="selectedValue" formControlName="position" nzAllowClear
+                           nzPlaceHolder="Select a person" nzShowSearch>
+                  <nz-option *ngFor="positions" nzLabel="{{positions.position_name}}"
+                             nzValue="{{positions.id}}"></nz-option>
+                </nz-select>
+                <ng-template #userErrorTpl let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    This field cannot be empty!
+                  </ng-container>
+                </ng-template>
+              </nz-form-control>
+            </div>
+          </nz-form-item>
+          <nz-form-item nz-row>
+            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
+              <nz-form-label>State</nz-form-label>
+            </div>
+            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+              <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
+                <input formControlName="state" nz-input placeholder="State"/>
+                <ng-template #userErrorTpl let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    This field cannot be empty!
+                  </ng-container>
+                </ng-template>
+              </nz-form-control>
+            </div>
+          </nz-form-item>
+          <nz-form-item nz-row>
+            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
+              <nz-form-label>Video link(Optional)</nz-form-label>
+            </div>
+            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+              <nz-form-control>
+                <input formControlName="video_link" nz-input placeholder="video_link"/>
+              </nz-form-control>
+            </div>
+          </nz-form-item>
+
+
+        </div>
+        <div [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXl]="12" [nzXs]="24" nz-col>
+          <nz-form-item>
+            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
+              <nz-form-label>Last Name</nz-form-label>
+            </div>
+            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+              <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
+                <input formControlName="last_name" nz-input placeholder="Last Name"/>
+                <ng-template #userErrorTpl let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    Please enter your Last Name!
+                  </ng-container>
+                </ng-template>
+              </nz-form-control>
+            </div>
+          </nz-form-item>
+          <nz-form-item>
+            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
+              <nz-form-label>Classification</nz-form-label>
+            </div>
+            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+              <nz-form-control [nzErrorTip]="emailErrorTpl" nzHasFeedback>
+                <input formControlName="classification" nz-input placeholder="classification" type="classification"/>
+                <ng-template #emailErrorTpl let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    This field cannot be empty!
+                  </ng-container>
+                </ng-template>
+              </nz-form-control>
+            </div>
+          </nz-form-item>
+          <nz-form-item nz-row>
+            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
+              <nz-form-label>School</nz-form-label>
+            </div>
+            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+              <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
+                <input formControlName="school" nz-input placeholder="School"/>
+                <ng-template #userErrorTpl let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    This field cannot be empty!
+                  </ng-container>
+                </ng-template>
+              </nz-form-control>
+            </div>
+          </nz-form-item>
+
+        </div>
+        <nz-form-item nz-row>
+          <nz-form-control>
+            <button [disabled]="!prospectForm.valid" nz-button nzType="primary">Submit</button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+    </form>
+  </div>
+
+</div>
