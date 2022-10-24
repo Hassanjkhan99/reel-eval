@@ -11,10 +11,10 @@ export class JwtInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-      if(request.url.replace(main_url,'').includes('dj-rest-auth/login/')){
+      if (request.url.replace(main_url, '').includes('dj-rest-auth/login/' || 'core/register/')) {
         return next.handle(request);
-      }else{
-        const  clone = request.clone({
+      } else {
+        const clone = request.clone({
           withCredentials: true
         })
         return next.handle(clone);

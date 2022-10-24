@@ -1,11 +1,13 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {NzTableFilterFn, NzTableFilterList, NzTableModule, NzTableSortFn, NzTableSortOrder} from "ng-zorro-antd/table";
 import {NzDropDownModule} from "ng-zorro-antd/dropdown";
 import {NzInputModule} from "ng-zorro-antd/input";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {FormsModule} from "@angular/forms";
 import {NzIconModule} from "ng-zorro-antd/icon";
+import {StaffService} from "../../../shared/services/staff.service";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-table-staff',
@@ -14,7 +16,7 @@ import {NzIconModule} from "ng-zorro-antd/icon";
   templateUrl: './table-staff.component.html',
   styleUrls: ['./table-staff.component.scss'],
 })
-export class TableStaffComponent implements OnInit{
+export class TableStaffComponent implements OnInit {
 
   firstNameFilterItems = []
   lastNameFilterItems = []
@@ -26,18 +28,28 @@ export class TableStaffComponent implements OnInit{
   visible: boolean = true;
   searchValue: string = '';
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor(private cdr: ChangeDetectorRef, private staffSer: StaffService) {
+  }
+
+  getStaff() {
+    this.staffSer.getStaff().pipe(map(value => value.results)).subscribe(
+      x => {
+        console.log(x);
+        this.cdr.detectChanges();
+
+      }
+    )
   }
 
   ngOnInit(): void {
-
+    this.getStaff();
     this.listOfData = [
       {
         firstName: 'John2',
         lastName: 'Brownc',
         email: 'john@brown.com',
-        username:'johnBrown9'
-      },    {
+        username: 'johnBrown9'
+      }, {
         firstName: 'John',
         lastName: 'Brown',
         email: 'john@brown.com',

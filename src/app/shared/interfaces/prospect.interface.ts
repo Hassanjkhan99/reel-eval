@@ -25,3 +25,12 @@ export interface Result {
   modified: string;
 }
 
+export interface ProspectForm {
+  first_name: string;
+  last_name: string;
+  position: number;
+  classification: string;
+  state: string;
+  school: string;
+  video_link: string;
+}
