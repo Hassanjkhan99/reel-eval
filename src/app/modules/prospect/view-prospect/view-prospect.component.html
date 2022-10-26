@@ -37,7 +37,8 @@
            {{ data.position_name }}
         </span>
       <span *ngIf="currentEditIndex == i">
-        <input formControlName="position_name" nz-input>
+       <app-positions-select (positionChanged)="setPosition($event)"
+                             [selectedPosition]="currentPosition"></app-positions-select>
       </span>
     </td>
     <td>

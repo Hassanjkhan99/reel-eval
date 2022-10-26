@@ -6,13 +6,13 @@ import {NzFormModule} from "ng-zorro-antd/form";
 import {ProspectService} from "../../../shared/services/prospect.service";
 import {NzInputModule} from "ng-zorro-antd/input";
 import {NzButtonModule} from "ng-zorro-antd/button";
-import {map} from "rxjs/operators";
 import {NzSelectModule} from "ng-zorro-antd/select";
+import {PositionsSelectComponent} from "../../../shared/components/positions-select/positions-select.component";
 
 @Component({
   selector: 'app-add-prospect',
   standalone: true,
-  imports: [CommonModule, NzGridModule, ReactiveFormsModule, NzFormModule, NzInputModule, NzButtonModule, NzSelectModule, FormsModule],
+  imports: [CommonModule, NzGridModule, ReactiveFormsModule, NzFormModule, NzInputModule, NzButtonModule, NzSelectModule, FormsModule, PositionsSelectComponent],
   templateUrl: './add-prospect.component.html',
   styleUrls: ['./add-prospect.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -20,7 +20,6 @@ import {NzSelectModule} from "ng-zorro-antd/select";
 export class AddProspectComponent implements OnInit {
   prospectForm: FormGroup;
   selectedValue = null;
-  positions;
 
   constructor(private fb: FormBuilder, private prospectService: ProspectService) {
     this.prospectForm = this.fb.group({
@@ -35,7 +34,6 @@ export class AddProspectComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getPositions();
 
   }
 
@@ -51,13 +49,5 @@ export class AddProspectComponent implements OnInit {
     console.log(value);
   }
 
-  getPositions() {
-    this.prospectService.getPositions().pipe(map(value => value.results)).subscribe(
-      x => {
-        this.positions = x;
-        console.log(x);
-      }
-    )
-  }
 
 }

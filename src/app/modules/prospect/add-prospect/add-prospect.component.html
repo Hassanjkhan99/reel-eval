@@ -31,11 +31,7 @@
             </div>
             <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
               <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
-                <nz-select [(ngModel)]="selectedValue" formControlName="position" nzAllowClear
-                           nzPlaceHolder="Select a person" nzShowSearch>
-                  <nz-option *ngFor="positions" nzLabel="{{positions.position_name}}"
-                             nzValue="{{positions.id}}"></nz-option>
-                </nz-select>
+<app-positions-select></app-positions-select>
                 <ng-template #userErrorTpl let-control>
                   <ng-container *ngIf="control.hasError('required')">
                     This field cannot be empty!
