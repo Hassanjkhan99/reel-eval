@@ -28,7 +28,8 @@ export class AddProspectComponent implements OnInit {
     this.prospectForm = this.fb.group({
       first_name: ['', [Validators.required]],
       last_name: ['', [Validators.required]],
-      position: [0, [Validators.required]],
+      position: [null, [Validators.required, Validators.nullValidator]],
+      position_name: ['', [Validators.required]],
       classification: ['', [Validators.required]],
       state: ['', [Validators.required]],
       school: ['', [Validators.required]],
@@ -53,6 +54,7 @@ export class AddProspectComponent implements OnInit {
   }
 
   setPosition(position: Positions) {
+    console.log(position)
     this.prospectForm.get('position').setValue(position.id)
     this.prospectForm.get('position_name').setValue(position.position_name)
     console.log(position.position_name)

@@ -8,6 +8,7 @@ import {NzInputModule} from "ng-zorro-antd/input";
 import {PositionsSelectComponent} from "../../../shared/components/positions-select/positions-select.component";
 import {Positions} from "../../../shared/interfaces/positions.interface";
 import {Prospect} from "../../../shared/interfaces/prospect.interface";
+import {NzNotificationService} from "ng-zorro-antd/notification";
 
 @Component({
   selector: 'app-view-prospect',
@@ -35,7 +36,7 @@ export class ViewProspectComponent implements OnInit {
   currentEditIndex: number;
   currentPosition: number;
 
-  constructor(private prospectSer: ProspectService, private cdr: ChangeDetectorRef) {
+  constructor(private prospectSer: ProspectService, private cdr: ChangeDetectorRef, private notification: NzNotificationService) {
   }
 
   ngOnInit(): void {
@@ -43,6 +44,12 @@ export class ViewProspectComponent implements OnInit {
   }
 
   isEdit(i: number) {
+    this.notification.success('Success', 'In Editing Mode', {
+      nzPlacement: 'bottomRight',
+      nzAnimate: true,
+      nzPauseOnHover: true,
+      nzDuration: 3000
+    })
     this.currentPosition = this.dataSet[i].position
     console.log(this.dataSet[i]);
     this.currentEditIndex = i;
