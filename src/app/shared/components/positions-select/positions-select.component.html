@@ -1,0 +1,4 @@
+<nz-select (ngModelChange)="emitPosition($event)" [(ngModel)]="selectedPosition" nzPlaceHolder="Select a position">
+  <nz-option *ngFor="let position of positions" nzLabel="{{position.position_name}}"
+             nzValue="{{position.id}}"></nz-option>
+</nz-select>

@@ -1,11 +1,11 @@
-export interface Result {
+export interface Positions {
   id: number;
   position_name: string;
 }
 
-export interface Positions {
+export interface Result {
   count: number;
   next?: any;
   previous?: any;
-  results: Result[];
+  results: Positions[];
 }

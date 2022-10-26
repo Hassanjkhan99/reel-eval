@@ -1,11 +1,11 @@
-export interface Prospect {
+export interface ProspectApi {
   count: number;
   next: string;
   previous?: any;
-  results: Result[];
+  results: Prospect[];
 }
 
-export interface Result {
+export interface Prospect {
   id: number;
   first_name: string;
   last_name: string;
