@@ -43,6 +43,7 @@ export class ViewProspectComponent implements OnInit {
   }
 
   isEdit(i: number) {
+    this.currentPosition = this.dataSet[i].position
     console.log(this.dataSet[i]);
     this.currentEditIndex = i;
     this.prospectForm.setValue({
@@ -56,7 +57,6 @@ export class ViewProspectComponent implements OnInit {
       video_link: this.dataSet[i].video_link,
       archived: false
     })
-    this.currentPosition = this.dataSet[i].position
   }
 
   isSave(i: number) {
@@ -70,7 +70,24 @@ export class ViewProspectComponent implements OnInit {
           }
         })
         this.currentEditIndex = -1;
+        this.cdr.detectChanges();
       }
+    )
+  }
+
+  isDelete(i: number) {
+    this.prospectSer.deleteProspect(this.dataSet[i].id).subscribe(
+      x => {
+        // this.dataSet.splice(i,1)
+        this.dataSet = this.dataSet.map((item) => {
+          if (item.id == this.dataSet[i].id) {
+            return
+          }
+          return item
+        }).filter(e => e)
+        console.log(this.dataSet)
+        this.cdr.detectChanges();
+      },
     )
   }
 

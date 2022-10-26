@@ -84,7 +84,7 @@
       <a (click)="isSave(i)" *ngIf="currentEditIndex == i" class="p-2">
         <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#46c40a'" nz-icon nzType="save"></i>
       </a>
-      <a class="p-2">
+      <a (click)="isDelete(i)" class="p-2">
         <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#c00206'" nz-icon nzType="delete"></i>
       </a>
     </td>

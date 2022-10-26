@@ -1,15 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {NzGridModule} from "ng-zorro-antd/grid";
 import {NzInputModule} from "ng-zorro-antd/input";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators
-} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NzIconModule} from "ng-zorro-antd/icon";
 import {NzFormModule} from "ng-zorro-antd/form";
 import {NzWaveModule} from "ng-zorro-antd/core/wave";
@@ -17,6 +9,7 @@ import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzCardModule} from "ng-zorro-antd/card";
 import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
 import {StaffService} from "../../../shared/services/staff.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-staff',
@@ -36,7 +29,7 @@ export class AddStaffComponent implements OnInit {
     {label: 'Can view prospects list', value: 'canViewList', checked: true}
   ];
 
-  constructor(private fb: FormBuilder, private staffService: StaffService) {
+  constructor(private fb: FormBuilder, private staffService: StaffService, private router: Router) {
     this.coachForm = this.fb.group({
       first_name: ['', [Validators.required]],
       last_name: ['', [Validators.required]],
@@ -44,7 +37,6 @@ export class AddStaffComponent implements OnInit {
       email: ['', [Validators.email, Validators.required]],
       password1: ['', [Validators.required, Validators.minLength(8)]],
       password2: ['', [this.confirmValidator]],
-      permissions: [0, Validators.required]
     });
   }
 
@@ -53,7 +45,11 @@ export class AddStaffComponent implements OnInit {
       this.coachForm.controls[key].markAsDirty();
       this.coachForm.controls[key].updateValueAndValidity();
     }
-    this.staffService.postAddCoach(value).subscribe();
+    this.staffService.postAddCoach(value).subscribe(
+      () => {
+        this.router.navigateByUrl(`staff/view`);
+      }
+    );
     console.log(value);
   }
 
@@ -73,34 +69,34 @@ export class AddStaffComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  updateAllChecked(): void {
-    if (this.allChecked) {
-      this.checkOptionsOne = this.checkOptionsOne.map(item => {
-        return {
-          ...item,
-          checked: true
-        };
-      });
-    } else {
-      this.checkOptionsOne = this.checkOptionsOne.map(item => {
-        return {
-          ...item,
-          checked: false
-        };
-      });
-    }
-  }
-
-  updateSingleChecked(): void {
-    if (this.checkOptionsOne.every(item => !item.checked)) {
-      this.allChecked = false;
-    } else if (this.checkOptionsOne.every(item => item.checked)) {
-      this.allChecked = true;
-    } else {
-    }
-    console.log(this.checkOptionsOne)
-
-  }
+  // updateAllChecked(): void {
+  //   if (this.allChecked) {
+  //     this.checkOptionsOne = this.checkOptionsOne.map(item => {
+  //       return {
+  //         ...item,
+  //         checked: true
+  //       };
+  //     });
+  //   } else {
+  //     this.checkOptionsOne = this.checkOptionsOne.map(item => {
+  //       return {
+  //         ...item,
+  //         checked: false
+  //       };
+  //     });
+  //   }
+  // }
+  //
+  // updateSingleChecked(): void {
+  //   if (this.checkOptionsOne.every(item => !item.checked)) {
+  //     this.allChecked = false;
+  //   } else if (this.checkOptionsOne.every(item => item.checked)) {
+  //     this.allChecked = true;
+  //   } else {
+  //   }
+  //   console.log(this.checkOptionsOne)
+  //
+  // }
 }
 
 
