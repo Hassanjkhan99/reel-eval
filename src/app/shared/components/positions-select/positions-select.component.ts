@@ -51,6 +51,7 @@ export class PositionsSelectComponent implements OnInit, OnChanges {
   setValue() {
     console.log(this.positions)
     console.log(this.selectedPosition ?? '1')
+    if (!this.selectedPosition) return
     this.position.setValue(this.selectedPosition.toString() ?? '1');
   }
 }

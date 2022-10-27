@@ -9,11 +9,14 @@ import {PositionsSelectComponent} from "../../../shared/components/positions-sel
 import {Positions} from "../../../shared/interfaces/positions.interface";
 import {Prospect} from "../../../shared/interfaces/prospect.interface";
 import {NzNotificationService} from "ng-zorro-antd/notification";
+import {NzMessageService} from "ng-zorro-antd/message";
+import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
+import {NzButtonModule} from "ng-zorro-antd/button";
 
 @Component({
   selector: 'app-view-prospect',
   standalone: true,
-  imports: [CommonModule, NzTableModule, NzIconModule, ReactiveFormsModule, NzInputModule, PositionsSelectComponent],
+  imports: [CommonModule, NzTableModule, NzIconModule, ReactiveFormsModule, NzInputModule, PositionsSelectComponent, NzPopconfirmModule, NzButtonModule],
   templateUrl: './view-prospect.component.html',
   styleUrls: ['./view-prospect.component.scss'],
 })
@@ -21,13 +24,15 @@ export class ViewProspectComponent implements OnInit {
   prospectForm = new FormGroup({
     first_name: new FormControl(''),
     last_name: new FormControl(''),
-    position_name: new FormControl(''),
+    position: new FormControl({
+      id: 0,
+      position_name: ''
+    }),
     classification: new FormControl(''),
     state: new FormControl(''),
     school: new FormControl(''),
     video_link: new FormControl(''),
     archived: new FormControl(false),
-    position: new FormControl(null)
   });
 
   dataSet: Prospect[] = [];
@@ -36,7 +41,8 @@ export class ViewProspectComponent implements OnInit {
   currentEditIndex: number;
   currentPosition: number;
 
-  constructor(private prospectSer: ProspectService, private cdr: ChangeDetectorRef, private notification: NzNotificationService) {
+  constructor(private prospectSer: ProspectService, private cdr: ChangeDetectorRef, private notification: NzNotificationService,
+              private nzMessageService: NzMessageService) {
   }
 
   ngOnInit(): void {
@@ -44,19 +50,23 @@ export class ViewProspectComponent implements OnInit {
   }
 
   isEdit(i: number) {
-    this.notification.success('Success', 'In Editing Mode', {
-      nzPlacement: 'bottomRight',
-      nzAnimate: true,
-      nzPauseOnHover: true,
-      nzDuration: 3000
-    })
-    this.currentPosition = this.dataSet[i].position
+    if (this.currentEditIndex != i && this.currentEditIndex > -1) {
+      this.notification.error("Can't edit another row while editing a row", 'You are currently editing a row , ' +
+        'please discard or save the changes', {
+        nzPlacement: 'bottomRight',
+        nzAnimate: true,
+        nzPauseOnHover: true,
+        nzDuration: 3000
+      })
+      return
+    }
+
+    this.currentPosition = this.dataSet[i].position.id
     console.log(this.dataSet[i]);
     this.currentEditIndex = i;
     this.prospectForm.setValue({
       first_name: this.dataSet[i].first_name,
       last_name: this.dataSet[i].last_name,
-      position_name: this.dataSet[i].position_name,
       position: this.dataSet[i].position,
       classification: this.dataSet[i].classification,
       state: this.dataSet[i].state,
@@ -67,6 +77,12 @@ export class ViewProspectComponent implements OnInit {
   }
 
   isSave(i: number) {
+    this.notification.success('Success', 'Your changes has been saved!', {
+      nzPlacement: 'bottomRight',
+      nzAnimate: true,
+      nzPauseOnHover: true,
+      nzDuration: 3000
+    })
     this.prospectSer.editProspect(this.dataSet[i].id, {...this.dataSet[i], ...this.prospectForm.value}).subscribe(
       x => {
         this.dataSet = this.dataSet.map(item => {
@@ -83,6 +99,12 @@ export class ViewProspectComponent implements OnInit {
   }
 
   isDelete(i: number) {
+    this.notification.success('Success', 'Selected Prospect has been deleted!', {
+      nzPlacement: 'bottomRight',
+      nzAnimate: true,
+      nzPauseOnHover: true,
+      nzDuration: 3000
+    })
     this.prospectSer.deleteProspect(this.dataSet[i].id).subscribe(
       x => {
         // this.dataSet.splice(i,1)
@@ -107,8 +129,18 @@ export class ViewProspectComponent implements OnInit {
   }
 
   setPosition(position: Positions) {
-    this.prospectForm.get('position').setValue(position.id)
-    this.prospectForm.get('position_name').setValue(position.position_name)
+    this.prospectForm.get('position').setValue(position)
     console.log(position.position_name)
+  }
+
+
+  cancel(): void {
+    this.nzMessageService.info('clicked cancel');
+  }
+
+  confirm(): void {
+    this.nzMessageService.info('clicked confirm');
+    this.currentEditIndex = -1;
+
   }
 }

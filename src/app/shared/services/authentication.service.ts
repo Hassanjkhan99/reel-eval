@@ -1,12 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
 
 import {User} from '../interfaces/user.type';
 import {Login, SignUp} from "../interfaces/authentication.interface";
 import {main_url} from "../../../environments/environment";
-import {ServerResponse} from "http";
 
 const USER_AUTH_API_URL = '/api-url';
 
@@ -22,19 +20,18 @@ export class AuthenticationService {
         this.currentUser = this.currentUserSubject.asObservable();
     }
 
-    public get currentUserValue(): User {
-        return this.currentUserSubject.value;
-    }
+  public get currentUserValue(): User {
+    return this.currentUserSubject.value;
+  }
 
-    login(username: string, password: string) {
+  login(username: string, password: string) {
 
-      return this.http.post<any>(USER_AUTH_API_URL, {username, password})
+    return this.http.post<any>(USER_AUTH_API_URL, {username, password})
 
-    }
+  }
 
-  logout() {
-    localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
+  logout(): Observable<{ detail: string }> {
+    return this.http.post<{ detail: string }>(`${main_url}dj-rest-auth/logout/`, {})
   }
 
   postSignup(payload: SignUp): Observable<SignUp> {
@@ -45,5 +42,7 @@ export class AuthenticationService {
 
     return this.http.post<Login>(`${main_url}dj-rest-auth/login/`, payload)
   }
+
+
 }
 

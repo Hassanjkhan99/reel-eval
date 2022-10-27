@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NzGridModule} from "ng-zorro-antd/grid";
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NzFormModule} from "ng-zorro-antd/form";
 import {ProspectService} from "../../../shared/services/prospect.service";
 import {NzInputModule} from "ng-zorro-antd/input";
@@ -10,6 +10,7 @@ import {NzSelectModule} from "ng-zorro-antd/select";
 import {PositionsSelectComponent} from "../../../shared/components/positions-select/positions-select.component";
 import {Positions} from "../../../shared/interfaces/positions.interface";
 import {Router} from "@angular/router";
+import {NzNotificationService} from "ng-zorro-antd/notification";
 
 @Component({
   selector: 'app-add-prospect',
@@ -24,12 +25,14 @@ export class AddProspectComponent implements OnInit {
   selectedValue = null;
   currentPosition: number;
 
-  constructor(private fb: FormBuilder, private prospectService: ProspectService, private router: Router) {
+  constructor(private fb: FormBuilder, private prospectService: ProspectService, private router: Router, private notification: NzNotificationService) {
     this.prospectForm = this.fb.group({
       first_name: ['', [Validators.required]],
       last_name: ['', [Validators.required]],
-      position: [null, [Validators.required, Validators.nullValidator]],
-      position_name: ['', [Validators.required]],
+      position: new FormControl({
+        id: 0,
+        position_name: ''
+      }),
       classification: ['', [Validators.required]],
       state: ['', [Validators.required]],
       school: ['', [Validators.required]],
@@ -42,6 +45,12 @@ export class AddProspectComponent implements OnInit {
   }
 
   submitForm(): void {
+    this.notification.success('Success', 'Your Prospect has been created!', {
+      nzPlacement: 'bottomRight',
+      nzAnimate: true,
+      nzPauseOnHover: true,
+      nzDuration: 3000
+    })
     for (const key in this.prospectForm.controls) {
       this.prospectForm.controls[key].markAsDirty();
       this.prospectForm.controls[key].updateValueAndValidity();
@@ -55,9 +64,7 @@ export class AddProspectComponent implements OnInit {
 
   setPosition(position: Positions) {
     console.log(position)
-    this.prospectForm.get('position').setValue(position.id)
-    this.prospectForm.get('position_name').setValue(position.position_name)
-    console.log(position.position_name)
+    this.prospectForm.get('position').setValue(position)
     this.prospectForm.updateValueAndValidity()
   }
 
