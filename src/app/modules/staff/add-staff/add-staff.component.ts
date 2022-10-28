@@ -80,7 +80,7 @@ export class AddStaffComponent implements OnInit {
   ngOnInit(): void {
     this.staffService.getStaff().pipe(map(result => result.count)).subscribe(e => {
       this.staffCount = e;
-      if (e > 20) {
+      if (e >= 20) {
         this.coachForm.disable()
       }
     })

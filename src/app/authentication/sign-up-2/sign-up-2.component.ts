@@ -45,7 +45,7 @@ export class SignUp2Component {
       this.signUpForm.controls[i].updateValueAndValidity();
 
     }
-    this.authService.postSignup(this.signUpForm.value).subscribe(
+    this.authService.signup(this.signUpForm.value).subscribe(
       x => {
         this.notification.success('Success', 'Your Account has been created!', {
           nzPlacement: 'bottomRight',

@@ -25,7 +25,7 @@ export class Login2Component {
       this.loginForm.controls[i].markAsDirty();
       this.loginForm.controls[i].updateValueAndValidity();
     }
-    this.authService.proceedLogin(this.loginForm.value).subscribe(
+    this.authService.login(this.loginForm.value).subscribe(
       response => {
         this.notification.success('Success', 'Login Successful!', {
           nzPlacement: 'bottomRight',

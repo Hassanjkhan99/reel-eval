@@ -7,9 +7,9 @@
 
 <div [nzGutter]="24" nz-row>
   <div [nzLg]="24" [nzMd]="24" [nzSm]="24" [nzXl]="24" [nzXs]="24" nz-col>
-    <div *ngIf="staffCount > 20">
+    <div *ngIf="staffCount >= 20">
       <nz-alert
-        class="text-center m-4"
+        class="text-center my-4"
         nzDescription="You have reached maximum account limit which is 20!"
         nzMessage="Cannot create another account"
         nzType="error"
