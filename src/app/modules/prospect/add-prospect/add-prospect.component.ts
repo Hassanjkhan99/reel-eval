@@ -45,18 +45,19 @@ export class AddProspectComponent implements OnInit {
   }
 
   submitForm(): void {
-    this.notification.success('Success', 'Your Prospect has been created!', {
-      nzPlacement: 'bottomRight',
-      nzAnimate: true,
-      nzPauseOnHover: true,
-      nzDuration: 3000
-    })
+
     for (const key in this.prospectForm.controls) {
       this.prospectForm.controls[key].markAsDirty();
       this.prospectForm.controls[key].updateValueAndValidity();
     }
     this.prospectService.postAddProspect(this.prospectForm.value).subscribe(
       () => {
+        this.notification.success('Success', 'Your Prospect has been created!', {
+          nzPlacement: 'bottomRight',
+          nzAnimate: true,
+          nzPauseOnHover: true,
+          nzDuration: 3000
+        })
         this.router.navigateByUrl(`prospect/view`);
       }
     );

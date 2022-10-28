@@ -39,12 +39,7 @@ export class SignUp2Component {
   }
 
   submitForm(): void {
-    this.notification.success('Success', 'Your Account has been created!', {
-      nzPlacement: 'bottomRight',
-      nzAnimate: true,
-      nzPauseOnHover: true,
-      nzDuration: 3000
-    })
+
     for (const i in this.signUpForm.controls) {
       this.signUpForm.controls[i].markAsDirty();
       this.signUpForm.controls[i].updateValueAndValidity();
@@ -52,6 +47,12 @@ export class SignUp2Component {
     }
     this.authService.postSignup(this.signUpForm.value).subscribe(
       x => {
+        this.notification.success('Success', 'Your Account has been created!', {
+          nzPlacement: 'bottomRight',
+          nzAnimate: true,
+          nzPauseOnHover: true,
+          nzDuration: 3000
+        })
         console.log(x);
       }
     );

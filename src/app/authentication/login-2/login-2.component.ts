@@ -20,18 +20,19 @@ export class Login2Component {
   }
 
   submitForm(): void {
-    this.notification.success('Success', 'Login Successful!', {
-      nzPlacement: 'bottomRight',
-      nzAnimate: true,
-      nzPauseOnHover: true,
-      nzDuration: 3000
-    })
+
     for (const i in this.loginForm.controls) {
       this.loginForm.controls[i].markAsDirty();
       this.loginForm.controls[i].updateValueAndValidity();
     }
     this.authService.proceedLogin(this.loginForm.value).subscribe(
       response => {
+        this.notification.success('Success', 'Login Successful!', {
+          nzPlacement: 'bottomRight',
+          nzAnimate: true,
+          nzPauseOnHover: true,
+          nzDuration: 3000
+        })
         console.log(response);
         this.router.navigateByUrl(`prospect/view`);
       }

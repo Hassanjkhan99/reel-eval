@@ -77,14 +77,15 @@ export class ViewProspectComponent implements OnInit {
   }
 
   isSave(i: number) {
-    this.notification.success('Success', 'Your changes has been saved!', {
-      nzPlacement: 'bottomRight',
-      nzAnimate: true,
-      nzPauseOnHover: true,
-      nzDuration: 3000
-    })
+
     this.prospectSer.editProspect(this.dataSet[i].id, {...this.dataSet[i], ...this.prospectForm.value}).subscribe(
       x => {
+        this.notification.success('Success', 'Your changes has been saved!', {
+          nzPlacement: 'bottomRight',
+          nzAnimate: true,
+          nzPauseOnHover: true,
+          nzDuration: 3000
+        })
         this.dataSet = this.dataSet.map(item => {
           if (item.id === x.id) {
             return x
@@ -99,14 +100,15 @@ export class ViewProspectComponent implements OnInit {
   }
 
   isDelete(i: number) {
-    this.notification.success('Success', 'Selected Prospect has been deleted!', {
-      nzPlacement: 'bottomRight',
-      nzAnimate: true,
-      nzPauseOnHover: true,
-      nzDuration: 3000
-    })
+
     this.prospectSer.deleteProspect(this.dataSet[i].id).subscribe(
       x => {
+        this.notification.success('Success', 'Selected Prospect has been deleted!', {
+          nzPlacement: 'bottomRight',
+          nzAnimate: true,
+          nzPauseOnHover: true,
+          nzDuration: 3000
+        })
         // this.dataSet.splice(i,1)
         this.dataSet = this.dataSet.map((item) => {
           if (item.id == this.dataSet[i].id) {
