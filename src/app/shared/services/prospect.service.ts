@@ -26,6 +26,10 @@ export class ProspectService {
     return this.http.post<ProspectForm>(`${main_url}prospects/`, payload);
   }
 
+  deleteProspect(id: number): Observable<Prospect> {
+    return this.http.delete<Prospect>(`${main_url}prospects/${id}/`);
+  }
+
   getPositions(): Observable<Positions[]> {
     return this.http.get<Result>(`${main_url}positions/`).pipe(map(e => e.results));
   }

@@ -18,6 +18,8 @@ import {ThemeConstantService} from './shared/services/theme-constant.service';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {JwtInterceptor} from "./shared/interceptor/token.interceptor";
+import {NzNotificationModule} from "ng-zorro-antd/notification";
+import {NzMessageModule} from "ng-zorro-antd/message";
 
 registerLocaleData(en);
 
@@ -34,6 +36,8 @@ registerLocaleData(en);
     SharedModule,
     NgChartjsModule,
     NgbModule,
+    NzNotificationModule,
+    NzMessageModule
 
   ],
     providers: [

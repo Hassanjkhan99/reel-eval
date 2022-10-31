@@ -9,15 +9,13 @@ export interface Prospect {
   id: number;
   first_name: string;
   last_name: string;
-  position: number;
-  position_name: string;
+  position: Position;
   classification: string;
   state: string;
   school: string;
   video_link: string;
   club: number;
   user: number;
-  club_name: string;
   archived: boolean;
   unique_id: string;
   unique_id_without_club: string;
@@ -33,4 +31,9 @@ export interface ProspectForm {
   state: string;
   school: string;
   video_link: string;
+}
+
+export interface Position {
+  id: number;
+  position_name: string;
 }

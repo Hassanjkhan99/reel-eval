@@ -1,11 +1,11 @@
 import {Routes} from '@angular/router';
-import {ViewProspectComponent} from "../../modules/prospect/view-prospect/view-prospect.component";
-import {TableStaffComponent} from "../../modules/staff/table-staff/table-staff.component";
+import {AuthGuard} from "../../shared/guard/auth.guard";
 
 export const CommonLayout_ROUTES: Routes = [
     {
         path: 'dashboard',
       loadChildren: () => import('../../modules/dashboard/dashboard.module').then(m => m.DashboardModule),
+      canActivate: [AuthGuard]
     },
   {
     path: 'staff/add',
@@ -13,7 +13,9 @@ export const CommonLayout_ROUTES: Routes = [
     data: {
       label: 'staff',
       path: 'staff/add'
-    }
+    },
+    canActivate: [AuthGuard]
+
   }
   ,
   {
@@ -22,7 +24,8 @@ export const CommonLayout_ROUTES: Routes = [
     data: {
       label: 'staff',
       path: 'staff/view'
-    }
+    },
+    canActivate: [AuthGuard]
   }
   ,
   {
@@ -31,7 +34,9 @@ export const CommonLayout_ROUTES: Routes = [
     data: {
       label: 'prospect',
       path: 'prospect/view'
-    }
+    },
+    canActivate: [AuthGuard]
+
   },
   {
     path: 'prospect/add',
@@ -39,6 +44,15 @@ export const CommonLayout_ROUTES: Routes = [
     data: {
       label: 'prospect',
       path: 'prospect/add'
-    }
-  }
+    },
+    canActivate: [AuthGuard]
+
+  },
+
+  {
+    path: '**',
+    redirectTo: 'dashboard'
+
+  },
+
 ];

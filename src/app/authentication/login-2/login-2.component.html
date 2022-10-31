@@ -9,7 +9,7 @@
                     <nz-card>
                         <h2 class="m-t-20">Sign In</h2>
                         <p class="m-b-30">Enter your credential to get access</p>
-                        <form (ngSubmit)="submitForm(loginForm.value)" [formGroup]="loginForm" class="login-form"
+                        <form [formGroup]="loginForm" class="login-form"
                               nz-form nzLayout="vertical">
                           <nz-form-item>
                             <nz-form-label nzFor="username" nzRequired>Username</nz-form-label>
@@ -37,7 +37,9 @@
                                 <nz-form-control>
                                     <div class="d-flex align-items-center justify-content-between">
                                         <span class="font-size-13 text-muted">Don't have an account? <a class="small" [routerLink]="['/authentication/sign-up']"> Signup</a></span>
-                                        <button nz-button class="login-form-button" [nzType]="'primary'">Sign In</button>
+                                      <button (click)="submitForm()" [nzType]="'primary'" class="login-form-button"
+                                              nz-button>Sign In
+                                      </button>
                                     </div>
                                 </nz-form-control>
                             </nz-form-item>

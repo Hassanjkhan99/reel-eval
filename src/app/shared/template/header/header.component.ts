@@ -1,69 +1,54 @@
-import { Component } from '@angular/core';
-import { ThemeConstantService } from '../../services/theme-constant.service';
+import {Component} from '@angular/core';
+import {ThemeConstantService} from '../../services/theme-constant.service';
+import {AuthenticationService} from "../../services/authentication.service";
+import {Router} from "@angular/router";
+import {NzNotificationService} from "ng-zorro-antd/notification";
 
 @Component({
-    selector: 'app-header',
-    templateUrl: './header.component.html'
+  selector: 'app-header',
+  templateUrl: './header.component.html'
 })
 
-export class HeaderComponent{
+export class HeaderComponent {
 
-    searchVisible : boolean = false;
-    quickViewVisible : boolean = false;
-    isFolded : boolean;
-    isExpand : boolean;
+  searchVisible: boolean = false;
+  quickViewVisible: boolean = false;
+  isFolded: boolean;
+  isExpand: boolean;
 
-    constructor( private themeService: ThemeConstantService) {}
+  constructor(private themeService: ThemeConstantService, private authService: AuthenticationService,
+              private router: Router, private notification: NzNotificationService) {
+  }
 
-    ngOnInit(): void {
-        this.themeService.isMenuFoldedChanges.subscribe(isFolded => this.isFolded = isFolded);
-        this.themeService.isExpandChanges.subscribe(isExpand => this.isExpand = isExpand);
-    }
+  ngOnInit(): void {
+    this.themeService.isMenuFoldedChanges.subscribe(isFolded => this.isFolded = isFolded);
+    this.themeService.isExpandChanges.subscribe(isExpand => this.isExpand = isExpand);
+  }
 
-    toggleFold() {
-        this.isFolded = !this.isFolded;
-        this.themeService.toggleFold(this.isFolded);
-    }
+  toggleFold() {
+    this.isFolded = !this.isFolded;
+    this.themeService.toggleFold(this.isFolded);
+  }
 
-    toggleExpand() {
-        this.isFolded = false;
-        this.isExpand = !this.isExpand;
-        this.themeService.toggleExpand(this.isExpand);
-        this.themeService.toggleFold(this.isFolded);
-    }
+  toggleExpand() {
+    this.isFolded = false;
+    this.isExpand = !this.isExpand;
+    this.themeService.toggleExpand(this.isExpand);
+    this.themeService.toggleFold(this.isFolded);
+  }
 
-    searchToggle(): void {
-        this.searchVisible = !this.searchVisible;
-    }
 
-    quickViewToggle(): void {
-        this.quickViewVisible = !this.quickViewVisible;
-    }
-
-    notificationList = [
-        {
-            title: 'You received a new message',
-            time: '8 min',
-            icon: 'mail',
-            color: 'ant-avatar-' + 'blue'
-        },
-        {
-            title: 'New user registered',
-            time: '7 hours',
-            icon: 'user-add',
-            color: 'ant-avatar-' + 'cyan'
-        },
-        {
-            title: 'System Alert',
-            time: '8 hours',
-            icon: 'warning',
-            color: 'ant-avatar-' + 'red'
-        },
-        {
-            title: 'You have a new update',
-            time: '2 days',
-            icon: 'sync',
-            color: 'ant-avatar-' + 'gold'
-        }
-    ];
+  logout() {
+    this.authService.logout().subscribe(
+      () => {
+        this.router.navigateByUrl(`authentication/login`);
+        this.notification.success('Success', 'Successfully Logged Out', {
+          nzPlacement: 'bottomRight',
+          nzAnimate: true,
+          nzPauseOnHover: true,
+          nzDuration: 3000
+        })
+      }
+    );
+  }
 }

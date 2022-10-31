@@ -1,24 +1,26 @@
 import {Injectable} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {catchError, Observable} from 'rxjs';
 
 import {AuthenticationService} from '../services/authentication.service';
+import {Router} from "@angular/router";
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private router: Router, private authService: AuthenticationService) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    // if (request.url.replace(main_url, '').includes('dj-rest-auth/login/' || 'core/register/')) {
-    //   return next.handle(request);
-    // } else {
+
     const clone = request.clone({
       withCredentials: true
     })
-    return next.handle(clone);
-    // }
+    // @ts-ignore
+    return next.handle(clone).pipe(catchError((err: HttpErrorResponse) => {
+
+      return err
+    }))
 
   }
 }

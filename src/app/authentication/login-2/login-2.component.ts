@@ -1,8 +1,8 @@
 import {Component} from '@angular/core'
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from "../../shared/services/authentication.service";
 import {Router} from "@angular/router";
-import {main_url} from "../../../environments/environment";
+import {NzNotificationService} from "ng-zorro-antd/notification";
 
 
 @Component({
@@ -15,18 +15,26 @@ export class Login2Component {
   passwordVisible = false;
   password: string;
 
-  constructor(private fb: FormBuilder, private authService: AuthenticationService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthenticationService, private router: Router,
+              private notification: NzNotificationService) {
   }
 
-  submitForm(value: { username: string; password: string; }): void {
+  submitForm(): void {
+
     for (const i in this.loginForm.controls) {
       this.loginForm.controls[i].markAsDirty();
       this.loginForm.controls[i].updateValueAndValidity();
     }
-    this.authService.proceedLogin(value).subscribe(
-      response=>{
+    this.authService.login(this.loginForm.value).subscribe(
+      response => {
+        this.notification.success('Success', 'Login Successful!', {
+          nzPlacement: 'bottomRight',
+          nzAnimate: true,
+          nzPauseOnHover: true,
+          nzDuration: 3000
+        })
         console.log(response);
-        this.router.navigateByUrl(`prospect/view`);
+        this.router.navigateByUrl(`app/prospect/view`);
       }
     );
 

@@ -7,7 +7,7 @@ export interface Staff {
   password2: string;
 }
 
-export interface Result {
+export interface StaffList {
   id: number;
   username: string;
   email: string;
@@ -17,10 +17,10 @@ export interface Result {
   club_name: string;
 }
 
-export interface StaffList {
+export interface StaffApi {
   count: number;
   next?: any;
   previous?: any;
-  results: Result[];
+  results: StaffList[];
 }
 
