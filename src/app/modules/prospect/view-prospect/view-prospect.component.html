@@ -34,10 +34,11 @@
     <td>
 
       <span *ngIf="currentEditIndex != i">
-           {{ data.position_name }}
+           {{ data.position.position_name }}
         </span>
       <span *ngIf="currentEditIndex == i">
-        <input formControlName="position_name" nz-input>
+       <app-positions-select (positionChanged)="setPosition($event)"
+                             [selectedPosition]="currentPosition"></app-positions-select>
       </span>
     </td>
     <td>
@@ -83,7 +84,14 @@
       <a (click)="isSave(i)" *ngIf="currentEditIndex == i" class="p-2">
         <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#46c40a'" nz-icon nzType="save"></i>
       </a>
-      <a class="p-2">
+      <a (nzOnCancel)="cancel()"
+         (nzOnConfirm)="confirm()"
+         *ngIf="currentEditIndex == i"
+         class="p-2"
+         nz-popconfirm nzPopconfirmPlacement="top" nzPopconfirmTitle="Are you sure you want to discard changes?">
+        <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#c00206'" nz-icon nzType="close-circle"></i>
+      </a>
+      <a (click)="isDelete(i)" *ngIf="currentEditIndex != i" class="p-2">
         <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#c00206'" nz-icon nzType="delete"></i>
       </a>
     </td>

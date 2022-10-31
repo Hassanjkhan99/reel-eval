@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 
 
 import {CommonLayoutComponent} from "./core/layouts/common-layout/common-layout.component";
@@ -8,16 +8,19 @@ import {CommonLayout_ROUTES} from "./core/routes/common-layout.routes";
 import {FullLayout_ROUTES} from "./core/routes/full-layout.routes";
 
 const appRoutes: Routes = [
-    {
-        path: '',
-        component: CommonLayoutComponent,
-        children: CommonLayout_ROUTES
-    },
-    {
-        path: '',
-        component: FullLayoutComponent,
-        children: FullLayout_ROUTES
-    }
+  {
+    path: 'app',
+    component: CommonLayoutComponent,
+    children: CommonLayout_ROUTES
+  },
+  {
+    path: '',
+    component: FullLayoutComponent,
+    children: FullLayout_ROUTES
+  }, {
+    path: '**',
+    redirectTo: ''
+  }
 ];
 
 @NgModule({

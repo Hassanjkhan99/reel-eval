@@ -1,10 +1,10 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
-import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {en_US, NZ_I18N} from 'ng-zorro-antd/i18n';
+import {NzBreadCrumbModule} from 'ng-zorro-antd/breadcrumb';
 
-import {registerLocaleData, PathLocationStrategy, LocationStrategy} from '@angular/common';
+import {LocationStrategy, PathLocationStrategy, registerLocaleData} from '@angular/common';
 import en from '@angular/common/locales/en';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -18,6 +18,8 @@ import {ThemeConstantService} from './shared/services/theme-constant.service';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {JwtInterceptor} from "./shared/interceptor/token.interceptor";
+import {NzNotificationModule} from "ng-zorro-antd/notification";
+import {NzMessageModule} from "ng-zorro-antd/message";
 
 registerLocaleData(en);
 
@@ -33,7 +35,10 @@ registerLocaleData(en);
     TemplateModule,
     SharedModule,
     NgChartjsModule,
-    NgbModule
+    NgbModule,
+    NzNotificationModule,
+    NzMessageModule
+
   ],
     providers: [
         {

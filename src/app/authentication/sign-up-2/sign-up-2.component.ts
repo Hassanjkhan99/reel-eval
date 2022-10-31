@@ -1,6 +1,7 @@
 import {Component} from '@angular/core'
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from "../../shared/services/authentication.service";
+import {NzNotificationService} from "ng-zorro-antd/notification";
 
 
 @Component({
@@ -12,7 +13,7 @@ export class SignUp2Component {
 
   signUpForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthenticationService) {
+  constructor(private fb: FormBuilder, private authService: AuthenticationService, private notification: NzNotificationService) {
     this.signUpForm = this.fb.group({
       username: ['', [Validators.required]],
       first_name: ['', [Validators.required]],
@@ -37,17 +38,21 @@ export class SignUp2Component {
     }
   }
 
-  submitForm(value: {
-    first_name: string; last_name: string; club_name: string; username: string;
-    email: string; password1: string; password2: string;
-  }): void {
+  submitForm(): void {
+
     for (const i in this.signUpForm.controls) {
       this.signUpForm.controls[i].markAsDirty();
       this.signUpForm.controls[i].updateValueAndValidity();
 
     }
-    this.authService.postSignup(value).subscribe(
+    this.authService.signup(this.signUpForm.value).subscribe(
       x => {
+        this.notification.success('Success', 'Your Account has been created!', {
+          nzPlacement: 'bottomRight',
+          nzAnimate: true,
+          nzPauseOnHover: true,
+          nzDuration: 3000
+        })
         console.log(x);
       }
     );

@@ -1,21 +1,13 @@
 <div class="row">
   <div class="col-12">
-    <h2>Add Staff Member</h2>
+    <h2>Add Prospect</h2>
     <hr>
   </div>
 </div>
-
 <div [nzGutter]="24" nz-row>
   <div [nzLg]="24" [nzMd]="24" [nzSm]="24" [nzXl]="24" [nzXs]="24" nz-col>
-    <div *ngIf="staffCount >= 20">
-      <nz-alert
-        class="text-center my-4"
-        nzDescription="You have reached maximum account limit which is 20!"
-        nzMessage="Cannot create another account"
-        nzType="error"
-      ></nz-alert>
-    </div>
-    <form [formGroup]="coachForm" nz-form>
+
+    <form [formGroup]="prospectForm" nz-form>
       <div nz-row>
         <div [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXl]="12" [nzXs]="24" nz-col>
           <nz-form-item nz-row>
@@ -48,38 +40,45 @@
               </nz-form-control>
             </div>
           </nz-form-item>
-          <nz-form-item>
+
+          <nz-form-item nz-row>
             <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
-              <nz-form-label>E-mail</nz-form-label>
+              <nz-form-label>State</nz-form-label>
             </div>
             <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
-              <nz-form-control [nzErrorTip]="emailErrorTpl" nzHasFeedback>
-                <input formControlName="email" nz-input placeholder="email" type="email"/>
-                <ng-template #emailErrorTpl let-control>
-                  <ng-container *ngIf="control.hasError('email')">
-                    The input is not valid E-mail!
-                  </ng-container>
+              <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
+                <input formControlName="state" nz-input placeholder="State"/>
+                <ng-template #userErrorTpl let-control>
                   <ng-container *ngIf="control.hasError('required')">
-                    Please input your E-mail!
+                    This field cannot be empty!
                   </ng-container>
                 </ng-template>
               </nz-form-control>
-
             </div>
           </nz-form-item>
-
+          <nz-form-item nz-row>
+            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
+              <nz-form-label>Video link(Optional)</nz-form-label>
+            </div>
+            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+              <nz-form-control>
+                <input formControlName="video_link" nz-input placeholder="video_link"/>
+              </nz-form-control>
+            </div>
+          </nz-form-item>
         </div>
         <div [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXl]="12" [nzXs]="24" nz-col>
           <nz-form-item>
-            <div [nzLg]="6" [nzMd]="8" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
-              <nz-form-label>Username</nz-form-label>
+            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
+              <nz-form-label>Position</nz-form-label>
             </div>
-            <div [nzLg]="18" [nzMd]="16" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
               <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
-                <input formControlName="username" nz-input placeholder="Username"/>
+                <app-positions-select (positionChanged)="setPosition($event)"
+                                      [selectedPosition]="currentPosition"></app-positions-select>
                 <ng-template #userErrorTpl let-control>
                   <ng-container *ngIf="control.hasError('required')">
-                    Please input your username!
+                    This field cannot be empty!
                   </ng-container>
                 </ng-template>
               </nz-form-control>
@@ -87,56 +86,44 @@
           </nz-form-item>
 
           <nz-form-item>
-            <div [nzLg]="6" [nzMd]="8" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
-              <nz-form-label>Password</nz-form-label>
+            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
+              <nz-form-label>Classification</nz-form-label>
             </div>
-            <div [nzLg]="18" [nzMd]="16" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
-              <nz-form-control nzErrorTip="Please input your password!" nzHasFeedback>
-                <input (ngModelChange)="validateConfirmPassword()" formControlName="password1" nz-input
-                       placeholder="Password" type="password"/>
-              </nz-form-control>
-            </div>
-          </nz-form-item>
-
-          <nz-form-item>
-            <div [nzLg]="6" [nzMd]="8" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
-              <nz-form-label>Confirm Password</nz-form-label>
-
-            </div>
-            <div [nzLg]="18" [nzMd]="16" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
-              <nz-form-control [nzErrorTip]="passwordErrorTpl" nzHasFeedback>
-                <input formControlName="password2" nz-input placeholder="confirm your password" type="password"/>
-                <ng-template #passwordErrorTpl let-control>
+            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+              <nz-form-control [nzErrorTip]="emailErrorTpl" nzHasFeedback>
+                <input formControlName="classification" nz-input placeholder="classification" type="classification"/>
+                <ng-template #emailErrorTpl let-control>
                   <ng-container *ngIf="control.hasError('required')">
-                    Please confirm your password!
-                  </ng-container>
-                  <ng-container *ngIf="control.hasError('confirm')">
-                    Password is inconsistent!
+                    This field cannot be empty!
                   </ng-container>
                 </ng-template>
               </nz-form-control>
-
             </div>
           </nz-form-item>
-        </div>
+          <nz-form-item nz-row>
+            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
+              <nz-form-label>School</nz-form-label>
+            </div>
+            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+              <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
+                <input formControlName="school" nz-input placeholder="School"/>
+                <ng-template #userErrorTpl let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    This field cannot be empty!
+                  </ng-container>
+                </ng-template>
+              </nz-form-control>
+            </div>
+          </nz-form-item>
 
+        </div>
       </div>
+
 
     </form>
   </div>
-  <!--  <div [nzLg]="8" [nzMd]="8" [nzSm]="24" [nzXl]="8" [nzXs]="24" nz-col>-->
-  <!--    <nz-card [nzBordered]="false" nzTitle="Permissions" style="width:100%; display: block">-->
-  <!--      <label (ngModelChange)="updateAllChecked()" [(ngModel)]="allChecked" nz-checkbox>-->
-  <!--        Admin-->
-  <!--      </label>-->
-  <!--      <nz-checkbox-group (ngModelChange)="updateSingleChecked()" [(ngModel)]="checkOptionsOne"-->
-  <!--                         class="d-flex flex-column"></nz-checkbox-group>-->
-  <!--    </nz-card>-->
-  <!--  </div>-->
-
   <div class="d-flex justify-content-center w-100">
-    <button (click)="submitForm()" [disabled]="!coachForm.valid" nz-button nzType="primary">Submit</button>
+    <button (click)="submitForm()" [disabled]="!prospectForm.valid" nz-button nzType="primary">Submit</button>
   </div>
 
 </div>
-
