@@ -34,7 +34,7 @@ export class Login2Component {
           nzDuration: 3000
         })
         console.log(response);
-        this.router.navigateByUrl(`prospect/view`);
+        this.router.navigateByUrl(`app/prospect/view`);
       }
     );
 

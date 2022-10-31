@@ -47,5 +47,12 @@ export const CommonLayout_ROUTES: Routes = [
     },
     canActivate: [AuthGuard]
 
-  }
+  },
+
+  {
+    path: '**',
+    redirectTo: 'dashboard'
+
+  },
+
 ];
