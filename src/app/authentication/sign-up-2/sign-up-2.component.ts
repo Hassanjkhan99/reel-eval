@@ -2,6 +2,7 @@ import {Component} from '@angular/core'
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from "../../shared/services/authentication.service";
 import {NzNotificationService} from "ng-zorro-antd/notification";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -13,7 +14,7 @@ export class SignUp2Component {
 
   signUpForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthenticationService, private notification: NzNotificationService) {
+  constructor(private fb: FormBuilder, private authService: AuthenticationService, private notification: NzNotificationService, private router: Router) {
     this.signUpForm = this.fb.group({
       username: ['', [Validators.required]],
       first_name: ['', [Validators.required]],
@@ -53,7 +54,7 @@ export class SignUp2Component {
           nzPauseOnHover: true,
           nzDuration: 3000
         })
-        console.log(x);
+        this.router.navigateByUrl('authentication/login')
       }
     );
 

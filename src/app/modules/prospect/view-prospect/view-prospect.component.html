@@ -91,7 +91,9 @@
          nz-popconfirm nzPopconfirmPlacement="top" nzPopconfirmTitle="Are you sure you want to discard changes?">
         <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#c00206'" nz-icon nzType="close-circle"></i>
       </a>
-      <a (click)="isDelete(i)" *ngIf="currentEditIndex != i" class="p-2">
+      <a (nzOnCancel)="cancel()"
+         (nzOnConfirm)="isDelete(i)" *ngIf="currentEditIndex != i" class="p-2" nz-popconfirm nzPopconfirmPlacement="top"
+         nzPopconfirmTitle="Are you sure you want to delete prospect?">
         <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#c00206'" nz-icon nzType="delete"></i>
       </a>
     </td>

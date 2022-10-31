@@ -58,7 +58,7 @@ export class AddProspectComponent implements OnInit {
           nzPauseOnHover: true,
           nzDuration: 3000
         })
-        this.router.navigateByUrl(`prospect/view`);
+        this.router.navigateByUrl(`app/prospect/view`);
       }
     );
   }

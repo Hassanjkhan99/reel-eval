@@ -34,6 +34,7 @@
     "date-fns": "^2.16.1",
     "express": "^4.18.2",
     "jquery": "^3.5.1",
+    "netlify": "^13.0.1",
     "ng-chartjs": "^0.2.1",
     "ng-zorro-antd": "^14.1.0",
     "ngx-highlightjs": "^4.1.3",

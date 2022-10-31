@@ -53,7 +53,7 @@ export class AddStaffComponent implements OnInit {
     }
     this.staffService.postAddCoach(this.coachForm.value).subscribe(
       () => {
-        this.router.navigateByUrl(`staff/view`);
+        this.router.navigateByUrl(`app/staff/view`);
         this.notification.success('Success', 'Your Staff member has been added!', {
           nzPlacement: 'bottomRight',
           nzAnimate: true,
