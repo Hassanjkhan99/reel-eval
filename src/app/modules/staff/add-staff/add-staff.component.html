@@ -1,13 +1,21 @@
 <div class="row">
   <div class="col-12">
-    <h2>Add Coach</h2>
+    <h2>Add Staff Member</h2>
     <hr>
   </div>
 </div>
-<div [nzGutter]="16" nz-row>
-  <div [nzLg]="16" [nzMd]="16" [nzSm]="24" [nzXl]="16" [nzXs]="24" nz-col>
 
-    <form (ngSubmit)="submitForm(coachForm.value)" [formGroup]="coachForm" nz-form>
+<div [nzGutter]="24" nz-row>
+  <div [nzLg]="24" [nzMd]="24" [nzSm]="24" [nzXl]="24" [nzXs]="24" nz-col>
+    <div *ngIf="staffCount >= 20">
+      <nz-alert
+        class="text-center my-4"
+        nzDescription="You have reached maximum account limit which is 20!"
+        nzMessage="Cannot create another account"
+        nzType="error"
+      ></nz-alert>
+    </div>
+    <form [formGroup]="coachForm" nz-form>
       <div nz-row>
         <div [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXl]="12" [nzXs]="24" nz-col>
           <nz-form-item nz-row>
@@ -25,34 +33,6 @@
               </nz-form-control>
             </div>
           </nz-form-item>
-          <nz-form-item>
-            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
-              <nz-form-label>Username</nz-form-label>
-            </div>
-            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
-              <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
-                <input formControlName="username" nz-input placeholder="Username"/>
-                <ng-template #userErrorTpl let-control>
-                  <ng-container *ngIf="control.hasError('required')">
-                    Please input your username!
-                  </ng-container>
-                </ng-template>
-              </nz-form-control>
-            </div>
-          </nz-form-item>
-          <nz-form-item>
-            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
-              <nz-form-label>Password</nz-form-label>
-            </div>
-            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
-              <nz-form-control nzErrorTip="Please input your password!" nzHasFeedback>
-                <input (ngModelChange)="validateConfirmPassword()" formControlName="password1" nz-input
-                       placeholder="Password" type="password"/>
-              </nz-form-control>
-            </div>
-          </nz-form-item>
-        </div>
-        <div [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXl]="12" [nzXs]="24" nz-col>
           <nz-form-item>
             <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
               <nz-form-label>Last Name</nz-form-label>
@@ -87,12 +67,43 @@
 
             </div>
           </nz-form-item>
+
+        </div>
+        <div [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXl]="12" [nzXs]="24" nz-col>
           <nz-form-item>
-            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" nz-col>
+            <div [nzLg]="6" [nzMd]="8" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
+              <nz-form-label>Username</nz-form-label>
+            </div>
+            <div [nzLg]="18" [nzMd]="16" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+              <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
+                <input formControlName="username" nz-input placeholder="Username"/>
+                <ng-template #userErrorTpl let-control>
+                  <ng-container *ngIf="control.hasError('required')">
+                    Please input your username!
+                  </ng-container>
+                </ng-template>
+              </nz-form-control>
+            </div>
+          </nz-form-item>
+
+          <nz-form-item>
+            <div [nzLg]="6" [nzMd]="8" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
+              <nz-form-label>Password</nz-form-label>
+            </div>
+            <div [nzLg]="18" [nzMd]="16" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+              <nz-form-control nzErrorTip="Please input your password!" nzHasFeedback>
+                <input (ngModelChange)="validateConfirmPassword()" formControlName="password1" nz-input
+                       placeholder="Password" type="password"/>
+              </nz-form-control>
+            </div>
+          </nz-form-item>
+
+          <nz-form-item>
+            <div [nzLg]="6" [nzMd]="8" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
               <nz-form-label>Confirm Password</nz-form-label>
 
             </div>
-            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+            <div [nzLg]="18" [nzMd]="16" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
               <nz-form-control [nzErrorTip]="passwordErrorTpl" nzHasFeedback>
                 <input formControlName="password2" nz-input placeholder="confirm your password" type="password"/>
                 <ng-template #passwordErrorTpl let-control>
@@ -107,27 +118,25 @@
 
             </div>
           </nz-form-item>
-          <nz-form-item nz-row>
-            <nz-form-control>
-              <button [disabled]="!coachForm.valid" nz-button nzType="primary">Submit</button>
-            </nz-form-control>
-          </nz-form-item>
         </div>
 
       </div>
 
     </form>
   </div>
-  <div [nzLg]="8" [nzMd]="8" [nzSm]="24" [nzXl]="8" [nzXs]="24" nz-col>
-    <nz-card [nzBordered]="false" nzTitle="Permissions" style="width:100%; display: block">
-      <label (ngModelChange)="updateAllChecked()" [(ngModel)]="allChecked" nz-checkbox>
-        Admin
-      </label>
-      <nz-checkbox-group (ngModelChange)="updateSingleChecked()" [(ngModel)]="checkOptionsOne"
-                         class="d-flex flex-column"></nz-checkbox-group>
-    </nz-card>
-  </div>
+  <!--  <div [nzLg]="8" [nzMd]="8" [nzSm]="24" [nzXl]="8" [nzXs]="24" nz-col>-->
+  <!--    <nz-card [nzBordered]="false" nzTitle="Permissions" style="width:100%; display: block">-->
+  <!--      <label (ngModelChange)="updateAllChecked()" [(ngModel)]="allChecked" nz-checkbox>-->
+  <!--        Admin-->
+  <!--      </label>-->
+  <!--      <nz-checkbox-group (ngModelChange)="updateSingleChecked()" [(ngModel)]="checkOptionsOne"-->
+  <!--                         class="d-flex flex-column"></nz-checkbox-group>-->
+  <!--    </nz-card>-->
+  <!--  </div>-->
 
+  <div class="d-flex justify-content-center w-100">
+    <button (click)="submitForm()" [disabled]="!coachForm.valid" nz-button nzType="primary">Submit</button>
+  </div>
 
 </div>
 

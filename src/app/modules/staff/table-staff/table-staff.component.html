@@ -1,25 +1,17 @@
-<nz-table #filterTable [nzData]="listOfData" nzTableLayout="fixed">
-<thead>
-<tr>
-  <th
-    *ngFor="let column of listOfColumns"
-    [nzSortOrder]="column.sortOrder"
-    [nzSortFn]="column.sortFn"
-    [nzSortDirections]="column.sortDirections"
-    [nzFilterMultiple]="column.filterMultiple"
-    [nzFilters]="column.listOfFilter"
-    [nzFilterFn]="column.filterFn"
-  >
-    {{ column.name }}
-  </th>
-</tr>
-</thead>
-<tbody>
-<tr *ngFor="let data of filterTable.data">
-  <td>{{ data.firstName }}</td>
-  <td>{{ data.lastName }}</td>
-  <td>{{ data.email }}</td>
-  <td>{{ data.username }}</td>
-</tr>
+<nz-table #borderedTable [nzData]="listOfData" nzBordered nzTableLayout="fixed">
+  <thead>
+  <tr>
+    <th *ngFor="let column of listOfColumns" class="text-center">
+      {{ column}}
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of borderedTable.data" class="text-center">
+    <td>{{ data.first_name }}</td>
+    <td>{{ data.last_name }}</td>
+    <td>{{ data.username }}</td>
+    <td>{{ data.email }}</td>
+  </tr>
 </tbody>
 </nz-table>
