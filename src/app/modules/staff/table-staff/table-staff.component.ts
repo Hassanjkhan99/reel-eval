@@ -19,15 +19,12 @@ import {StaffList} from "../../../shared/interfaces/staff.interface";
 })
 export class TableStaffComponent implements OnInit {
 
-  // firstNameFilterItems = []
-  // lastNameFilterItems = []
-  // emailFilterItems = []
-  // usernameFilterItems = []
 
   listOfColumns = ['First Name', 'Last Name', 'Username', 'Email'];
   listOfData: StaffList[] = [];
   visible: boolean = true;
-  searchValue: string = '';
+  searchValue = '';
+
 
   constructor(private cdr: ChangeDetectorRef, private staffSer: StaffService) {
   }
@@ -45,94 +42,19 @@ export class TableStaffComponent implements OnInit {
   ngOnInit(): void {
     this.getStaff();
 
-    //  const filteredFirstNameData = [...new Set(this.listOfData.map(e => {
-    //    return e.firstName
-    //  }))]
-    //
-    // this.firstNameFilterItems = filteredFirstNameData.map(e => {
-    //    return {
-    //      text: e,
-    //      value: e
-    //    }
-    //  })
-    //
-    //  const filteredLastNameData = [...new Set(this.listOfData.map(e => {
-    //    return e.last_Name
-    //  }))]
-    //
-    //  this.lastNameFilterItems = filteredLastNameData.map(e => {
-    //    return {
-    //      text: e,
-    //      value: e
-    //    }
-    //  })
-    //
-    //  const filteredEmailData = [...new Set(this.listOfData.map(e => {
-    //    return e.email
-    //  }))]
-    //
-    //  this.emailFilterItems = filteredEmailData.map(e => {
-    //    return {
-    //      text: e,
-    //      value: e
-    //    }
-    //  })
-    //
-    //  const filteredUserNameData = [...new Set(this.listOfData.map(e => {
-    //    return e.username
-    //  }))]
-    //
-    //  this.usernameFilterItems = filteredUserNameData.map(e => {
-    //    return {
-    //      text: e,
-    //      value: e
-    //    }
-    //  })
-    //
-    //  this.listOfColumns= [
-    //    {
-    //      name: 'First Name',
-    //      sortOrder: null,
-    //      sortFn: (a: DataItem, b: DataItem) => a.firstName.localeCompare(b.firstName),
-    //      filterMultiple: true,
-    //      listOfFilter: this.firstNameFilterItems,
-    //      filterFn: (list: string[], item: DataItem) => list.some(firstName => item.firstName.indexOf(firstName) !== -1)
-    //    },
-    //    {
-    //      name: 'Last Name',
-    //      sortOrder: null,
-    //      sortFn: (a: DataItem, b: DataItem) => a.lastName.localeCompare(b.lastName),
-    //      filterMultiple: true,
-    //      listOfFilter: this.lastNameFilterItems,
-    //      filterFn: (list: string[], item: DataItem) => list.some(lastName => item.lastName.indexOf(lastName) !== -1)
-    //    },
-    //    {
-    //      name: 'Email',
-    //      sortOrder: 'descend',
-    //      sortFn: (a: DataItem, b: DataItem) => a.email.localeCompare(b.email),
-    //      filterMultiple: true,
-    //      listOfFilter: this.emailFilterItems,
-    //      filterFn: (list: string[], item: DataItem) => list.some(email => item.email.indexOf(email) !== -1)
-    //    },
-    //    {
-    //      name: 'Username',
-    //      sortOrder: null,
-    //      sortFn: (a: DataItem, b: DataItem) => a.username.length - b.username.length,
-    //      filterMultiple: false,
-    //      listOfFilter:this.usernameFilterItems,
-    //      filterFn: (username: string, item: DataItem) => item.username.indexOf(username) !== -1
-    //    }
-    //  ]
-  }
-
-
-  search() {
-
   }
 
   reset() {
-
+    this.searchValue = '';
+    this.search();
   }
+
+  search() {
+    this.visible = false;
+    this.listOfData = this.listOfData.filter((item: StaffList) => item.first_name.indexOf(this.searchValue) !== -1);
+  }
+
+
 }
 
 

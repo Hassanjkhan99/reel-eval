@@ -30,6 +30,10 @@ export class AuthenticationService {
     return this.http.get<any>(`${main_url}dj-rest-auth/user/`)
   }
 
+  forget(payload): Observable<string> {
+    return this.http.post<string>(`${main_url}dj-rest-auth/password/reset/`, payload)
+  }
+
 
 }
 

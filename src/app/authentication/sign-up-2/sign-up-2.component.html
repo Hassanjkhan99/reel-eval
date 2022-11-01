@@ -50,18 +50,32 @@
                             </nz-form-item>
                             <nz-form-item>
                               <nz-form-label nzRequired nzFor="password">Password</nz-form-label>
-                                    <nz-form-control nzErrorTip="Please input your Password!">
-                                      <input formControlName="password1" id="password1" nz-input placeholder="Password"
-                                             type="password">
-                                    </nz-form-control>
-                                </nz-form-item>
-                                <nz-form-item>
-                                    <nz-form-label nzFor="checkPassword" nzRequired>Confirm Password</nz-form-label>
-                                    <nz-form-control nzErrorTip="Please confirm your password!">
-                                      <input formControlName="password2" id="password2" nz-input
-                                             placeholder="Confirm Password" type="password">
-                                    </nz-form-control>
-                                </nz-form-item>
+                              <nz-form-control nzErrorTip="Please input your Password!">
+                                <nz-input-group [nzSuffix]="suffixTemplate">
+                                  <input [(ngModel)]="password" [type]="passwordVisible ? 'text' : 'password'"
+                                         formControlName="password1" id="password1" nz-input placeholder="Password"
+                                  >
+                                </nz-input-group>
+                              </nz-form-control>
+                              <ng-template #suffixTemplate>
+                                <i (click)="passwordVisible = !passwordVisible"
+                                   [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" nz-icon></i>
+                              </ng-template>
+                            </nz-form-item>
+                            <nz-form-item>
+                              <nz-form-label nzFor="checkPassword" nzRequired>Confirm Password</nz-form-label>
+                              <nz-form-control nzErrorTip="Please confirm your password!">
+                                <nz-input-group [nzSuffix]="suffixTemplate2">
+                                  <input [(ngModel)]="password2" [type]="passwordVisible2 ? 'text' : 'password'"
+                                         formControlName="password2" id="password2" nz-input
+                                         placeholder="Confirm Password">
+                                </nz-input-group>
+                              </nz-form-control>
+                              <ng-template #suffixTemplate2>
+                                <i (click)="passwordVisible2 = !passwordVisible2"
+                                   [nzType]="passwordVisible2 ? 'eye-invisible' : 'eye'" nz-icon></i>
+                              </ng-template>
+                            </nz-form-item>
                                 <div class="d-flex align-items-center justify-content-between">
                                     <nz-form-item>
                                         <nz-form-control>

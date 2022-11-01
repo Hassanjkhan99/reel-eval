@@ -2,7 +2,6 @@ import {Component} from '@angular/core'
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from "../../shared/services/authentication.service";
 import {NzNotificationService} from "ng-zorro-antd/notification";
-import {Router} from "@angular/router";
 
 
 @Component({
@@ -13,8 +12,13 @@ import {Router} from "@angular/router";
 export class SignUp2Component {
 
   signUpForm: FormGroup;
+  passwordVisible = false;
+  password: string;
+  passwordVisible2 = false;
+  password2: string;
 
-  constructor(private fb: FormBuilder, private authService: AuthenticationService, private notification: NzNotificationService, private router: Router) {
+
+  constructor(private fb: FormBuilder, private authService: AuthenticationService, private notification: NzNotificationService) {
     this.signUpForm = this.fb.group({
       username: ['', [Validators.required]],
       first_name: ['', [Validators.required]],
@@ -54,7 +58,22 @@ export class SignUp2Component {
           nzPauseOnHover: true,
           nzDuration: 3000
         })
-        this.router.navigateByUrl('authentication/login')
+      },
+      (error) => {
+        error = error.error;
+        for (const errorKey in error) {
+          const arr: string[] = error[errorKey];
+          arr.forEach((msg) => {
+            // this.signUpForm.get(errorKey).setErrors({msg})
+
+            this.notification.error('Failed', msg, {
+              nzPlacement: 'bottomRight',
+              nzAnimate: true,
+              nzPauseOnHover: true,
+              nzDuration: 2000
+            })
+          });
+        }
       }
     );
 
@@ -63,4 +82,10 @@ export class SignUp2Component {
   ngOnInit(): void {
 
   }
+}
+
+export interface RegisterResponseError {
+  name: string[];
+  password1: string[];
+
 }

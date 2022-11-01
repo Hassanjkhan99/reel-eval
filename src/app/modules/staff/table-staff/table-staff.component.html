@@ -1,17 +1,30 @@
 <nz-table #borderedTable [nzData]="listOfData" nzBordered nzTableLayout="fixed">
   <thead>
   <tr>
-    <th *ngFor="let column of listOfColumns" class="text-center">
+    <th *ngFor="let column of listOfColumns" class="text-center" nzCustomFilter>
       {{ column}}
+      <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+        <span nz-icon nzType="search"></span>
+      </nz-filter-trigger>
     </th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let data of borderedTable.data" class="text-center">
+
     <td>{{ data.first_name }}</td>
     <td>{{ data.last_name }}</td>
     <td>{{ data.username }}</td>
     <td>{{ data.email }}</td>
   </tr>
-</tbody>
+  </tbody>
 </nz-table>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input [(ngModel)]="searchValue" nz-input placeholder="Search name" type="text"/>
+      <button (click)="search()" class="search-button" nz-button nzSize="small" nzType="primary">Search</button>
+      <button (click)="reset()" nz-button nzSize="small">Reset</button>
+    </div>
+  </div>
+</nz-dropdown-menu>
