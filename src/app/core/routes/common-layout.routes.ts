@@ -51,7 +51,7 @@ export const CommonLayout_ROUTES: Routes = [
 
   {
     path: '**',
-    redirectTo: 'dashboard'
+    redirectTo: 'app/dashboard'
 
   },
 

@@ -13,7 +13,7 @@ export class StaffService {
   }
 
   postAddCoach(payload: Staff): Observable<Staff> {
-    return this.http.post<Staff>(`${main_url}core/register/`, payload);
+    return this.http.post<Staff>(`${main_url}core/register/create_user_with_club/`, payload);
   }
 
   getStaff(): Observable<StaffApi> {

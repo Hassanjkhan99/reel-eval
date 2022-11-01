@@ -52,7 +52,7 @@
                               <nz-form-label nzRequired nzFor="password">Password</nz-form-label>
                               <nz-form-control nzErrorTip="Please input your Password!">
                                 <nz-input-group [nzSuffix]="suffixTemplate">
-                                  <input [(ngModel)]="password" [type]="passwordVisible ? 'text' : 'password'"
+                                  <input [type]="passwordVisible ? 'text' : 'password'"
                                          formControlName="password1" id="password1" nz-input placeholder="Password"
                                   >
                                 </nz-input-group>
@@ -66,7 +66,7 @@
                               <nz-form-label nzFor="checkPassword" nzRequired>Confirm Password</nz-form-label>
                               <nz-form-control nzErrorTip="Please confirm your password!">
                                 <nz-input-group [nzSuffix]="suffixTemplate2">
-                                  <input [(ngModel)]="password2" [type]="passwordVisible2 ? 'text' : 'password'"
+                                  <input [type]="passwordVisible2 ? 'text' : 'password'"
                                          formControlName="password2" id="password2" nz-input
                                          placeholder="Confirm Password">
                                 </nz-input-group>
@@ -87,7 +87,8 @@
                                   <nz-form-item>
                                     <nz-form-control>
                                       <div>
-                                        <button (click)="submitForm()" [nzType]="'primary'" class="login-form-button"
+                                        <button (click)="submitForm()" [disabled]="signUpForm.invalid"
+                                                [nzType]="'primary'" class="login-form-button"
                                                 nz-button>Sign Up
                                         </button>
                                       </div>

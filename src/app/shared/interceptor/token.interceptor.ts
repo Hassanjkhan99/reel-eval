@@ -13,6 +13,10 @@ export class JwtInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
+    if (request.url == 'core/register/') {
+      return next.handle(request)
+    }
+
     const clone = request.clone({
       withCredentials: true
     })
