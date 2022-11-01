@@ -57,7 +57,7 @@ export class SignUp2Component {
           nzPauseOnHover: true,
           nzDuration: 3000
         });
-        this.router.navigateByUrl('app/dashboard/home')
+        this.router.navigateByUrl('authentication/login')
       },
       (error) => {
         error = error.error;
