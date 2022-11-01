@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {catchError, Observable} from 'rxjs';
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 import {AuthenticationService} from '../services/authentication.service';
 import {Router} from "@angular/router";
+import {NzNotificationService} from "ng-zorro-antd/notification";
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(private router: Router, private authService: AuthenticationService) {
+  constructor(private router: Router, private authService: AuthenticationService, private notification: NzNotificationService) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -16,11 +17,7 @@ export class JwtInterceptor implements HttpInterceptor {
     const clone = request.clone({
       withCredentials: true
     })
-    // @ts-ignore
-    return next.handle(clone).pipe(catchError((err: HttpErrorResponse) => {
-
-      return err
-    }))
+    return next.handle(clone)
 
   }
 }

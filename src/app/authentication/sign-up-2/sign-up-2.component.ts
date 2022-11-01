@@ -12,6 +12,11 @@ import {NzNotificationService} from "ng-zorro-antd/notification";
 export class SignUp2Component {
 
   signUpForm: FormGroup;
+  passwordVisible = false;
+  password: string;
+  passwordVisible2 = false;
+  password2: string;
+
 
   constructor(private fb: FormBuilder, private authService: AuthenticationService, private notification: NzNotificationService) {
     this.signUpForm = this.fb.group({
@@ -53,7 +58,22 @@ export class SignUp2Component {
           nzPauseOnHover: true,
           nzDuration: 3000
         })
-        console.log(x);
+      },
+      (error) => {
+        error = error.error;
+        for (const errorKey in error) {
+          const arr: string[] = error[errorKey];
+          arr.forEach((msg) => {
+            // this.signUpForm.get(errorKey).setErrors({msg})
+
+            this.notification.error('Failed', msg, {
+              nzPlacement: 'bottomRight',
+              nzAnimate: true,
+              nzPauseOnHover: true,
+              nzDuration: 2000
+            })
+          });
+        }
       }
     );
 
@@ -62,4 +82,10 @@ export class SignUp2Component {
   ngOnInit(): void {
 
   }
+}
+
+export interface RegisterResponseError {
+  name: string[];
+  password1: string[];
+
 }
