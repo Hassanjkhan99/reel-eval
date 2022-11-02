@@ -20,10 +20,15 @@ import {StaffList} from "../../../shared/interfaces/staff.interface";
 export class TableStaffComponent implements OnInit {
 
 
-  listOfColumns = ['First Name', 'Last Name', 'Username', 'Email'];
+  listOfColumns = {first_name: 'First Name', last_name: 'Last Name', username: 'Username', email: 'Email'};
   listOfData: StaffList[] = [];
-  visible: boolean = true;
-  searchValue = '';
+  originalListOfData: StaffList[] = [];
+  visible = {
+    first_name: false, last_name: false, username: false, email: false
+  };
+  searchValue = {
+    first_name: '', last_name: '', username: '', email: ''
+  };
 
 
   constructor(private cdr: ChangeDetectorRef, private staffSer: StaffService) {
@@ -35,23 +40,28 @@ export class TableStaffComponent implements OnInit {
         console.log(x);
         this.cdr.detectChanges();
         this.listOfData = x;
+        this.originalListOfData = x;
       }
     )
   }
 
   ngOnInit(): void {
     this.getStaff();
-
   }
 
-  reset() {
-    this.searchValue = '';
-    this.search();
+  reset(key) {
+    this.searchValue[key] = ''
+
+    this.search(key);
   }
 
-  search() {
-    this.visible = false;
-    this.listOfData = this.listOfData.filter((item: StaffList) => item.first_name.indexOf(this.searchValue) !== -1);
+  search(key) {
+    console.log(this.listOfData)
+    this.visible[key] = false;
+    console.log({key})
+    this.listOfData = this.originalListOfData.filter((item: StaffList) => item[key].indexOf(this.searchValue[key]) !== -1);
+    console.log(this.listOfData)
+    console.log(this.searchValue)
   }
 
 

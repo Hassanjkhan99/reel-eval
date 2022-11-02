@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NzTableModule} from "ng-zorro-antd/table";
 import {NzIconModule} from "ng-zorro-antd/icon";
@@ -12,15 +12,23 @@ import {NzNotificationService} from "ng-zorro-antd/notification";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 import {NzButtonModule} from "ng-zorro-antd/button";
+import {TabsComponent} from "../tabs/tabs.component";
 
 @Component({
   selector: 'app-view-prospect',
   standalone: true,
-  imports: [CommonModule, NzTableModule, NzIconModule, ReactiveFormsModule, NzInputModule, PositionsSelectComponent, NzPopconfirmModule, NzButtonModule],
+  imports: [CommonModule, NzTableModule, NzIconModule, ReactiveFormsModule, NzInputModule, PositionsSelectComponent, NzPopconfirmModule, NzButtonModule, TabsComponent],
   templateUrl: './view-prospect.component.html',
   styleUrls: ['./view-prospect.component.scss'],
 })
 export class ViewProspectComponent implements OnInit {
+
+  @Input() dataSet: Prospect[] = [];
+  @Input() achievedTable: boolean = false;
+  @Input() isLoading: boolean = false;
+  @Output() prospectArchived: EventEmitter<Prospect> = new EventEmitter<Prospect>()
+  @Output() prospectUnArchived: EventEmitter<Prospect> = new EventEmitter<Prospect>()
+
   prospectForm = new FormGroup({
     first_name: new FormControl(''),
     last_name: new FormControl(''),
@@ -35,7 +43,6 @@ export class ViewProspectComponent implements OnInit {
     archived: new FormControl(false),
   });
 
-  dataSet: Prospect[] = [];
 
 
   currentEditIndex: number;
@@ -46,7 +53,6 @@ export class ViewProspectComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getProspect();
   }
 
   isEdit(i: number) {
@@ -116,19 +122,13 @@ export class ViewProspectComponent implements OnInit {
           }
           return item
         }).filter(e => e)
-        console.log(this.dataSet)
+        this.currentEditIndex = -1
         this.cdr.detectChanges();
       },
     )
   }
 
-  getProspect() {
-    this.prospectSer.getProspects().subscribe(
-      x => {
-        this.dataSet = x;
-      }
-    )
-  }
+
 
   setPosition(position: Positions) {
     this.prospectForm.get('position').setValue(position)
@@ -144,5 +144,54 @@ export class ViewProspectComponent implements OnInit {
     this.nzMessageService.info('clicked confirm');
     this.currentEditIndex = -1;
 
+  }
+
+  isArchive(i: number) {
+    this.prospectSer.editProspect(this.dataSet[i].id, {...this.dataSet[i], archived: true}).subscribe(
+      x => {
+        this.notification.success('Success', 'Your changes has been archived!', {
+          nzPlacement: 'bottomRight',
+          nzAnimate: true,
+          nzPauseOnHover: true,
+          nzDuration: 3000
+        })
+        this.prospectArchived.emit(this.dataSet[i]);
+
+        this.dataSet = this.dataSet.map((item) => {
+          if (item.id == this.dataSet[i].id) {
+            return
+          }
+          return item
+        }).filter(e => e)
+        this.currentEditIndex = -1
+        this.cdr.detectChanges();
+
+      }
+    )
+  }
+
+
+  isUnArchive(i: number) {
+    this.prospectSer.unArchiveProspect(this.dataSet[i].id).subscribe(
+      x => {
+        this.notification.success('Success', 'Your changes has been unarchived!', {
+          nzPlacement: 'bottomRight',
+          nzAnimate: true,
+          nzPauseOnHover: true,
+          nzDuration: 3000
+        })
+        this.prospectUnArchived.emit(this.dataSet[i]);
+
+        this.dataSet = this.dataSet.map((item) => {
+          if (item.id == this.dataSet[i].id) {
+            return
+          }
+          return item
+        }).filter(e => e)
+        this.currentEditIndex = -1
+        this.cdr.detectChanges();
+
+      }
+    )
   }
 }

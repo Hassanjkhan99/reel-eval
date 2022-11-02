@@ -4,7 +4,6 @@ import {RouterModule, Routes} from '@angular/router';
 import {Login2Component} from './login-2/login-2.component';
 import {SignUp2Component} from './sign-up-2/sign-up-2.component';
 import {Error1Component} from './error-1/error-1.component';
-import {Error2Component} from './error-2/error-2.component';
 import {ForgetPasswordComponent} from "./forget-password/forget-password.component";
 
 const routes: Routes = [
@@ -28,24 +27,16 @@ const routes: Routes = [
       title: 'Sign Up'
     }
   },
-
   {
-        path: 'error-1',
-        component: Error1Component,
-        data: {
-            title: 'Error 1'
-        }
-    },
-    {
-        path: 'error-2',
-        component: Error2Component,
-        data: {
-            title: 'Error 2'
-        }
-    },
+    path: 'error',
+    component: Error1Component,
+    data: {
+      title: 'Error'
+    }
+  },
   {
     path: '**',
-    redirectTo: 'login'
+    redirectTo: 'error'
   }
 ];
 

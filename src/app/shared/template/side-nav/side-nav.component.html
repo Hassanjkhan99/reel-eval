@@ -4,6 +4,7 @@
             'ant-menu-dark' : isSideNavDark
         }"
       class="ant-menu ant-menu-root ant-menu-inline side-nav-menu"
+
   >
     <li *ngFor="let item of menuItems"
         [ngClass]="item.submenu.length > 0?'ant-menu-submenu ant-menu-submenu-inline':'ant-menu-item'"
@@ -22,7 +23,8 @@
       </a>
 
       <!-- Second Level -->
-      <ul *ngIf="item.submenu.length > 0" class="ant-menu ant-menu-inline ant-menu-sub dropdown-menu">
+      <ul *ngIf="item.submenu.length > 0" class="ant-menu ant-menu-inline ant-menu-sub dropdown-menu"
+          style="position: relative !important;">
         <li *ngFor="let subItem of item.submenu"
             [ngClass]="subItem.submenu.length > 0?'ant-menu-submenu ant-menu-submenu-inline':'ant-menu-item'"
             [routerLinkActiveOptions]="{exact: true}"

@@ -18,8 +18,16 @@ export class ProspectService {
     return this.http.get<ProspectApi>(`${main_url}prospects/`).pipe(map(e => e.results));
   }
 
-  editProspect(id: number, payload): Observable<Prospect> {
+  getArchivedProspects(): Observable<Prospect[]> {
+    return this.http.get<ProspectApi>(`${main_url}archived_prospects/`).pipe(map(e => e.results));
+  }
+
+  editProspect(id: number, payload: Prospect): Observable<Prospect> {
     return this.http.put<Prospect>(`${main_url}prospects/${id}/`, payload);
+  }
+
+  unArchiveProspect(id: number): Observable<Prospect> {
+    return this.http.patch<Prospect>(`${main_url}archived_prospects/${id}/`, {});
   }
 
   postAddProspect(payload: ProspectForm): Observable<ProspectForm> {
@@ -29,6 +37,7 @@ export class ProspectService {
   deleteProspect(id: number): Observable<Prospect> {
     return this.http.delete<Prospect>(`${main_url}prospects/${id}/`);
   }
+
 
   getPositions(): Observable<Positions[]> {
     return this.http.get<Result>(`${main_url}positions/`).pipe(map(e => e.results));

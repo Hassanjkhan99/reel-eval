@@ -20,12 +20,15 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {JwtInterceptor} from "./shared/interceptor/token.interceptor";
 import {NzNotificationModule} from "ng-zorro-antd/notification";
 import {NzMessageModule} from "ng-zorro-antd/message";
+import {NzCardModule} from "ng-zorro-antd/card";
+import {NzTabsModule} from "ng-zorro-antd/tabs";
 
 registerLocaleData(en);
 
 @NgModule({
   declarations: [
     AppComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -37,21 +40,24 @@ registerLocaleData(en);
     NgChartjsModule,
     NgbModule,
     NzNotificationModule,
-    NzMessageModule
+    NzMessageModule,
+    NzCardModule,
+    NzTabsModule,
 
   ],
-    providers: [
-        {
-            provide: NZ_I18N,
-            useValue: en_US,
-        },
-        {
-            provide: LocationStrategy,
-            useClass: PathLocationStrategy
-        },
-      { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-      ThemeConstantService
-    ],
-    bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: NZ_I18N,
+      useValue: en_US,
+    },
+    {
+      provide: LocationStrategy,
+      useClass: PathLocationStrategy
+    },
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    ThemeConstantService
+  ],
+
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

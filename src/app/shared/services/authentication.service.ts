@@ -27,7 +27,7 @@ export class AuthenticationService {
   }
 
   checkLogin(): Observable<any> {
-    return this.http.get<any>(`${main_url}dj-rest-auth/user/`);
+    return this.http.get<any>(`${main_url}accounts/me/`);
   }
 
   forget(email): Observable<string> {

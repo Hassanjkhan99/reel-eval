@@ -30,7 +30,7 @@ export const CommonLayout_ROUTES: Routes = [
   ,
   {
     path: 'prospect/view',
-    loadComponent: () => import('../../modules/prospect/view-prospect/view-prospect.component').then(c => c.ViewProspectComponent),
+    loadComponent: () => import('../../modules/prospect/tabs/tabs.component').then(c => c.TabsComponent),
     data: {
       label: 'prospect',
       path: 'prospect/view'

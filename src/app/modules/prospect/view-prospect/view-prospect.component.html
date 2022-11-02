@@ -1,4 +1,4 @@
-<nz-table #borderedTable [nzData]="dataSet" nzBordered nzTitle="List of Prospects">
+<nz-table #borderedTable [nzData]="dataSet" [nzLoading]="isLoading" nzBordered>
   <thead>
   <tr>
     <th class="text-center">First Name</th>
@@ -96,6 +96,22 @@
          nzPopconfirmTitle="Are you sure you want to delete prospect?">
         <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#c00206'" nz-icon nzType="delete"></i>
       </a>
+      <ng-template [ngIf]="!achievedTable">
+        <a (nzOnCancel)="cancel()"
+           (nzOnConfirm)="isArchive(i)" *ngIf="currentEditIndex != i" class="p-2" nz-popconfirm
+           nzPopconfirmPlacement="top"
+           nzPopconfirmTitle="Are you sure you want to archive prospect?">
+          <span nz-icon nzTheme="outline" nzType="export"></span>
+        </a>
+      </ng-template>
+      <ng-template [ngIf]="achievedTable">
+        <a (nzOnCancel)="cancel()"
+           (nzOnConfirm)="isUnArchive(i)" *ngIf="currentEditIndex != i" class="p-2" nz-popconfirm
+           nzPopconfirmPlacement="top"
+           nzPopconfirmTitle="Are you sure you want to unarchive prospect?">
+          <span nz-icon nzTheme="outline" nzType="export"></span>
+        </a>
+      </ng-template>
     </td>
   </tr>
   </tbody>
