@@ -13,11 +13,13 @@ import {Router} from "@angular/router";
 import {NzNotificationService} from "ng-zorro-antd/notification";
 import {map} from "rxjs/operators";
 import {NzAlertModule} from "ng-zorro-antd/alert";
+import {GroupList} from "../../../shared/interfaces/staff.interface";
+import {NzSelectModule} from "ng-zorro-antd/select";
 
 @Component({
   selector: 'app-add-staff',
   standalone: true,
-  imports: [CommonModule, NzInputModule, FormsModule, NzIconModule, NzFormModule, ReactiveFormsModule, NzWaveModule, NzButtonModule, NzCardModule, NzCheckboxModule, NzAlertModule],
+  imports: [CommonModule, NzInputModule, FormsModule, NzIconModule, NzFormModule, ReactiveFormsModule, NzWaveModule, NzButtonModule, NzCardModule, NzCheckboxModule, NzAlertModule, NzSelectModule],
   templateUrl: './add-staff.component.html',
   styleUrls: ['./add-staff.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -25,13 +27,7 @@ import {NzAlertModule} from "ng-zorro-antd/alert";
 export class AddStaffComponent implements OnInit {
   staffCount: number = 0;
   coachForm: FormGroup;
-  allChecked = false;
-  checkOptionsOne = [
-    {label: 'Can create new prospects', value: 'canCreateProspects', checked: false},
-    {label: 'Can grade prospects', value: 'canGradeProspects', checked: false},
-    {label: 'Can view reports graded by others', value: 'canViewReports', checked: false},
-    {label: 'Can view prospects list', value: 'canViewList', checked: true}
-  ];
+  options: GroupList[];
 
   constructor(private fb: FormBuilder, private staffService: StaffService, private router: Router,
               private notification: NzNotificationService) {
@@ -42,6 +38,7 @@ export class AddStaffComponent implements OnInit {
       email: ['', [Validators.email, Validators.required]],
       password1: ['', [Validators.required, Validators.minLength(8)]],
       password2: ['', [this.confirmValidator]],
+      groups: [[0], [Validators.required]]
     });
   }
 
@@ -83,6 +80,10 @@ export class AddStaffComponent implements OnInit {
       if (e >= 20) {
         this.coachForm.disable()
       }
+    })
+    this.staffService.getGroupList().subscribe(e => {
+      this.options = e;
+      console.log(this.options)
     })
   }
 

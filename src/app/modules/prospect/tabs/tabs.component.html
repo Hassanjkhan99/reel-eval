@@ -1,10 +1,12 @@
 <nz-tabset nzCentered nzSize="large">
   <nz-tab nzTitle="Unarchived">
     <app-view-prospect (prospectArchived)="getArchivedProspect()" [achievedTable]="false" [dataSet]="unArchivedList"
+                       [originalDataSet]="unArchivedList"
                        [isLoading]="isLoadingUnArchivedList"></app-view-prospect>
   </nz-tab>
   <nz-tab nzTitle="Archived">
     <app-view-prospect (prospectUnArchived)="getProspect()" [achievedTable]="true" [dataSet]="archivedList"
+                       [originalDataSet]="archivedList"
                        [isLoading]="isLoadingArchivedList"></app-view-prospect>
   </nz-tab>
 </nz-tabset>

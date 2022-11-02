@@ -2,7 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {main_url} from "../../../environments/environment";
-import {Staff, StaffApi} from "../interfaces/staff.interface";
+import {Group, GroupList, Staff, StaffApi} from "../interfaces/staff.interface";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,9 @@ export class StaffService {
 
   getStaff(): Observable<StaffApi> {
     return this.http.get<StaffApi>(`${main_url}accounts/`);
+  }
+
+  getGroupList(): Observable<GroupList[]> {
+    return this.http.get<Group>(`${main_url}groups/`).pipe(map(e => e.results));
   }
 }

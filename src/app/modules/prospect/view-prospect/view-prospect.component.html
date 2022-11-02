@@ -1,14 +1,26 @@
-<nz-table #borderedTable [nzData]="dataSet" [nzLoading]="isLoading" nzBordered>
+<nz-table #borderedTable [nzData]="dataSet" [nzLoading]="isLoading" nzBordered nzTableLayout="fixed">
   <thead>
   <tr>
-    <th class="text-center">First Name</th>
-    <th class="text-center">Last Name</th>
-    <th class="text-center">Position</th>
-    <th class="text-center">Classification/Year</th>
-    <th class="text-center">State/Province</th>
-    <th class="text-center">School/Team</th>
-    <th class="text-center">Video Link</th>
+    <th *ngFor="let column of listOfColumns|keyvalue" class="text-center" nzCustomFilter>
+      {{column.value}}
+      <nz-filter-trigger [(nzVisible)]="visible[column.key]" [nzActive]="searchValue[column.key].length > 0"
+                         [nzDropdownMenu]="menu">
+        <span nz-icon nzType="search"></span>
+      </nz-filter-trigger>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <div class="ant-table-filter-dropdown">
+          <div class="search-box">
+            <input [(ngModel)]="searchValue[column.key]" nz-input placeholder="Search name" type="text"/>
+            <button (click)="search(column.key)" class="search-button" nz-button nzSize="small" nzType="primary">
+              Search
+            </button>
+            <button (click)="reset(column.key)" nz-button nzSize="small">Reset</button>
+          </div>
+        </div>
+      </nz-dropdown-menu>
+    </th>
     <th class="text-center">Action</th>
+
 
   </tr>
   </thead>

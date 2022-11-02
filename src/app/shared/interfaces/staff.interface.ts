@@ -5,6 +5,7 @@ export interface Staff {
   last_name: string;
   password1: string;
   password2: string;
+  groups: number[];
 }
 
 export interface StaffList {
@@ -24,3 +25,14 @@ export interface StaffApi {
   results: StaffList[];
 }
 
+export interface Group {
+  count: number;
+  next?: any;
+  previous?: any;
+  results: GroupList[];
+}
+
+export interface GroupList {
+  id: number;
+  name: string;
+}

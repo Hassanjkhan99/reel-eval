@@ -41,7 +41,8 @@
                                         <span class="font-size-13 text-muted">Don't have an account? <a
                                           [routerLink]="['/authentication/sign-up']" class="small"
                                         > Signup</a></span>
-                                    <button (click)="submitForm()" [nzType]="'primary'" class="login-form-button"
+                                    <button (click)="submitForm()" [disabled]="loginForm.invalid" [nzType]="'primary'"
+                                            class="login-form-button"
                                             nz-button>Sign In
                                     </button>
                                   </div>

@@ -67,6 +67,27 @@
 
             </div>
           </nz-form-item>
+          <nz-form-item>
+            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
+              <nz-form-label>Permissions</nz-form-label>
+            </div>
+            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
+              <nz-form-control>
+                <nz-select
+                  [nzMaxTagPlaceholder]="tagPlaceHolder"
+                  formControlName="groups"
+                  nzMode="multiple"
+                  nzPlaceHolder="Select Permissions"
+                >
+                  <nz-option *ngFor="let permissions of options" [nzLabel]="permissions.name"
+                             [nzValue]="permissions.id">
+                  </nz-option>
+                </nz-select>
+                <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
+              </nz-form-control>
+
+            </div>
+          </nz-form-item>
 
         </div>
         <div [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXl]="12" [nzXs]="24" nz-col>

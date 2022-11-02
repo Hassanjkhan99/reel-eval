@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from 
 import {CommonModule} from '@angular/common';
 import {NzTableModule} from "ng-zorro-antd/table";
 import {NzIconModule} from "ng-zorro-antd/icon";
-import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ProspectService} from "../../../shared/services/prospect.service";
 import {NzInputModule} from "ng-zorro-antd/input";
 import {PositionsSelectComponent} from "../../../shared/components/positions-select/positions-select.component";
@@ -13,22 +13,36 @@ import {NzMessageService} from "ng-zorro-antd/message";
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {TabsComponent} from "../tabs/tabs.component";
+import {NzDropDownModule} from "ng-zorro-antd/dropdown";
 
 @Component({
   selector: 'app-view-prospect',
   standalone: true,
-  imports: [CommonModule, NzTableModule, NzIconModule, ReactiveFormsModule, NzInputModule, PositionsSelectComponent, NzPopconfirmModule, NzButtonModule, TabsComponent],
+  imports: [CommonModule, NzTableModule, NzIconModule, ReactiveFormsModule, NzInputModule, PositionsSelectComponent, NzPopconfirmModule, NzButtonModule, TabsComponent, NzDropDownModule, FormsModule],
   templateUrl: './view-prospect.component.html',
   styleUrls: ['./view-prospect.component.scss'],
 })
 export class ViewProspectComponent implements OnInit {
 
   @Input() dataSet: Prospect[] = [];
+  @Input() originalDataSet: Prospect[] = [];
   @Input() achievedTable: boolean = false;
   @Input() isLoading: boolean = false;
   @Output() prospectArchived: EventEmitter<Prospect> = new EventEmitter<Prospect>()
   @Output() prospectUnArchived: EventEmitter<Prospect> = new EventEmitter<Prospect>()
+  listOfColumns = {
+    first_name: 'First Name', last_name: 'Last Name', position: 'Position', classification: 'Classification/Year',
+    state: 'State/Province', school: 'School/Team', video_link: 'Video Link'
+  };
 
+  visible = {
+    first_name: false, last_name: false, position: false, classification: false,
+    state: false, school: false, video_link: false
+  };
+  searchValue = {
+    first_name: '', last_name: '', position: '', classification: '',
+    state: '', school: '', video_link: ''
+  };
   prospectForm = new FormGroup({
     first_name: new FormControl(''),
     last_name: new FormControl(''),
@@ -193,5 +207,20 @@ export class ViewProspectComponent implements OnInit {
 
       }
     )
+  }
+
+  reset(key) {
+    this.searchValue[key] = ''
+
+    this.search(key);
+  }
+
+  search(key) {
+    console.log(this.dataSet)
+    this.visible[key] = false;
+    console.log({key})
+    this.dataSet = this.originalDataSet.filter((item: Prospect) => item[key].indexOf(this.searchValue[key]) !== -1);
+    console.log(this.dataSet)
+    console.log(this.searchValue)
   }
 }
