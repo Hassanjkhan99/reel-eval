@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from 
 import {CommonModule} from '@angular/common';
 import {NzTableModule} from "ng-zorro-antd/table";
 import {NzIconModule} from "ng-zorro-antd/icon";
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ProspectService} from "../../../shared/services/prospect.service";
 import {NzInputModule} from "ng-zorro-antd/input";
 import {PositionsSelectComponent} from "../../../shared/components/positions-select/positions-select.component";
@@ -14,6 +14,7 @@ import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {TabsComponent} from "../tabs/tabs.component";
 import {NzDropDownModule} from "ng-zorro-antd/dropdown";
+import {NotificationService} from "../../../shared/services/notification.service";
 
 @Component({
   selector: 'app-view-prospect',
@@ -45,6 +46,7 @@ export class ViewProspectComponent implements OnInit {
     first_name: '', last_name: '', position: '', classification: '',
     state: '', school: '', video_link: ''
   };
+  showRow: Boolean = false;
   prospectForm = new FormGroup({
     first_name: new FormControl(''),
     last_name: new FormControl(''),
@@ -60,12 +62,13 @@ export class ViewProspectComponent implements OnInit {
   });
 
 
-
   currentEditIndex: number;
   currentPosition: number;
 
-  constructor(private prospectSer: ProspectService, private cdr: ChangeDetectorRef, private notification: NzNotificationService,
-              private nzMessageService: NzMessageService) {
+  constructor(private fb: FormBuilder, private prospectSer: ProspectService, private cdr: ChangeDetectorRef, private notification: NzNotificationService,
+              private nzMessageService: NzMessageService,
+              private notificationService: NotificationService) {
+
   }
 
   ngOnInit(): void {
@@ -145,10 +148,15 @@ export class ViewProspectComponent implements OnInit {
   }
 
 
-
   setPosition(position: Positions) {
     this.prospectForm.get('position').setValue(position)
     console.log(position.position_name)
+  }
+
+  addPosition(position: Positions) {
+    console.log(position)
+    this.prospectForm.controls.position.setValue(position)
+    this.prospectForm.updateValueAndValidity()
   }
 
 
@@ -159,18 +167,15 @@ export class ViewProspectComponent implements OnInit {
   confirm(): void {
     this.nzMessageService.info('clicked confirm');
     this.currentEditIndex = -1;
-
+    this.showRow = false;
   }
 
   isArchive(i: number) {
     this.prospectSer.editProspect(this.dataSet[i].id, {...this.dataSet[i], archived: true}).subscribe(
       x => {
-        this.notification.success('Success', 'Your changes has been archived!', {
-          nzPlacement: 'bottomRight',
-          nzAnimate: true,
-          nzPauseOnHover: true,
-          nzDuration: 3000
-        })
+
+        this.notificationService.success('Success', 'Your Prospect has been archived')
+
         this.prospectArchived.emit(this.dataSet[i]);
 
         this.dataSet = this.dataSet.map((item) => {
@@ -224,5 +229,27 @@ export class ViewProspectComponent implements OnInit {
     this.dataSet = this.originalDataSet.filter((item: Prospect) => item[key].indexOf(this.searchValue[key]) !== -1);
     console.log(this.dataSet)
     console.log(this.searchValue)
+  }
+
+  isSaveNew() {
+    this.prospectSer.postAddProspect(this.prospectForm.value).subscribe(
+      x => {
+        this.notificationService.success('Success', 'Your Prospect has been added')
+        this.dataSet = [...this.dataSet, x]
+        this.showRow = false;
+
+      }
+    )
+
+    this.cdr.detectChanges();
+
+  }
+
+  isCreate() {
+
+  }
+
+  addProspect() {
+    this.showRow = true;
   }
 }

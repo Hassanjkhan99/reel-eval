@@ -26,7 +26,7 @@ export interface Prospect {
 export interface ProspectForm {
   first_name: string;
   last_name: string;
-  position: number;
+  position: PositionForm;
   classification: string;
   state: string;
   school: string;
@@ -36,4 +36,8 @@ export interface ProspectForm {
 export interface Position {
   id: number;
   position_name: string;
+}
+
+export interface PositionForm {
+  id: number;
 }

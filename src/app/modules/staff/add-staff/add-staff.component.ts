@@ -28,6 +28,8 @@ export class AddStaffComponent implements OnInit {
   staffCount: number = 0;
   coachForm: FormGroup;
   options: GroupList[];
+  passwordVisible = false;
+  passwordVisible2 = false;
 
   constructor(private fb: FormBuilder, private staffService: StaffService, private router: Router,
               private notification: NzNotificationService) {

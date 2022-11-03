@@ -1,3 +1,6 @@
+<div class="p-2 w-100 d-flex justify-content-end">
+  <button (click)="addProspect()" nz-button nzType="primary">Add Prospect</button>
+</div>
 <nz-table #borderedTable [nzData]="dataSet" [nzLoading]="isLoading" nzBordered nzTableLayout="fixed">
   <thead>
   <tr>
@@ -26,6 +29,62 @@
   </tr>
   </thead>
   <tbody>
+  <tr *ngIf="showRow" [formGroup]="prospectForm" class="text-center">
+    <td>
+      <span>
+        <input formControlName="first_name" nz-input>
+      </span>
+    </td>
+    <td>
+
+      <span>
+        <input formControlName="last_name" nz-input>
+      </span>
+    </td>
+    <td>
+
+      <span>
+       <app-positions-select (positionChanged)="addPosition($event)"
+                             [selectedPosition]="currentPosition"></app-positions-select>
+      </span>
+    </td>
+    <td>
+      <span>
+        <input formControlName="classification" nz-input>
+      </span>
+    </td>
+    <td>
+      <span>
+        <input formControlName="state" nz-input>
+      </span>
+    </td>
+    <td>
+      <span>
+        <input formControlName="school" nz-input>
+      </span>
+
+    <td>
+      <span>
+        <input formControlName="video_link" nz-input>
+      </span>
+    </td>
+    <td class="d-flex justify-content-center">
+      <a (click)="isSaveNew()" class="p-2">
+        <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#46c40a'" nz-icon nzType="save"></i>
+      </a>
+      <a (nzOnCancel)="cancel()"
+         (nzOnConfirm)="confirm()"
+         class="p-2"
+         nz-popconfirm nzPopconfirmPlacement="top" nzPopconfirmTitle="Are you sure you want to discard changes?">
+        <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#c00206'" nz-icon nzType="close-circle"></i>
+      </a>
+      <a (nzOnCancel)="cancel()"
+         (nzOnConfirm)="isCreate()" class="p-2" nz-popconfirm nzPopconfirmPlacement="top"
+         nzPopconfirmTitle="Are you sure you want to delete prospect?">
+        <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#f5d50a'" nz-icon nzType="plus-circle"></i>
+      </a>
+    </td>
+  </tr>
   <tr *ngFor="let data of borderedTable.data; let i = index" [formGroup]="prospectForm" class="text-center">
     <td>
         <span *ngIf="currentEditIndex != i">

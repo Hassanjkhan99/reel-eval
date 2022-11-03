@@ -113,11 +113,19 @@
             </div>
             <div [nzLg]="18" [nzMd]="16" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
               <nz-form-control nzErrorTip="Please input your password!" nzHasFeedback>
-                <input (ngModelChange)="validateConfirmPassword()" formControlName="password1" nz-input
-                       placeholder="Password" type="password"/>
+                <nz-input-group [nzSuffix]="suffixTemplate">
+                  <input (ngModelChange)="validateConfirmPassword()" [type]="passwordVisible ? 'text' : 'password'"
+                         formControlName="password1" id="password1" nz-input placeholder="Password"
+                  >
+                </nz-input-group>
+                <ng-template #suffixTemplate>
+                  <i (click)="passwordVisible = !passwordVisible"
+                     [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" nz-icon></i>
+                </ng-template>
               </nz-form-control>
             </div>
           </nz-form-item>
+
 
           <nz-form-item>
             <div [nzLg]="6" [nzMd]="8" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
@@ -126,7 +134,11 @@
             </div>
             <div [nzLg]="18" [nzMd]="16" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
               <nz-form-control [nzErrorTip]="passwordErrorTpl" nzHasFeedback>
-                <input formControlName="password2" nz-input placeholder="confirm your password" type="password"/>
+                <nz-input-group [nzSuffix]="suffixTemplate2">
+                  <input [type]="passwordVisible2 ? 'text' : 'password'"
+                         formControlName="password2" id="password2" nz-input
+                         placeholder="Confirm Password">
+                </nz-input-group>
                 <ng-template #passwordErrorTpl let-control>
                   <ng-container *ngIf="control.hasError('required')">
                     Please confirm your password!
@@ -134,6 +146,10 @@
                   <ng-container *ngIf="control.hasError('confirm')">
                     Password is inconsistent!
                   </ng-container>
+                </ng-template>
+                <ng-template #suffixTemplate2>
+                  <i (click)="passwordVisible2 = !passwordVisible2"
+                     [nzType]="passwordVisible2 ? 'eye-invisible' : 'eye'" nz-icon></i>
                 </ng-template>
               </nz-form-control>
 

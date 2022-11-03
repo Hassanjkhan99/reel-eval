@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Prospect, ProspectApi, ProspectForm} from "../interfaces/prospect.interface";
+import {Prospect, ProspectApi} from "../interfaces/prospect.interface";
 import {main_url} from "../../../environments/environment";
 import {Positions, Result} from "../interfaces/positions.interface";
 import {map} from "rxjs/operators";
@@ -30,8 +30,8 @@ export class ProspectService {
     return this.http.patch<Prospect>(`${main_url}archived_prospects/${id}/`, {});
   }
 
-  postAddProspect(payload: ProspectForm): Observable<ProspectForm> {
-    return this.http.post<ProspectForm>(`${main_url}prospects/`, payload);
+  postAddProspect(payload: Prospect): Observable<Prospect> {
+    return this.http.post<Prospect>(`${main_url}prospects/`, payload);
   }
 
   deleteProspect(id: number): Observable<Prospect> {
