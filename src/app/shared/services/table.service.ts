@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
-import { formatDate } from '@angular/common';
+import {Injectable} from '@angular/core';
+import {formatDate} from '@angular/common';
 
 @Injectable()
 export class TableService {
 
-    deepCopy(object: any | any[]) {
-        return JSON.parse(JSON.stringify(object));
-    }
-    
-    /**
-     * sort array via single
+  deepCopy(object: any | any[]) {
+    return JSON.parse(JSON.stringify(object));
+  }
+
+  /**
+   * sort array via single
      * @param sortAttribute {key: property of the object, value: 'ascend' or 'descend'}
      * @param inputData
      */
@@ -84,7 +84,7 @@ export class TableService {
         if (!b) b = '-';
 
         if (a === b) return 0;
-        
+
         return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
     }
 }
@@ -111,12 +111,12 @@ export class TableService {
 //                 </tr>
 //             </thead>
 //             <tbody>
-//                 <tr *ngFor="let data of instantFilterTable.data ">
-//                     <td>{{data.name}}</td>
-//                     <td>{{data.age}}</td>
-//                     <td>{{data.address}}</td>
+//                 <tr *ngFor="let unSelectedTraits of instantFilterTable.unSelectedTraits ">
+//                     <td>{{unSelectedTraits.name}}</td>
+//                     <td>{{unSelectedTraits.age}}</td>
+//                     <td>{{unSelectedTraits.address}}</td>
 //                     <td>
-//                         <a>Action 一 {{data.name}}</a>
+//                         <a>Action 一 {{unSelectedTraits.name}}</a>
 //                         <nz-divider nzType="vertical"></nz-divider>
 //                         <a>Delete</a>
 //                     </td>

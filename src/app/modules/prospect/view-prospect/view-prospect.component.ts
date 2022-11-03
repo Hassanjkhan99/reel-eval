@@ -30,10 +30,12 @@ export class ViewProspectComponent implements OnInit {
   @Input() isLoading: boolean = false;
   @Output() prospectArchived: EventEmitter<Prospect> = new EventEmitter<Prospect>()
   @Output() prospectUnArchived: EventEmitter<Prospect> = new EventEmitter<Prospect>()
-  listOfColumns = {
-    first_name: 'First Name', last_name: 'Last Name', position: 'Position', classification: 'Classification/Year',
-    state: 'State/Province', school: 'School/Team', video_link: 'Video Link'
-  };
+  listOfColumns = [
+    'First Name', 'Last Name', 'Position', 'Classification/Year',
+    'State/Province', 'School/Team', 'Video Link']
+
+  listOfFilter = ['first_name', 'last_name', 'position', 'classification',
+    'state', 'school', 'video_link']
 
   visible = {
     first_name: false, last_name: false, position: false, classification: false,

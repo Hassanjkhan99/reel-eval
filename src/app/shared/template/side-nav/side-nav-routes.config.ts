@@ -48,6 +48,13 @@ export const ROUTES: SideNavInterface[] = [
         submenu: []
       },
     ]
+  }, {
+    path: 'traits',
+    title: 'Traits',
+    iconTheme: 'fill',
+    submenu: [],
+    icon: 'nzBack',
+    iconType: 'nzIcon'
   }
 
 ]

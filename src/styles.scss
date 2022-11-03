@@ -5,3 +5,7 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+
+.text-align-center {
+  text-align: center !important;
+}

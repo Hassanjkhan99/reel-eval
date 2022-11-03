@@ -50,6 +50,16 @@ export const CommonLayout_ROUTES: Routes = [
   },
 
   {
+    path: 'traits',
+    loadComponent: () => import('../../modules/traits/traits.component').then(c => c.TraitsComponent),
+    data: {
+      label: 'traits',
+      path: 'traits'
+    },
+    canActivate: [AuthGuard]
+  },
+
+  {
     path: '**',
     redirectTo: 'app/dashboard'
 
