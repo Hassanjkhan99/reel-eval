@@ -75,14 +75,9 @@ export class ViewProspectComponent implements OnInit {
   }
 
   isEdit(i: number) {
-    if (this.currentEditIndex != i && this.currentEditIndex > -1) {
-      this.notification.error("Can't edit another row while editing a row", 'You are currently editing a row , ' +
-        'please discard or save the changes', {
-        nzPlacement: 'bottomRight',
-        nzAnimate: true,
-        nzPauseOnHover: true,
-        nzDuration: 3000
-      })
+    if ((this.currentEditIndex != i && this.currentEditIndex > -1) || this.showRow) {
+      this.notificationService.error("Can't edit another row while editing a row", 'You are currently editing a row , ' +
+        'please discard or save the changes')
       return
     }
 
@@ -253,6 +248,17 @@ export class ViewProspectComponent implements OnInit {
 
 
   addProspect() {
+    if (this.currentEditIndex > -1 || this.showRow) {
+      this.notificationService.error("Can't add another row while editing a row", 'You are currently editing a row , ' +
+        'please discard or save the changes')
+      return
+    }
+    this.prospectForm.reset()
+    this.currentPosition = -1
+    this.showRow = false;
+    this.cdr.detectChanges();
     this.showRow = true;
+    this.cdr.detectChanges();
+
   }
 }

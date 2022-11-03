@@ -1,6 +1,6 @@
 <div class="p-2 w-100 d-flex justify-content-end">
   <button (click)="addNewTraitRow()" nz-button nzType="primary">
-    Add Prospect
+    Add Trait
   </button>
 </div>
 <nz-table #table [nzData]="traits" nzBordered>
@@ -13,14 +13,120 @@
   </thead>
   <tbody>
   <tr *ngIf="showRow" [formGroup]="traitForm" class="text-align-center">
-    <td><input formControlName="trait" nz-input nzSize="large"/></td>
-    <td><input formControlName="description" nz-input nzSize="large"/></td>
-    <td></td>
+    <td><input formControlName="trait" nz-input nzSize="large" placeholder="Trait"/></td>
+    <td><input formControlName="description" nz-input nzSize="large" placeholder="Description"/></td>
+    <td class="d-flex justify-content-center">
+      <a (click)="isSaveNew(false)" class="p-2">
+        <i
+          [nzTheme]="'twotone'"
+          [nzTwotoneColor]="'#46c40a'"
+          nz-icon
+          nzType="save"
+        ></i>
+      </a>
+      <a
+        (nzOnCancel)="cancel()"
+        (nzOnConfirm)="confirm()"
+        class="p-2"
+        nz-popconfirm
+        nzPopconfirmPlacement="top"
+        nzPopconfirmTitle="Are you sure you want to discard changes?"
+      >
+        <i
+          [nzTheme]="'twotone'"
+          [nzTwotoneColor]="'#c00206'"
+          nz-icon
+          nzType="close-circle"
+        ></i>
+      </a>
+      <a
+        (nzOnCancel)="cancel()"
+        (nzOnConfirm)="isSaveNew(true)"
+        class="p-2"
+        nz-popconfirm
+        nzPopconfirmPlacement="top"
+        nzPopconfirmTitle="Are you sure you want to save current prospect and add another prospect?"
+      >
+        <i
+          [nzTheme]="'twotone'"
+          [nzTwotoneColor]="'#f5d50a'"
+          nz-icon
+          nzType="plus-circle"
+        ></i>
+      </a>
+    </td>
+
   </tr>
-  <tr *ngFor="let data of table.data" class="text-align-center">
-    <td>{{data.trait}}</td>
-    <td>{{data.description}}</td>
-    <td></td>
+  <tr *ngFor="let data of table.data; let i = index" [formGroup]="traitForm" class="text-align-center">
+
+    <td>
+      <span *ngIf="currentEditIndex != i">
+         {{data.trait}}
+        </span>
+      <span *ngIf="currentEditIndex == i">
+          <input formControlName="trait" nz-input/>
+        </span>
+    </td>
+
+
+    <td>
+      <span *ngIf="currentEditIndex != i">
+         {{data.description}}
+        </span>
+      <span *ngIf="currentEditIndex == i">
+          <input formControlName="description" nz-input placeholder="Description"/>
+        </span>
+    </td>
+
+
+    <td class="d-flex justify-content-center">
+      <a (click)="isEdit(i)" *ngIf="currentEditIndex != i" class="p-2">
+        <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
+      </a>
+      <a (click)="isSave(i)" *ngIf="currentEditIndex == i" class="p-2">
+        <i
+          [nzTheme]="'twotone'"
+          [nzTwotoneColor]="'#46c40a'"
+          nz-icon
+          nzType="save"
+        ></i>
+      </a>
+      <a
+        (nzOnCancel)="cancel()"
+        (nzOnConfirm)="confirm()"
+        *ngIf="currentEditIndex == i"
+        class="p-2"
+        nz-popconfirm
+        nzPopconfirmPlacement="top"
+        nzPopconfirmTitle="Are you sure you want to discard changes?"
+      >
+        <i
+          [nzTheme]="'twotone'"
+          [nzTwotoneColor]="'#c00206'"
+          nz-icon
+          nzType="close-circle"
+        ></i>
+      </a>
+      <a
+        (nzOnCancel)="cancel()"
+        (nzOnConfirm)="isDelete(i)"
+        *ngIf="currentEditIndex != i"
+        class="p-2"
+        nz-popconfirm
+        nzPopconfirmPlacement="top"
+        nzPopconfirmTitle="Are you sure you want to delete prospect?"
+      >
+        <i
+          [nzTheme]="'twotone'"
+          [nzTwotoneColor]="'#c00206'"
+          nz-icon
+          nzType="delete"
+        ></i>
+      </a>
+
+    </td>
+
+
   </tr>
   </tbody>
 </nz-table>
