@@ -38,7 +38,7 @@ export class AddStaffComponent implements OnInit {
       email: ['', [Validators.email, Validators.required]],
       password1: ['', [Validators.required, Validators.minLength(8)]],
       password2: ['', [this.confirmValidator]],
-      groups: [[0], [Validators.required]]
+      groups: [[], [Validators.required]]
     });
   }
 
