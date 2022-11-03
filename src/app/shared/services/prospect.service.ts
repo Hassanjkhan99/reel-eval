@@ -30,7 +30,7 @@ export class ProspectService {
     return this.http.patch<Prospect>(`${main_url}archived_prospects/${id}/`, {});
   }
 
-  postAddProspect(payload: Prospect): Observable<Prospect> {
+  postAddProspect(payload: Partial<Prospect>): Observable<Prospect> {
     return this.http.post<Prospect>(`${main_url}prospects/`, payload);
   }
 

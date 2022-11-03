@@ -111,12 +111,12 @@ export class TableService {
 //                 </tr>
 //             </thead>
 //             <tbody>
-//                 <tr *ngFor="let unSelectedTraits of instantFilterTable.unSelectedTraits ">
-//                     <td>{{unSelectedTraits.name}}</td>
-//                     <td>{{unSelectedTraits.age}}</td>
-//                     <td>{{unSelectedTraits.address}}</td>
+//                 <tr *ngFor="let traits of instantFilterTable.traits ">
+//                     <td>{{traits.name}}</td>
+//                     <td>{{traits.age}}</td>
+//                     <td>{{traits.address}}</td>
 //                     <td>
-//                         <a>Action 一 {{unSelectedTraits.name}}</a>
+//                         <a>Action 一 {{traits.name}}</a>
 //                         <nz-divider nzType="vertical"></nz-divider>
 //                         <a>Delete</a>
 //                     </td>

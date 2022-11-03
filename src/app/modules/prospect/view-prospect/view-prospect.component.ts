@@ -87,7 +87,6 @@ export class ViewProspectComponent implements OnInit {
     }
 
     this.currentPosition = this.dataSet[i].position.id
-    console.log(this.dataSet[i]);
     this.currentEditIndex = i;
     this.prospectForm.setValue({
       first_name: this.dataSet[i].first_name,
@@ -231,23 +230,27 @@ export class ViewProspectComponent implements OnInit {
     console.log(this.searchValue)
   }
 
-  isSaveNew() {
+  isSaveNew(isAddAnother: boolean) {
     this.prospectSer.postAddProspect(this.prospectForm.value).subscribe(
       x => {
         this.notificationService.success('Success', 'Your Prospect has been added')
-        this.dataSet = [...this.dataSet, x]
-        this.showRow = false;
-
+        this.dataSet = [x, ...this.dataSet]
+        if (isAddAnother) {
+          this.prospectForm.reset();
+          this.currentPosition = -1
+          this.showRow = false;
+          this.cdr.detectChanges();
+          this.showRow = true;
+        } else {
+          this.showRow = false;
+        }
+        this.cdr.detectChanges();
       }
     )
 
-    this.cdr.detectChanges();
 
   }
 
-  isCreate() {
-
-  }
 
   addProspect() {
     this.showRow = true;

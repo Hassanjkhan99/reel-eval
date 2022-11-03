@@ -7,41 +7,34 @@ import {NzGridModule} from "ng-zorro-antd/grid";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzInputModule} from "ng-zorro-antd/input";
 import {NzIconModule} from "ng-zorro-antd/icon";
+import {NzTableModule} from "ng-zorro-antd/table";
+import {NzDividerModule} from "ng-zorro-antd/divider";
+import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-traits',
   standalone: true,
-  imports: [CommonModule, NzListModule, NzGridModule, NzButtonModule, NzInputModule, NzIconModule],
+  imports: [CommonModule, NzListModule, NzGridModule, NzButtonModule, NzInputModule, NzIconModule, NzTableModule, NzDividerModule, ReactiveFormsModule],
   templateUrl: './traits.component.html',
   styleUrls: ['./traits.component.scss'],
 })
 export class TraitsComponent implements OnInit {
-  unSelectedTraits: Traits[] = [];
-  selectedTraits: Traits[] = []
+  traits: Traits[] = [];
   showRow: boolean = false;
+  traitForm = new FormGroup({
+    trait: new FormControl(''),
+    description: new FormControl('')
+  })
 
   constructor(private traitsService: TraitsService, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
     this.traitsService.getAllTraits().subscribe(traits => {
-      this.unSelectedTraits = traits
+      this.traits = traits
     })
   }
 
-  traitSelected(trait: Traits) {
-    this.selectedTraits = [...this.selectedTraits, trait]
-    const index = this.unSelectedTraits.findIndex(item => item.id === trait.id)
-    this.unSelectedTraits.splice(index, 1);
-    this.cdr.detectChanges()
-  }
-
-  traitUnSelected(trait: Traits) {
-    this.unSelectedTraits = [...this.unSelectedTraits, trait]
-    const index = this.unSelectedTraits.findIndex(item => item.id === trait.id)
-    this.unSelectedTraits.splice(index, 1);
-    this.cdr.detectChanges()
-  }
 
   addNewTraitRow() {
     this.showRow = true

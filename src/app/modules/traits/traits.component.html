@@ -1,80 +1,26 @@
-<div class="d-flex justify-content-center align-items-center" nz-row>
-
-  <div nz-col nzLg="12">
-    <ul [nzDataSource]="unSelectedTraits" nz-list nzBordered nzSize="large">
-      <nz-list-header
-        class="d-flex justify-content-between align-items-center font-weight-semibold"
-      ><span>Traits</span
-      ><span
-      ><button (click)="addNewTraitRow()" nz-button nzSize="small" nzType="primary">
-            Add custom trait
-          </button></span></nz-list-header>
-      <li
-        *ngIf="showRow"
-        nz-list-item
-        nzNoFlex
-      >
-        <input nz-input placeholder="title"/>
-        <input nz-input placeholder="description"/>
-        <ul nz-list-item-actions>
-          <nz-list-item-action>
-            <a (click)="isSave()" class="p-2">
-              <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#46c40a'" nz-icon nzType="save"></i>
-            </a>
-            <a (click)="isSave()" class="p-2">
-              <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#46c40a'" nz-icon nzType="plus-circle"></i>
-            </a>
-          </nz-list-item-action>
-        </ul>
-      </li>
-      <li
-        (click)="traitUnSelected(item)"
-        *ngFor="let item of unSelectedTraits"
-        class="d-flex justify-content-center align-items-center pointer"
-        nz-list-item
-        nzNoFlex
-      >
-        {{ item.trait }}
-      </li>
-    </ul>
-  </div>
-  <div nz-col nzLg="12">
-    <ul [nzDataSource]="unSelectedTraits" nz-list nzBordered nzSize="large">
-      <nz-list-header
-        class="d-flex justify-content-between align-items-center font-weight-semibold"
-      ><span>Traits</span
-      ><span
-      ><button (click)="addNewTraitRow()" nz-button nzSize="small" nzType="primary">
-            Add custom trait
-          </button></span></nz-list-header>
-      <li
-        *ngIf="showRow"
-        nz-list-item
-        nzNoFlex
-      >
-        <input nz-input placeholder="title"/>
-        <input nz-input placeholder="description"/>
-        <ul nz-list-item-actions>
-          <nz-list-item-action>
-            <a (click)="isSave()" class="p-2">
-              <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#46c40a'" nz-icon nzType="save"></i>
-            </a>
-            <a (click)="isSave()" class="p-2">
-              <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#46c40a'" nz-icon nzType="plus-circle"></i>
-            </a>
-          </nz-list-item-action>
-        </ul>
-      </li>
-      <li
-        (click)="traitUnSelected(item)"
-        *ngFor="let item of unSelectedTraits"
-        class="d-flex justify-content-center align-items-center pointer"
-        nz-list-item
-        nzNoFlex
-      >
-        {{ item.description }}
-      </li>
-    </ul>
-  </div>
+<div class="p-2 w-100 d-flex justify-content-end">
+  <button (click)="addNewTraitRow()" nz-button nzType="primary">
+    Add Prospect
+  </button>
 </div>
-
+<nz-table #table [nzData]="traits" nzBordered>
+  <thead>
+  <tr>
+    <th>Trait</th>
+    <th>Description</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngIf="showRow" [formGroup]="traitForm" class="text-align-center">
+    <td><input formControlName="trait" nz-input nzSize="large"/></td>
+    <td><input formControlName="description" nz-input nzSize="large"/></td>
+    <td></td>
+  </tr>
+  <tr *ngFor="let data of table.data" class="text-align-center">
+    <td>{{data.trait}}</td>
+    <td>{{data.description}}</td>
+    <td></td>
+  </tr>
+  </tbody>
+</nz-table>

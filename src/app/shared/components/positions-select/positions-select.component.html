@@ -1,4 +1,4 @@
-<nz-select [formControl]="position" nzMode="default" nzPlaceHolder="Select a position" nzSize="large">
+<nz-select [formControl]="position" class="w-100" nzMode="default" nzPlaceHolder="Select a position" nzSize="large">
   <nz-option *ngFor="let position of positions" nzLabel="{{position.position_name}}"
              nzValue="{{position.id}}"></nz-option>
 </nz-select>

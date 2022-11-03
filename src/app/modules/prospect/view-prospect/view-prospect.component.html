@@ -1,186 +1,277 @@
-<div class="p-2 w-100 d-flex justify-content-end">
-  <button (click)="addProspect()" nz-button nzType="primary">Add Prospect</button>
+<div *ngIf="!achievedTable" class="p-2 w-100 d-flex justify-content-end">
+  <button (click)="addProspect()" nz-button nzType="primary">
+    Add Prospect
+  </button>
 </div>
-<nz-table #borderedTable [nzData]="dataSet" [nzLoading]="isLoading" nzBordered nzTableLayout="fixed">
+<nz-table
+  #borderedTable
+  [nzData]="dataSet"
+  [nzLoading]="isLoading"
+  nzBordered
+  nzTableLayout="fixed"
+>
   <thead>
   <tr>
-    <th *ngFor="let column of listOfColumns;let i = index" class="text-center" nzCustomFilter>
-      {{column}}
-      <nz-filter-trigger *ngIf="column !== 'Position' && column !== 'Video Link'"
-                         [(nzVisible)]="visible[listOfFilter[i]]" [nzActive]="searchValue[listOfFilter[i]].length > 0"
-                         [nzDropdownMenu]="menu">
+    <th
+      *ngFor="let column of listOfColumns; let i = index"
+      class="text-center"
+      nzCustomFilter
+    >
+      {{ column }}
+      <nz-filter-trigger
+        *ngIf="column !== 'Position' && column !== 'Video Link'"
+        [(nzVisible)]="visible[listOfFilter[i]]"
+        [nzActive]="searchValue[listOfFilter[i]].length > 0"
+        [nzDropdownMenu]="menu"
+      >
         <span nz-icon nzType="search"></span>
       </nz-filter-trigger>
       <nz-dropdown-menu #menu="nzDropdownMenu">
         <div class="ant-table-filter-dropdown">
           <div class="search-box">
-            <input [(ngModel)]="searchValue[listOfFilter[i]]" [placeholder]="'Search ' + column" nz-input type="text"/>
-            <button (click)="search(listOfFilter[i])" class="search-button" nz-button nzSize="small" nzType="primary">
+            <input
+              [(ngModel)]="searchValue[listOfFilter[i]]"
+              [placeholder]="'Search ' + column"
+              nz-input
+              type="text"
+            />
+            <button
+              (click)="search(listOfFilter[i])"
+              class="search-button"
+              nz-button
+              nzSize="small"
+              nzType="primary"
+            >
               Search
             </button>
-            <button (click)="reset(listOfFilter[i])" nz-button nzSize="small">Reset</button>
+            <button (click)="reset(listOfFilter[i])" nz-button nzSize="small">
+              Reset
+            </button>
           </div>
         </div>
       </nz-dropdown-menu>
     </th>
     <th class="text-center">Action</th>
-
-
   </tr>
   </thead>
   <tbody>
   <tr *ngIf="showRow" [formGroup]="prospectForm" class="text-center">
     <td>
-      <span>
-        <input formControlName="first_name" nz-input>
-      </span>
+        <span>
+          <input formControlName="first_name" nz-input/>
+        </span>
     </td>
     <td>
+        <span>
+          <input formControlName="last_name" nz-input/>
+        </span>
+    </td>
+    <td>
+        <span>
+          <app-positions-select
+            (positionChanged)="addPosition($event)"
+            [selectedPosition]="currentPosition"
+          ></app-positions-select>
+        </span>
+    </td>
+    <td>
+        <span>
+          <input formControlName="classification" nz-input/>
+        </span>
+    </td>
+    <td>
+        <span>
+          <input formControlName="state" nz-input/>
+        </span>
+    </td>
+    <td>
+        <span>
+          <input formControlName="school" nz-input/>
+        </span>
+    </td>
 
-      <span>
-        <input formControlName="last_name" nz-input>
-      </span>
-    </td>
     <td>
-
-      <span>
-       <app-positions-select (positionChanged)="addPosition($event)"
-                             [selectedPosition]="currentPosition"></app-positions-select>
-      </span>
-    </td>
-    <td>
-      <span>
-        <input formControlName="classification" nz-input>
-      </span>
-    </td>
-    <td>
-      <span>
-        <input formControlName="state" nz-input>
-      </span>
-    </td>
-    <td>
-      <span>
-        <input formControlName="school" nz-input>
-      </span>
-
-    <td>
-      <span>
-        <input formControlName="video_link" nz-input>
-      </span>
+        <span>
+          <input formControlName="video_link" nz-input/>
+        </span>
     </td>
     <td class="d-flex justify-content-center">
-      <a (click)="isSaveNew()" class="p-2">
-        <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#46c40a'" nz-icon nzType="save"></i>
+      <a (click)="isSaveNew(false)" class="p-2">
+        <i
+          [nzTheme]="'twotone'"
+          [nzTwotoneColor]="'#46c40a'"
+          nz-icon
+          nzType="save"
+        ></i>
       </a>
-      <a (nzOnCancel)="cancel()"
-         (nzOnConfirm)="confirm()"
-         class="p-2"
-         nz-popconfirm nzPopconfirmPlacement="top" nzPopconfirmTitle="Are you sure you want to discard changes?">
-        <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#c00206'" nz-icon nzType="close-circle"></i>
+      <a
+        (nzOnCancel)="cancel()"
+        (nzOnConfirm)="confirm()"
+        class="p-2"
+        nz-popconfirm
+        nzPopconfirmPlacement="top"
+        nzPopconfirmTitle="Are you sure you want to discard changes?"
+      >
+        <i
+          [nzTheme]="'twotone'"
+          [nzTwotoneColor]="'#c00206'"
+          nz-icon
+          nzType="close-circle"
+        ></i>
       </a>
-      <a (nzOnCancel)="cancel()"
-         (nzOnConfirm)="isCreate()" class="p-2" nz-popconfirm nzPopconfirmPlacement="top"
-         nzPopconfirmTitle="Are you sure you want to delete prospect?">
-        <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#f5d50a'" nz-icon nzType="plus-circle"></i>
+      <a
+        (nzOnCancel)="cancel()"
+        (nzOnConfirm)="isSaveNew(true)"
+        class="p-2"
+        nz-popconfirm
+        nzPopconfirmPlacement="top"
+        nzPopconfirmTitle="Are you sure you want to save current prospect and add another prospect?"
+      >
+        <i
+          [nzTheme]="'twotone'"
+          [nzTwotoneColor]="'#f5d50a'"
+          nz-icon
+          nzType="plus-circle"
+        ></i>
       </a>
     </td>
   </tr>
-  <tr *ngFor="let data of borderedTable.data; let i = index" [formGroup]="prospectForm" class="text-center">
+  <tr
+    *ngFor="let data of borderedTable.data; let i = index"
+    [formGroup]="prospectForm"
+    class="text-center"
+  >
     <td>
         <span *ngIf="currentEditIndex != i">
           {{ data.first_name }}
         </span>
       <span *ngIf="currentEditIndex == i">
-        <input [value]="data.first_name" formControlName="first_name" nz-input>
-      </span>
+          <input
+            [value]="data.first_name"
+            formControlName="first_name"
+            nz-input
+          />
+        </span>
     </td>
     <td>
-
-      <span *ngIf="currentEditIndex != i">
-           {{ data.last_name }}
+        <span *ngIf="currentEditIndex != i">
+          {{ data.last_name }}
         </span>
       <span *ngIf="currentEditIndex == i">
-        <input formControlName="last_name" nz-input>
-      </span>
+          <input formControlName="last_name" nz-input/>
+        </span>
     </td>
     <td>
-
-      <span *ngIf="currentEditIndex != i">
-           {{ data.position.position_name }}
+        <span *ngIf="currentEditIndex != i">
+          {{ data.position.position_name }}
         </span>
       <span *ngIf="currentEditIndex == i">
-       <app-positions-select (positionChanged)="setPosition($event)"
-                             [selectedPosition]="currentPosition"></app-positions-select>
-      </span>
+          <app-positions-select
+            (positionChanged)="setPosition($event)"
+            [selectedPosition]="currentPosition"
+          ></app-positions-select>
+        </span>
     </td>
     <td>
-      <span *ngIf="currentEditIndex != i">
-         {{ data.classification }}
-
+        <span *ngIf="currentEditIndex != i">
+          {{ data.classification }}
         </span>
       <span *ngIf="currentEditIndex == i">
-        <input formControlName="classification" nz-input>
-      </span>
+          <input formControlName="classification" nz-input/>
+        </span>
     </td>
     <td>
-      <span *ngIf="currentEditIndex != i">
-         {{ data.state }}
-
+        <span *ngIf="currentEditIndex != i">
+          {{ data.state }}
         </span>
       <span *ngIf="currentEditIndex == i">
-        <input formControlName="state" nz-input>
-      </span>
+          <input formControlName="state" nz-input/>
+        </span>
     </td>
     <td>
-      <span *ngIf="currentEditIndex != i">
-         {{ data.school }}
-
+        <span *ngIf="currentEditIndex != i">
+          {{ data.school }}
         </span>
       <span *ngIf="currentEditIndex == i">
-        <input formControlName="school" nz-input>
-      </span>
+          <input formControlName="school" nz-input/>
+        </span>
+    </td>
 
     <td>
-      <span *ngIf="currentEditIndex != i">
-         {{ data.video_link }}
-
+        <span *ngIf="currentEditIndex != i">
+          {{ data.video_link }}
         </span>
       <span *ngIf="currentEditIndex == i">
-        <input formControlName="video_link" nz-input>
-      </span>
+          <input formControlName="video_link" nz-input/>
+        </span>
     </td>
     <td class="d-flex justify-content-center">
       <a (click)="isEdit(i)" *ngIf="currentEditIndex != i" class="p-2">
         <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
       </a>
       <a (click)="isSave(i)" *ngIf="currentEditIndex == i" class="p-2">
-        <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#46c40a'" nz-icon nzType="save"></i>
+        <i
+          [nzTheme]="'twotone'"
+          [nzTwotoneColor]="'#46c40a'"
+          nz-icon
+          nzType="save"
+        ></i>
       </a>
-      <a (nzOnCancel)="cancel()"
-         (nzOnConfirm)="confirm()"
-         *ngIf="currentEditIndex == i"
-         class="p-2"
-         nz-popconfirm nzPopconfirmPlacement="top" nzPopconfirmTitle="Are you sure you want to discard changes?">
-        <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#c00206'" nz-icon nzType="close-circle"></i>
+      <a
+        (nzOnCancel)="cancel()"
+        (nzOnConfirm)="confirm()"
+        *ngIf="currentEditIndex == i"
+        class="p-2"
+        nz-popconfirm
+        nzPopconfirmPlacement="top"
+        nzPopconfirmTitle="Are you sure you want to discard changes?"
+      >
+        <i
+          [nzTheme]="'twotone'"
+          [nzTwotoneColor]="'#c00206'"
+          nz-icon
+          nzType="close-circle"
+        ></i>
       </a>
-      <a (nzOnCancel)="cancel()"
-         (nzOnConfirm)="isDelete(i)" *ngIf="currentEditIndex != i" class="p-2" nz-popconfirm nzPopconfirmPlacement="top"
-         nzPopconfirmTitle="Are you sure you want to delete prospect?">
-        <i [nzTheme]="'twotone'" [nzTwotoneColor]="'#c00206'" nz-icon nzType="delete"></i>
+      <a
+        (nzOnCancel)="cancel()"
+        (nzOnConfirm)="isDelete(i)"
+        *ngIf="currentEditIndex != i"
+        class="p-2"
+        nz-popconfirm
+        nzPopconfirmPlacement="top"
+        nzPopconfirmTitle="Are you sure you want to delete prospect?"
+      >
+        <i
+          [nzTheme]="'twotone'"
+          [nzTwotoneColor]="'#c00206'"
+          nz-icon
+          nzType="delete"
+        ></i>
       </a>
       <ng-template [ngIf]="!achievedTable">
-        <a (nzOnCancel)="cancel()"
-           (nzOnConfirm)="isArchive(i)" *ngIf="currentEditIndex != i" class="p-2" nz-popconfirm
-           nzPopconfirmPlacement="top"
-           nzPopconfirmTitle="Are you sure you want to archive prospect?">
+        <a
+          (nzOnCancel)="cancel()"
+          (nzOnConfirm)="isArchive(i)"
+          *ngIf="currentEditIndex != i"
+          class="p-2"
+          nz-popconfirm
+          nzPopconfirmPlacement="top"
+          nzPopconfirmTitle="Are you sure you want to archive prospect?"
+        >
           <span nz-icon nzTheme="outline" nzType="export"></span>
         </a>
       </ng-template>
       <ng-template [ngIf]="achievedTable">
-        <a (nzOnCancel)="cancel()"
-           (nzOnConfirm)="isUnArchive(i)" *ngIf="currentEditIndex != i" class="p-2" nz-popconfirm
-           nzPopconfirmPlacement="top"
-           nzPopconfirmTitle="Are you sure you want to unarchive prospect?">
+        <a
+          (nzOnCancel)="cancel()"
+          (nzOnConfirm)="isUnArchive(i)"
+          *ngIf="currentEditIndex != i"
+          class="p-2"
+          nz-popconfirm
+          nzPopconfirmPlacement="top"
+          nzPopconfirmTitle="Are you sure you want to unarchive prospect?"
+        >
           <span nz-icon nzTheme="outline" nzType="export"></span>
         </a>
       </ng-template>
