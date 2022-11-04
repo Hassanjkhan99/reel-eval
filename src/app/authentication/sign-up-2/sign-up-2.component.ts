@@ -75,7 +75,7 @@ export class SignUp2Component {
         for (const errorKey in error) {
           const arr: string[] = error[errorKey];
           arr.forEach((msg) => {
-            // this.signUpForm.get(errorKey).setErrors({msg})
+            this.signUpForm.get(errorKey).setErrors({msg})
 
             this.notification.error('Failed', msg, {
               nzPlacement: 'bottomRight',
