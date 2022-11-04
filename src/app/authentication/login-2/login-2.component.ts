@@ -34,23 +34,7 @@ export class Login2Component {
           nzDuration: 3000
         })
         console.log(response);
-        this.router.navigateByUrl(`app/prospect/view`);
-      },
-      (error) => {
-        error = error.error;
-        console.log(error)
-
-        for (const errorKey in error) {
-          const arr: string[] = error[errorKey];
-          arr.forEach((msg) => {
-            this.notification.error('Failed', msg, {
-              nzPlacement: 'bottomRight',
-              nzAnimate: true,
-              nzPauseOnHover: true,
-              nzDuration: 2000
-            })
-          });
-        }
+        this.router.navigateByUrl(`app/dashboard/home`);
       }
     );
 

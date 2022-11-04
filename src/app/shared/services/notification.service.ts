@@ -35,4 +35,13 @@ export class NotificationService {
       nzDuration: duration
     })
   }
+
+  warning(title: string = 'Warning', message: string, placement: NzNotificationPlacement = 'bottomRight', pauseOnHover: boolean = true, duration: number = 2000) {
+    this.notification.info(title, message, {
+      nzPlacement: placement,
+      nzAnimate: true,
+      nzPauseOnHover: pauseOnHover,
+      nzDuration: duration
+    })
+  }
 }

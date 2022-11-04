@@ -19,7 +19,7 @@ const appRoutes: Routes = [
     children: FullLayout_ROUTES
   }, {
     path: '**',
-    redirectTo: ''
+    redirectTo: 'app'
   }
 ];
 

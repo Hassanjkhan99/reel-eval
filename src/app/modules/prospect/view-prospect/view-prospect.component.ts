@@ -232,6 +232,7 @@ export class ViewProspectComponent implements OnInit {
         this.dataSet = [x, ...this.dataSet]
         if (isAddAnother) {
           this.prospectForm.reset();
+          this.prospectForm.controls.archived.setValue(false)
           this.currentPosition = -1
           this.showRow = false;
           this.cdr.detectChanges();
@@ -254,6 +255,7 @@ export class ViewProspectComponent implements OnInit {
       return
     }
     this.prospectForm.reset()
+    this.prospectForm.controls.archived.setValue(false)
     this.currentPosition = -1
     this.showRow = false;
     this.cdr.detectChanges();

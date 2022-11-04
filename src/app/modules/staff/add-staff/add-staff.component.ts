@@ -82,6 +82,22 @@ export class AddStaffComponent implements OnInit {
       if (e >= 20) {
         this.coachForm.disable()
       }
+    }, (error) => {
+      error = error.error;
+      console.log(error)
+      for (const errorKey in error) {
+        const arr: string[] = error[errorKey];
+        arr.forEach((msg) => {
+          this.coachForm.get(errorKey).setErrors({msg})
+
+          this.notification.error('Failed', msg, {
+            nzPlacement: 'bottomRight',
+            nzAnimate: true,
+            nzPauseOnHover: true,
+            nzDuration: 2000
+          })
+        });
+      }
     })
     this.staffService.getGroupList().subscribe(e => {
       this.options = e;
