@@ -49,7 +49,7 @@ export class TraitsComponent implements OnInit {
   listOfColumns: ColumnItem[] = [
     {
       name: 'Trait',
-      sortOrder: null,
+      sortOrder: 'ascend',
       sortFn: (a: Trait, b: Trait) => {
         if (a.trait) return a.trait.localeCompare(b.trait)
       },

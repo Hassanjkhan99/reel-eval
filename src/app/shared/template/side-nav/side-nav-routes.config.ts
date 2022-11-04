@@ -30,7 +30,7 @@ export const ROUTES: SideNavInterface[] = [
     title: 'Prospects',
     iconType: 'nzIcon',
     iconTheme: 'outline',
-    icon: 'user',
+    icon: 'team',
 
     submenu: [
       // {

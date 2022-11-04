@@ -54,6 +54,18 @@ export class AddStaffComponent implements OnInit {
       () => {
         this.router.navigateByUrl(`app/staff/view`);
         this.notification.success('Success', 'Your Staff member has been added!')
+      }, (error) => {
+        console.log(error)
+        error = error.error;
+        console.log(error)
+        for (const errorKey in error) {
+          const arr: string[] = error[errorKey];
+          arr.forEach((msg) => {
+            this.coachForm.get(errorKey).setErrors({msg})
+
+            this.notification.error('Failed', msg)
+          });
+        }
       }
     );
   }
@@ -78,6 +90,7 @@ export class AddStaffComponent implements OnInit {
         this.coachForm.disable()
       }
     }, (error) => {
+      console.log(error)
       error = error.error;
       console.log(error)
       for (const errorKey in error) {
