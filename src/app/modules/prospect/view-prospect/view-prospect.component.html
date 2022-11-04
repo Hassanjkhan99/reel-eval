@@ -16,10 +16,16 @@
       *ngFor="let column of listOfColumns; let i = index"
       class="text-center"
       nzCustomFilter
+      [nzFilterFn]="column.filterFn"
+      [nzFilterMultiple]="column.filterMultiple"
+      [nzFilters]="column.listOfFilter"
+      [nzSortDirections]="column.sortDirections"
+      [nzSortFn]="column.sortFn"
+      [nzSortOrder]="column.sortOrder"
     >
-      {{ column }}
+      {{ column.name }}
       <nz-filter-trigger
-        *ngIf="column !== 'Position' && column !== 'Video Link'"
+        *ngIf="column.name !== 'Position' && column.name !== 'Video Link'"
         [(nzVisible)]="visible[listOfFilter[i]]"
         [nzActive]="searchValue[listOfFilter[i]].length > 0"
         [nzDropdownMenu]="menu"
@@ -31,7 +37,7 @@
           <div class="search-box">
             <input
               [(ngModel)]="searchValue[listOfFilter[i]]"
-              [placeholder]="'Search ' + column"
+              [placeholder]="'Search ' + column.name"
               nz-input
               type="text"
             />

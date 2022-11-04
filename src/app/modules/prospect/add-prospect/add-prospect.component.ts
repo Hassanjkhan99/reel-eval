@@ -53,7 +53,7 @@ export class AddProspectComponent implements OnInit {
     this.prospectService.postAddProspect(this.prospectForm.value).subscribe(
       () => {
         this.notification.success('Success', 'Your Prospect has been created!')
-        this.router.navigateByUrl(`app/prospect/view`);
+        this.router.navigateByUrl(`app/prospects`);
       }
     );
   }

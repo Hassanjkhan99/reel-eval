@@ -29,11 +29,11 @@ export const CommonLayout_ROUTES: Routes = [
   }
   ,
   {
-    path: 'prospect/view',
+    path: 'prospects',
     loadComponent: () => import('../../modules/prospect/tabs/tabs.component').then(c => c.TabsComponent),
     data: {
       label: 'prospect',
-      path: 'prospect/view'
+      path: 'prospects'
     },
     canActivate: [AuthGuard]
 

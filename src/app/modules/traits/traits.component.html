@@ -6,8 +6,52 @@
 <nz-table #table [nzData]="traits" nzBordered>
   <thead>
   <tr>
-    <th>Trait</th>
-    <th>Description</th>
+    <th
+      *ngFor="let column of listOfColumns; let i = index"
+      [nzFilterFn]="column.filterFn"
+      [nzFilterMultiple]="column.filterMultiple"
+      [nzFilters]="column.listOfFilter"
+      [nzSortDirections]="column.sortDirections"
+      [nzSortFn]="column.sortFn"
+      [nzSortOrder]="column.sortOrder"
+      class="text-center"
+      nzCustomFilter
+    >
+      {{ column.name }}
+      <nz-filter-trigger
+        *ngIf="column.name !== 'Position' && column.name !== 'Video Link'"
+        [(nzVisible)]="visible[listOfFilter[i]]"
+        [nzActive]="searchValue[listOfFilter[i]].length > 0"
+        [nzDropdownMenu]="menu"
+      >
+        <span nz-icon nzType="search"></span>
+      </nz-filter-trigger>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <div class="ant-table-filter-dropdown">
+          <div class="search-box">
+            <input
+              [(ngModel)]="searchValue[listOfFilter[i]]"
+              [placeholder]="'Search ' + column.name"
+              nz-input
+              type="text"
+            />
+            <button
+              (click)="search(listOfFilter[i])"
+              class="search-button"
+              nz-button
+              nzSize="small"
+              nzType="primary"
+            >
+              Search
+            </button>
+            <button (click)="reset(listOfFilter[i])" nz-button nzSize="small">
+              Reset
+            </button>
+          </div>
+        </div>
+      </nz-dropdown-menu>
+    </th>
+
     <th>Action</th>
   </tr>
   </thead>

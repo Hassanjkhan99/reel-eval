@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {NzTableModule} from "ng-zorro-antd/table";
+import {NzTableFilterFn, NzTableFilterList, NzTableModule, NzTableSortFn, NzTableSortOrder} from "ng-zorro-antd/table";
 import {NzIconModule} from "ng-zorro-antd/icon";
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ProspectService} from "../../../shared/services/prospect.service";
@@ -30,9 +30,50 @@ export class ViewProspectComponent implements OnInit {
   @Input() isLoading: boolean = false;
   @Output() prospectArchived: EventEmitter<Prospect> = new EventEmitter<Prospect>()
   @Output() prospectUnArchived: EventEmitter<Prospect> = new EventEmitter<Prospect>()
-  listOfColumns = [
-    'First Name', 'Last Name', 'Position', 'Classification/Year',
-    'State/Province', 'School/Team', 'Video Link']
+
+  listOfColumns: ColumnItem[] = [
+    {
+      name: 'First Name',
+      sortOrder: null,
+      sortFn: (a: Prospect, b: Prospect) => a.first_name.localeCompare(b.first_name),
+      sortDirections: ['ascend', 'descend', null],
+    },
+    {
+      name: 'Last Name',
+      sortOrder: 'ascend',
+      sortFn: (a: Prospect, b: Prospect) => a.last_name.localeCompare(b.last_name),
+      sortDirections: ['ascend', 'descend', null],
+    }, {
+      name: 'Position',
+      sortOrder: null,
+      sortFn: (a: Prospect, b: Prospect) => a.position.position_name.localeCompare(b.position.position_name),
+      sortDirections: ['ascend', 'descend', null],
+    }, {
+      name: 'Classification/Year',
+      sortOrder: null,
+      sortFn: (a: Prospect, b: Prospect) => a.classification.localeCompare(b.classification),
+      sortDirections: ['ascend', 'descend', null],
+    }, {
+      name: 'State/Province',
+      sortOrder: null,
+      sortFn: (a: Prospect, b: Prospect) => a.state.localeCompare(b.state),
+      sortDirections: ['ascend', 'descend', null],
+    }, {
+      name: 'School/Team',
+      sortOrder: null,
+      sortFn: (a: Prospect, b: Prospect) => a.school.localeCompare(b.school),
+      sortDirections: ['ascend', 'descend', null],
+    }, {
+      name: 'Video Link',
+      sortOrder: null,
+      sortFn: (a: Prospect, b: Prospect) => {
+        if (a.video_link) return a.video_link.localeCompare(b.video_link)
+      },
+      sortDirections: ['ascend', 'descend', null],
+    },
+
+  ];
+
 
   listOfFilter = ['first_name', 'last_name', 'position', 'classification',
     'state', 'school', 'video_link']
@@ -99,13 +140,15 @@ export class ViewProspectComponent implements OnInit {
     this.prospectSer.editProspect(this.dataSet[i].id, {...this.dataSet[i], ...this.prospectForm.value}).subscribe(
       x => {
         this.notificationService.success('Success', 'Your changes has been saved!')
-        this.dataSet = this.dataSet.map(item => {
+        const dataSet = this.dataSet.map(item => {
           if (item.id === x.id) {
             return x
           } else {
             return item
           }
         })
+        this.originalDataSet = dataSet
+        this.dataSet = dataSet
         this.currentEditIndex = -1;
         this.cdr.detectChanges();
       }
@@ -118,12 +161,14 @@ export class ViewProspectComponent implements OnInit {
       x => {
         this.notificationService.success('Success', 'Selected Prospect has been deleted!')
         // this.dataSet.splice(i,1)
-        this.dataSet = this.dataSet.map((item) => {
+        const dataSet = this.dataSet.map((item) => {
           if (item.id == this.dataSet[i].id) {
             return
           }
           return item
         }).filter(e => e)
+        this.originalDataSet = dataSet
+        this.dataSet = dataSet
         this.currentEditIndex = -1
         this.cdr.detectChanges();
       },
@@ -161,12 +206,15 @@ export class ViewProspectComponent implements OnInit {
 
         this.prospectArchived.emit(this.dataSet[i]);
 
-        this.dataSet = this.dataSet.map((item) => {
+        const dataSet = this.dataSet.map((item) => {
           if (item.id == this.dataSet[i].id) {
             return
           }
           return item
         }).filter(e => e)
+
+        this.originalDataSet = dataSet
+        this.dataSet = dataSet
         this.currentEditIndex = -1
         this.cdr.detectChanges();
 
@@ -181,12 +229,15 @@ export class ViewProspectComponent implements OnInit {
         this.notificationService.success('Success', 'Your changes has been unarchived!')
         this.prospectUnArchived.emit(this.dataSet[i]);
 
-        this.dataSet = this.dataSet.map((item) => {
+        const dataSet = this.dataSet.map((item) => {
           if (item.id == this.dataSet[i].id) {
             return
           }
           return item
         }).filter(e => e)
+
+        this.originalDataSet = dataSet
+        this.dataSet = dataSet
         this.currentEditIndex = -1
         this.cdr.detectChanges();
 
@@ -201,19 +252,18 @@ export class ViewProspectComponent implements OnInit {
   }
 
   search(key) {
-    console.log(this.dataSet)
     this.visible[key] = false;
-    console.log({key})
     this.dataSet = this.originalDataSet.filter((item: Prospect) => item[key].indexOf(this.searchValue[key]) !== -1);
-    console.log(this.dataSet)
-    console.log(this.searchValue)
   }
 
   isSaveNew(isAddAnother: boolean) {
     this.prospectSer.postAddProspect(this.prospectForm.value).subscribe(
       x => {
         this.notificationService.success('Success', 'Your Prospect has been added')
-        this.dataSet = [x, ...this.dataSet]
+        const dataSet = [x, ...this.dataSet]
+
+        this.originalDataSet = dataSet
+        this.dataSet = dataSet
         if (isAddAnother) {
           this.prospectForm.reset();
           this.prospectForm.controls.archived.setValue(false)
@@ -247,4 +297,14 @@ export class ViewProspectComponent implements OnInit {
     this.cdr.detectChanges();
 
   }
+}
+
+interface ColumnItem {
+  name: string;
+  sortOrder: NzTableSortOrder | null;
+  sortFn: NzTableSortFn<Partial<Prospect>> | null;
+  listOfFilter?: NzTableFilterList;
+  filterFn?: NzTableFilterFn<Partial<Prospect>> | null;
+  filterMultiple?: boolean;
+  sortDirections: NzTableSortOrder[];
 }

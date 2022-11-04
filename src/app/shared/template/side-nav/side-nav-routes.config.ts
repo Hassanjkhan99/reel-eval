@@ -26,11 +26,12 @@ export const ROUTES: SideNavInterface[] = [
         ]
     },
   {
-    path: '',
-    title: 'Prospect',
+    path: 'prospects',
+    title: 'Prospects',
     iconType: 'nzIcon',
     iconTheme: 'outline',
     icon: 'user',
+
     submenu: [
       // {
       //   path: 'prospect/add',
@@ -40,21 +41,21 @@ export const ROUTES: SideNavInterface[] = [
       //   iconTheme: 'fill',
       //   submenu: []
       // },
-      {
-        path: 'prospect/view',
-        title: 'View Prospects',
-        iconType: '',
-        icon: '',
-        iconTheme: 'fill',
-        submenu: []
-      },
+      // {
+      //   path: 'prospect/view',
+      //   title: 'View Prospects',
+      //   iconType: '',
+      //   icon: '',
+      //   iconTheme: 'fill',
+      //   submenu: []
+      // },
     ]
   }, {
     path: 'traits',
     title: 'Traits',
     iconTheme: 'fill',
     submenu: [],
-    icon: 'nzBack',
+    icon: 'trophy',
     iconType: 'nzIcon'
   }
 
