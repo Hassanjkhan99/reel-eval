@@ -38,16 +38,16 @@ export const CommonLayout_ROUTES: Routes = [
     canActivate: [AuthGuard]
 
   },
-  {
-    path: 'prospect/add',
-    loadComponent: () => import('../../modules/prospect/add-prospect/add-prospect.component').then(c => c.AddProspectComponent),
-    data: {
-      label: 'prospect',
-      path: 'prospect/add'
-    },
-    canActivate: [AuthGuard]
-
-  },
+  // {
+  //   path: 'prospect/add',
+  //   loadComponent: () => import('../../modules/prospect/add-prospect/add-prospect.component').then(c => c.AddProspectComponent),
+  //   data: {
+  //     label: 'prospect',
+  //     path: 'prospect/add'
+  //   },
+  //   canActivate: [AuthGuard]
+  //
+  // },
 
   {
     path: 'traits',

@@ -1,8 +1,8 @@
 import {Component} from '@angular/core'
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from "../../shared/services/authentication.service";
-import {NzNotificationService} from "ng-zorro-antd/notification";
 import {Router} from "@angular/router";
+import {NotificationService} from "../../shared/services/notification.service";
 
 
 @Component({
@@ -17,7 +17,7 @@ export class SignUp2Component {
   passwordVisible2 = false;
 
 
-  constructor(private fb: FormBuilder, private authService: AuthenticationService, private notification: NzNotificationService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthenticationService, private notification: NotificationService, private router: Router) {
     this.signUpForm = this.fb.group({
       username: ['', [Validators.required]],
       first_name: ['', [Validators.required]],
@@ -51,24 +51,14 @@ export class SignUp2Component {
     }
     this.authService.signup(this.signUpForm.value).subscribe(
       x => {
-        this.notification.success('Success', 'Your Account has been created!', {
-          nzPlacement: 'bottomRight',
-          nzAnimate: true,
-          nzPauseOnHover: true,
-          nzDuration: 3000
-        });
+        this.notification.success('Success', 'Your Account has been created!');
         this.router.navigateByUrl('authentication/login')
       },
       (error) => {
         error = error.error;
         console.log(error)
         if (error['detail']) {
-          this.notification.error('Failed', error['detail'], {
-            nzPlacement: 'bottomRight',
-            nzAnimate: true,
-            nzPauseOnHover: true,
-            nzDuration: 2000
-          })
+          this.notification.error('Failed', error['detail'])
           this.router.navigateByUrl('app/dashboard/home')
           return;
         }
@@ -77,12 +67,7 @@ export class SignUp2Component {
           arr.forEach((msg) => {
             this.signUpForm.get(errorKey).setErrors({msg})
 
-            this.notification.error('Failed', msg, {
-              nzPlacement: 'bottomRight',
-              nzAnimate: true,
-              nzPauseOnHover: true,
-              nzDuration: 2000
-            })
+            this.notification.error('Failed', msg)
           });
         }
       }

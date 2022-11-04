@@ -10,11 +10,11 @@ import {NzCardModule} from "ng-zorro-antd/card";
 import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
 import {StaffService} from "../../../shared/services/staff.service";
 import {Router} from "@angular/router";
-import {NzNotificationService} from "ng-zorro-antd/notification";
 import {map} from "rxjs/operators";
 import {NzAlertModule} from "ng-zorro-antd/alert";
 import {GroupList} from "../../../shared/interfaces/staff.interface";
 import {NzSelectModule} from "ng-zorro-antd/select";
+import {NotificationService} from "../../../shared/services/notification.service";
 
 @Component({
   selector: 'app-add-staff',
@@ -32,7 +32,7 @@ export class AddStaffComponent implements OnInit {
   passwordVisible2 = false;
 
   constructor(private fb: FormBuilder, private staffService: StaffService, private router: Router,
-              private notification: NzNotificationService) {
+              private notification: NotificationService) {
     this.coachForm = this.fb.group({
       first_name: ['', [Validators.required]],
       last_name: ['', [Validators.required]],
@@ -53,12 +53,7 @@ export class AddStaffComponent implements OnInit {
     this.staffService.postAddCoach(this.coachForm.value).subscribe(
       () => {
         this.router.navigateByUrl(`app/staff/view`);
-        this.notification.success('Success', 'Your Staff member has been added!', {
-          nzPlacement: 'bottomRight',
-          nzAnimate: true,
-          nzPauseOnHover: true,
-          nzDuration: 3000
-        })
+        this.notification.success('Success', 'Your Staff member has been added!')
       }
     );
   }
@@ -90,12 +85,7 @@ export class AddStaffComponent implements OnInit {
         arr.forEach((msg) => {
           this.coachForm.get(errorKey).setErrors({msg})
 
-          this.notification.error('Failed', msg, {
-            nzPlacement: 'bottomRight',
-            nzAnimate: true,
-            nzPauseOnHover: true,
-            nzDuration: 2000
-          })
+          this.notification.error('Failed', msg)
         });
       }
     })

@@ -4,6 +4,7 @@ import {NzTabsModule} from "ng-zorro-antd/tabs";
 import {ProspectService} from "../../../shared/services/prospect.service";
 import {Prospect} from "../../../shared/interfaces/prospect.interface";
 import {ViewProspectComponent} from "../view-prospect/view-prospect.component";
+import {NotificationService} from "../../../shared/services/notification.service";
 
 @Component({
   selector: 'app-tabs',
@@ -20,7 +21,7 @@ export class TabsComponent implements OnInit {
   isLoadingArchivedList: boolean = false;
   isLoadingUnArchivedList: boolean = false;
 
-  constructor(private prospectSer: ProspectService,) {
+  constructor(private prospectSer: ProspectService, private notification: NotificationService) {
   }
 
   ngOnInit(): void {

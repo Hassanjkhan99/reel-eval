@@ -32,16 +32,17 @@ export const ROUTES: SideNavInterface[] = [
     iconTheme: 'outline',
     icon: 'user',
     submenu: [
+      // {
+      //   path: 'prospect/add',
+      //   title: 'Add Prospect',
+      //   iconType: '',
+      //   icon: '',
+      //   iconTheme: 'fill',
+      //   submenu: []
+      // },
       {
-        path: 'prospect/add',
-        title: 'Add Prospect',
-        iconType: '',
-        icon: '',
-        iconTheme: 'fill',
-        submenu: []
-      }, {
         path: 'prospect/view',
-        title: 'View Prospect',
+        title: 'View Prospects',
         iconType: '',
         icon: '',
         iconTheme: 'fill',

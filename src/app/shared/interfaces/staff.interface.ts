@@ -6,6 +6,8 @@ export interface Staff {
   password1: string;
   password2: string;
   groups: number[];
+  id: number;
+
 }
 
 export interface StaffList {

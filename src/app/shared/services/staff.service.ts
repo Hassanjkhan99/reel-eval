@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {main_url} from "../../../environments/environment";
-import {Group, GroupList, Staff, StaffApi} from "../interfaces/staff.interface";
+import {Group, GroupList, Staff, StaffApi, StaffList} from "../interfaces/staff.interface";
 import {map} from "rxjs/operators";
 
 @Injectable({
@@ -24,4 +24,15 @@ export class StaffService {
   getGroupList(): Observable<GroupList[]> {
     return this.http.get<Group>(`${main_url}groups/`).pipe(map(e => e.results));
   }
+
+  editStaff(id: number, payload: Partial<Staff>): Observable<StaffList> {
+    return this.http.put<StaffList>(`${main_url}accounts/${id}/`, payload);
+  }
+
+
+  deleteStaff(id: number): Observable<Staff> {
+    return this.http.delete<Staff>(`${main_url}accounts/${id}/`);
+  }
+
+
 }

@@ -1,34 +1,134 @@
 <nz-table #borderedTable [nzData]="listOfData" nzBordered nzTableLayout="fixed">
   <thead>
   <tr>
-    <th *ngFor="let column of listOfColumns|keyvalue" class="text-center" nzCustomFilter>
-      {{column.value}}
-      <nz-filter-trigger [(nzVisible)]="visible[column.key]" [nzActive]="searchValue[column.key].length > 0"
+    <th *ngFor="let column of listOfColumns; let i = index" class="text-center" nzCustomFilter>
+      {{column}}
+      <nz-filter-trigger *ngIf="column !== 'Actions'"
+                         [(nzVisible)]="visible[listOfFilter[i]]"
+                         [nzActive]="searchValue[listOfFilter[i]].length > 0"
                          [nzDropdownMenu]="menu">
         <span nz-icon nzType="search"></span>
       </nz-filter-trigger>
       <nz-dropdown-menu #menu="nzDropdownMenu">
         <div class="ant-table-filter-dropdown">
           <div class="search-box">
-            <input [(ngModel)]="searchValue[column.key]" [placeholder]="'Search ' + column.value " nz-input
-                   type="text"/>
-            <button (click)="search(column.key)" class="search-button" nz-button nzSize="small" nzType="primary">
+            <input
+              [(ngModel)]="searchValue[listOfFilter[i]]"
+              [placeholder]="'Search ' + column"
+              nz-input
+              type="text"
+            />
+            <button
+              (click)="search(listOfFilter[i])"
+              class="search-button"
+              nz-button
+              nzSize="small"
+              nzType="primary"
+            >
               Search
             </button>
-            <button (click)="reset(column.key)" nz-button nzSize="small">Reset</button>
+            <button (click)="reset(listOfFilter[i])" nz-button nzSize="small">
+              Reset
+            </button>
           </div>
         </div>
       </nz-dropdown-menu>
+
     </th>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let data of borderedTable.data" class="text-center">
+  <tr *ngFor="let data of borderedTable.data; let i = index" [formGroup]="staffForm"
+      class="text-center">
 
-    <td>{{ data.email }}</td>
-    <td>{{ data.first_name }}</td>
-    <td>{{ data.last_name }}</td>
-    <td>{{ data.username }}</td>
+    <td>
+      <span *ngIf="currentEditIndex != i">
+         {{ data.first_name }}
+        </span>
+      <span *ngIf="currentEditIndex == i">
+          <input class="text-align-center" formControlName="first_name" nz-input/>
+        </span>
+    </td>
+
+
+    <td>
+      <span *ngIf="currentEditIndex != i">
+      {{ data.last_name }}
+        </span>
+      <span *ngIf="currentEditIndex == i">
+          <input class="text-align-center" formControlName="last_name" nz-input/>
+        </span>
+    </td>
+    <td>
+      <span *ngIf="currentEditIndex != i">
+       {{ data.username }}
+        </span>
+      <span *ngIf="currentEditIndex == i">
+          <input class="text-align-center" formControlName="username" nz-input/>
+        </span>
+    </td>
+    <td>
+      <span *ngIf="currentEditIndex != i">
+         {{ data.email }}
+        </span>
+      <span *ngIf="currentEditIndex == i">
+          <input class="text-align-center" formControlName="email" nz-input/>
+        </span>
+    </td>
+    <td class="d-flex justify-content-center">
+      <a (click)="isEdit(i)" *ngIf="currentEditIndex != i" class="p-2">
+        <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
+      </a>
+      <a (click)="isSave(i)" *ngIf="currentEditIndex == i" class="p-2">
+        <i
+          [nzTheme]="'twotone'"
+          [nzTwotoneColor]="'#46c40a'"
+          nz-icon
+          nzType="save"
+        ></i>
+      </a>
+      <a
+        (nzOnCancel)="cancel()"
+        (nzOnConfirm)="confirm()"
+        *ngIf="currentEditIndex == i"
+        class="p-2"
+        nz-popconfirm
+        nzPopconfirmPlacement="top"
+        nzPopconfirmTitle="Are you sure you want to discard changes?"
+      >
+        <i
+          [nzTheme]="'twotone'"
+          [nzTwotoneColor]="'#c00206'"
+          nz-icon
+          nzType="close-circle"
+        ></i>
+      </a>
+      <div
+        *ngIf="staffCount != 1" class="p-2"
+      >
+        <a
+          (nzOnCancel)="cancel()"
+          (nzOnConfirm)="isDelete(i)"
+          *ngIf="currentEditIndex != i"
+
+          nz-popconfirm
+          nzPopconfirmPlacement="top"
+          nzPopconfirmTitle="Are you sure you want to delete prospect?"
+        >
+          <i
+
+            [nzTheme]="'twotone'"
+            [nzTwotoneColor]="'#c00206'"
+            nz-icon
+            nzType="delete"
+          ></i>
+        </a>
+
+      </div>
+
+
+    </td>
+
   </tr>
   </tbody>
 </nz-table>

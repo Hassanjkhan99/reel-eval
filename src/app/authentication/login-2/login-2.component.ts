@@ -2,7 +2,7 @@ import {Component} from '@angular/core'
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from "../../shared/services/authentication.service";
 import {Router} from "@angular/router";
-import {NzNotificationService} from "ng-zorro-antd/notification";
+import {NotificationService} from "../../shared/services/notification.service";
 
 
 @Component({
@@ -16,7 +16,7 @@ export class Login2Component {
   password: string;
 
   constructor(private fb: FormBuilder, private authService: AuthenticationService, private router: Router,
-              private notification: NzNotificationService) {
+              private notification: NotificationService) {
   }
 
   submitForm(): void {
@@ -27,12 +27,7 @@ export class Login2Component {
     }
     this.authService.login(this.loginForm.value).subscribe(
       response => {
-        this.notification.success('Success', 'Login Successful!', {
-          nzPlacement: 'bottomRight',
-          nzAnimate: true,
-          nzPauseOnHover: true,
-          nzDuration: 3000
-        })
+        this.notification.success('Success', 'Login Successful!')
         console.log(response);
         this.router.navigateByUrl(`app/dashboard/home`);
       }

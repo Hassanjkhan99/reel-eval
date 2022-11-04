@@ -10,7 +10,7 @@ import {NzSelectModule} from "ng-zorro-antd/select";
 import {PositionsSelectComponent} from "../../../shared/components/positions-select/positions-select.component";
 import {Positions} from "../../../shared/interfaces/positions.interface";
 import {Router} from "@angular/router";
-import {NzNotificationService} from "ng-zorro-antd/notification";
+import {NotificationService} from "../../../shared/services/notification.service";
 
 @Component({
   selector: 'app-add-prospect',
@@ -25,7 +25,7 @@ export class AddProspectComponent implements OnInit {
   selectedValue = null;
   currentPosition: number;
 
-  constructor(private fb: FormBuilder, private prospectService: ProspectService, private router: Router, private notification: NzNotificationService) {
+  constructor(private fb: FormBuilder, private prospectService: ProspectService, private router: Router, private notification: NotificationService) {
     this.prospectForm = this.fb.group({
       first_name: ['', [Validators.required]],
       last_name: ['', [Validators.required]],
@@ -52,12 +52,7 @@ export class AddProspectComponent implements OnInit {
     }
     this.prospectService.postAddProspect(this.prospectForm.value).subscribe(
       () => {
-        this.notification.success('Success', 'Your Prospect has been created!', {
-          nzPlacement: 'bottomRight',
-          nzAnimate: true,
-          nzPauseOnHover: true,
-          nzDuration: 3000
-        })
+        this.notification.success('Success', 'Your Prospect has been created!')
         this.router.navigateByUrl(`app/prospect/view`);
       }
     );
