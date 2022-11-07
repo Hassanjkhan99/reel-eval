@@ -3,174 +3,175 @@
     Add Trait
   </button>
 </div>
-<nz-table #table [nzData]="traits" nzBordered>
-  <thead>
-  <tr>
-    <th
-      *ngFor="let column of listOfColumns; let i = index"
-      [nzFilterFn]="column.filterFn"
-      [nzFilterMultiple]="column.filterMultiple"
-      [nzFilters]="column.listOfFilter"
-      [nzSortDirections]="column.sortDirections"
-      [nzSortFn]="column.sortFn"
-      [nzSortOrder]="column.sortOrder"
-      class="text-center"
-      nzCustomFilter
-    >
-      {{ column.name }}
-      <nz-filter-trigger
-        *ngIf="column.name !== 'Position' && column.name !== 'Video Link'"
-        [(nzVisible)]="visible[listOfFilter[i]]"
-        [nzActive]="searchValue[listOfFilter[i]].length > 0"
-        [nzDropdownMenu]="menu"
+<div class="d-flex justify-content-center">
+  <nz-table #table [nzData]="traits" nzBordered style="width: 70%">
+    <thead>
+    <tr>
+      <th
+        *ngFor="let column of listOfColumns; let i = index"
+        [class]=" 'text-center ' + column.name"
+        [nzFilterFn]="column.filterFn"
+        [nzFilterMultiple]="column.filterMultiple"
+        [nzFilters]="column.listOfFilter"
+        [nzSortDirections]="column.sortDirections"
+        [nzSortFn]="column.sortFn"
+        [nzSortOrder]="column.sortOrder"
+
+        nzCustomFilter
       >
-        <span nz-icon nzType="search"></span>
-      </nz-filter-trigger>
-      <nz-dropdown-menu #menu="nzDropdownMenu">
-        <div class="ant-table-filter-dropdown">
-          <div class="search-box">
-            <input
-              [(ngModel)]="searchValue[listOfFilter[i]]"
-              [placeholder]="'Search ' + column.name"
-              nz-input
-              type="text"
-            />
-            <button
-              (click)="search(listOfFilter[i])"
-              class="search-button"
-              nz-button
-              nzSize="small"
-              nzType="primary"
-            >
-              Search
-            </button>
-            <button (click)="reset(listOfFilter[i])" nz-button nzSize="small">
-              Reset
-            </button>
+        {{ column.name }}
+        <nz-filter-trigger
+          *ngIf="column.name !== 'Position' && column.name !== 'Video Link'"
+          [(nzVisible)]="visible[listOfFilter[i]]"
+          [nzActive]="searchValue[listOfFilter[i]].length > 0"
+          [nzDropdownMenu]="menu"
+        >
+          <span nz-icon nzType="search"></span>
+        </nz-filter-trigger>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <div class="ant-table-filter-dropdown">
+            <div class="search-box">
+              <input
+                [(ngModel)]="searchValue[listOfFilter[i]]"
+                [placeholder]="'Search ' + column.name"
+                nz-input
+                type="text"
+              />
+              <button
+                (click)="search(listOfFilter[i])"
+                class="search-button"
+                nz-button
+                nzSize="small"
+                nzType="primary"
+              >
+                Search
+              </button>
+              <button (click)="reset(listOfFilter[i])" nz-button nzSize="small">
+                Reset
+              </button>
+            </div>
           </div>
-        </div>
-      </nz-dropdown-menu>
-    </th>
+        </nz-dropdown-menu>
+      </th>
 
-    <th>Action</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngIf="showRow" [formGroup]="traitForm" class="text-align-center">
-    <td><input formControlName="trait" nz-input nzSize="large" placeholder="Trait"/></td>
-    <td><input formControlName="description" nz-input nzSize="large" placeholder="Description"/></td>
-    <td class="d-flex justify-content-center">
-      <a (click)="isSaveNew(false)" class="p-2">
-        <i
-          [nzTheme]="'twotone'"
-          [nzTwotoneColor]="'#46c40a'"
-          nz-icon
-          nzType="save"
-        ></i>
-      </a>
-      <a
-        (nzOnCancel)="cancel()"
-        (nzOnConfirm)="confirm()"
-        class="p-2"
-        nz-popconfirm
-        nzPopconfirmPlacement="top"
-        nzPopconfirmTitle="Are you sure you want to discard changes?"
-      >
-        <i
-          [nzTheme]="'twotone'"
-          [nzTwotoneColor]="'#c00206'"
-          nz-icon
-          nzType="close-circle"
-        ></i>
-      </a>
-      <a
-        (nzOnCancel)="cancel()"
-        (nzOnConfirm)="isSaveNew(true)"
-        class="p-2"
-        nz-popconfirm
-        nzPopconfirmPlacement="top"
-        nzPopconfirmTitle="Are you sure you want to save current trait and add another trait?"
-      >
-        <i
-          [nzTheme]="'twotone'"
-          [nzTwotoneColor]="'#f5d50a'"
-          nz-icon
-          nzType="plus-circle"
-        ></i>
-      </a>
-    </td>
+      <th class="Action">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngIf="showRow" [formGroup]="traitForm" class="text-align-center">
+      <td><input formControlName="trait" nz-input nzSize="large" placeholder="Trait"/></td>
+      <td><input formControlName="description" nz-input nzSize="large" placeholder="Description"/></td>
+      <td class="d-flex justify-content-center">
+        <a (click)="isSaveNew(false)" class="p-2">
+          <i
+            [nzTheme]="'twotone'"
+            [nzTwotoneColor]="'#46c40a'"
+            nz-icon
+            nzType="save"
+          ></i>
+        </a>
+        <a
+          (nzOnCancel)="cancel()"
+          (nzOnConfirm)="confirm()"
+          class="p-2"
+          nz-popconfirm
+          nzPopconfirmPlacement="top"
+          nzPopconfirmTitle="Are you sure you want to discard changes?"
+        >
+          <i
+            [nzTheme]="'twotone'"
+            [nzTwotoneColor]="'#c00206'"
+            nz-icon
+            nzType="close-circle"
+          ></i>
+        </a>
+        <a
+          (click)="isSaveNew(true)"
+          class="p-2"
 
-  </tr>
-  <tr *ngFor="let data of table.data; let i = index" [formGroup]="traitForm" class="text-align-center">
+        >
+          <i
+            [nzTheme]="'twotone'"
+            [nzTwotoneColor]="'#f5d50a'"
+            nz-icon
+            nzType="plus-circle"
+          ></i>
+        </a>
+      </td>
 
-    <td>
+    </tr>
+    <tr *ngFor="let data of table.data; let i = index" [formGroup]="traitForm" class="text-align-center">
+
+      <td>
       <span *ngIf="currentEditIndex != i">
          {{data.trait}}
         </span>
-      <span *ngIf="currentEditIndex == i">
+        <span *ngIf="currentEditIndex == i">
           <input formControlName="trait" nz-input/>
         </span>
-    </td>
+      </td>
 
 
-    <td>
+      <td>
       <span *ngIf="currentEditIndex != i">
          {{data.description}}
         </span>
-      <span *ngIf="currentEditIndex == i">
+        <span *ngIf="currentEditIndex == i">
           <input formControlName="description" nz-input placeholder="Description"/>
         </span>
-    </td>
+      </td>
 
 
-    <td class="d-flex justify-content-center">
-      <a (click)="isEdit(i)" *ngIf="currentEditIndex != i" class="p-2">
-        <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
-      </a>
-      <a (click)="isSave(i)" *ngIf="currentEditIndex == i" class="p-2">
-        <i
-          [nzTheme]="'twotone'"
-          [nzTwotoneColor]="'#46c40a'"
-          nz-icon
-          nzType="save"
-        ></i>
-      </a>
-      <a
-        (nzOnCancel)="cancel()"
-        (nzOnConfirm)="confirm()"
-        *ngIf="currentEditIndex == i"
-        class="p-2"
-        nz-popconfirm
-        nzPopconfirmPlacement="top"
-        nzPopconfirmTitle="Are you sure you want to discard changes?"
-      >
-        <i
-          [nzTheme]="'twotone'"
-          [nzTwotoneColor]="'#c00206'"
-          nz-icon
-          nzType="close-circle"
-        ></i>
-      </a>
-      <a
-        (nzOnCancel)="cancel()"
-        (nzOnConfirm)="isDelete(i)"
-        *ngIf="currentEditIndex != i"
-        class="p-2"
-        nz-popconfirm
-        nzPopconfirmPlacement="top"
-        nzPopconfirmTitle="Are you sure you want to delete trait?"
-      >
-        <i
-          [nzTheme]="'twotone'"
-          [nzTwotoneColor]="'#c00206'"
-          nz-icon
-          nzType="delete"
-        ></i>
-      </a>
+      <td class="d-flex justify-content-center">
+        <a (click)="isEdit(i)" *ngIf="currentEditIndex != i" class="p-2">
+          <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
+        </a>
+        <a (click)="isSave(i)" *ngIf="currentEditIndex == i" class="p-2">
+          <i
+            [nzTheme]="'twotone'"
+            [nzTwotoneColor]="'#46c40a'"
+            nz-icon
+            nzType="save"
+          ></i>
+        </a>
+        <a
+          (nzOnCancel)="cancel()"
+          (nzOnConfirm)="confirm()"
+          *ngIf="currentEditIndex == i"
+          class="p-2"
+          nz-popconfirm
+          nzPopconfirmPlacement="top"
+          nzPopconfirmTitle="Are you sure you want to discard changes?"
+        >
+          <i
+            [nzTheme]="'twotone'"
+            [nzTwotoneColor]="'#c00206'"
+            nz-icon
+            nzType="close-circle"
+          ></i>
+        </a>
+        <a
+          (nzOnCancel)="cancel()"
+          (nzOnConfirm)="isDelete(i)"
+          *ngIf="currentEditIndex != i"
+          class="p-2"
+          nz-popconfirm
+          nzPopconfirmPlacement="top"
+          nzPopconfirmTitle="Are you sure you want to delete trait?"
+        >
+          <i
+            [nzTheme]="'twotone'"
+            [nzTwotoneColor]="'#c00206'"
+            nz-icon
+            nzType="delete"
+          ></i>
+        </a>
 
-    </td>
+      </td>
 
 
-  </tr>
-  </tbody>
-</nz-table>
+    </tr>
+    </tbody>
+  </nz-table>
+
+</div>

@@ -126,12 +126,9 @@
         ></i>
       </a>
       <a
-        (nzOnCancel)="cancel()"
-        (nzOnConfirm)="isSaveNew(true)"
+
         class="p-2"
-        nz-popconfirm
-        nzPopconfirmPlacement="top"
-        nzPopconfirmTitle="Are you sure you want to save current prospect and add another prospect?"
+        (click)="isSaveNew(true)"
       >
         <i
           [nzTheme]="'twotone'"
@@ -257,26 +254,19 @@
       </a>
       <ng-template [ngIf]="!achievedTable">
         <a
-          (nzOnCancel)="cancel()"
-          (nzOnConfirm)="isArchive(i)"
+          (click)="isArchive(i)"
           *ngIf="currentEditIndex != i"
           class="p-2"
-          nz-popconfirm
-          nzPopconfirmPlacement="top"
-          nzPopconfirmTitle="Are you sure you want to archive prospect?"
         >
           <i nz-icon nzTheme="outline" nzType="export"></i>
         </a>
       </ng-template>
       <ng-template [ngIf]="achievedTable">
         <a
-          (nzOnCancel)="cancel()"
-          (nzOnConfirm)="isUnArchive(i)"
+          (click)="isUnArchive(i)"
           *ngIf="currentEditIndex != i"
           class="p-2"
-          nz-popconfirm
-          nzPopconfirmPlacement="top"
-          nzPopconfirmTitle="Are you sure you want to unarchive prospect?"
+
         >
           <i nz-icon nzTheme="outline" nzType="export"></i>
         </a>
