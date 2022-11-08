@@ -21,6 +21,10 @@ export class StaffService {
     return this.http.get<StaffApi>(`${main_url}accounts/`);
   }
 
+  getStaffSorted(column: string, direction: string): Observable<StaffApi> {
+    return this.http.get<StaffApi>(`${main_url}accounts/`, {params: {ordering: column}});
+  }
+
   getGroupList(): Observable<GroupList[]> {
     return this.http.get<Group>(`${main_url}groups/`).pipe(map(e => e.results));
   }

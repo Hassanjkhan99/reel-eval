@@ -7,13 +7,13 @@ import {NzGridModule} from 'ng-zorro-antd/grid';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {NzIconModule} from 'ng-zorro-antd/icon';
-import {NzTableFilterFn, NzTableFilterList, NzTableModule, NzTableSortFn, NzTableSortOrder,} from 'ng-zorro-antd/table';
+import {NzTableFilterFn, NzTableFilterList, NzTableModule, NzTableQueryParams,} from 'ng-zorro-antd/table';
 import {NzDividerModule} from 'ng-zorro-antd/divider';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule,} from '@angular/forms';
 import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
 import {NotificationService} from '../../shared/services/notification.service';
 import {Prospect} from '../../shared/interfaces/prospect.interface';
-import {NzDropDownModule} from "ng-zorro-antd/dropdown";
+import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
 
 @Component({
   selector: 'app-traits',
@@ -36,42 +36,34 @@ import {NzDropDownModule} from "ng-zorro-antd/dropdown";
   styleUrls: ['./traits.component.scss'],
 })
 export class TraitsComponent implements OnInit {
-
   traitForm = new FormGroup({
     trait: new FormControl(''),
     description: new FormControl(''),
   });
-
-
+  total = 0;
   traits: Trait[] = [];
   showRow: boolean = false;
   currentEditIndex: number = -1;
   listOfColumns: ColumnItem[] = [
     {
       name: 'Trait',
-      sortOrder: 'ascend',
-      sortFn: (a: Trait, b: Trait) => {
-        if (a.trait) return a.trait.localeCompare(b.trait)
-      },
-      sortDirections: ['ascend', 'descend', null],
     },
     {
       name: 'Description',
-      sortOrder: null,
-      sortFn: (a: Trait, b: Trait) => {
-        if (a.description) return a.description.localeCompare(b.description)
-      },
-      sortDirections: ['ascend', 'descend', null],
     },
   ];
   visible = {
-    trait: false, description: false
+    trait: false,
+    description: false,
   };
   searchValue = {
-    trait: '', description: ''
+    trait: '',
+    description: '',
   };
-  listOfFilter = ['trait', 'description',]
-  private originalTraits: Trait[] = [];
+  listOfFilter = ['trait', 'description'];
+  pageSize: number = 10;
+  pageIndex: number = 0;
+  private params: NzTableQueryParams;
 
   constructor(
     private traitsService: TraitsService,
@@ -81,10 +73,12 @@ export class TraitsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.traitsService.getAllTraits().subscribe((traits) => {
-      this.traits = traits;
-      this.originalTraits = traits
-    });
+    this.traitsService
+      .getAllTraits(0, 10, null, null, null)
+      .subscribe((traits) => {
+        this.traits = traits.results;
+        this.total = traits.count;
+      });
   }
 
   addNewTraitRow() {
@@ -134,15 +128,13 @@ export class TraitsComponent implements OnInit {
           'Success',
           'Your changes has been saved!'
         );
-        const traits = this.traits.map((item) => {
+        this.traits = this.traits.map((item) => {
           if (item.id === x.id) {
             return x;
           } else {
             return item;
           }
         });
-        this.originalTraits = traits
-        this.traits = traits
         this.currentEditIndex = -1;
         this.cdr.detectChanges();
       });
@@ -155,7 +147,7 @@ export class TraitsComponent implements OnInit {
         'Selected Prospect has been deleted!'
       );
       // this.traits.splice(i,1)
-      const traits = this.traits
+      this.traits = this.traits
         .map((item) => {
           if (item.id == this.traits[i].id) {
             return;
@@ -163,8 +155,6 @@ export class TraitsComponent implements OnInit {
           return item;
         })
         .filter((e) => e);
-      this.originalTraits = traits
-      this.traits = traits
       this.currentEditIndex = -1;
       this.cdr.detectChanges();
     });
@@ -184,9 +174,7 @@ export class TraitsComponent implements OnInit {
     this.traitsService.saveTrait(this.traitForm.value).subscribe((x) => {
       this.notificationService.success('Success', 'Your Trait has been added');
       // @ts-ignore
-      const traits: Trait[] = [x, ...this.traits];
-      this.originalTraits = traits
-      this.traits = traits
+      this.traits = [x, ...this.traits];
       if (isAddAnother) {
         this.traitForm.reset();
         this.showRow = false;
@@ -200,23 +188,45 @@ export class TraitsComponent implements OnInit {
   }
 
   reset(key) {
-    this.searchValue[key] = ''
+    this.searchValue[key] = '';
 
     this.search(key);
   }
 
   search(key) {
     this.visible[key] = false;
-    this.traits = this.originalTraits.filter((item: Trait) => item[key].indexOf(this.searchValue[key]) !== -1);
+    this.onQueryParamsChange(
+      {...this.params, filter: this.searchValue[key]},
+      key
+    );
+  }
+
+  onQueryParamsChange(params: NzTableQueryParams, filterField?: string): void {
+    const {pageSize, pageIndex, sort, filter} = params;
+    this.params = params;
+    const currentSort = sort.find((item) => item.value !== null);
+    const sortField = (currentSort && currentSort.key) || null;
+    const sortOrder = (currentSort && currentSort.value) || null;
+    this.traitsService
+      .getAllTraits(
+        pageIndex,
+        pageSize,
+        sortField,
+        sortOrder,
+        filter,
+        filterField
+      )
+      .subscribe((e) => {
+        console.log({pageIndex, pageSize, sortField, sortOrder, filter});
+        this.traits = e.results;
+        this.total = e.count;
+      });
   }
 }
 
 interface ColumnItem {
   name: string;
-  sortOrder: NzTableSortOrder | null;
-  sortFn: NzTableSortFn<Partial<Prospect>> | null;
   listOfFilter?: NzTableFilterList;
   filterFn?: NzTableFilterFn<Partial<Prospect>> | null;
   filterMultiple?: boolean;
-  sortDirections: NzTableSortOrder[];
 }

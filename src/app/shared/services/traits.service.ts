@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {main_url} from "../../../environments/environment";
 import {Trait, TraitsApiResponse} from "../interfaces/trait";
-import {map} from "rxjs/operators";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -13,9 +12,29 @@ export class TraitsService {
   constructor(private http: HttpClient) {
   }
 
-  getAllTraits(): Observable<Trait[]> {
-    return this.http.get<TraitsApiResponse>(main_url + 'traits/').pipe(map(e => e.results))
+  getAllTraits(pageIndex, pageSize, sortField?, sortOrder?, filter?, filterField?: string): Observable<TraitsApiResponse> {
+    if (sortOrder && sortField) {
+      sortField = sortField.toLowerCase()
+      sortField = sortOrder === 'descend' ? '-' + sortField : sortField
+    }
+
+    let params = {}
+    if (pageIndex) {
+      params['pageIndex'] = pageIndex
+    }
+    if (pageSize) {
+      params['pageSize'] = pageSize
+    }
+    if (sortField) {
+      params['ordering'] = sortField
+    }
+
+    if (filter && filterField) {
+      params[filterField + '__contains'] = filter
+    }
+    return this.http.get<TraitsApiResponse>(main_url + 'traits/', {params})
   }
+
 
   saveTrait(payload: Partial<Trait>) {
     return this.http.post(main_url + 'traits/', payload)

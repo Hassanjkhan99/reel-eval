@@ -69,12 +69,8 @@ export class TableStaffComponent implements OnInit {
   }
 
   search(key) {
-    console.log(this.listOfData)
     this.visible[key] = false;
-    console.log({key})
     this.listOfData = this.originalListOfData.filter((item: StaffList) => item[key].indexOf(this.searchValue[key]) !== -1);
-    console.log(this.listOfData)
-    console.log(this.searchValue)
   }
 
   isEdit(i: number) {

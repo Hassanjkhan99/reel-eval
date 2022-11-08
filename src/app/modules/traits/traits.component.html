@@ -1,11 +1,15 @@
-<div class="p-2 w-100 d-flex justify-content-end">
+<div class="p-2 w-85 d-flex justify-content-end">
   <button (click)="addNewTraitRow()" nz-button nzType="primary">
     Add Trait
   </button>
-
-
-  <div class="d-flex justify-content-center">
-  <nz-table #table [nzData]="traits" nzBordered style="width: 70%">
+</div>
+<div class="d-flex justify-content-center">
+  <nz-table #table
+            (nzQueryParams)="onQueryParamsChange($event)"
+            [nzData]="traits"
+            [nzFrontPagination]="false"
+            [nzPageIndex]="pageIndex"
+            [nzPageSize]="pageSize" [nzTotal]="total" nzBordered nzShowSizeChanger style="width: 70%">
     <thead>
     <tr>
       <th
@@ -14,10 +18,8 @@
         [nzFilterFn]="column.filterFn"
         [nzFilterMultiple]="column.filterMultiple"
         [nzFilters]="column.listOfFilter"
-        [nzSortDirections]="column.sortDirections"
-        [nzSortFn]="column.sortFn"
-        [nzSortOrder]="column.sortOrder"
-
+        [nzColumnKey]="column.name"
+        [nzSortFn]="true"
         nzCustomFilter
       >
         {{ column.name }}
