@@ -372,7 +372,7 @@ export class ViewProspectComponent implements OnInit {
   }
 
   onQueryParamsChange(params: NzTableQueryParams, filterField?: string): void {
-    console.log({params})
+    console.log(params)
 
     this.queryParmsChange.emit({params, filterField});
   }

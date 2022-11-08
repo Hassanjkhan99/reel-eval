@@ -32,7 +32,7 @@ export class ProspectService {
     }
 
     if (filter && filterField) {
-      params[filterField + '__contains'] = filter
+      params[filterField + '__icontains'] = filter
     }
     return this.http.get<ProspectApi>(`${main_url}prospects/`, {params});
   }
@@ -55,7 +55,7 @@ export class ProspectService {
     }
 
     if (filter && filterField) {
-      params[filterField + '__contains'] = filter
+      params[filterField + '__icontains'] = filter
     }
     return this.http.get<ProspectApi>(`${main_url}archived_prospects/`, {params});
   }
