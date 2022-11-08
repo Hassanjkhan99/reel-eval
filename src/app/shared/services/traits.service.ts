@@ -30,7 +30,7 @@ export class TraitsService {
     }
 
     if (filter && filterField) {
-      params[filterField + '__contains'] = filter
+      params[filterField + '__icontains'] = filter
     }
     return this.http.get<TraitsApiResponse>(main_url + 'traits/', {params})
   }
