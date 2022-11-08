@@ -1,90 +1,143 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output,} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {NzTableFilterFn, NzTableFilterList, NzTableModule, NzTableSortFn, NzTableSortOrder} from "ng-zorro-antd/table";
-import {NzIconModule} from "ng-zorro-antd/icon";
-import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {ProspectService} from "../../../shared/services/prospect.service";
-import {NzInputModule} from "ng-zorro-antd/input";
-import {PositionsSelectComponent} from "../../../shared/components/positions-select/positions-select.component";
-import {Positions} from "../../../shared/interfaces/positions.interface";
-import {Prospect} from "../../../shared/interfaces/prospect.interface";
-import {NzMessageService} from "ng-zorro-antd/message";
-import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
-import {NzButtonModule} from "ng-zorro-antd/button";
-import {TabsComponent} from "../tabs/tabs.component";
-import {NzDropDownModule} from "ng-zorro-antd/dropdown";
-import {NotificationService} from "../../../shared/services/notification.service";
+import {
+  NzTableFilterFn,
+  NzTableFilterList,
+  NzTableModule,
+  NzTableQueryParams,
+  NzTableSortFn,
+  NzTableSortOrder,
+} from 'ng-zorro-antd/table';
+import {NzIconModule} from 'ng-zorro-antd/icon';
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule,} from '@angular/forms';
+import {ProspectService} from '../../../shared/services/prospect.service';
+import {NzInputModule} from 'ng-zorro-antd/input';
+import {PositionsSelectComponent} from '../../../shared/components/positions-select/positions-select.component';
+import {Positions} from '../../../shared/interfaces/positions.interface';
+import {Prospect} from '../../../shared/interfaces/prospect.interface';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
+import {NzButtonModule} from 'ng-zorro-antd/button';
+import {TabsComponent} from '../tabs/tabs.component';
+import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
+import {NotificationService} from '../../../shared/services/notification.service';
 
 @Component({
   selector: 'app-view-prospect',
   standalone: true,
-  imports: [CommonModule, NzTableModule, NzIconModule, ReactiveFormsModule, NzInputModule, PositionsSelectComponent, NzPopconfirmModule, NzButtonModule, TabsComponent, NzDropDownModule, FormsModule],
+  imports: [
+    CommonModule,
+    NzTableModule,
+    NzIconModule,
+    ReactiveFormsModule,
+    NzInputModule,
+    PositionsSelectComponent,
+    NzPopconfirmModule,
+    NzButtonModule,
+    TabsComponent,
+    NzDropDownModule,
+    FormsModule,
+  ],
   templateUrl: './view-prospect.component.html',
   styleUrls: ['./view-prospect.component.scss'],
 })
 export class ViewProspectComponent implements OnInit {
-
   @Input() dataSet: Prospect[] = [];
   @Input() originalDataSet: Prospect[] = [];
   @Input() achievedTable: boolean = false;
   @Input() isLoading: boolean = false;
-  @Output() prospectArchived: EventEmitter<Prospect> = new EventEmitter<Prospect>()
-  @Output() prospectUnArchived: EventEmitter<Prospect> = new EventEmitter<Prospect>()
+  @Input() pageSize: number = 10;
+  @Input() pageIndex: number = 0;
+  @Input() params: NzTableQueryParams;
+  @Output() queryParmsChange: EventEmitter<{
+    params: NzTableQueryParams;
+    filterField?: string;
+  }> = new EventEmitter<{ params: NzTableQueryParams; filterField?: string }>();
+  @Output() prospectArchived: EventEmitter<Prospect> =
+    new EventEmitter<Prospect>();
+  @Output() prospectUnArchived: EventEmitter<Prospect> =
+    new EventEmitter<Prospect>();
+
+  total = 0;
 
   listOfColumns: ColumnItem[] = [
     {
       name: 'First Name',
       sortOrder: null,
-      sortFn: (a: Prospect, b: Prospect) => a.first_name.localeCompare(b.first_name),
+      sortFn: (a: Prospect, b: Prospect) =>
+        a.first_name.localeCompare(b.first_name),
       sortDirections: ['ascend', 'descend', null],
     },
     {
       name: 'Last Name',
       sortOrder: 'ascend',
-      sortFn: (a: Prospect, b: Prospect) => a.last_name.localeCompare(b.last_name),
+      sortFn: (a: Prospect, b: Prospect) =>
+        a.last_name.localeCompare(b.last_name),
       sortDirections: ['ascend', 'descend', null],
-    }, {
+    },
+    {
       name: 'Position',
       sortOrder: null,
-      sortFn: (a: Prospect, b: Prospect) => a.position.position_name.localeCompare(b.position.position_name),
+      sortFn: (a: Prospect, b: Prospect) =>
+        a.position.position_name.localeCompare(b.position.position_name),
       sortDirections: ['ascend', 'descend', null],
-    }, {
+    },
+    {
       name: 'Classification/Year',
       sortOrder: null,
-      sortFn: (a: Prospect, b: Prospect) => a.classification.localeCompare(b.classification),
+      sortFn: (a: Prospect, b: Prospect) =>
+        a.classification.localeCompare(b.classification),
       sortDirections: ['ascend', 'descend', null],
-    }, {
+    },
+    {
       name: 'State/Province',
       sortOrder: null,
       sortFn: (a: Prospect, b: Prospect) => a.state.localeCompare(b.state),
       sortDirections: ['ascend', 'descend', null],
-    }, {
+    },
+    {
       name: 'School/Team',
       sortOrder: null,
       sortFn: (a: Prospect, b: Prospect) => a.school.localeCompare(b.school),
       sortDirections: ['ascend', 'descend', null],
-    }, {
+    },
+    {
       name: 'Video Link',
       sortOrder: null,
       sortFn: (a: Prospect, b: Prospect) => {
-        if (a.video_link) return a.video_link.localeCompare(b.video_link)
+        if (a.video_link) return a.video_link.localeCompare(b.video_link);
       },
       sortDirections: ['ascend', 'descend', null],
     },
-
   ];
 
-
-  listOfFilter = ['first_name', 'last_name', 'position', 'classification',
-    'state', 'school', 'video_link']
+  listOfFilter = [
+    'first_name',
+    'last_name',
+    'position',
+    'classification',
+    'state',
+    'school',
+    'video_link',
+  ];
 
   visible = {
-    first_name: false, last_name: false, position: false, classification: false,
-    state: false, school: false, video_link: false
+    first_name: false,
+    last_name: false,
+    position: false,
+    classification: false,
+    state: false,
+    school: false,
+    video_link: false,
   };
   searchValue = {
-    first_name: '', last_name: '', position: '', classification: '',
-    state: '', school: '', video_link: ''
+    first_name: '',
+    last_name: '',
+    position: '',
+    classification: '',
+    state: '',
+    school: '',
+    video_link: '',
   };
   showRow: Boolean = false;
   prospectForm = new FormGroup({
@@ -92,7 +145,7 @@ export class ViewProspectComponent implements OnInit {
     last_name: new FormControl(''),
     position: new FormControl({
       id: 0,
-      position_name: ''
+      position_name: '',
     }),
     classification: new FormControl(''),
     state: new FormControl(''),
@@ -101,27 +154,35 @@ export class ViewProspectComponent implements OnInit {
     archived: new FormControl(false),
   });
 
-
   currentEditIndex: number;
   currentPosition: number;
 
-  constructor(private fb: FormBuilder, private prospectSer: ProspectService, private cdr: ChangeDetectorRef,
-              private nzMessageService: NzMessageService,
-              private notificationService: NotificationService) {
-
+  constructor(
+    private fb: FormBuilder,
+    private prospectSer: ProspectService,
+    private cdr: ChangeDetectorRef,
+    private nzMessageService: NzMessageService,
+    private notificationService: NotificationService
+  ) {
   }
 
   ngOnInit(): void {
   }
 
   isEdit(i: number) {
-    if ((this.currentEditIndex != i && this.currentEditIndex > -1) || this.showRow) {
-      this.notificationService.error("Can't edit another row while editing a row", 'You are currently editing a row , ' +
-        'please discard or save the changes')
-      return
+    if (
+      (this.currentEditIndex != i && this.currentEditIndex > -1) ||
+      this.showRow
+    ) {
+      this.notificationService.error(
+        "Can't edit another row while editing a row",
+        'You are currently editing a row , ' +
+        'please discard or save the changes'
+      );
+      return;
     }
 
-    this.currentPosition = this.dataSet[i].position.id
+    this.currentPosition = this.dataSet[i].position.id;
     this.currentEditIndex = i;
     this.prospectForm.setValue({
       first_name: this.dataSet[i].first_name,
@@ -131,62 +192,67 @@ export class ViewProspectComponent implements OnInit {
       state: this.dataSet[i].state,
       school: this.dataSet[i].school,
       video_link: this.dataSet[i].video_link,
-      archived: false
-    })
+      archived: false,
+    });
   }
 
   isSave(i: number) {
-
-    this.prospectSer.editProspect(this.dataSet[i].id, {...this.dataSet[i], ...this.prospectForm.value}).subscribe(
-      x => {
-        this.notificationService.success('Success', 'Your changes has been saved!')
-        const dataSet = this.dataSet.map(item => {
+    this.prospectSer
+      .editProspect(this.dataSet[i].id, {
+        ...this.dataSet[i],
+        ...this.prospectForm.value,
+      })
+      .subscribe((x) => {
+        this.notificationService.success(
+          'Success',
+          'Your changes has been saved!'
+        );
+        const dataSet = this.dataSet.map((item) => {
           if (item.id === x.id) {
-            return x
+            return x;
           } else {
-            return item
+            return item;
           }
-        })
-        this.originalDataSet = dataSet
-        this.dataSet = dataSet
+        });
+        this.originalDataSet = dataSet;
+        this.dataSet = dataSet;
         this.currentEditIndex = -1;
         this.cdr.detectChanges();
-      }
-    )
+      });
   }
 
   isDelete(i: number) {
-
-    this.prospectSer.deleteProspect(this.dataSet[i].id).subscribe(
-      x => {
-        this.notificationService.success('Success', 'Selected Prospect has been deleted!')
-        // this.dataSet.splice(i,1)
-        const dataSet = this.dataSet.map((item) => {
+    this.prospectSer.deleteProspect(this.dataSet[i].id).subscribe((x) => {
+      this.notificationService.success(
+        'Success',
+        'Selected Prospect has been deleted!'
+      );
+      // this.dataSet.splice(i,1)
+      const dataSet = this.dataSet
+        .map((item) => {
           if (item.id == this.dataSet[i].id) {
-            return
+            return;
           }
-          return item
-        }).filter(e => e)
-        this.originalDataSet = dataSet
-        this.dataSet = dataSet
-        this.currentEditIndex = -1
-        this.cdr.detectChanges();
-      },
-    )
+          return item;
+        })
+        .filter((e) => e);
+      this.originalDataSet = dataSet;
+      this.dataSet = dataSet;
+      this.currentEditIndex = -1;
+      this.cdr.detectChanges();
+    });
   }
 
-
   setPosition(position: Positions) {
-    this.prospectForm.get('position').setValue(position)
-    console.log(position.position_name)
+    this.prospectForm.get('position').setValue(position);
+    console.log(position.position_name);
   }
 
   addPosition(position: Positions) {
-    console.log(position)
-    this.prospectForm.controls.position.setValue(position)
-    this.prospectForm.updateValueAndValidity()
+    console.log(position);
+    this.prospectForm.controls.position.setValue(position);
+    this.prospectForm.updateValueAndValidity();
   }
-
 
   cancel(): void {
     this.nzMessageService.info('clicked cancel');
@@ -199,103 +265,116 @@ export class ViewProspectComponent implements OnInit {
   }
 
   isArchive(i: number) {
-    this.prospectSer.editProspect(this.dataSet[i].id, {...this.dataSet[i], archived: true}).subscribe(
-      x => {
-
-        this.notificationService.success('Success', 'Your Prospect has been archived')
+    this.prospectSer
+      .editProspect(this.dataSet[i].id, {...this.dataSet[i], archived: true})
+      .subscribe((x) => {
+        this.notificationService.success(
+          'Success',
+          'Your Prospect has been archived'
+        );
 
         this.prospectArchived.emit(this.dataSet[i]);
 
-        const dataSet = this.dataSet.map((item) => {
-          if (item.id == this.dataSet[i].id) {
-            return
-          }
-          return item
-        }).filter(e => e)
+        const dataSet = this.dataSet
+          .map((item) => {
+            if (item.id == this.dataSet[i].id) {
+              return;
+            }
+            return item;
+          })
+          .filter((e) => e);
 
-        this.originalDataSet = dataSet
-        this.dataSet = dataSet
-        this.currentEditIndex = -1
+        this.originalDataSet = dataSet;
+        this.dataSet = dataSet;
+        this.currentEditIndex = -1;
         this.cdr.detectChanges();
-
-      }
-    )
+      });
   }
 
-
   isUnArchive(i: number) {
-    this.prospectSer.unArchiveProspect(this.dataSet[i].id).subscribe(
-      x => {
-        this.notificationService.success('Success', 'Your changes has been unarchived!')
-        this.prospectUnArchived.emit(this.dataSet[i]);
+    this.prospectSer.unArchiveProspect(this.dataSet[i].id).subscribe((x) => {
+      this.notificationService.success(
+        'Success',
+        'Your changes has been unarchived!'
+      );
+      this.prospectUnArchived.emit(this.dataSet[i]);
 
-        const dataSet = this.dataSet.map((item) => {
+      const dataSet = this.dataSet
+        .map((item) => {
           if (item.id == this.dataSet[i].id) {
-            return
+            return;
           }
-          return item
-        }).filter(e => e)
+          return item;
+        })
+        .filter((e) => e);
 
-        this.originalDataSet = dataSet
-        this.dataSet = dataSet
-        this.currentEditIndex = -1
-        this.cdr.detectChanges();
-
-      }
-    )
+      this.originalDataSet = dataSet;
+      this.dataSet = dataSet;
+      this.currentEditIndex = -1;
+      this.cdr.detectChanges();
+    });
   }
 
   reset(key) {
-    this.searchValue[key] = ''
+    this.searchValue[key] = '';
 
     this.search(key);
   }
 
   search(key) {
     this.visible[key] = false;
-    this.dataSet = this.originalDataSet.filter((item: Prospect) => item[key].indexOf(this.searchValue[key]) !== -1);
+    this.onQueryParamsChange(
+      {...this.params, filter: this.searchValue[key]},
+      key
+    );
   }
 
   isSaveNew(isAddAnother: boolean) {
-    this.prospectSer.postAddProspect(this.prospectForm.value).subscribe(
-      x => {
-        this.notificationService.success('Success', 'Your Prospect has been added')
-        const dataSet = [x, ...this.dataSet]
+    this.prospectSer.postAddProspect(this.prospectForm.value).subscribe((x) => {
+      this.notificationService.success(
+        'Success',
+        'Your Prospect has been added'
+      );
+      const dataSet = [x, ...this.dataSet];
 
-        this.originalDataSet = dataSet
-        this.dataSet = dataSet
-        if (isAddAnother) {
-          this.prospectForm.reset();
-          this.prospectForm.controls.archived.setValue(false)
-          this.currentPosition = -1
-          this.showRow = false;
-          this.cdr.detectChanges();
-          this.showRow = true;
-        } else {
-          this.showRow = false;
-        }
+      this.originalDataSet = dataSet;
+      this.dataSet = dataSet;
+      if (isAddAnother) {
+        this.prospectForm.reset();
+        this.prospectForm.controls.archived.setValue(false);
+        this.currentPosition = -1;
+        this.showRow = false;
         this.cdr.detectChanges();
+        this.showRow = true;
+      } else {
+        this.showRow = false;
       }
-    )
-
-
+      this.cdr.detectChanges();
+    });
   }
-
 
   addProspect() {
     if (this.currentEditIndex > -1 || this.showRow) {
-      this.notificationService.error("Can't add another row while editing a row", 'You are currently editing a row , ' +
-        'please discard or save the changes')
-      return
+      this.notificationService.error(
+        "Can't add another row while editing a row",
+        'You are currently editing a row , ' +
+        'please discard or save the changes'
+      );
+      return;
     }
-    this.prospectForm.reset()
-    this.prospectForm.controls.archived.setValue(false)
-    this.currentPosition = -1
+    this.prospectForm.reset();
+    this.prospectForm.controls.archived.setValue(false);
+    this.currentPosition = -1;
     this.showRow = false;
     this.cdr.detectChanges();
     this.showRow = true;
     this.cdr.detectChanges();
+  }
 
+  onQueryParamsChange(params: NzTableQueryParams, filterField?: string): void {
+    console.log({params})
+
+    this.queryParmsChange.emit({params, filterField});
   }
 }
 

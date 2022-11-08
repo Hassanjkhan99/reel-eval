@@ -9,6 +9,10 @@
   [nzLoading]="isLoading"
   nzBordered
   nzTableLayout="fixed"
+  (nzQueryParams)="onQueryParamsChange($event)"
+  [nzFrontPagination]="false"
+  [nzPageIndex]="pageIndex"
+  [nzPageSize]="pageSize" [nzTotal]="total"
 >
   <thead>
   <tr>
@@ -20,7 +24,8 @@
       [nzFilterMultiple]="column.filterMultiple"
       [nzFilters]="column.listOfFilter"
       [nzSortDirections]="column.sortDirections"
-      [nzSortFn]="column.sortFn"
+      [nzColumnKey]="listOfFilter[i]"
+      [nzSortFn]="true"
       [nzSortOrder]="column.sortOrder"
     >
       {{ column.name }}

@@ -14,12 +14,50 @@ export class ProspectService {
   constructor(private http: HttpClient) {
   }
 
-  getProspects(): Observable<Prospect[]> {
-    return this.http.get<ProspectApi>(`${main_url}prospects/`).pipe(map(e => e.results));
+  getProspects(pageIndex, pageSize, sortField?, sortOrder?, filter?, filterField?: string): Observable<ProspectApi> {
+    if (sortOrder && sortField) {
+      sortField = sortField.toLowerCase()
+      sortField = sortOrder === 'descend' ? '-' + sortField : sortField
+    }
+
+    let params = {}
+    if (pageIndex) {
+      params['pageIndex'] = pageIndex
+    }
+    if (pageSize) {
+      params['pageSize'] = pageSize
+    }
+    if (sortField) {
+      params['ordering'] = sortField
+    }
+
+    if (filter && filterField) {
+      params[filterField + '__contains'] = filter
+    }
+    return this.http.get<ProspectApi>(`${main_url}prospects/`, {params});
   }
 
-  getArchivedProspects(): Observable<Prospect[]> {
-    return this.http.get<ProspectApi>(`${main_url}archived_prospects/`).pipe(map(e => e.results));
+  getArchivedProspects(pageIndex, pageSize, sortField?, sortOrder?, filter?, filterField?: string): Observable<ProspectApi> {
+    if (sortOrder && sortField) {
+      sortField = sortField.toLowerCase()
+      sortField = sortOrder === 'descend' ? '-' + sortField : sortField
+    }
+
+    let params = {}
+    if (pageIndex) {
+      params['pageIndex'] = pageIndex
+    }
+    if (pageSize) {
+      params['pageSize'] = pageSize
+    }
+    if (sortField) {
+      params['ordering'] = sortField
+    }
+
+    if (filter && filterField) {
+      params[filterField + '__contains'] = filter
+    }
+    return this.http.get<ProspectApi>(`${main_url}archived_prospects/`, {params});
   }
 
   editProspect(id: number, payload: Prospect): Observable<Prospect> {
