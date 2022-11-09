@@ -34,8 +34,8 @@ export class TableStaffComponent implements OnInit {
   listOfData: StaffList[] = [];
   originalListOfData: StaffList[] = [];
   total = 0;
-  pageSize: number = 10;
-  pageIndex: number = 0;
+  pageSize: number = 5;
+  pageIndex: number = 1;
   private params: NzTableQueryParams;
   visible = {
     first_name: false, last_name: false, username: false, email: false, actions: false
@@ -55,7 +55,7 @@ export class TableStaffComponent implements OnInit {
   }
 
   getStaff() {
-    this.staffSer.getStaff(0, 10, null, null, null).subscribe(
+    this.staffSer.getStaff(1, 5, null, null, null).subscribe(
       x => {
         console.log(x);
         this.cdr.detectChanges();
@@ -165,7 +165,7 @@ export class TableStaffComponent implements OnInit {
       .subscribe((e) => {
         console.log({pageIndex, pageSize, sortField, sortOrder, filter});
         this.listOfData = e.results;
-        this.total = e.count;
+        this.total = e.count - pageSize;
       });
   }
 

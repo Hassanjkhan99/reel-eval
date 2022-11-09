@@ -61,8 +61,8 @@ export class TraitsComponent implements OnInit {
     description: '',
   };
   listOfFilter = ['trait', 'description'];
-  pageSize: number = 10;
-  pageIndex: number = 0;
+  pageSize: number = 5;
+  pageIndex: number = 1;
   private params: NzTableQueryParams;
 
   constructor(
@@ -74,7 +74,7 @@ export class TraitsComponent implements OnInit {
 
   ngOnInit(): void {
     this.traitsService
-      .getAllTraits(0, 10, null, null, null)
+      .getAllTraits(1, 5, null, null, null)
       .subscribe((traits) => {
         this.traits = traits.results;
         this.total = traits.count;
@@ -219,7 +219,7 @@ export class TraitsComponent implements OnInit {
       .subscribe((e) => {
         console.log({pageIndex, pageSize, sortField, sortOrder, filter});
         this.traits = e.results;
-        this.total = e.count;
+        this.total = e.count - pageSize;
       });
   }
 }

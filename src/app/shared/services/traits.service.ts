@@ -20,10 +20,10 @@ export class TraitsService {
 
     let params = {}
     if (pageIndex) {
-      params['pageIndex'] = pageIndex
+      params['offset'] = pageIndex * pageSize
     }
     if (pageSize) {
-      params['pageSize'] = pageSize
+      params['limit'] = pageSize
     }
     if (sortField) {
       params['ordering'] = sortField
