@@ -10,7 +10,6 @@ import {NzCardModule} from "ng-zorro-antd/card";
 import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
 import {StaffService} from "../../../shared/services/staff.service";
 import {Router} from "@angular/router";
-import {map} from "rxjs/operators";
 import {NzAlertModule} from "ng-zorro-antd/alert";
 import {GroupList} from "../../../shared/interfaces/staff.interface";
 import {NzSelectModule} from "ng-zorro-antd/select";
@@ -84,9 +83,9 @@ export class AddStaffComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.staffService.getStaff().pipe(map(result => result.count)).subscribe(e => {
-      this.staffCount = e;
-      if (e >= 20) {
+    this.staffService.getStaff(0, 10, null, null, null).subscribe(e => {
+      this.staffCount = e.count;
+      if (e.count >= 20) {
         this.coachForm.disable()
       }
     }, (error) => {

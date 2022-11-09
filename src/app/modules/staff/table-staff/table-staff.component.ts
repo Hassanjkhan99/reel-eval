@@ -1,13 +1,19 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {NzTableFilterFn, NzTableFilterList, NzTableModule, NzTableSortFn, NzTableSortOrder} from "ng-zorro-antd/table";
+import {
+  NzTableFilterFn,
+  NzTableFilterList,
+  NzTableModule,
+  NzTableQueryParams,
+  NzTableSortFn,
+  NzTableSortOrder
+} from "ng-zorro-antd/table";
 import {NzDropDownModule} from "ng-zorro-antd/dropdown";
 import {NzInputModule} from "ng-zorro-antd/input";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NzIconModule} from "ng-zorro-antd/icon";
 import {StaffService} from "../../../shared/services/staff.service";
-import {map} from "rxjs/operators";
 import {StaffList} from "../../../shared/interfaces/staff.interface";
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 import {NotificationService} from "../../../shared/services/notification.service";
@@ -27,6 +33,10 @@ export class TableStaffComponent implements OnInit {
   listOfFilter = ['first_name', 'last_name', 'username', 'email', 'actions'];
   listOfData: StaffList[] = [];
   originalListOfData: StaffList[] = [];
+  total = 0;
+  pageSize: number = 10;
+  pageIndex: number = 0;
+  private params: NzTableQueryParams;
   visible = {
     first_name: false, last_name: false, username: false, email: false, actions: false
   };
@@ -45,21 +55,20 @@ export class TableStaffComponent implements OnInit {
   }
 
   getStaff() {
-    this.staffSer.getStaff().pipe(map(value => value.results)).subscribe(
+    this.staffSer.getStaff(0, 10, null, null, null).subscribe(
       x => {
         console.log(x);
         this.cdr.detectChanges();
-        this.listOfData = x;
-        this.originalListOfData = x;
+        this.listOfData = x.results;
+        this.originalListOfData = x.results;
+        this.staffCount = x.count;
       }
     )
   }
 
   ngOnInit(): void {
     this.getStaff();
-    this.staffSer.getStaff().pipe(map(result => result.count)).subscribe(e => {
-      this.staffCount = e;
-    })
+
   }
 
   reset(key) {
@@ -70,7 +79,10 @@ export class TableStaffComponent implements OnInit {
 
   search(key) {
     this.visible[key] = false;
-    this.listOfData = this.originalListOfData.filter((item: StaffList) => item[key].indexOf(this.searchValue[key]) !== -1);
+    this.onQueryParamsChange(
+      {...this.params, filter: this.searchValue[key]},
+      key
+    );
   }
 
   isEdit(i: number) {
@@ -133,6 +145,28 @@ export class TableStaffComponent implements OnInit {
   confirm(): void {
     this.notificationService.info('clicked confirm', '', 'top');
     this.currentEditIndex = -1;
+  }
+
+  onQueryParamsChange(params: NzTableQueryParams, filterField?: string): void {
+    const {pageSize, pageIndex, sort, filter} = params;
+    this.params = params;
+    const currentSort = sort.find((item) => item.value !== null);
+    const sortField = (currentSort && currentSort.key) || null;
+    const sortOrder = (currentSort && currentSort.value) || null;
+    this.staffSer
+      .getStaff(
+        pageIndex,
+        pageSize,
+        sortField,
+        sortOrder,
+        filter,
+        filterField
+      )
+      .subscribe((e) => {
+        console.log({pageIndex, pageSize, sortField, sortOrder, filter});
+        this.listOfData = e.results;
+        this.total = e.count;
+      });
   }
 
 

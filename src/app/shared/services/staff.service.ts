@@ -17,8 +17,27 @@ export class StaffService {
     return this.http.post<Staff>(`${main_url}core/register/create_user_with_club/`, payload);
   }
 
-  getStaff(): Observable<StaffApi> {
-    return this.http.get<StaffApi>(`${main_url}accounts/`);
+  getStaff(pageIndex, pageSize, sortField?, sortOrder?, filter?, filterField?: string): Observable<StaffApi> {
+    if (sortOrder && sortField) {
+      sortField = sortField.toLowerCase()
+      sortField = sortOrder === 'descend' ? '-' + sortField : sortField
+    }
+
+    let params = {}
+    if (pageIndex) {
+      params['pageIndex'] = pageIndex
+    }
+    if (pageSize) {
+      params['pageSize'] = pageSize
+    }
+    if (sortField) {
+      params['ordering'] = sortField
+    }
+
+    if (filter && filterField) {
+      params[filterField + '__icontains'] = filter
+    }
+    return this.http.get<StaffApi>(`${main_url}accounts/`, {params});
   }
 
   getStaffSorted(column: string, direction: string): Observable<StaffApi> {

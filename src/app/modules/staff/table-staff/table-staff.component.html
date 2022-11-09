@@ -1,7 +1,15 @@
-<nz-table #borderedTable [nzData]="listOfData" nzBordered nzTableLayout="fixed">
+<nz-table #borderedTable (nzQueryParams)="onQueryParamsChange($event)"
+          [nzData]="listOfData"
+          [nzFrontPagination]="false"
+          [nzPageIndex]="pageIndex"
+          [nzPageSize]="pageSize" [nzTotal]="total"
+          nzBordered nzTableLayout="fixed">
   <thead>
   <tr>
-    <th *ngFor="let column of listOfColumns; let i = index" class="text-center" nzCustomFilter>
+    <th *ngFor="let column of listOfColumns; let i = index"
+        [nzColumnKey]="listOfFilter[i]"
+        [nzSortFn]="true"
+        class="text-center" nzCustomFilter>
       {{column}}
       <nz-filter-trigger *ngIf="column !== 'Actions'"
                          [(nzVisible)]="visible[listOfFilter[i]]"
