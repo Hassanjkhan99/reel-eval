@@ -3,13 +3,17 @@
           [nzFrontPagination]="false"
           [nzPageIndex]="pageIndex"
           [nzPageSize]="pageSize" [nzTotal]="total"
-          nzBordered nzTableLayout="fixed">
+          [nzPageSizeOptions]="[5,10,20,30,40,50]" [nzScroll]="{ y: '361px' }"
+          nzBordered
+          nzShowSizeChanger
+          nzTableLayout="fixed"
+>
   <thead>
   <tr>
     <th *ngFor="let column of listOfColumns; let i = index"
         [nzColumnKey]="listOfFilter[i]"
         [nzSortFn]="true"
-        class="text-center" nzCustomFilter>
+        [class]="'text-center ' + listOfFilter[i]" nzCustomFilter>
       {{column}}
       <nz-filter-trigger *ngIf="column !== 'Actions'"
                          [(nzVisible)]="visible[listOfFilter[i]]"

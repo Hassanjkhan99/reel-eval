@@ -5,6 +5,7 @@ import {ProspectService} from "../../../shared/services/prospect.service";
 import {Prospect} from "../../../shared/interfaces/prospect.interface";
 import {ViewProspectComponent} from "../view-prospect/view-prospect.component";
 import {NzTableQueryParams} from "ng-zorro-antd/table";
+import {NzSafeAny} from "ng-zorro-antd/core/types";
 
 @Component({
   selector: 'app-tabs',
@@ -27,13 +28,22 @@ export class TabsComponent implements OnInit {
   pageIndexUnArchived: number = 1;
   pageSizeArchived: number = 5;
   pageSizeUnArchived: number = 5;
+  filterList: Array<{ text: string; value: NzSafeAny; byDefault?: boolean }> = [];
 
 
   constructor(private prospectSer: ProspectService, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
-
+    this.prospectSer.getPositions().subscribe(positions => {
+      this.filterList = positions.map(e => {
+        return {
+          value: e.position_name, text: e.position_name
+        }
+      })
+      console.log(this.filterList)
+      this.cdr.detectChanges()
+    })
   }
 
   getProspect() {
@@ -80,7 +90,7 @@ export class TabsComponent implements OnInit {
         console.log({pageIndex, pageSize, sortField, sortOrder, filter});
         this.unArchivedList = e.results;
         this.totalUnArchived = e.count;
-        this.pageIndexUnArchived = pageIndex
+        this.pageIndexUnArchived = pageIndex;
         this.cdr.detectChanges()
       });
   }

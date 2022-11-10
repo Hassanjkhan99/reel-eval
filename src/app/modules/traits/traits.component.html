@@ -4,21 +4,30 @@
   </button>
 </div>
 <div class="d-flex justify-content-center">
-  <nz-table #table
-            (nzQueryParams)="onQueryParamsChange($event)"
-            [nzData]="traits"
-            [nzFrontPagination]="false"
-            [nzPageIndex]="pageIndex"
-            [nzPageSize]="pageSize" [nzTotal]="total" nzBordered nzShowSizeChanger style="width: 70%">
+  <nz-table
+    #table
+    (nzQueryParams)="onQueryParamsChange($event)"
+    [nzData]="traits"
+    [nzFrontPagination]="false"
+    [nzPageIndex]="pageIndex"
+    [nzPageSizeOptions]="[5, 10, 20, 30, 40, 50]"
+    [nzPageSize]="pageSize"
+    [nzScroll]="{ y: '361px' }"
+    [nzTotal]="total"
+    nzBordered
+    nzShowSizeChanger
+    nzTableLayout="fixed"
+    style="width: 70%"
+  >
     <thead>
     <tr>
       <th
         *ngFor="let column of listOfColumns; let i = index"
-        [class]=" 'text-center ' + column.name"
+        [class]="'text-center ' + column.name"
+        [nzColumnKey]="column.name"
         [nzFilterFn]="column.filterFn"
         [nzFilterMultiple]="column.filterMultiple"
         [nzFilters]="column.listOfFilter"
-        [nzColumnKey]="column.name"
         [nzSortFn]="true"
         nzCustomFilter
       >
@@ -49,7 +58,11 @@
               >
                 Search
               </button>
-              <button (click)="reset(listOfFilter[i])" nz-button nzSize="small">
+              <button
+                (click)="reset(listOfFilter[i])"
+                nz-button
+                nzSize="small"
+              >
                 Reset
               </button>
             </div>
@@ -62,8 +75,22 @@
     </thead>
     <tbody>
     <tr *ngIf="showRow" [formGroup]="traitForm" class="text-align-center">
-      <td><input formControlName="trait" nz-input nzSize="large" placeholder="Trait"/></td>
-      <td><input formControlName="description" nz-input nzSize="large" placeholder="Description"/></td>
+      <td>
+        <input
+          formControlName="trait"
+          nz-input
+          nzSize="large"
+          placeholder="Trait"
+        />
+      </td>
+      <td>
+        <input
+          formControlName="description"
+          nz-input
+          nzSize="large"
+          placeholder="Description"
+        />
+      </td>
       <td class="d-flex justify-content-center">
         <a (click)="isSaveNew(false)" class="p-2">
           <i
@@ -88,11 +115,7 @@
             nzType="close-circle"
           ></i>
         </a>
-        <a
-          (click)="isSaveNew(true)"
-          class="p-2"
-
-        >
+        <a (click)="isSaveNew(true)" class="p-2">
           <i
             [nzTheme]="'twotone'"
             [nzTwotoneColor]="'#f5d50a'"
@@ -101,29 +124,33 @@
           ></i>
         </a>
       </td>
-
     </tr>
-    <tr *ngFor="let data of table.data; let i = index" [formGroup]="traitForm" class="text-align-center">
-
+    <tr
+      *ngFor="let data of table.data; let i = index"
+      [formGroup]="traitForm"
+      class="text-align-center"
+    >
       <td>
-      <span *ngIf="currentEditIndex != i">
-         {{data.trait}}
-        </span>
+          <span *ngIf="currentEditIndex != i">
+            {{ data.trait }}
+          </span>
         <span *ngIf="currentEditIndex == i">
-          <input formControlName="trait" nz-input/>
-        </span>
+            <input formControlName="trait" nz-input/>
+          </span>
       </td>
 
-
       <td>
-      <span *ngIf="currentEditIndex != i">
-         {{data.description}}
-        </span>
+          <span *ngIf="currentEditIndex != i">
+            {{ data.description }}
+          </span>
         <span *ngIf="currentEditIndex == i">
-          <input formControlName="description" nz-input placeholder="Description"/>
-        </span>
+            <input
+              formControlName="description"
+              nz-input
+              placeholder="Description"
+            />
+          </span>
       </td>
-
 
       <td class="d-flex justify-content-center">
         <a (click)="isEdit(i)" *ngIf="currentEditIndex != i" class="p-2">
@@ -169,12 +196,8 @@
             nzType="delete"
           ></i>
         </a>
-
       </td>
-
-
     </tr>
     </tbody>
   </nz-table>
-
 </div>

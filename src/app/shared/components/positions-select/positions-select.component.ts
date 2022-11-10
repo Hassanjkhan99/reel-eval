@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NzSelectModule} from "ng-zorro-antd/select";
@@ -21,7 +21,7 @@ export class PositionsSelectComponent implements OnInit {
   @Input() selectedPosition: number;
   @Output() positionChanged: EventEmitter<Positions> = new EventEmitter<Positions>()
 
-  constructor(private prospectService: ProspectService) {
+  constructor(private prospectService: ProspectService, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -32,6 +32,7 @@ export class PositionsSelectComponent implements OnInit {
         }
       })
       this.setValue();
+      this.cdr.detectChanges()
     })
     this.position.valueChanges.subscribe(e => {
       this.emitPosition(e)

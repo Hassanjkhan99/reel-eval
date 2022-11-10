@@ -1,7 +1,6 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output,} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, Output,} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
-  NzTableFilterFn,
   NzTableFilterList,
   NzTableModule,
   NzTableQueryParams,
@@ -21,6 +20,8 @@ import {NzButtonModule} from 'ng-zorro-antd/button';
 import {TabsComponent} from '../tabs/tabs.component';
 import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
 import {NotificationService} from '../../../shared/services/notification.service';
+import {NzSafeAny} from "ng-zorro-antd/core/types";
+import {NzListModule} from "ng-zorro-antd/list";
 
 @Component({
   selector: 'app-view-prospect',
@@ -37,11 +38,12 @@ import {NotificationService} from '../../../shared/services/notification.service
     TabsComponent,
     NzDropDownModule,
     FormsModule,
+    NzListModule,
   ],
   templateUrl: './view-prospect.component.html',
   styleUrls: ['./view-prospect.component.scss'],
 })
-export class ViewProspectComponent implements OnInit {
+export class ViewProspectComponent {
   @Input() dataSet: Prospect[] = [];
   @Input() originalDataSet: Prospect[] = [];
   @Input() achievedTable: boolean = false;
@@ -50,6 +52,8 @@ export class ViewProspectComponent implements OnInit {
   @Input() pageIndex: number;
   @Input() params: NzTableQueryParams;
   @Input() total = 0;
+  @Input() positionListFilter: Array<{ text: string; value: NzSafeAny; byDefault?: boolean }> = [];
+
   @Output() queryParamsChange: EventEmitter<{
     params: NzTableQueryParams;
     filterField?: string;
@@ -59,62 +63,43 @@ export class ViewProspectComponent implements OnInit {
   @Output() prospectUnArchived: EventEmitter<Prospect> =
     new EventEmitter<Prospect>();
 
-
   listOfColumns: ColumnItem[] = [
     {
       name: 'First Name',
-      sortOrder: null,
-      sortFn: (a: Prospect, b: Prospect) =>
-        a.first_name.localeCompare(b.first_name),
-      sortDirections: ['ascend', 'descend', null],
     },
     {
       name: 'Last Name',
-      sortOrder: 'ascend',
-      sortFn: (a: Prospect, b: Prospect) =>
-        a.last_name.localeCompare(b.last_name),
-      sortDirections: ['ascend', 'descend', null],
     },
     {
       name: 'Position',
-      sortOrder: null,
-      sortFn: (a: Prospect, b: Prospect) =>
-        a.position.position_name.localeCompare(b.position.position_name),
       sortDirections: ['ascend', 'descend', null],
+      filterFn: (list, item: Prospect) => {
+        this.onQueryParamsChange(
+          {...this.params, filter: list.join(' ').toString()},
+          'position'
+        );
+      },
+      listOfFilter: this.positionListFilter,
+      filterMultiple: true
     },
     {
       name: 'Classification/Year',
-      sortOrder: null,
-      sortFn: (a: Prospect, b: Prospect) =>
-        a.classification.localeCompare(b.classification),
-      sortDirections: ['ascend', 'descend', null],
     },
     {
       name: 'State/Province',
-      sortOrder: null,
-      sortFn: (a: Prospect, b: Prospect) => a.state.localeCompare(b.state),
-      sortDirections: ['ascend', 'descend', null],
     },
     {
       name: 'School/Team',
-      sortOrder: null,
-      sortFn: (a: Prospect, b: Prospect) => a.school.localeCompare(b.school),
-      sortDirections: ['ascend', 'descend', null],
     },
     {
       name: 'Video Link',
-      sortOrder: null,
-      sortFn: (a: Prospect, b: Prospect) => {
-        if (a.video_link) return a.video_link.localeCompare(b.video_link);
-      },
-      sortDirections: ['ascend', 'descend', null],
     },
   ];
 
   listOfFilter = [
     'first_name',
     'last_name',
-    'position',
+    'position__position_name',
     'classification',
     'state',
     'school',
@@ -124,7 +109,7 @@ export class ViewProspectComponent implements OnInit {
   visible = {
     first_name: false,
     last_name: false,
-    position: false,
+    position__position_name: false,
     classification: false,
     state: false,
     school: false,
@@ -133,7 +118,7 @@ export class ViewProspectComponent implements OnInit {
   searchValue = {
     first_name: '',
     last_name: '',
-    position: '',
+    position__position_name: '',
     classification: '',
     state: '',
     school: '',
@@ -166,8 +151,6 @@ export class ViewProspectComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
-  }
 
   isEdit(i: number) {
     if (
@@ -321,6 +304,11 @@ export class ViewProspectComponent implements OnInit {
     this.search(key);
   }
 
+  filterPosition(positions) {
+    console.log(positions)
+    this.queryParamsChange.emit({params: this.params, filterField: positions});
+  }
+
   search(key) {
     this.visible[key] = false;
     this.onQueryParamsChange(
@@ -378,10 +366,10 @@ export class ViewProspectComponent implements OnInit {
 
 interface ColumnItem {
   name: string;
-  sortOrder: NzTableSortOrder | null;
-  sortFn: NzTableSortFn<Partial<Prospect>> | null;
+  sortOrder?: NzTableSortOrder | null;
+  sortFn?: NzTableSortFn<Partial<Prospect>> | null;
   listOfFilter?: NzTableFilterList;
-  filterFn?: NzTableFilterFn<Partial<Prospect>> | null;
+  filterFn?: (list: any, item: Prospect) => void;
   filterMultiple?: boolean;
-  sortDirections: NzTableSortOrder[];
+  sortDirections?: NzTableSortOrder[];
 }

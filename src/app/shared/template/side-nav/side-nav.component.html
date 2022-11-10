@@ -6,7 +6,8 @@
       class="ant-menu ant-menu-root ant-menu-inline side-nav-menu"
 
   >
-    <li *ngFor="let item of menuItems"
+    <li *ngFor="let item of menuItems" [nzTooltipArrowPointAtCenter]="false" [nzTooltipTitle]="item.toolTip" nz-tooltip
+        nzTooltipColor="blue" nzTooltipPlacement="right"
         [ngClass]="item.submenu.length > 0?'ant-menu-submenu ant-menu-submenu-inline':'ant-menu-item'"
         [routerLinkActiveOptions]="{exact: true}"
         [routerLinkActive]="item.submenu.length > 0 ? 'ant-menu-submenu-open' : 'ant-menu-item-selected'">
@@ -25,7 +26,8 @@
       <!-- Second Level -->
       <ul *ngIf="item.submenu.length > 0" class="ant-menu ant-menu-inline ant-menu-sub dropdown-menu"
           style="position: relative !important;">
-        <li *ngFor="let subItem of item.submenu"
+        <li *ngFor="let subItem of item.submenu" [nzTooltipTitle]="subItem.toolTip" nz-tooltip
+            nzTooltipPlacement="right"
             [ngClass]="subItem.submenu.length > 0?'ant-menu-submenu ant-menu-submenu-inline':'ant-menu-item'"
             [routerLinkActiveOptions]="{exact: true}"
             [routerLinkActive]="subItem.submenu.length > 0 ? 'ant-menu-submenu-open' : 'ant-menu-item-selected'">
@@ -46,7 +48,8 @@
 
           <!-- Third Level -->
           <ul *ngIf="subItem.submenu.length > 0" class="ant-menu ant-menu-inline ant-menu-sub dropdown-menu">
-            <li *ngFor="let subItem of subItem.submenu"
+            <li *ngFor="let subItem of subItem.submenu" [nzTooltipTitle]="subItem.toolTip" nz-tooltip
+                nzTooltipPlacement="right"
                 [ngClass]="subItem.submenu.length > 0?'ant-menu-submenu ant-menu-submenu-inline':'ant-menu-item'"
                 [routerLinkActiveOptions]="{exact: true}"
                 routerLinkActive="ant-menu-item-selected">
