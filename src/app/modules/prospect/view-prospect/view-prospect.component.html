@@ -20,13 +20,9 @@
       *ngFor="let column of listOfColumns; let i = index"
       class="text-center"
       nzCustomFilter
-      [nzFilterFn]="column.filterFn"
-      [nzFilterMultiple]="column.filterMultiple"
-      [nzFilters]="column.listOfFilter"
-      [nzSortDirections]="column.sortDirections"
       [nzColumnKey]="listOfFilter[i]"
       [nzSortFn]="true"
-      [nzSortOrder]="column.sortOrder"
+
     >
       {{ column.name }}
       <nz-filter-trigger

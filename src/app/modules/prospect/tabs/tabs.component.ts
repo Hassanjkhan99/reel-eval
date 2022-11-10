@@ -20,38 +20,40 @@ export class TabsComponent implements OnInit {
 
   isLoadingArchivedList: boolean = false;
   isLoadingUnArchivedList: boolean = false;
-  total = 0;
+  totalArchived = 0;
+  totalUnArchived = 0;
   params: NzTableQueryParams;
-  pageIndex: number = 0;
-  pageSize: number = 10;
+  pageIndexArchived: number = 1;
+  pageIndexUnArchived: number = 1;
+  pageSizeArchived: number = 5;
+  pageSizeUnArchived: number = 5;
 
 
   constructor(private prospectSer: ProspectService, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
-    this.getProspect();
-    this.getArchivedProspect()
+
   }
 
   getProspect() {
     this.isLoadingUnArchivedList = true
-    this.prospectSer.getProspects(0, 10, null, null, null).subscribe(
+    this.prospectSer.getProspects(this.pageIndexUnArchived, this.pageSizeUnArchived, null, null, null).subscribe(
       x => {
         this.isLoadingUnArchivedList = false
         this.unArchivedList = x.results
-        this.total = x.count
+        this.totalUnArchived = x.count
       }
     )
   }
 
   getArchivedProspect() {
     this.isLoadingArchivedList = true
-    this.prospectSer.getArchivedProspects(0, 10, null, null, null).subscribe(
+    this.prospectSer.getArchivedProspects(this.pageIndexArchived, this.pageSizeArchived, null, null, null).subscribe(
       x => {
         this.archivedList = x.results
         this.isLoadingArchivedList = false
-        this.total = x.count
+        this.totalArchived = x.count;
       }
     )
   }
@@ -60,11 +62,11 @@ export class TabsComponent implements OnInit {
   onQueryParamsChange(params: { params: NzTableQueryParams; filterField?: string }) {
     const {pageSize, pageIndex, sort, filter} = params.params;
     this.params = params.params;
-    console.log(sort)
 
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || null;
     const sortOrder = (currentSort && currentSort.value) || null;
+
     this.prospectSer
       .getProspects(
         pageIndex,
@@ -77,12 +79,13 @@ export class TabsComponent implements OnInit {
       .subscribe((e) => {
         console.log({pageIndex, pageSize, sortField, sortOrder, filter});
         this.unArchivedList = e.results;
-        this.total = e.count;
+        this.totalUnArchived = e.count;
+        this.pageIndexUnArchived = pageIndex
         this.cdr.detectChanges()
       });
   }
 
-  onQueryParamsChangeArchieve(params: { params: NzTableQueryParams; filterField?: string }) {
+  onQueryParamsChangeArchive(params: { params: NzTableQueryParams; filterField?: string }) {
     const {pageSize, pageIndex, sort, filter} = params.params;
     this.params = params.params;
     const currentSort = sort.find((item) => item.value !== null);
@@ -100,7 +103,8 @@ export class TabsComponent implements OnInit {
       .subscribe((e) => {
         console.log({pageIndex, pageSize, sortField, sortOrder, filter});
         this.archivedList = e.results;
-        this.total = e.count;
+        this.totalArchived = e.count;
+        this.pageIndexArchived = pageIndex
         this.cdr.detectChanges()
 
       });

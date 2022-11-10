@@ -1,16 +1,18 @@
 <nz-tabset nzCentered nzSize="large">
   <nz-tab nzTitle="Active Prospects">
-    <app-view-prospect (prospectArchived)="getArchivedProspect()" (queryParmsChange)="onQueryParamsChange($event)"
-                       [pageIndex]="pageIndex" [pageSize]="pageSize" [params]="params"
+    <app-view-prospect (prospectArchived)="getArchivedProspect()" (queryParamsChange)="onQueryParamsChange($event)"
+                       [pageIndex]="pageIndexUnArchived" [pageSize]="pageSizeUnArchived" [params]="params"
                        [achievedTable]="false" [dataSet]="unArchivedList"
                        [originalDataSet]="unArchivedList"
+                       [total]="totalUnArchived"
                        [isLoading]="isLoadingUnArchivedList"></app-view-prospect>
   </nz-tab>
   <nz-tab nzTitle="Archived Prospects">
-    <app-view-prospect (prospectUnArchived)="getProspect()" (queryParmsChange)="onQueryParamsChangeArchieve($event)"
-                       [pageIndex]="pageIndex" [pageSize]="pageSize" [params]="params"
+    <app-view-prospect (prospectUnArchived)="getProspect()" (queryParamsChange)="onQueryParamsChangeArchive($event)"
+                       [pageIndex]="pageIndexArchived" [pageSize]="pageSizeArchived" [params]="params"
                        [achievedTable]="true" [dataSet]="archivedList"
                        [originalDataSet]="archivedList"
+                       [total]="totalArchived"
                        [isLoading]="isLoadingArchivedList"></app-view-prospect>
   </nz-tab>
 </nz-tabset>

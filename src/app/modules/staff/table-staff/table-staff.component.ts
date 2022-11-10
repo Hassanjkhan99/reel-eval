@@ -55,7 +55,7 @@ export class TableStaffComponent implements OnInit {
   }
 
   getStaff() {
-    this.staffSer.getStaff(1, 5, null, null, null).subscribe(
+    this.staffSer.getStaff(this.pageIndex, this.pageSize, null, null, null).subscribe(
       x => {
         console.log(x);
         this.cdr.detectChanges();
@@ -165,7 +165,7 @@ export class TableStaffComponent implements OnInit {
       .subscribe((e) => {
         console.log({pageIndex, pageSize, sortField, sortOrder, filter});
         this.listOfData = e.results;
-        this.total = e.count - pageSize;
+        this.total = e.count;
       });
   }
 

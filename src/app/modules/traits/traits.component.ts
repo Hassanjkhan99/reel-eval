@@ -74,7 +74,7 @@ export class TraitsComponent implements OnInit {
 
   ngOnInit(): void {
     this.traitsService
-      .getAllTraits(1, 5, null, null, null)
+      .getAllTraits(this.pageIndex, this.pageSize, null, null, null)
       .subscribe((traits) => {
         this.traits = traits.results;
         this.total = traits.count;
@@ -219,7 +219,7 @@ export class TraitsComponent implements OnInit {
       .subscribe((e) => {
         console.log({pageIndex, pageSize, sortField, sortOrder, filter});
         this.traits = e.results;
-        this.total = e.count - pageSize;
+        this.total = e.count;
       });
   }
 }

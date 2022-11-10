@@ -25,7 +25,7 @@ export class StaffService {
 
     let params = {}
     if (pageIndex) {
-      params['offset'] = pageIndex * pageSize
+      params['offset'] = (pageIndex - 1) * pageSize
     }
     if (pageSize) {
       params['limit'] = pageSize

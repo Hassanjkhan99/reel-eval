@@ -46,10 +46,11 @@ export class ViewProspectComponent implements OnInit {
   @Input() originalDataSet: Prospect[] = [];
   @Input() achievedTable: boolean = false;
   @Input() isLoading: boolean = false;
-  @Input() pageSize: number = 10;
-  @Input() pageIndex: number = 0;
+  @Input() pageSize: number = 5;
+  @Input() pageIndex: number;
   @Input() params: NzTableQueryParams;
-  @Output() queryParmsChange: EventEmitter<{
+  @Input() total = 0;
+  @Output() queryParamsChange: EventEmitter<{
     params: NzTableQueryParams;
     filterField?: string;
   }> = new EventEmitter<{ params: NzTableQueryParams; filterField?: string }>();
@@ -58,7 +59,6 @@ export class ViewProspectComponent implements OnInit {
   @Output() prospectUnArchived: EventEmitter<Prospect> =
     new EventEmitter<Prospect>();
 
-  total = 0;
 
   listOfColumns: ColumnItem[] = [
     {
@@ -372,9 +372,7 @@ export class ViewProspectComponent implements OnInit {
   }
 
   onQueryParamsChange(params: NzTableQueryParams, filterField?: string): void {
-    console.log(params)
-
-    this.queryParmsChange.emit({params, filterField});
+    this.queryParamsChange.emit({params, filterField});
   }
 }
 
