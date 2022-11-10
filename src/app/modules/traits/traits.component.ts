@@ -14,6 +14,7 @@ import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
 import {NotificationService} from '../../shared/services/notification.service';
 import {Prospect} from '../../shared/interfaces/prospect.interface';
 import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
+import {NzToolTipModule} from "ng-zorro-antd/tooltip";
 
 @Component({
   selector: 'app-traits',
@@ -31,6 +32,7 @@ import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
     NzPopconfirmModule,
     FormsModule,
     NzDropDownModule,
+    NzToolTipModule,
   ],
   templateUrl: './traits.component.html',
   styleUrls: ['./traits.component.scss'],

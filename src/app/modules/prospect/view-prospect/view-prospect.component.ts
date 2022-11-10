@@ -22,6 +22,7 @@ import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
 import {NotificationService} from '../../../shared/services/notification.service';
 import {NzSafeAny} from "ng-zorro-antd/core/types";
 import {NzListModule} from "ng-zorro-antd/list";
+import {NzToolTipModule} from "ng-zorro-antd/tooltip";
 
 @Component({
   selector: 'app-view-prospect',
@@ -39,6 +40,7 @@ import {NzListModule} from "ng-zorro-antd/list";
     NzDropDownModule,
     FormsModule,
     NzListModule,
+    NzToolTipModule,
   ],
   templateUrl: './view-prospect.component.html',
   styleUrls: ['./view-prospect.component.scss'],

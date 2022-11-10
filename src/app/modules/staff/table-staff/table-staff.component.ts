@@ -17,11 +17,12 @@ import {StaffService} from "../../../shared/services/staff.service";
 import {StaffList} from "../../../shared/interfaces/staff.interface";
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 import {NotificationService} from "../../../shared/services/notification.service";
+import {NzToolTipModule} from "ng-zorro-antd/tooltip";
 
 @Component({
   selector: 'app-table-staff',
   standalone: true,
-  imports: [CommonModule, NzTableModule, NzDropDownModule, NzInputModule, NzButtonModule, FormsModule, NzIconModule, NzPopconfirmModule, ReactiveFormsModule],
+  imports: [CommonModule, NzTableModule, NzDropDownModule, NzInputModule, NzButtonModule, FormsModule, NzIconModule, NzPopconfirmModule, ReactiveFormsModule, NzToolTipModule],
   templateUrl: './table-staff.component.html',
   styleUrls: ['./table-staff.component.scss'],
 })

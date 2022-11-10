@@ -113,6 +113,7 @@
           [nzTwotoneColor]="'#46c40a'"
           nz-icon
           nzType="save"
+          [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Save Prospect'" nz-tooltip
         ></i>
       </a>
       <a
@@ -122,6 +123,7 @@
         nz-popconfirm
         nzPopconfirmPlacement="top"
         nzPopconfirmTitle="Are you sure you want to discard changes?"
+        [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Discard changes'" nz-tooltip
       >
         <i
           [nzTheme]="'twotone'"
@@ -134,6 +136,7 @@
 
         class="p-2"
         (click)="isSaveNew(true)"
+        [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Add New Prospect'" nz-tooltip
       >
         <i
           [nzTheme]="'twotone'"
@@ -214,10 +217,14 @@
         </span>
     </td>
     <td class="d-flex justify-content-center">
-      <a (click)="isEdit(i)" *ngIf="currentEditIndex != i" class="p-2">
+      <a (click)="isEdit(i)" *ngIf="currentEditIndex != i" [nzTooltipColor]="'blue'"
+         [nzTooltipTitle]="'Edit Prospect'" class="p-2" nz-tooltip
+      >
         <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
       </a>
-      <a (click)="isSave(i)" *ngIf="currentEditIndex == i" class="p-2">
+      <a (click)="isSave(i)" *ngIf="currentEditIndex == i" [nzTooltipColor]="'blue'"
+         [nzTooltipTitle]="'Save changes'" class="p-2" nz-tooltip
+      >
         <i
           [nzTheme]="'twotone'"
           [nzTwotoneColor]="'#46c40a'"
@@ -233,6 +240,7 @@
         nz-popconfirm
         nzPopconfirmPlacement="top"
         nzPopconfirmTitle="Are you sure you want to discard changes?"
+        [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Discard changes'" nz-tooltip
       >
         <i
           [nzTheme]="'twotone'"
@@ -249,6 +257,7 @@
         nz-popconfirm
         nzPopconfirmPlacement="top"
         nzPopconfirmTitle="Are you sure you want to delete prospect?"
+        [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Delete Prospect'" nz-tooltip
       >
         <i
           [nzTheme]="'twotone'"
@@ -262,6 +271,7 @@
           (click)="isArchive(i)"
           *ngIf="currentEditIndex != i"
           class="p-2"
+          [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Archive Prospect'" nz-tooltip
         >
           <i nz-icon nzTheme="outline" nzType="export"></i>
         </a>
@@ -271,7 +281,7 @@
           (click)="isUnArchive(i)"
           *ngIf="currentEditIndex != i"
           class="p-2"
-
+          [nzTooltipColor]="'blue'" [nzTooltipTitle]="'UnArchive Prospect'" nz-tooltip
         >
           <i nz-icon nzTheme="outline" nzType="export"></i>
         </a>
