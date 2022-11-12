@@ -29,6 +29,8 @@ export class TabsComponent implements OnInit {
   pageSizeArchived: number = 5;
   pageSizeUnArchived: number = 5;
   filterList: Array<{ text: string; value: NzSafeAny; byDefault?: boolean }> = [];
+  unArchivedClassificationList: { name: string }[] = [];
+  archivedClassificationList: { name: string }[] = [];
 
 
   constructor(private prospectSer: ProspectService, private cdr: ChangeDetectorRef) {
@@ -41,7 +43,6 @@ export class TabsComponent implements OnInit {
           value: e.position_name, text: e.position_name
         }
       })
-      console.log(this.filterList)
       this.cdr.detectChanges()
     })
   }
@@ -52,6 +53,10 @@ export class TabsComponent implements OnInit {
       x => {
         this.isLoadingUnArchivedList = false
         this.unArchivedList = x.results
+        this.unArchivedClassificationList = x.results.map(e => {
+          return {name: e.classification}
+        })
+        console.log(this.unArchivedClassificationList)
         this.totalUnArchived = x.count
       }
     )
@@ -62,7 +67,10 @@ export class TabsComponent implements OnInit {
     this.prospectSer.getArchivedProspects(this.pageIndexArchived, this.pageSizeArchived, null, null, null).subscribe(
       x => {
         this.archivedList = x.results
-        this.isLoadingArchivedList = false
+        this.isLoadingArchivedList = false;
+        this.archivedClassificationList = x.results.map(e => {
+          return {name: e.classification}
+        })
         this.totalArchived = x.count;
       }
     )
@@ -87,10 +95,13 @@ export class TabsComponent implements OnInit {
         params.filterField
       )
       .subscribe((e) => {
-        console.log({pageIndex, pageSize, sortField, sortOrder, filter});
         this.unArchivedList = e.results;
         this.totalUnArchived = e.count;
         this.pageIndexUnArchived = pageIndex;
+        this.unArchivedClassificationList = [...new Set(e.results.map(e => e.classification))].map(name => {
+          return {name}
+        })
+        console.log(this.unArchivedClassificationList)
         this.cdr.detectChanges()
       });
   }
@@ -111,10 +122,13 @@ export class TabsComponent implements OnInit {
         params.filterField
       )
       .subscribe((e) => {
-        console.log({pageIndex, pageSize, sortField, sortOrder, filter});
         this.archivedList = e.results;
         this.totalArchived = e.count;
         this.pageIndexArchived = pageIndex
+        this.archivedClassificationList = [...new Set(e.results.map(e => e.classification))].map(name => {
+          return {name}
+        })
+        console.log(this.unArchivedClassificationList)
         this.cdr.detectChanges()
 
       });

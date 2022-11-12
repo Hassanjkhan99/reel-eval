@@ -1,0 +1,9 @@
+<ul
+  class="ant-dropdown-menu ant-dropdown-menu-root ant-dropdown-menu-light ant-dropdown-menu-vertical"
+  nz-menu
+>
+  <li *ngFor="let position of positions;let i = index" nz-menu-item>
+    <label (ngModelChange)="positionSelected()" [(ngModel)]="positions[i].checked"
+           nz-checkbox>{{position.position_name}}</label>
+  </li>
+</ul>

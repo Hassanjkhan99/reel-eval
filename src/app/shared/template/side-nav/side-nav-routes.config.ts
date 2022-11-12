@@ -6,7 +6,6 @@ export const ROUTES: SideNavInterface[] = [
       title: 'Staff',
       iconType: 'nzIcon',
       iconTheme: 'outline',
-      toolTip: 'Add, Edit or View All staff members',
       icon: 'user',
       submenu: [
         {
@@ -32,7 +31,6 @@ export const ROUTES: SideNavInterface[] = [
     iconType: 'nzIcon',
     iconTheme: 'outline',
     icon: 'team',
-    toolTip: 'Add, Edit , Delete and View All prospects',
     submenu: [
       // {
       //   path: 'prospect/add',
@@ -54,7 +52,6 @@ export const ROUTES: SideNavInterface[] = [
   }, {
     path: 'traits',
     title: 'Traits',
-    toolTip: 'Add, Edit or View All Traits',
     iconTheme: 'fill',
     submenu: [],
     icon: 'trophy',

@@ -41,11 +41,17 @@
         <div class="ant-table-filter-dropdown">
           <div class="search-box">
             <input
+              *ngIf="column.name !== 'Position'"
               [(ngModel)]="searchValue[listOfFilter[i]]"
               [placeholder]="'Search ' + column.name"
               nz-input
               type="text"
             />
+            <app-position-multi-select (positionsChanged)="filterPosition($event)"
+                                       *ngIf="column.name === 'Position'"></app-position-multi-select>
+            <app-checkbox-list (listChanged)="filterClassification($event)"
+                               *ngIf="column.name === 'Classification/Year'"
+                               [inputList]="classificationList"></app-checkbox-list>
             <button
               (click)="search(listOfFilter[i])"
               class="search-button"

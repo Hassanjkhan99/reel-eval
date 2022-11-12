@@ -4,8 +4,8 @@
                        [positionListFilter]="filterList"
                        [pageIndex]="pageIndexUnArchived" [pageSize]="pageSizeUnArchived" [params]="params"
                        [achievedTable]="false" [dataSet]="unArchivedList"
-                       [originalDataSet]="unArchivedList"
                        [total]="totalUnArchived"
+                       [classificationList]="unArchivedClassificationList"
                        [isLoading]="isLoadingUnArchivedList"></app-view-prospect>
   </nz-tab>
   <nz-tab nzTitle="Archived Prospects">
@@ -13,8 +13,8 @@
                        [positionListFilter]="filterList"
                        [pageIndex]="pageIndexArchived" [pageSize]="pageSizeArchived" [params]="params"
                        [achievedTable]="true" [dataSet]="archivedList"
-                       [originalDataSet]="archivedList"
                        [total]="totalArchived"
+                       [classificationList]="archivedClassificationList"
                        [isLoading]="isLoadingArchivedList"></app-view-prospect>
   </nz-tab>
 </nz-tabset>

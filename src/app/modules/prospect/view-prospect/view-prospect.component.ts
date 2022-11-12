@@ -23,6 +23,10 @@ import {NotificationService} from '../../../shared/services/notification.service
 import {NzSafeAny} from "ng-zorro-antd/core/types";
 import {NzListModule} from "ng-zorro-antd/list";
 import {NzToolTipModule} from "ng-zorro-antd/tooltip";
+import {
+  PositionMultiSelectComponent
+} from "../../../shared/components/position-multi-select/position-multi-select.component";
+import {CheckboxListComponent, ListInterface} from "../../../shared/components/checkbox-list/checkbox-list.component";
 
 @Component({
   selector: 'app-view-prospect',
@@ -41,13 +45,15 @@ import {NzToolTipModule} from "ng-zorro-antd/tooltip";
     FormsModule,
     NzListModule,
     NzToolTipModule,
+    PositionMultiSelectComponent,
+    CheckboxListComponent,
   ],
   templateUrl: './view-prospect.component.html',
   styleUrls: ['./view-prospect.component.scss'],
 })
 export class ViewProspectComponent {
   @Input() dataSet: Prospect[] = [];
-  @Input() originalDataSet: Prospect[] = [];
+  @Input() classificationList: { name: string }[] = [];
   @Input() achievedTable: boolean = false;
   @Input() isLoading: boolean = false;
   @Input() pageSize: number = 5;
@@ -74,15 +80,6 @@ export class ViewProspectComponent {
     },
     {
       name: 'Position',
-      sortDirections: ['ascend', 'descend', null],
-      filterFn: (list, item: Prospect) => {
-        this.onQueryParamsChange(
-          {...this.params, filter: list.join(' ').toString()},
-          'position'
-        );
-      },
-      listOfFilter: this.positionListFilter,
-      filterMultiple: true
     },
     {
       name: 'Classification/Year',
@@ -192,15 +189,13 @@ export class ViewProspectComponent {
           'Success',
           'Your changes has been saved!'
         );
-        const dataSet = this.dataSet.map((item) => {
+        this.dataSet = this.dataSet.map((item) => {
           if (item.id === x.id) {
             return x;
           } else {
             return item;
           }
         });
-        this.originalDataSet = dataSet;
-        this.dataSet = dataSet;
         this.currentEditIndex = -1;
         this.cdr.detectChanges();
       });
@@ -213,7 +208,7 @@ export class ViewProspectComponent {
         'Selected Prospect has been deleted!'
       );
       // this.dataSet.splice(i,1)
-      const dataSet = this.dataSet
+      this.dataSet = this.dataSet
         .map((item) => {
           if (item.id == this.dataSet[i].id) {
             return;
@@ -221,8 +216,6 @@ export class ViewProspectComponent {
           return item;
         })
         .filter((e) => e);
-      this.originalDataSet = dataSet;
-      this.dataSet = dataSet;
       this.currentEditIndex = -1;
       this.cdr.detectChanges();
     });
@@ -260,7 +253,7 @@ export class ViewProspectComponent {
 
         this.prospectArchived.emit(this.dataSet[i]);
 
-        const dataSet = this.dataSet
+        this.dataSet = this.dataSet
           .map((item) => {
             if (item.id == this.dataSet[i].id) {
               return;
@@ -268,9 +261,6 @@ export class ViewProspectComponent {
             return item;
           })
           .filter((e) => e);
-
-        this.originalDataSet = dataSet;
-        this.dataSet = dataSet;
         this.currentEditIndex = -1;
         this.cdr.detectChanges();
       });
@@ -284,7 +274,7 @@ export class ViewProspectComponent {
       );
       this.prospectUnArchived.emit(this.dataSet[i]);
 
-      const dataSet = this.dataSet
+      this.dataSet = this.dataSet
         .map((item) => {
           if (item.id == this.dataSet[i].id) {
             return;
@@ -292,9 +282,6 @@ export class ViewProspectComponent {
           return item;
         })
         .filter((e) => e);
-
-      this.originalDataSet = dataSet;
-      this.dataSet = dataSet;
       this.currentEditIndex = -1;
       this.cdr.detectChanges();
     });
@@ -306,9 +293,8 @@ export class ViewProspectComponent {
     this.search(key);
   }
 
-  filterPosition(positions) {
-    console.log(positions)
-    this.queryParamsChange.emit({params: this.params, filterField: positions});
+  filterPosition(positions: Positions[]) {
+    this.searchValue.position__position_name = positions.map(e => e.position_name).join(' ')
   }
 
   search(key) {
@@ -325,10 +311,7 @@ export class ViewProspectComponent {
         'Success',
         'Your Prospect has been added'
       );
-      const dataSet = [x, ...this.dataSet];
-
-      this.originalDataSet = dataSet;
-      this.dataSet = dataSet;
+      this.dataSet = [x, ...this.dataSet];
       if (isAddAnother) {
         this.prospectForm.reset();
         this.prospectForm.controls.archived.setValue(false);
@@ -363,6 +346,10 @@ export class ViewProspectComponent {
 
   onQueryParamsChange(params: NzTableQueryParams, filterField?: string): void {
     this.queryParamsChange.emit({params, filterField});
+  }
+
+  filterClassification(classifications: ListInterface[]) {
+    this.searchValue.classification = classifications.map(e => e.name).join(' ')
   }
 }
 
