@@ -52,7 +52,16 @@
     </ul>
     <ul class="nav-right">
       <li>
-        <button (click)="logout()" nz-button nzDanger>Logout</button>
+        <nz-avatar [nzDropdownMenu]="menu" nz-dropdown nzIcon="user" nzPlacement="bottomCenter"
+                   style="background-color:#0087f5;"></nz-avatar>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul class="d-flex justify-content-center" nz-menu>
+            <li nz-menu-item>
+              <button (click)="logout()" nz-button nzDanger>Logout</button>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+
       </li>
     </ul>
   </div>

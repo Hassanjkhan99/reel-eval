@@ -83,11 +83,19 @@ export class ProspectService {
     return this.http.get<Result>(`${main_url}positions/`).pipe(map(e => e.results));
   }
 
-  getSchools(): Observable<Schools[]> {
-    return this.http.get<SchoolApi>(`${main_url}schools/`).pipe(map(e => e.results));
+  getSchools(searchValue?: string): Observable<Schools[]> {
+    return this.http.get<SchoolApi>(`${main_url}schools/`, {
+      params: {
+        'school_name__icontains': searchValue
+      }
+    }).pipe(map(e => e.results));
   }
 
-  getStates(): Observable<States[]> {
-    return this.http.get<StateApi>(`${main_url}states/`).pipe(map(e => e.results));
+  getStates(searchValue?: string): Observable<States[]> {
+    return this.http.get<StateApi>(`${main_url}states/`, {
+      params: {
+        'state_name__icontains': searchValue
+      }
+    }).pipe(map(e => e.results));
   }
 }

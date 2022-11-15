@@ -31,6 +31,12 @@ import {Schools} from "../../../shared/interfaces/school.interface";
 import {SchoolSelectComponent} from "../../../shared/components/school-select/school-select.component";
 import {States} from "../../../shared/interfaces/state.interface";
 import {StateSelectComponent} from "../../../shared/components/state-select/state-select.component";
+import {
+  StatesSelectSearchComponent
+} from "../../../shared/components/states-select-search/states-select-search.component";
+import {
+  SchoolSelectSearchComponent
+} from "../../../shared/components/school-select-search/school-select-search.component";
 
 @Component({
   selector: 'app-view-prospect',
@@ -53,6 +59,8 @@ import {StateSelectComponent} from "../../../shared/components/state-select/stat
     CheckboxListComponent,
     SchoolSelectComponent,
     StateSelectComponent,
+    StatesSelectSearchComponent,
+    SchoolSelectSearchComponent,
   ],
   templateUrl: './view-prospect.component.html',
   styleUrls: ['./view-prospect.component.scss'],
@@ -392,12 +400,20 @@ export class ViewProspectComponent {
     this.searchValue.classification = classification.name
   }
 
-  filterState(state: ListInterface) {
-    this.searchValue.state = state.name
+  filterState(state: States) {
+    this.searchValue.state = state.state_name
   }
 
-  filterSchool(school: ListInterface) {
-    this.searchValue.school = school.name
+  filterSchool(school: Schools) {
+    this.searchValue.school = school.school_name
+  }
+
+  searchStates($event: string) {
+
+  }
+
+  searchSchools($event: string) {
+
   }
 }
 

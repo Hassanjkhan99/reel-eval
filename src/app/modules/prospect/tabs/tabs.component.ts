@@ -47,14 +47,7 @@ export class TabsComponent implements OnInit {
       })
       this.cdr.detectChanges()
     })
-    this.prospectSer.getStates().subscribe(states => {
-      this.stateList = states.map(e => {
-        return {
-          name: e.state_name
-        }
-      })
-      this.cdr.detectChanges()
-    })
+
     this.prospectSer.getSchools().subscribe(schools => {
       this.schoolList = schools.map(e => {
         return {

@@ -16,6 +16,7 @@ import {NzSelectModule} from "ng-zorro-antd/select";
 export class CheckboxListComponent {
 
   @Output() selectionChange: EventEmitter<ListInterface> = new EventEmitter<ListInterface>()
+  @Output() searchValue: EventEmitter<string> = new EventEmitter<string>()
   @Input() inputList: ListInterface[] = [];
   @Input() name: string = '';
 
@@ -27,6 +28,12 @@ export class CheckboxListComponent {
 
   itemSelected() {
     this.selectionChange.emit(this.selectedValue)
+  }
+
+  search(searchValue: string) {
+    console.log({searchValue})
+    this.searchValue.emit(searchValue)
+
   }
 }
 

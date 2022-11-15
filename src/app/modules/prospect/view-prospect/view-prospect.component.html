@@ -51,12 +51,26 @@
             <app-position-multi-select (positionsChanged)="filterPosition($event)"
                                        *ngIf="column.name === 'Position'"></app-position-multi-select>
 
-            <app-checkbox-list (selectionChange)="filterState($event)" *ngIf="column.name === 'St./Prov'"
-                               [inputList]="stateList"
-                               [name]="column.name"></app-checkbox-list>
-            <app-checkbox-list (selectionChange)="filterSchool($event)" *ngIf="column.name === 'School/Team'"
-                               [inputList]="schoolList"
-                               [name]="column.name"></app-checkbox-list>
+            <!--            <app-checkbox-list (selectionChange)="filterState($event)" *ngIf="column.name === 'St./Prov'"-->
+            <!--                               [inputList]="stateList"-->
+            <!--                               [name]="column.name"-->
+            <!--                                (searchValue) = "searchStates($event)"-->
+            <!--            ></app-checkbox-list>-->
+            <app-states-select-search (selectionChange)="filterState($event) "
+                                      *ngIf="column.name === 'St./Prov'"
+            >
+            </app-states-select-search>
+            <app-school-select-search (selectionChange)="filterSchool($event) "
+                                      *ngIf="column.name === 'School/Team'"
+            >
+            </app-school-select-search>
+
+            <!--            <app-checkbox-list (selectionChange)="filterSchool($event)" *ngIf="column.name === 'School/Team'"-->
+            <!--                               [inputList]="schoolList"-->
+            <!--                               [name]="column.name"-->
+            <!--                               (searchValue) = "searchSchools($event)"-->
+
+            <!--            ></app-checkbox-list>-->
             <button
               (click)="search(listOfFilter[i])"
               class="search-button"
@@ -314,3 +328,5 @@
 
   </tbody>
 </nz-table>
+
+
