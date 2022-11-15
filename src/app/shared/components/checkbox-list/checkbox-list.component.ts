@@ -1,46 +1,32 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ProspectService} from "../../services/prospect.service";
 import {FormsModule} from "@angular/forms";
 import {NzMenuModule} from "ng-zorro-antd/menu";
 import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
+import {NzSelectModule} from "ng-zorro-antd/select";
 
 @Component({
   selector: 'app-checkbox-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, NzMenuModule, NzCheckboxModule],
+  imports: [CommonModule, FormsModule, NzMenuModule, NzCheckboxModule, NzSelectModule],
   templateUrl: './checkbox-list.component.html',
   styleUrls: ['./checkbox-list.component.scss'],
 })
-export class CheckboxListComponent implements OnChanges {
+export class CheckboxListComponent {
 
-  @Output() listChanged: EventEmitter<ListInterface[]> = new EventEmitter<ListInterface[]>()
-  @Input() inputList: ListInterface[] = []
-  selectionList: CheckedListInterface[] = []
-  selections: ListInterface[] = [];
+  @Output() selectionChange: EventEmitter<ListInterface> = new EventEmitter<ListInterface>()
+  @Input() inputList: ListInterface[] = [];
+  @Input() name: string = '';
+
+  selectedValue: ListInterface;
 
 
   constructor(private prospectService: ProspectService, private cdr: ChangeDetectorRef) {
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.selectionList = this.inputList.map(e => {
-      return {
-        ...e, checked: false
-      }
-    })
-    this.cdr.detectChanges()
-  }
-
-
   itemSelected() {
-    this.selections = this.selectionList.filter(e => e.checked).map(e => {
-      return {
-        name: e.name, id: e.id
-      }
-    })
-
-    this.listChanged.emit(this.selections)
+    this.selectionChange.emit(this.selectedValue)
   }
 }
 

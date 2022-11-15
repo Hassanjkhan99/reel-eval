@@ -14,15 +14,16 @@ import {NzButtonModule} from "ng-zorro-antd/button";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NzIconModule} from "ng-zorro-antd/icon";
 import {StaffService} from "../../../shared/services/staff.service";
-import {StaffList} from "../../../shared/interfaces/staff.interface";
+import {GroupList, StaffList} from "../../../shared/interfaces/staff.interface";
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 import {NotificationService} from "../../../shared/services/notification.service";
 import {NzToolTipModule} from "ng-zorro-antd/tooltip";
+import {NzSelectModule} from "ng-zorro-antd/select";
 
 @Component({
   selector: 'app-table-staff',
   standalone: true,
-  imports: [CommonModule, NzTableModule, NzDropDownModule, NzInputModule, NzButtonModule, FormsModule, NzIconModule, NzPopconfirmModule, ReactiveFormsModule, NzToolTipModule],
+  imports: [CommonModule, NzTableModule, NzDropDownModule, NzInputModule, NzButtonModule, FormsModule, NzIconModule, NzPopconfirmModule, ReactiveFormsModule, NzToolTipModule, NzSelectModule],
   templateUrl: './table-staff.component.html',
   styleUrls: ['./table-staff.component.scss'],
 })
@@ -30,13 +31,14 @@ export class TableStaffComponent implements OnInit {
 
   staffCount: number = 0;
   currentEditIndex: number = -1;
-  listOfColumns = ['First Name', 'Last Name', 'Username', 'Email', 'Actions'];
+  listOfColumns = ['First Name', 'Last Name', 'Username', 'Email', 'Permissions', 'Actions'];
   listOfFilter = ['first_name', 'last_name', 'username', 'email', 'actions'];
   listOfData: StaffList[] = [];
   originalListOfData: StaffList[] = [];
   total = 0;
-  pageSize: number = 5;
+  pageSize: number = 8;
   pageIndex: number = 1;
+  options: GroupList[];
   private params: NzTableQueryParams;
   visible = {
     first_name: false, last_name: false, username: false, email: false, actions: false
@@ -49,6 +51,8 @@ export class TableStaffComponent implements OnInit {
     last_name: new FormControl(''),
     username: new FormControl(''),
     email: new FormControl(''),
+    groups: new FormControl([0])
+
 
   });
 
@@ -69,7 +73,9 @@ export class TableStaffComponent implements OnInit {
 
   ngOnInit(): void {
     this.getStaff();
-
+    this.staffSer.getGroupList().subscribe(e => {
+      this.options = e;
+    })
   }
 
   reset(key) {
@@ -99,6 +105,7 @@ export class TableStaffComponent implements OnInit {
       last_name: this.listOfData[i].last_name,
       username: this.listOfData[i].username,
       email: this.listOfData[i].email,
+      groups: this.listOfData[i].groups
 
     })
   }

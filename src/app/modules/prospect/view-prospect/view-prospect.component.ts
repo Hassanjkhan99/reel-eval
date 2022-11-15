@@ -27,6 +27,10 @@ import {
   PositionMultiSelectComponent
 } from "../../../shared/components/position-multi-select/position-multi-select.component";
 import {CheckboxListComponent, ListInterface} from "../../../shared/components/checkbox-list/checkbox-list.component";
+import {Schools} from "../../../shared/interfaces/school.interface";
+import {SchoolSelectComponent} from "../../../shared/components/school-select/school-select.component";
+import {States} from "../../../shared/interfaces/state.interface";
+import {StateSelectComponent} from "../../../shared/components/state-select/state-select.component";
 
 @Component({
   selector: 'app-view-prospect',
@@ -47,6 +51,8 @@ import {CheckboxListComponent, ListInterface} from "../../../shared/components/c
     NzToolTipModule,
     PositionMultiSelectComponent,
     CheckboxListComponent,
+    SchoolSelectComponent,
+    StateSelectComponent,
   ],
   templateUrl: './view-prospect.component.html',
   styleUrls: ['./view-prospect.component.scss'],
@@ -54,9 +60,11 @@ import {CheckboxListComponent, ListInterface} from "../../../shared/components/c
 export class ViewProspectComponent {
   @Input() dataSet: Prospect[] = [];
   @Input() classificationList: { name: string }[] = [];
+  @Input() stateList: { name: string }[] = [];
+  @Input() schoolList: { name: string }[] = [];
   @Input() achievedTable: boolean = false;
   @Input() isLoading: boolean = false;
-  @Input() pageSize: number = 5;
+  @Input() pageSize: number = 8;
   @Input() pageIndex: number;
   @Input() params: NzTableQueryParams;
   @Input() total = 0;
@@ -82,10 +90,14 @@ export class ViewProspectComponent {
       name: 'Position',
     },
     {
-      name: 'Classification/Year',
+      name: 'Class/Yr',
+      tooltip: true,
+      tooltipText: 'Classification/Year'
     },
     {
-      name: 'State/Province',
+      name: 'St./Prov',
+      tooltip: true,
+      tooltipText: 'State/Province'
     },
     {
       name: 'School/Team',
@@ -140,6 +152,8 @@ export class ViewProspectComponent {
 
   currentEditIndex: number;
   currentPosition: number;
+  currentSchool: string;
+  currentState: string;
 
   constructor(
     private fb: FormBuilder,
@@ -165,6 +179,8 @@ export class ViewProspectComponent {
     }
 
     this.currentPosition = this.dataSet[i].position.id;
+    this.currentSchool = this.dataSet[i].school;
+    this.currentState = this.dataSet[i].state;
     this.currentEditIndex = i;
     this.prospectForm.setValue({
       first_name: this.dataSet[i].first_name,
@@ -226,9 +242,31 @@ export class ViewProspectComponent {
     console.log(position.position_name);
   }
 
+  setSchool(school: Schools) {
+    this.prospectForm.get('school').setValue(school.school_name);
+    console.log(school.school_name);
+  }
+
+  setState(state: States) {
+    this.prospectForm.get('state').setValue(state.state_name);
+    console.log(state.state_name);
+  }
+
   addPosition(position: Positions) {
     console.log(position);
     this.prospectForm.controls.position.setValue(position);
+    this.prospectForm.updateValueAndValidity();
+  }
+
+  addSchool(school: Schools) {
+    console.log(school);
+    this.prospectForm.controls.school.setValue(school.school_name);
+    this.prospectForm.updateValueAndValidity();
+  }
+
+  addState(state: States) {
+    console.log(state);
+    this.prospectForm.controls.state.setValue(state.state_name);
     this.prospectForm.updateValueAndValidity();
   }
 
@@ -293,8 +331,8 @@ export class ViewProspectComponent {
     this.search(key);
   }
 
-  filterPosition(positions: Positions[]) {
-    this.searchValue.position__position_name = positions.map(e => e.position_name).join(' ')
+  filterPosition(positions: Positions) {
+    this.searchValue.position__position_name = positions.position_name
   }
 
   search(key) {
@@ -316,6 +354,8 @@ export class ViewProspectComponent {
         this.prospectForm.reset();
         this.prospectForm.controls.archived.setValue(false);
         this.currentPosition = -1;
+        this.currentSchool = '';
+        this.currentState = '';
         this.showRow = false;
         this.cdr.detectChanges();
         this.showRow = true;
@@ -348,8 +388,16 @@ export class ViewProspectComponent {
     this.queryParamsChange.emit({params, filterField});
   }
 
-  filterClassification(classifications: ListInterface[]) {
-    this.searchValue.classification = classifications.map(e => e.name).join(' ')
+  filterClassification(classification: ListInterface) {
+    this.searchValue.classification = classification.name
+  }
+
+  filterState(state: ListInterface) {
+    this.searchValue.state = state.name
+  }
+
+  filterSchool(school: ListInterface) {
+    this.searchValue.school = school.name
   }
 }
 
@@ -361,4 +409,6 @@ interface ColumnItem {
   filterFn?: (list: any, item: Prospect) => void;
   filterMultiple?: boolean;
   sortDirections?: NzTableSortOrder[];
+  tooltip?: boolean
+  tooltipText?: string
 }

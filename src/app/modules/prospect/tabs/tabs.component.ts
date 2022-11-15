@@ -26,11 +26,13 @@ export class TabsComponent implements OnInit {
   params: NzTableQueryParams;
   pageIndexArchived: number = 1;
   pageIndexUnArchived: number = 1;
-  pageSizeArchived: number = 5;
-  pageSizeUnArchived: number = 5;
+  pageSizeArchived: number = 8;
+  pageSizeUnArchived: number = 8;
   filterList: Array<{ text: string; value: NzSafeAny; byDefault?: boolean }> = [];
   unArchivedClassificationList: { name: string }[] = [];
   archivedClassificationList: { name: string }[] = [];
+  stateList: { name: string }[] = [];
+  schoolList: { name: string }[] = [];
 
 
   constructor(private prospectSer: ProspectService, private cdr: ChangeDetectorRef) {
@@ -41,6 +43,22 @@ export class TabsComponent implements OnInit {
       this.filterList = positions.map(e => {
         return {
           value: e.position_name, text: e.position_name
+        }
+      })
+      this.cdr.detectChanges()
+    })
+    this.prospectSer.getStates().subscribe(states => {
+      this.stateList = states.map(e => {
+        return {
+          name: e.state_name
+        }
+      })
+      this.cdr.detectChanges()
+    })
+    this.prospectSer.getSchools().subscribe(schools => {
+      this.schoolList = schools.map(e => {
+        return {
+          name: e.school_name
         }
       })
       this.cdr.detectChanges()

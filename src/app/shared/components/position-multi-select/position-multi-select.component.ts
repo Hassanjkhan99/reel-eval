@@ -25,36 +25,28 @@ import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
 })
 export class PositionMultiSelectComponent implements OnInit {
 
-  positions: PositionCheckedInterface[] = []
+  positions: Positions[] = []
 
-  @Input() selectedPositions: Positions[];
+  @Input() selectedPosition: Positions;
 
-  @Output() positionsChanged: EventEmitter<Positions[]> = new EventEmitter<Positions[]>()
+  @Output() positionsChanged: EventEmitter<Positions> = new EventEmitter<Positions>()
 
   constructor(private prospectService: ProspectService, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
     this.prospectService.getPositions().subscribe(positions => {
-      this.positions = positions.map(e => {
-        return {
-          id: e.id, position_name: e.position_name, checked: false
-        }
-      })
+      this.positions = positions
       this.cdr.detectChanges()
     })
 
   }
 
   positionSelected() {
-    this.selectedPositions = this.positions.filter(e => e.checked).map(e => {
-      return {
-        position_name: e.position_name, id: e.id
-      }
-    })
-
-    this.positionsChanged.emit(this.selectedPositions)
+    this.positionsChanged.emit(this.selectedPosition)
   }
+
+
 }
 
 

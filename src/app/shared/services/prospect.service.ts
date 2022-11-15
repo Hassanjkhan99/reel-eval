@@ -5,6 +5,8 @@ import {Prospect, ProspectApi} from "../interfaces/prospect.interface";
 import {main_url} from "../../../environments/environment";
 import {Positions, Result} from "../interfaces/positions.interface";
 import {map} from "rxjs/operators";
+import {SchoolApi, Schools} from "../interfaces/school.interface";
+import {StateApi, States} from "../interfaces/state.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -79,5 +81,13 @@ export class ProspectService {
 
   getPositions(): Observable<Positions[]> {
     return this.http.get<Result>(`${main_url}positions/`).pipe(map(e => e.results));
+  }
+
+  getSchools(): Observable<Schools[]> {
+    return this.http.get<SchoolApi>(`${main_url}schools/`).pipe(map(e => e.results));
+  }
+
+  getStates(): Observable<States[]> {
+    return this.http.get<StateApi>(`${main_url}states/`).pipe(map(e => e.results));
   }
 }

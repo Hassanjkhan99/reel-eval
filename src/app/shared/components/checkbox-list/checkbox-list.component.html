@@ -1,8 +1,12 @@
-<ul
-  class="ant-dropdown-menu ant-dropdown-menu-root ant-dropdown-menu-light ant-dropdown-menu-vertical"
-  nz-menu
+<nz-select
+  (ngModelChange)="itemSelected()"
+  [(ngModel)]="selectedValue"
+  class="w-100 p-1"
+  nzPlaceHolder="Select {{name}}"
 >
-  <li *ngFor="let item of selectionList;let i = index" nz-menu-item>
-    <label (ngModelChange)="itemSelected()" [(ngModel)]="selectionList[i].checked" nz-checkbox>{{item.name}}</label>
-  </li>
-</ul>
+  <nz-option
+    *ngFor="let item of inputList"
+    [nzLabel]="item.name"
+    [nzValue]="item"
+  ></nz-option>
+</nz-select>

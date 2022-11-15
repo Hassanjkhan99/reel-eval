@@ -3,7 +3,7 @@
           [nzFrontPagination]="false"
           [nzPageIndex]="pageIndex"
           [nzPageSize]="pageSize" [nzTotal]="total"
-          [nzPageSizeOptions]="[5,10,20,30,40,50]" [nzScroll]="{ y: '361px' }"
+          [nzPageSizeOptions]="[8,10,20,30,40,50]" [nzScroll]="{ y: '580px' }"
           nzBordered
           nzShowSizeChanger
           nzTableLayout="fixed"
@@ -15,7 +15,7 @@
         [nzSortFn]="true"
         [class]="'text-center ' + listOfFilter[i]" nzCustomFilter>
       {{column}}
-      <nz-filter-trigger *ngIf="column !== 'Actions'"
+      <nz-filter-trigger *ngIf="column !== 'Actions' && column !== 'Permissions'"
                          [(nzVisible)]="visible[listOfFilter[i]]"
                          [nzActive]="searchValue[listOfFilter[i]].length > 0"
                          [nzDropdownMenu]="menu">
@@ -85,6 +85,24 @@
         </span>
       <span *ngIf="currentEditIndex == i">
           <input class="text-align-center" formControlName="email" nz-input/>
+        </span>
+    </td>
+    <td>
+      <span *ngIf="currentEditIndex != i">
+         {{ data.group }}
+        </span>
+      <span *ngIf="currentEditIndex == i">
+          <nz-select
+            [nzMaxTagPlaceholder]="tagPlaceHolder"
+            formControlName="groups"
+            nzMode="multiple"
+            nzPlaceHolder="Select Permissions"
+          >
+                  <nz-option *ngFor="let permissions of options" [nzLabel]="permissions.name"
+                             [nzValue]="permissions.id">
+                  </nz-option>
+                </nz-select>
+        <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
         </span>
     </td>
     <td class="d-flex justify-content-center">

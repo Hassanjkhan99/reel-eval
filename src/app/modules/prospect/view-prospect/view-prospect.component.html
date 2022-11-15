@@ -13,8 +13,8 @@
   [nzFrontPagination]="false"
   [nzPageIndex]="pageIndex"
   [nzPageSize]="pageSize" [nzTotal]="total"
-  [nzPageSizeOptions]="[5,10,20,30,40,50]"
-  [nzScroll]="{ y: '361px' }"
+  [nzPageSizeOptions]="[8,10,20,30,40,50]"
+  [nzScroll]="{ y: '580px' }"
   nzShowSizeChanger
 >
   <thead>
@@ -25,6 +25,7 @@
       [nzCustomFilter]=" column.name !== 'Video Link'"
       [nzColumnKey]="listOfFilter[i]"
       [nzSortFn]="true"
+      [nz-tooltip]="column.tooltipText"
     >
       {{ column.name }}
 
@@ -41,7 +42,7 @@
         <div class="ant-table-filter-dropdown">
           <div class="search-box">
             <input
-              *ngIf="column.name !== 'Position'"
+              *ngIf="column.name !== 'Position' && column.name !== 'St./Prov'&& column.name !== 'School/Team'"
               [(ngModel)]="searchValue[listOfFilter[i]]"
               [placeholder]="'Search ' + column.name"
               nz-input
@@ -49,9 +50,13 @@
             />
             <app-position-multi-select (positionsChanged)="filterPosition($event)"
                                        *ngIf="column.name === 'Position'"></app-position-multi-select>
-            <app-checkbox-list (listChanged)="filterClassification($event)"
-                               *ngIf="column.name === 'Classification/Year'"
-                               [inputList]="classificationList"></app-checkbox-list>
+
+            <app-checkbox-list (selectionChange)="filterState($event)" *ngIf="column.name === 'St./Prov'"
+                               [inputList]="stateList"
+                               [name]="column.name"></app-checkbox-list>
+            <app-checkbox-list (selectionChange)="filterSchool($event)" *ngIf="column.name === 'School/Team'"
+                               [inputList]="schoolList"
+                               [name]="column.name"></app-checkbox-list>
             <button
               (click)="search(listOfFilter[i])"
               class="search-button"
@@ -98,12 +103,18 @@
     </td>
     <td>
         <span>
-          <input formControlName="state" nz-input/>
+          <app-state-select
+            (stateChanged)="addState($event)"
+            [selectedState]="currentState"
+          ></app-state-select>
         </span>
     </td>
     <td>
         <span>
-          <input formControlName="school" nz-input/>
+          <app-school-select
+            (schoolChanged)="addSchool($event)"
+            [selectedSchool]="currentSchool"
+          ></app-school-select>
         </span>
     </td>
 
@@ -202,7 +213,10 @@
           {{ data.state }}
         </span>
       <span *ngIf="currentEditIndex == i">
-          <input formControlName="state" nz-input/>
+          <app-state-select
+            (stateChanged)="setState($event)"
+            [selectedState]="currentState"
+          ></app-state-select>
         </span>
     </td>
     <td>
@@ -210,7 +224,10 @@
           {{ data.school }}
         </span>
       <span *ngIf="currentEditIndex == i">
-          <input formControlName="school" nz-input/>
+         <app-school-select
+           (schoolChanged)="setSchool($event)"
+           [selectedSchool]="currentSchool"
+         ></app-school-select>
         </span>
     </td>
 

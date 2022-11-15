@@ -1,0 +1,5 @@
+<nz-select [formControl]="school" class="w-100" nzPlaceHolder="Select your School" nzSize="large">
+  <nz-option *ngFor="let school of schools" nzLabel="{{school.school_name}}"
+             nzValue="{{school.school_name}}"></nz-option>
+</nz-select>
+
