@@ -26,11 +26,8 @@ import {NzToolTipModule} from "ng-zorro-antd/tooltip";
 import {
   PositionMultiSelectComponent
 } from "../../../shared/components/position-multi-select/position-multi-select.component";
-import {CheckboxListComponent, ListInterface} from "../../../shared/components/checkbox-list/checkbox-list.component";
 import {Schools} from "../../../shared/interfaces/school.interface";
-import {SchoolSelectComponent} from "../../../shared/components/school-select/school-select.component";
 import {States} from "../../../shared/interfaces/state.interface";
-import {StateSelectComponent} from "../../../shared/components/state-select/state-select.component";
 import {
   StatesSelectSearchComponent
 } from "../../../shared/components/states-select-search/states-select-search.component";
@@ -56,9 +53,6 @@ import {
     NzListModule,
     NzToolTipModule,
     PositionMultiSelectComponent,
-    CheckboxListComponent,
-    SchoolSelectComponent,
-    StateSelectComponent,
     StatesSelectSearchComponent,
     SchoolSelectSearchComponent,
   ],
@@ -163,6 +157,9 @@ export class ViewProspectComponent {
   currentSchool: string;
   currentState: string;
 
+  stateSearchFormControl = new FormControl<string>(null);
+  schoolSearchFormControl = new FormControl<string>(null);
+
   constructor(
     private fb: FormBuilder,
     private prospectSer: ProspectService,
@@ -172,6 +169,23 @@ export class ViewProspectComponent {
   ) {
   }
 
+  get school() {
+    return this.prospectForm.controls.school
+  }
+
+  get state() {
+    return this.prospectForm.controls.school
+  }
+
+  ngOnInit() {
+    this.stateSearchFormControl.valueChanges.subscribe(val => {
+      console.log('stateSearchFormControl: ', val)
+      this.searchValue.state = val;
+    });
+    this.schoolSearchFormControl.valueChanges.subscribe(val => {
+      this.searchValue.school = val;
+    })
+  }
 
   isEdit(i: number) {
     if (
@@ -263,12 +277,6 @@ export class ViewProspectComponent {
   addPosition(position: Positions) {
     console.log(position);
     this.prospectForm.controls.position.setValue(position);
-    this.prospectForm.updateValueAndValidity();
-  }
-
-  addSchool(school: Schools) {
-    console.log(school);
-    this.prospectForm.controls.school.setValue(school.school_name);
     this.prospectForm.updateValueAndValidity();
   }
 
@@ -383,10 +391,19 @@ export class ViewProspectComponent {
       );
       return;
     }
-    this.prospectForm.reset();
-    this.prospectForm.controls.archived.setValue(false);
+    this.prospectForm.reset({
+      school: '',
+      archived: false,
+      position: null,
+      classification: '',
+      first_name: '',
+      last_name: "",
+      state: '',
+      video_link: ''
+    });
     this.currentPosition = -1;
     this.showRow = false;
+    console.log(this.prospectForm.value)
     this.cdr.detectChanges();
     this.showRow = true;
     this.cdr.detectChanges();
@@ -396,25 +413,6 @@ export class ViewProspectComponent {
     this.queryParamsChange.emit({params, filterField});
   }
 
-  filterClassification(classification: ListInterface) {
-    this.searchValue.classification = classification.name
-  }
-
-  filterState(state: States) {
-    this.searchValue.state = state.state_name
-  }
-
-  filterSchool(school: Schools) {
-    this.searchValue.school = school.school_name
-  }
-
-  searchStates($event: string) {
-
-  }
-
-  searchSchools($event: string) {
-
-  }
 }
 
 interface ColumnItem {

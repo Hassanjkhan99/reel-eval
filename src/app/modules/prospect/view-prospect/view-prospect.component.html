@@ -12,8 +12,9 @@
   (nzQueryParams)="onQueryParamsChange($event)"
   [nzFrontPagination]="false"
   [nzPageIndex]="pageIndex"
-  [nzPageSize]="pageSize" [nzTotal]="total"
-  [nzPageSizeOptions]="[8,10,20,30,40,50]"
+  [nzPageSizeOptions]="[8, 10, 20, 30, 40, 50]"
+  [nzPageSize]="pageSize"
+  [nzTotal]="total"
   [nzScroll]="{ y: '580px' }"
   nzShowSizeChanger
 >
@@ -21,19 +22,18 @@
   <tr>
     <th
       *ngFor="let column of listOfColumns; let i = index"
-      class="text-center"
-      [nzCustomFilter]=" column.name !== 'Video Link'"
-      [nzColumnKey]="listOfFilter[i]"
-      [nzSortFn]="true"
       [nz-tooltip]="column.tooltipText"
+      [nzColumnKey]="listOfFilter[i]"
+      [nzCustomFilter]="column.name !== 'Video Link'"
+      [nzSortFn]="true"
+      class="text-center"
     >
       {{ column.name }}
 
-
       <nz-filter-trigger
         *ngIf="column.name !== 'Video Link'"
-        [(nzVisible)]="visible[listOfFilter[i]]"
-        [nzActive]="searchValue[listOfFilter[i]].length > 0"
+        [(nzVisible)]="visible[listOfFilter?.[i]]"
+        [nzActive]="searchValue[listOfFilter[i]]?.length > 0"
         [nzDropdownMenu]="menu"
       >
         <span nz-icon nzType="search"></span>
@@ -42,35 +42,32 @@
         <div class="ant-table-filter-dropdown">
           <div class="search-box">
             <input
-              *ngIf="column.name !== 'Position' && column.name !== 'St./Prov'&& column.name !== 'School/Team'"
+              *ngIf="
+                  column.name !== 'Position' &&
+                  column.name !== 'St./Prov' &&
+                  column.name !== 'School/Team'
+                "
               [(ngModel)]="searchValue[listOfFilter[i]]"
               [placeholder]="'Search ' + column.name"
               nz-input
               type="text"
             />
-            <app-position-multi-select (positionsChanged)="filterPosition($event)"
-                                       *ngIf="column.name === 'Position'"></app-position-multi-select>
+            <app-position-multi-select
+              (positionsChanged)="filterPosition($event)"
+              *ngIf="column.name === 'Position'"
+            ></app-position-multi-select>
 
-            <!--            <app-checkbox-list (selectionChange)="filterState($event)" *ngIf="column.name === 'St./Prov'"-->
-            <!--                               [inputList]="stateList"-->
-            <!--                               [name]="column.name"-->
-            <!--                                (searchValue) = "searchStates($event)"-->
-            <!--            ></app-checkbox-list>-->
-            <app-states-select-search (selectionChange)="filterState($event) "
-                                      *ngIf="column.name === 'St./Prov'"
+            <app-states-select-search
+              *ngIf="column.name === 'St./Prov'"
+              [formControl]="stateSearchFormControl"
             >
             </app-states-select-search>
-            <app-school-select-search (selectionChange)="filterSchool($event) "
-                                      *ngIf="column.name === 'School/Team'"
+            <app-school-select-search
+              *ngIf="column.name === 'School/Team'"
+              [formControl]="schoolSearchFormControl"
             >
             </app-school-select-search>
 
-            <!--            <app-checkbox-list (selectionChange)="filterSchool($event)" *ngIf="column.name === 'School/Team'"-->
-            <!--                               [inputList]="schoolList"-->
-            <!--                               [name]="column.name"-->
-            <!--                               (searchValue) = "searchSchools($event)"-->
-
-            <!--            ></app-checkbox-list>-->
             <button
               (click)="search(listOfFilter[i])"
               class="search-button"
@@ -117,18 +114,13 @@
     </td>
     <td>
         <span>
-          <app-state-select
-            (stateChanged)="addState($event)"
-            [selectedState]="currentState"
-          ></app-state-select>
+          <app-states-select-search formControlName="state"></app-states-select-search>
         </span>
     </td>
     <td>
         <span>
-          <app-school-select
-            (schoolChanged)="addSchool($event)"
-            [selectedSchool]="currentSchool"
-          ></app-school-select>
+          <app-school-select-search formControlName="school">
+          </app-school-select-search>
         </span>
     </td>
 
@@ -141,20 +133,24 @@
       <a (click)="isSaveNew(false)" class="p-2">
         <i
           [nzTheme]="'twotone'"
+          [nzTooltipColor]="'blue'"
+          [nzTooltipTitle]="'Save Prospect'"
           [nzTwotoneColor]="'#46c40a'"
           nz-icon
+          nz-tooltip
           nzType="save"
-          [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Save Prospect'" nz-tooltip
         ></i>
       </a>
       <a
         (nzOnCancel)="cancel()"
         (nzOnConfirm)="confirm()"
+        [nzTooltipColor]="'blue'"
+        [nzTooltipTitle]="'Discard changes'"
         class="p-2"
         nz-popconfirm
+        nz-tooltip
         nzPopconfirmPlacement="top"
         nzPopconfirmTitle="Are you sure you want to discard changes?"
-        [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Discard changes'" nz-tooltip
       >
         <i
           [nzTheme]="'twotone'"
@@ -164,10 +160,11 @@
         ></i>
       </a>
       <a
-
-        class="p-2"
         (click)="isSaveNew(true)"
-        [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Add New Prospect'" nz-tooltip
+        [nzTooltipColor]="'blue'"
+        [nzTooltipTitle]="'Add New Prospect'"
+        class="p-2"
+        nz-tooltip
       >
         <i
           [nzTheme]="'twotone'"
@@ -227,10 +224,8 @@
           {{ data.state }}
         </span>
       <span *ngIf="currentEditIndex == i">
-          <app-state-select
-            (stateChanged)="setState($event)"
-            [selectedState]="currentState"
-          ></app-state-select>
+          <app-states-select-search formControlName="state">
+          </app-states-select-search>
         </span>
     </td>
     <td>
@@ -238,10 +233,8 @@
           {{ data.school }}
         </span>
       <span *ngIf="currentEditIndex == i">
-         <app-school-select
-           (schoolChanged)="setSchool($event)"
-           [selectedSchool]="currentSchool"
-         ></app-school-select>
+          <app-school-select-search formControlName="school">
+          </app-school-select-search>
         </span>
     </td>
 
@@ -254,13 +247,23 @@
         </span>
     </td>
     <td class="d-flex justify-content-center">
-      <a (click)="isEdit(i)" *ngIf="currentEditIndex != i" [nzTooltipColor]="'blue'"
-         [nzTooltipTitle]="'Edit Prospect'" class="p-2" nz-tooltip
+      <a
+        (click)="isEdit(i)"
+        *ngIf="currentEditIndex != i"
+        [nzTooltipColor]="'blue'"
+        [nzTooltipTitle]="'Edit Prospect'"
+        class="p-2"
+        nz-tooltip
       >
         <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
       </a>
-      <a (click)="isSave(i)" *ngIf="currentEditIndex == i" [nzTooltipColor]="'blue'"
-         [nzTooltipTitle]="'Save changes'" class="p-2" nz-tooltip
+      <a
+        (click)="isSave(i)"
+        *ngIf="currentEditIndex == i"
+        [nzTooltipColor]="'blue'"
+        [nzTooltipTitle]="'Save changes'"
+        class="p-2"
+        nz-tooltip
       >
         <i
           [nzTheme]="'twotone'"
@@ -273,11 +276,13 @@
         (nzOnCancel)="cancel()"
         (nzOnConfirm)="confirm()"
         *ngIf="currentEditIndex == i"
+        [nzTooltipColor]="'blue'"
+        [nzTooltipTitle]="'Discard changes'"
         class="p-2"
         nz-popconfirm
+        nz-tooltip
         nzPopconfirmPlacement="top"
         nzPopconfirmTitle="Are you sure you want to discard changes?"
-        [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Discard changes'" nz-tooltip
       >
         <i
           [nzTheme]="'twotone'"
@@ -290,11 +295,13 @@
         (nzOnCancel)="cancel()"
         (nzOnConfirm)="isDelete(i)"
         *ngIf="currentEditIndex != i"
+        [nzTooltipColor]="'blue'"
+        [nzTooltipTitle]="'Delete Prospect'"
         class="p-2"
         nz-popconfirm
+        nz-tooltip
         nzPopconfirmPlacement="top"
         nzPopconfirmTitle="Are you sure you want to delete prospect?"
-        [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Delete Prospect'" nz-tooltip
       >
         <i
           [nzTheme]="'twotone'"
@@ -307,8 +314,10 @@
         <a
           (click)="isArchive(i)"
           *ngIf="currentEditIndex != i"
+          [nzTooltipColor]="'blue'"
+          [nzTooltipTitle]="'Archive Prospect'"
           class="p-2"
-          [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Archive Prospect'" nz-tooltip
+          nz-tooltip
         >
           <i nz-icon nzTheme="outline" nzType="export"></i>
         </a>
@@ -317,16 +326,15 @@
         <a
           (click)="isUnArchive(i)"
           *ngIf="currentEditIndex != i"
+          [nzTooltipColor]="'blue'"
+          [nzTooltipTitle]="'UnArchive Prospect'"
           class="p-2"
-          [nzTooltipColor]="'blue'" [nzTooltipTitle]="'UnArchive Prospect'" nz-tooltip
+          nz-tooltip
         >
           <i nz-icon nzTheme="outline" nzType="export"></i>
         </a>
       </ng-template>
     </td>
   </tr>
-
   </tbody>
 </nz-table>
-
-

@@ -27,6 +27,7 @@
     "@angular/router": "^14.2.0",
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@ng-bootstrap/ng-bootstrap": "^13.0.0",
+    "@ngneat/until-destroy": "^9.2.2",
     "@popperjs/core": "^2.10.2",
     "bootstrap": "^5.2.0",
     "chart.js": "^3.0.0",

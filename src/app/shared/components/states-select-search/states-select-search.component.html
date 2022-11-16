@@ -1,13 +1,14 @@
 <nz-select
-  (ngModelChange)="itemSelected()" (nzOnSearch)="search($event)"
-  [(ngModel)]="selectedValue"
+  (nzOnSearch)="search($event)"
+  [formControl]="control"
   class="w-100 p-1"
   nzPlaceHolder="Search for States"
   nzShowSearch
+  ngDefaultControl
 >
   <nz-option
-    *ngFor="let item of inputList"
+    *ngFor="let item of list"
     [nzLabel]="item.state_name"
-    [nzValue]="item"
+    [nzValue]="item.state_name"
   ></nz-option>
 </nz-select>
