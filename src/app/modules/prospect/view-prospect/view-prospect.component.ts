@@ -186,6 +186,9 @@ export class ViewProspectComponent {
     this.schoolSearchFormControl.valueChanges.subscribe(val => {
       this.searchValue.school = val;
     })
+    this.positionSearchFormControl.valueChanges.subscribe(val => {
+      this.searchValue.position__position_name = val;
+    })
   }
 
   isEdit(i: number) {
