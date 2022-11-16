@@ -98,4 +98,12 @@ export class ProspectService {
       }
     }).pipe(map(e => e.results));
   }
+
+  exportCompleteListToExcel() {
+    return this.http.get(`${main_url}prospects/export_to_excel/0/`, {responseType: 'blob' as 'json'});
+  }
+
+  exportToExcel(idArr: number[]) {
+    return this.http.get(`${main_url}prospects/export_to_excel/${idArr.join(',')}/`, {responseType: 'blob' as 'json'});
+  }
 }

@@ -1,8 +1,21 @@
-<div *ngIf="!achievedTable" class="p-2 w-100 d-flex justify-content-end">
-  <button (click)="addProspect()" nz-button nzType="primary">
-    Add Prospect
-  </button>
+<div class=" w-100 d-flex justify-content-end">
+  <div class="p-2  d-flex justify-content-end">
+    <button (click)="exportCompleteListToExcel()" nz-button nzType="primary">
+      Export Complete List To Excel
+    </button>
+  </div>
+  <div class="p-2  d-flex justify-content-end">
+    <button (click)="exportListToExcel()" [disabled]="checkedIds.length < 1" nz-button nzType="primary">
+      Export Selected Prospects List To Excel
+    </button>
+  </div>
+  <div *ngIf="!achievedTable" class="p-2  d-flex justify-content-end">
+    <button (click)="addProspect()" nz-button nzType="primary">
+      Add Prospect
+    </button>
+  </div>
 </div>
+
 <nz-table
   #borderedTable
   [nzData]="dataSet"
@@ -17,9 +30,15 @@
   [nzTotal]="total"
   [nzScroll]="{ y: '580px' }"
   nzShowSizeChanger
+  (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
 >
   <thead>
   <tr>
+    <th
+      (nzCheckedChange)="onAllChecked($event)"
+      [(nzChecked)]="checked"
+      [nzIndeterminate]="indeterminate"
+    ></th>
     <th
       *ngFor="let column of listOfColumns; let i = index"
       [nz-tooltip]="column.tooltipText"
@@ -181,6 +200,7 @@
     [formGroup]="prospectForm"
     class="text-center"
   >
+    <td (nzCheckedChange)="onItemChecked(data.id, $event)" [nzChecked]="setOfCheckedId.has(data.id)"></td>
     <td>
         <span *ngIf="currentEditIndex != i">
           {{ data.first_name }}

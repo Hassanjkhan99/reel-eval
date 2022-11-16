@@ -20,20 +20,18 @@ import {NzButtonModule} from 'ng-zorro-antd/button';
 import {TabsComponent} from '../tabs/tabs.component';
 import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
 import {NotificationService} from '../../../shared/services/notification.service';
-import {NzSafeAny} from "ng-zorro-antd/core/types";
-import {NzListModule} from "ng-zorro-antd/list";
-import {NzToolTipModule} from "ng-zorro-antd/tooltip";
+import {NzSafeAny} from 'ng-zorro-antd/core/types';
+import {NzListModule} from 'ng-zorro-antd/list';
+import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import {
   PositionMultiSelectComponent
-} from "../../../shared/components/position-multi-select/position-multi-select.component";
-import {Schools} from "../../../shared/interfaces/school.interface";
-import {States} from "../../../shared/interfaces/state.interface";
+} from '../../../shared/components/position-multi-select/position-multi-select.component';
 import {
   StatesSelectSearchComponent
-} from "../../../shared/components/states-select-search/states-select-search.component";
+} from '../../../shared/components/states-select-search/states-select-search.component';
 import {
   SchoolSelectSearchComponent
-} from "../../../shared/components/school-select-search/school-select-search.component";
+} from '../../../shared/components/school-select-search/school-select-search.component';
 
 @Component({
   selector: 'app-view-prospect',
@@ -70,7 +68,11 @@ export class ViewProspectComponent {
   @Input() pageIndex: number;
   @Input() params: NzTableQueryParams;
   @Input() total = 0;
-  @Input() positionListFilter: Array<{ text: string; value: NzSafeAny; byDefault?: boolean }> = [];
+  @Input() positionListFilter: Array<{
+    text: string;
+    value: NzSafeAny;
+    byDefault?: boolean;
+  }> = [];
 
   @Output() queryParamsChange: EventEmitter<{
     params: NzTableQueryParams;
@@ -94,12 +96,12 @@ export class ViewProspectComponent {
     {
       name: 'Class/Yr',
       tooltip: true,
-      tooltipText: 'Classification/Year'
+      tooltipText: 'Classification/Year',
     },
     {
       name: 'St./Prov',
       tooltip: true,
-      tooltipText: 'State/Province'
+      tooltipText: 'State/Province',
     },
     {
       name: 'School/Team',
@@ -161,6 +163,12 @@ export class ViewProspectComponent {
   positionSearchFormControl = new FormControl<string>(null);
   schoolSearchFormControl = new FormControl<string>(null);
 
+  checked = false;
+  indeterminate = false;
+  listOfCurrentPageData: readonly Prospect[] = [];
+  setOfCheckedId = new Set<number>();
+  checkedIds: number[] = [];
+
   constructor(
     private fb: FormBuilder,
     private prospectSer: ProspectService,
@@ -171,24 +179,24 @@ export class ViewProspectComponent {
   }
 
   get school() {
-    return this.prospectForm.controls.school
+    return this.prospectForm.controls.school;
   }
 
   get state() {
-    return this.prospectForm.controls.school
+    return this.prospectForm.controls.school;
   }
 
   ngOnInit() {
-    this.stateSearchFormControl.valueChanges.subscribe(val => {
-      console.log('stateSearchFormControl: ', val)
+    this.stateSearchFormControl.valueChanges.subscribe((val) => {
+      console.log('stateSearchFormControl: ', val);
       this.searchValue.state = val;
     });
-    this.schoolSearchFormControl.valueChanges.subscribe(val => {
+    this.schoolSearchFormControl.valueChanges.subscribe((val) => {
       this.searchValue.school = val;
-    })
-    this.positionSearchFormControl.valueChanges.subscribe(val => {
+    });
+    this.positionSearchFormControl.valueChanges.subscribe((val) => {
       this.searchValue.position__position_name = val;
-    })
+    });
   }
 
   isEdit(i: number) {
@@ -244,7 +252,7 @@ export class ViewProspectComponent {
   }
 
   isDelete(i: number) {
-    this.prospectSer.deleteProspect(this.dataSet[i].id).subscribe((x) => {
+    this.prospectSer.deleteProspect(this.dataSet[i].id).subscribe(() => {
       this.notificationService.success(
         'Success',
         'Selected Prospect has been deleted!'
@@ -268,25 +276,9 @@ export class ViewProspectComponent {
     console.log(position.position_name);
   }
 
-  setSchool(school: Schools) {
-    this.prospectForm.get('school').setValue(school.school_name);
-    console.log(school.school_name);
-  }
-
-  setState(state: States) {
-    this.prospectForm.get('state').setValue(state.state_name);
-    console.log(state.state_name);
-  }
-
   addPosition(position: Positions) {
     console.log(position);
     this.prospectForm.controls.position.setValue(position);
-    this.prospectForm.updateValueAndValidity();
-  }
-
-  addState(state: States) {
-    console.log(state);
-    this.prospectForm.controls.state.setValue(state.state_name);
     this.prospectForm.updateValueAndValidity();
   }
 
@@ -303,7 +295,7 @@ export class ViewProspectComponent {
   isArchive(i: number) {
     this.prospectSer
       .editProspect(this.dataSet[i].id, {...this.dataSet[i], archived: true})
-      .subscribe((x) => {
+      .subscribe(() => {
         this.notificationService.success(
           'Success',
           'Your Prospect has been archived'
@@ -325,7 +317,7 @@ export class ViewProspectComponent {
   }
 
   isUnArchive(i: number) {
-    this.prospectSer.unArchiveProspect(this.dataSet[i].id).subscribe((x) => {
+    this.prospectSer.unArchiveProspect(this.dataSet[i].id).subscribe(() => {
       this.notificationService.success(
         'Success',
         'Your changes has been unarchived!'
@@ -352,7 +344,7 @@ export class ViewProspectComponent {
   }
 
   filterPosition(positions: Positions) {
-    this.searchValue.position__position_name = positions.position_name
+    this.searchValue.position__position_name = positions.position_name;
   }
 
   search(key) {
@@ -401,13 +393,13 @@ export class ViewProspectComponent {
       position: null,
       classification: '',
       first_name: '',
-      last_name: "",
+      last_name: '',
       state: '',
-      video_link: ''
+      video_link: '',
     });
     this.currentPosition = -1;
     this.showRow = false;
-    console.log(this.prospectForm.value)
+    console.log(this.prospectForm.value);
     this.cdr.detectChanges();
     this.showRow = true;
     this.cdr.detectChanges();
@@ -417,6 +409,67 @@ export class ViewProspectComponent {
     this.queryParamsChange.emit({params, filterField});
   }
 
+  exportCompleteListToExcel() {
+    this.prospectSer.exportCompleteListToExcel().subscribe((response) => {
+      this.download(response);
+    });
+  }
+
+  exportListToExcel() {
+    this.prospectSer
+      .exportToExcel([...this.setOfCheckedId])
+      .subscribe((response) => {
+        this.download(response);
+      });
+  }
+
+  download(response) {
+    let binaryData = [];
+    binaryData.push(response);
+    let downloadLink = document.createElement('a');
+    downloadLink.href = window.URL.createObjectURL(new Blob(binaryData));
+    downloadLink.setAttribute('download', 'ProspectsList.xls');
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+  }
+
+  updateCheckedSet(id: number, checked: boolean): void {
+    if (checked) {
+      this.setOfCheckedId.add(id);
+    } else {
+      this.setOfCheckedId.delete(id);
+    }
+    this.checkedIds = [...this.setOfCheckedId]
+  }
+
+  onItemChecked(id: number, checked: boolean): void {
+    this.updateCheckedSet(id, checked);
+    this.refreshCheckedStatus();
+    console.log(this.setOfCheckedId)
+  }
+
+  onAllChecked(value: boolean): void {
+    this.listOfCurrentPageData.forEach((item) =>
+      this.updateCheckedSet(item.id, value)
+    );
+    this.refreshCheckedStatus();
+    console.log(this.setOfCheckedId)
+  }
+
+  onCurrentPageDataChange($event: readonly Prospect[]): void {
+    this.listOfCurrentPageData = $event;
+    this.refreshCheckedStatus();
+  }
+
+  refreshCheckedStatus(): void {
+    this.checked = this.listOfCurrentPageData.every((item) =>
+      this.setOfCheckedId.has(item.id)
+    );
+    this.indeterminate =
+      this.listOfCurrentPageData.some((item) =>
+        this.setOfCheckedId.has(item.id)
+      ) && !this.checked;
+  }
 }
 
 interface ColumnItem {
@@ -427,6 +480,6 @@ interface ColumnItem {
   filterFn?: (list: any, item: Prospect) => void;
   filterMultiple?: boolean;
   sortDirections?: NzTableSortOrder[];
-  tooltip?: boolean
-  tooltipText?: string
+  tooltip?: boolean;
+  tooltipText?: string;
 }
