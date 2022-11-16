@@ -13,3 +13,17 @@ export interface Login {
   password: string;
 
 }
+
+
+export interface UserMe {
+  id: number;
+  username: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  club_id: number;
+  club_name: string;
+  club_is_active: string;
+  group: string;
+  groups: number[];
+}

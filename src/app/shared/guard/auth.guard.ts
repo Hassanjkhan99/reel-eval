@@ -24,6 +24,7 @@ export class AuthGuard implements CanActivate {
 
   checkUser() {
     return this.authService.checkLogin().pipe(tap(e => {
+      this.authService.currentUser$.next(e)
       return !!e;
     }, error => !error))
   }

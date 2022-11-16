@@ -16,7 +16,7 @@ export class HeaderComponent {
   isFolded: boolean;
   isExpand: boolean;
 
-  constructor(private themeService: ThemeConstantService, private authService: AuthenticationService,
+  constructor(private themeService: ThemeConstantService, public authService: AuthenticationService,
               private router: Router, private notification: NzNotificationService) {
   }
 

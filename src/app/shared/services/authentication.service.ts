@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {Login, SignUp} from '../interfaces/authentication.interface';
 import {main_url} from '../../../environments/environment';
 
@@ -8,6 +8,9 @@ import {main_url} from '../../../environments/environment';
   providedIn: 'root',
 })
 export class AuthenticationService {
+
+  currentUser$: BehaviorSubject<any> = new BehaviorSubject<any>(null)
+
   constructor(private http: HttpClient) {
   }
 

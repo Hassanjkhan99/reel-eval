@@ -31,8 +31,8 @@ export class TableStaffComponent implements OnInit {
 
   staffCount: number = 0;
   currentEditIndex: number = -1;
-  listOfColumns = ['First Name', 'Last Name', 'Username', 'Email', 'Permissions', 'Actions'];
-  listOfFilter = ['first_name', 'last_name', 'username', 'email', 'actions'];
+  listOfColumns = ['First Name', 'Last Name', 'Username', 'Email'];
+  listOfFilter = ['first_name', 'last_name', 'username', 'email'];
   listOfData: StaffList[] = [];
   originalListOfData: StaffList[] = [];
   total = 0;
