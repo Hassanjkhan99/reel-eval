@@ -55,6 +55,7 @@
             <app-position-multi-select
               (positionsChanged)="filterPosition($event)"
               *ngIf="column.name === 'Position'"
+              [formControl]="positionSearchFormControl"
             ></app-position-multi-select>
 
             <app-states-select-search

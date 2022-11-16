@@ -158,6 +158,7 @@ export class ViewProspectComponent {
   currentState: string;
 
   stateSearchFormControl = new FormControl<string>(null);
+  positionSearchFormControl = new FormControl<string>(null);
   schoolSearchFormControl = new FormControl<string>(null);
 
   constructor(

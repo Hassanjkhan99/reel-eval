@@ -1,6 +1,6 @@
 <nz-select
   (ngModelChange)="positionSelected()"
-  [(ngModel)]="selectedPosition"
+  [formControl]="control"
   class="w-100 p-1"
   nzPlaceHolder="Select Positions"
 >
