@@ -33,7 +33,6 @@
       >
         {{ column.name }}
         <nz-filter-trigger
-          *ngIf="column.name !== 'Position' && column.name !== 'Video Link'"
           [(nzVisible)]="visible[listOfFilter[i]]"
           [nzActive]="searchValue[listOfFilter[i]].length > 0"
           [nzDropdownMenu]="menu"

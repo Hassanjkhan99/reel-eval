@@ -31,6 +31,7 @@
   [nzScroll]="{ y: '580px' }"
   nzShowSizeChanger
   (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+  class="w-100"
 >
   <thead>
   <tr>
@@ -38,6 +39,8 @@
       (nzCheckedChange)="onAllChecked($event)"
       [(nzChecked)]="checked"
       [nzIndeterminate]="indeterminate"
+      nzWidth="100px"
+
     ></th>
     <th
       *ngFor="let column of listOfColumns; let i = index"
@@ -109,6 +112,7 @@
   </thead>
   <tbody>
   <tr *ngIf="showRow" [formGroup]="prospectForm" class="text-center">
+    <td></td>
     <td>
         <span>
           <input formControlName="first_name" nz-input/>
