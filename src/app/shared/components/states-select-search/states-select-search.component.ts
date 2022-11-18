@@ -37,7 +37,10 @@ export class StatesSelectSearchComponent
   }
 
   async search(searchValue: string) {
-    console.log({searchValue});
+    if (searchValue === '') {
+      this.list = []
+      return
+    }
     this.list = await this.prospectSer.getStates(searchValue).toPromise();
     this.cdr.detectChanges();
   }

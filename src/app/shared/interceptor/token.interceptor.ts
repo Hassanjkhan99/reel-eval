@@ -22,35 +22,29 @@ export class JwtInterceptor implements HttpInterceptor {
     })
     return next.handle(clone).pipe(tap(() => {
     }, (error: HttpErrorResponse) => {
-      let errorMessage = '';
       let {status} = error;
 
-      if (error.error instanceof ErrorEvent) {
-        errorMessage = `Error: ${error.error.message}`;
-      } else {
-        errorMessage = `Error Code: ${status}\nMessage: ${error.message}`;
-      }
-
       if (status == 404) {
-        this.notification.error('Error', errorMessage);
+        this.notification.error('Error', error.error['detail']);
       } else if (status == 0) {
         this.notification.warning(
           'warning', 'There might be a problem. Please, try again.'
         );
+        this.router.navigateByUrl('app/authentication/login')
       } else if (status == 500) {
         this.notification.warning('warning', 'An unexpected error occurred.');
       } else if (status == 403) {
-        console.log(error)
         this.notification.error(
           'Error', error.error['details']
         );
+        this.router.navigateByUrl('app/authentication/login')
       } else if (status == 400 && 'non_field_errors' in error.error) {
-        this.notification.warning(
-          'Warning',
+        this.notification.error(
+          'Error',
           error.error['non_field_errors']
         );
       } else if (status == 204) {
-        this.notification.error('Error', 'No Data Found');
+        this.notification.warning('Warning', 'No Data Found');
       }
 
       return throwError(error);

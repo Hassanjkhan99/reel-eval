@@ -2,6 +2,7 @@ import {ChangeDetectorRef, Component, EventEmitter, Input, Output,} from '@angul
 import {CommonModule} from '@angular/common';
 import {
   NzTableFilterList,
+  NzTableFilterValue,
   NzTableModule,
   NzTableQueryParams,
   NzTableSortFn,
@@ -168,6 +169,8 @@ export class ViewProspectComponent {
   listOfCurrentPageData: readonly Prospect[] = [];
   setOfCheckedId = new Set<number>();
   checkedIds: number[] = [];
+  private filterField: string = '';
+  private currentFilterValue: Array<{ key: string; value: NzTableFilterValue }>;
 
   constructor(
     private fb: FormBuilder,
@@ -406,7 +409,15 @@ export class ViewProspectComponent {
   }
 
   onQueryParamsChange(params: NzTableQueryParams, filterField?: string): void {
-    this.queryParamsChange.emit({params, filterField});
+    if (filterField) {
+      this.filterField = filterField;
+      this.currentFilterValue = params.filter;
+    }
+    console.log({filterField});
+    this.queryParamsChange.emit({
+      params: {...params, filter: this.currentFilterValue},
+      filterField: this.filterField,
+    });
   }
 
   exportCompleteListToExcel() {
@@ -439,13 +450,13 @@ export class ViewProspectComponent {
     } else {
       this.setOfCheckedId.delete(id);
     }
-    this.checkedIds = [...this.setOfCheckedId]
+    this.checkedIds = [...this.setOfCheckedId];
   }
 
   onItemChecked(id: number, checked: boolean): void {
     this.updateCheckedSet(id, checked);
     this.refreshCheckedStatus();
-    console.log(this.setOfCheckedId)
+    console.log(this.setOfCheckedId);
   }
 
   onAllChecked(value: boolean): void {
@@ -453,7 +464,7 @@ export class ViewProspectComponent {
       this.updateCheckedSet(item.id, value)
     );
     this.refreshCheckedStatus();
-    console.log(this.setOfCheckedId)
+    console.log(this.setOfCheckedId);
   }
 
   onCurrentPageDataChange($event: readonly Prospect[]): void {

@@ -39,8 +39,7 @@
       (nzCheckedChange)="onAllChecked($event)"
       [(nzChecked)]="checked"
       [nzIndeterminate]="indeterminate"
-      nzWidth="100px"
-
+      nzWidth="80px"
     ></th>
     <th
       *ngFor="let column of listOfColumns; let i = index"
@@ -75,7 +74,6 @@
               type="text"
             />
             <app-position-multi-select
-              (positionsChanged)="filterPosition($event)"
               *ngIf="column.name === 'Position'"
               [formControl]="positionSearchFormControl"
             ></app-position-multi-select>

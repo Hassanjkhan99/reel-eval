@@ -39,7 +39,10 @@ export class SchoolSelectSearchComponent implements OnInit, ControlValueAccessor
 
 
   search(searchValue: string) {
-    console.log({searchValue})
+    if (searchValue === '') {
+      this.schoolsList = []
+      return
+    }
     this.prospectSer.getSchools(searchValue).subscribe(schools => {
       this.schoolsList = schools
       this.cdr.detectChanges();

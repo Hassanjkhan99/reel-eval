@@ -1,13 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  forwardRef,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
   ControlValueAccessor,
@@ -45,7 +36,6 @@ export class PositionMultiSelectComponent implements OnInit, ControlValueAccesso
 
   @Input() selectedPosition: Positions;
 
-  @Output() positionsChanged: EventEmitter<Positions> = new EventEmitter<Positions>()
 
   constructor(private prospectService: ProspectService, private cdr: ChangeDetectorRef) {
   }
@@ -57,10 +47,6 @@ export class PositionMultiSelectComponent implements OnInit, ControlValueAccesso
       this.cdr.detectChanges()
     })
 
-  }
-
-  positionSelected() {
-    this.positionsChanged.emit(this.selectedPosition)
   }
 
 

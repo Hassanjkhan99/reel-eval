@@ -53,16 +53,16 @@
 .ant-checkbox-input {
 
     &:focus,
-    &:hover {   
-        + .ant-checkbox-inner {
-            border-color: $checkbox-theme-color;
-        }
+    &:hover {
+      + .ant-checkbox-inner {
+        border-color: $checkbox-theme-color;
+      }
     }
 }
 
 .ant-checkbox-indeterminate {
-    
-    .ant-checkbox-inner {
+
+  .ant-checkbox-inner {
 
         &:after {
             background-color: $checkbox-theme-color;

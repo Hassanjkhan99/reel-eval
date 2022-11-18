@@ -89,6 +89,7 @@ export class TabsComponent implements OnInit {
 
 
   onQueryParamsChange(params: { params: NzTableQueryParams; filterField?: string }) {
+    console.log({params})
     const {pageSize, pageIndex, sort, filter} = params.params;
     this.params = params.params;
 
