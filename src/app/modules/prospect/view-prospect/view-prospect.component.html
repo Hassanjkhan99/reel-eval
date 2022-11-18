@@ -202,7 +202,8 @@
     [formGroup]="prospectForm"
     class="text-center"
   >
-    <td (nzCheckedChange)="onItemChecked(data.id, $event)" [nzChecked]="setOfCheckedId.has(data.id)"></td>
+    <td (nzCheckedChange)="onItemChecked(data.id, $event)" [nzChecked]="setOfCheckedId.has(data.id)"
+        [nzShowCheckbox]="!( currentEditIndex === i)"></td>
     <td>
         <span *ngIf="currentEditIndex != i">
           {{ data.first_name }}
