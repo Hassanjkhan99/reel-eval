@@ -37,7 +37,8 @@
                             </nz-form-item>
                             <nz-form-item>
                               <nz-form-label nzFor="club_name" nzRequired>Club name</nz-form-label>
-                              <nz-form-control nzErrorTip="Please input your club name!">
+                              <nz-form-control
+                                [nzErrorTip]="club_name.errors?.['msg'] ?  club_name.errors?.['msg'] : 'Please input your club name!'">
                                 <input formControlName="club_name" id="club_name" nz-input placeholder="Club name"
                                        type="text">
                               </nz-form-control>

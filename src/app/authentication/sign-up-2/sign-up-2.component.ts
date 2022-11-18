@@ -30,6 +30,10 @@ export class SignUp2Component {
     });
   }
 
+  get club_name() {
+    return this.signUpForm.controls.club_name;
+  }
+
   updateConfirmValidator(): void {
     Promise.resolve().then(() => this.signUpForm.controls.password2.updateValueAndValidity());
   }
@@ -57,16 +61,10 @@ export class SignUp2Component {
       (error) => {
         error = error.error;
         console.log(error)
-        if (error['detail']) {
-          this.notification.error('Failed', error['detail'])
-          this.router.navigateByUrl('app/dashboard/home')
-          return;
-        }
         for (const errorKey in error) {
           const arr: string[] = error[errorKey];
           arr.forEach((msg) => {
             this.signUpForm.get(errorKey).setErrors({msg})
-
             this.notification.error('Failed', msg)
           });
         }
