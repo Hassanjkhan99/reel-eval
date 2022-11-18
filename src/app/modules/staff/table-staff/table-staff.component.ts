@@ -1,13 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {
-  NzTableFilterFn,
-  NzTableFilterList,
-  NzTableModule,
-  NzTableQueryParams,
-  NzTableSortFn,
-  NzTableSortOrder
-} from "ng-zorro-antd/table";
+import {NzTableModule, NzTableQueryParams} from "ng-zorro-antd/table";
 import {NzDropDownModule} from "ng-zorro-antd/dropdown";
 import {NzInputModule} from "ng-zorro-antd/input";
 import {NzButtonModule} from "ng-zorro-antd/button";
@@ -180,13 +173,3 @@ export class TableStaffComponent implements OnInit {
 
 }
 
-
-interface ColumnItem {
-  name: string;
-  sortOrder?: NzTableSortOrder;
-  sortFn?: NzTableSortFn;
-  listOfFilter?: NzTableFilterList;
-  filterFn?: NzTableFilterFn;
-  filterMultiple?: boolean;
-  sortDirections?: NzTableSortOrder[];
-}

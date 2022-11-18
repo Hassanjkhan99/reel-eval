@@ -30,6 +30,18 @@ export class SignUp2Component {
     });
   }
 
+  get username() {
+    return this.signUpForm.controls.username;
+  }
+
+  get email() {
+    return this.signUpForm.controls.email;
+  }
+
+  get password1() {
+    return this.signUpForm.controls.password1;
+  }
+
   get club_name() {
     return this.signUpForm.controls.club_name;
   }
