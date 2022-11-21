@@ -7,7 +7,13 @@ import {NzGridModule} from 'ng-zorro-antd/grid';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {NzIconModule} from 'ng-zorro-antd/icon';
-import {NzTableFilterFn, NzTableFilterList, NzTableModule, NzTableQueryParams,} from 'ng-zorro-antd/table';
+import {
+  NzTableFilterFn,
+  NzTableFilterList,
+  NzTableFilterValue,
+  NzTableModule,
+  NzTableQueryParams,
+} from 'ng-zorro-antd/table';
 import {NzDividerModule} from 'ng-zorro-antd/divider';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule,} from '@angular/forms';
 import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
@@ -66,6 +72,8 @@ export class TraitsComponent implements OnInit {
   pageSize: number = 8;
   pageIndex: number = 1;
   private params: NzTableQueryParams;
+  private filterField: string = '';
+  private currentFilterValue: Array<{ key: string; value: NzTableFilterValue }>;
 
   constructor(
     private traitsService: TraitsService,
@@ -204,8 +212,13 @@ export class TraitsComponent implements OnInit {
   }
 
   onQueryParamsChange(params: NzTableQueryParams, filterField?: string): void {
+    if (filterField) {
+      this.filterField = filterField;
+      this.currentFilterValue = params.filter;
+    }
     const {pageSize, pageIndex, sort, filter} = params;
-    this.params = params;
+    this.params = {...params, filter: this.currentFilterValue}
+
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || null;
     const sortOrder = (currentSort && currentSort.value) || null;
@@ -215,8 +228,8 @@ export class TraitsComponent implements OnInit {
         pageSize,
         sortField,
         sortOrder,
-        filter,
-        filterField
+        this.params.filter,
+        this.filterField
       )
       .subscribe((e) => {
         console.log({pageIndex, pageSize, sortField, sortOrder, filter});

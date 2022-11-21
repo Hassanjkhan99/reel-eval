@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {NzTableModule, NzTableQueryParams} from "ng-zorro-antd/table";
+import {NzTableFilterValue, NzTableModule, NzTableQueryParams} from "ng-zorro-antd/table";
 import {NzDropDownModule} from "ng-zorro-antd/dropdown";
 import {NzInputModule} from "ng-zorro-antd/input";
 import {NzButtonModule} from "ng-zorro-antd/button";
@@ -45,9 +45,9 @@ export class TableStaffComponent implements OnInit {
     username: new FormControl(''),
     email: new FormControl(''),
     groups: new FormControl([0])
-
-
   });
+  private filterField: string = '';
+  private currentFilterValue: Array<{ key: string; value: NzTableFilterValue }>;
 
   constructor(private cdr: ChangeDetectorRef, private staffSer: StaffService, private notificationService: NotificationService) {
   }
@@ -149,19 +149,24 @@ export class TableStaffComponent implements OnInit {
   }
 
   onQueryParamsChange(params: NzTableQueryParams, filterField?: string): void {
+    if (filterField) {
+      this.filterField = filterField;
+      this.currentFilterValue = params.filter;
+    }
     const {pageSize, pageIndex, sort, filter} = params;
-    this.params = params;
+    this.params = {...params, filter: this.currentFilterValue}
+
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || null;
     const sortOrder = (currentSort && currentSort.value) || null;
     this.staffSer
       .getStaff(
-        pageIndex,
-        pageSize,
+        this.params.pageIndex,
+        this.params.pageSize,
         sortField,
         sortOrder,
-        filter,
-        filterField
+        this.params.filter,
+        this.filterField
       )
       .subscribe((e) => {
         console.log({pageIndex, pageSize, sortField, sortOrder, filter});

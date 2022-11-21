@@ -35,6 +35,7 @@ export class PositionMultiSelectComponent implements OnInit, ControlValueAccesso
   control = new FormControl<string>(null)
 
   @Input() selectedPosition: Positions;
+  @Input() resetForm: boolean = false;
 
 
   constructor(private prospectService: ProspectService, private cdr: ChangeDetectorRef) {
@@ -66,7 +67,7 @@ export class PositionMultiSelectComponent implements OnInit, ControlValueAccesso
   }
 
   async writeValue(val: string): Promise<void> {
-
+    this.control.reset(val)
   }
 
 }

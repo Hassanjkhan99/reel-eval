@@ -25,9 +25,6 @@
         *ngFor="let column of listOfColumns; let i = index"
         [class]="'text-center ' + column.name"
         [nzColumnKey]="column.name"
-        [nzFilterFn]="column.filterFn"
-        [nzFilterMultiple]="column.filterMultiple"
-        [nzFilters]="column.listOfFilter"
         [nzSortFn]="true"
         nzCustomFilter
       >

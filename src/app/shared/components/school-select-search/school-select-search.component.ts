@@ -66,6 +66,6 @@ export class SchoolSelectSearchComponent implements OnInit, ControlValueAccessor
 
   async writeValue(val: string): Promise<void> {
     await this.search(val)
-    this.control.setValue(val)
+    this.control.reset(val)
   }
 }

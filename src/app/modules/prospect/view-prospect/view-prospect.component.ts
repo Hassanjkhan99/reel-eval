@@ -163,6 +163,7 @@ export class ViewProspectComponent {
   stateSearchFormControl = new FormControl<string>(null);
   positionSearchFormControl = new FormControl<string>(null);
   schoolSearchFormControl = new FormControl<string>(null);
+  resetPosition: boolean = false;
 
   checked = false;
   indeterminate = false;
@@ -342,7 +343,15 @@ export class ViewProspectComponent {
 
   reset(key) {
     this.searchValue[key] = '';
-
+    if (key === 'position__position_name') {
+      this.positionSearchFormControl.reset()
+    }
+    if (key === 'school') {
+      this.schoolSearchFormControl.reset()
+    }
+    if (key === 'state') {
+      this.stateSearchFormControl.reset()
+    }
     this.search(key);
   }
 
@@ -413,7 +422,6 @@ export class ViewProspectComponent {
       this.filterField = filterField;
       this.currentFilterValue = params.filter;
     }
-    console.log({filterField});
     this.queryParamsChange.emit({
       params: {...params, filter: this.currentFilterValue},
       filterField: this.filterField,

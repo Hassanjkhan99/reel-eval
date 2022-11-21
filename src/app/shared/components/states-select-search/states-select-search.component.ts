@@ -49,7 +49,6 @@ export class StatesSelectSearchComponent
     this.control.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe((value) => {
-        console.log('registerOnChange: ', value)
         fn(value);
       });
   }
@@ -67,7 +66,6 @@ export class StatesSelectSearchComponent
 
   async writeValue(state: string): Promise<void> {
     await this.search(state);
-    console.log('writeValue: ', state)
-    this.control.setValue(state)
+    this.control.reset(state)
   }
 }
