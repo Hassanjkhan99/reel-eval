@@ -156,14 +156,14 @@ export class ViewProspectComponent {
   });
 
   currentEditIndex: number;
-  currentPosition: number;
+  currentPosition: Positions;
   currentSchool: string;
   currentState: string;
 
   stateSearchFormControl = new FormControl<string>(null);
   positionSearchFormControl = new FormControl<string>(null);
   schoolSearchFormControl = new FormControl<string>(null);
-  resetPosition: boolean = false;
+  positionFormControl = new FormControl<Positions>(null);
 
   checked = false;
   indeterminate = false;
@@ -201,6 +201,9 @@ export class ViewProspectComponent {
     this.positionSearchFormControl.valueChanges.subscribe((val) => {
       this.searchValue.position__position_name = val;
     });
+    this.positionFormControl.valueChanges.subscribe((val) => {
+      this.prospectForm.controls.position.setValue(val);
+    });
   }
 
   isEdit(i: number) {
@@ -216,10 +219,10 @@ export class ViewProspectComponent {
       return;
     }
 
-    this.currentPosition = this.dataSet[i].position.id;
     this.currentSchool = this.dataSet[i].school;
     this.currentState = this.dataSet[i].state;
     this.currentEditIndex = i;
+    this.positionFormControl.setValue(this.dataSet[i].position)
     this.prospectForm.setValue({
       first_name: this.dataSet[i].first_name,
       last_name: this.dataSet[i].last_name,
@@ -280,11 +283,6 @@ export class ViewProspectComponent {
     console.log(position.position_name);
   }
 
-  addPosition(position: Positions) {
-    console.log(position);
-    this.prospectForm.controls.position.setValue(position);
-    this.prospectForm.updateValueAndValidity();
-  }
 
   cancel(): void {
     this.nzMessageService.info('clicked cancel');
@@ -355,9 +353,6 @@ export class ViewProspectComponent {
     this.search(key);
   }
 
-  filterPosition(positions: Positions) {
-    this.searchValue.position__position_name = positions.position_name;
-  }
 
   search(key) {
     this.visible[key] = false;
@@ -377,7 +372,6 @@ export class ViewProspectComponent {
       if (isAddAnother) {
         this.prospectForm.reset();
         this.prospectForm.controls.archived.setValue(false);
-        this.currentPosition = -1;
         this.currentSchool = '';
         this.currentState = '';
         this.showRow = false;
@@ -409,7 +403,6 @@ export class ViewProspectComponent {
       state: '',
       video_link: '',
     });
-    this.currentPosition = -1;
     this.showRow = false;
     console.log(this.prospectForm.value);
     this.cdr.detectChanges();

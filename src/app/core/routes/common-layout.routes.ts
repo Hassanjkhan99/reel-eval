@@ -58,6 +58,15 @@ export const CommonLayout_ROUTES: Routes = [
     },
     canActivate: [AuthGuard]
   },
+  {
+    path: 'pre-grading',
+    loadComponent: () => import('../../modules/grading/pre-grading/pre-grading.component').then(c => c.PreGradingComponent),
+    data: {
+      label: 'pre-grading',
+      path: 'pre-grading'
+    },
+    canActivate: [AuthGuard]
+  },
 
   {
     path: '**',

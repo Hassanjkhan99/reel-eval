@@ -124,8 +124,7 @@
     <td>
         <span>
           <app-positions-select
-            (positionChanged)="addPosition($event)"
-            [selectedPosition]="currentPosition"
+            [formControl]="positionFormControl"
           ></app-positions-select>
         </span>
     </td>
@@ -230,8 +229,7 @@
         </span>
       <span *ngIf="currentEditIndex == i">
           <app-positions-select
-            (positionChanged)="setPosition($event)"
-            [selectedPosition]="currentPosition"
+            [formControl]="positionFormControl"
           ></app-positions-select>
         </span>
     </td>
