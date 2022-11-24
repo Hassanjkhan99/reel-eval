@@ -429,14 +429,14 @@ export class ViewProspectComponent {
   }
 
   exportCompleteListToExcel() {
-    this.prospectSer.exportCompleteListToExcel().subscribe((response) => {
+    this.prospectSer.exportCompleteListToExcel(this.achievedTable).subscribe((response) => {
       this.download(response);
     });
   }
 
   exportListToExcel() {
     this.prospectSer
-      .exportToExcel([...this.setOfCheckedId])
+      .exportToExcel(this.achievedTable, [...this.setOfCheckedId])
       .subscribe((response) => {
         this.download(response);
       });
