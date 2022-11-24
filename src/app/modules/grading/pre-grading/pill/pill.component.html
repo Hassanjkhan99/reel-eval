@@ -1,0 +1,14 @@
+<div [class.background-primary]="selectedList" class="pill">
+  <div></div>
+  <div>{{item.trait}}</div>
+
+  <i
+    *ngIf="selectedList"
+    [nzTheme]="'fill'"
+    nz-icon
+    nzTwotoneColor="#c00206"
+    nzType="close-circle"
+  ></i>
+  <i *ngIf="!selectedList" [nzTheme]="'twotone'"
+     nz-icon nzTwotoneColor="#46c40a" nzType="plus-circle"></i>
+</div>

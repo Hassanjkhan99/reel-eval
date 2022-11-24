@@ -1,0 +1,21 @@
+.pill {
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  border-radius: 14px;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.48);
+  font-size: 22px;
+}
+
+.background-primary {
+  background: rgba(63, 135, 245, 0.53);
+  color: white;
+}
+
+.background-white {
+  background: white;
+}

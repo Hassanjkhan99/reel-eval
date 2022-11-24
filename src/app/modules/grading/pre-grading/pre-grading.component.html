@@ -1,1 +1,32 @@
-<app-positions-select></app-positions-select>
+<div class="p-5">
+  <app-positions-select></app-positions-select>
+</div>
+
+<div class="bg-white" nz-row>
+
+  <div [nzSpan]="16" nz-col>
+    <div class="w-100 text-align-center p-0">
+      <h2>Choose the Traits</h2>
+      <p>Traits defaults to 5 traits. You can delete/add as many traits as they want.</p>
+    </div>
+    <div class="w-100 text-align-center p-0">
+      <nz-list nzGrid>
+        <div [nzGutter]="16" nz-row>
+          <div *ngFor="let item of unSelectedTraits" [nzSpan]="12" nz-col>
+            <nz-list-item>
+              <app-pill [item]="item" [selectedList]="true"></app-pill>
+            </nz-list-item>
+          </div>
+          <div *ngFor="let item of unSelectedTraits" [nzSpan]="12" nz-col>
+            <nz-list-item>
+              <app-pill [item]="item" [selectedList]="false"></app-pill>
+            </nz-list-item>
+          </div>
+
+        </div>
+      </nz-list>
+    </div>
+
+  </div>
+  <div [nzSpan]="8" nz-col></div>
+</div>
