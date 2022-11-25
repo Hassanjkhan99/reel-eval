@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {main_url} from "../../../environments/environment";
 import {Trait, TraitsApiResponse} from "../interfaces/trait";
 import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -47,5 +48,14 @@ export class TraitsService {
   deleteTrait(id: number): Observable<Trait> {
     return this.http.delete<Trait>(`${main_url}traits/${id}/`);
   }
+
+  getTraitsSearch(searchValue?: string): Observable<Trait[]> {
+    return this.http.get<TraitsApiResponse>(`${main_url}traits/`, {
+      params: {
+        'trait__icontains': searchValue
+      }
+    }).pipe(map(e => e.results));
+  }
+
 
 }

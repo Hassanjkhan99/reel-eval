@@ -12,12 +12,15 @@
     <div class="w-100 text-align-center p-0">
       <nz-list nzGrid>
         <div [nzGutter]="16" nz-row>
-          <div *ngFor="let item of unSelectedTraits" [nzSpan]="12" nz-col>
+          <div *ngFor="let item of unSelectedTraits" [nzSpan]="8" nz-col>
             <nz-list-item>
               <app-pill [item]="item" [selectedList]="true"></app-pill>
             </nz-list-item>
           </div>
-          <div *ngFor="let item of unSelectedTraits" [nzSpan]="12" nz-col>
+          <div [nzSpan]="8" nz-col>
+            <app-traits-select [formControl]="selectedTrait"></app-traits-select>
+          </div>
+          <div *ngFor="let item of unSelectedTraits" [nzSpan]="8" nz-col>
             <nz-list-item>
               <app-pill [item]="item" [selectedList]="false"></app-pill>
             </nz-list-item>
