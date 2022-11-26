@@ -4,7 +4,7 @@
 
 <div [nzGutter]="8" class="bg-white" nz-row>
 
-  <div [nzSpan]="16" nz-col>
+  <div [nzLg]="16" [nzMd]="16" [nzSm]="24" [nzXl]="16" [nzXs]="24" nz-col>
     <div class="w-100 text-align-center p-0">
       <h2>Choose the Traits</h2>
       <p>Traits defaults to 5 traits. You can delete/add as many traits as they want.</p>
@@ -49,7 +49,9 @@
     </div>
 
   </div>
-  <div [nzSpan]="8" nz-col>
+  <div [nzLg]="8" [nzMd]="8" [nzSm]="24" [nzXl]="8" [nzXs]="24" class="text-center" nz-col>
+    <h2>Assign the Weights</h2>
+    <p *ngIf="selectedTraits.length < 1">There are no selected Traits</p>
     <app-assign-weights [list]="selectedTraits" [traits]="traits"></app-assign-weights>
   </div>
 </div>
