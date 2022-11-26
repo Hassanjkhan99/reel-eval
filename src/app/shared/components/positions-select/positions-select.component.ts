@@ -1,6 +1,13 @@
 import {ChangeDetectorRef, Component, forwardRef, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule} from "@angular/forms";
+import {
+  ControlValueAccessor,
+  FormControl,
+  FormControlStatus,
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule
+} from "@angular/forms";
 import {NzSelectModule} from "ng-zorro-antd/select";
 import {ProspectService} from "../../services/prospect.service";
 import {Positions} from "../../interfaces/positions.interface";
@@ -23,7 +30,7 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 export class PositionsSelectComponent implements OnInit, ControlValueAccessor {
 
   positions: Positions[] = []
-  position: FormControl = new FormControl<Positions>(null)
+  position: FormControl = new FormControl<number>(null)
 
   constructor(private prospectService: ProspectService, private cdr: ChangeDetectorRef) {
   }
@@ -43,11 +50,12 @@ export class PositionsSelectComponent implements OnInit, ControlValueAccessor {
   registerOnChange(fn: (val: Positions) => unknown): void {
     this.position.valueChanges.pipe(untilDestroyed(this)).subscribe(value => {
       console.log({value})
-      fn(value)
+      const position = this.positions.find(({id}) => id === value)
+      fn(position)
     })
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: (val: FormControlStatus) => unknown): void {
     this.position.statusChanges.pipe(untilDestroyed(this)).subscribe(value => {
       console.log(this.position.value)
       fn(value)
@@ -57,10 +65,11 @@ export class PositionsSelectComponent implements OnInit, ControlValueAccessor {
   setDisabledState(isDisabled: boolean): void {
   }
 
-  async writeValue(val: any): Promise<void> {
+  async writeValue(val: Positions): Promise<void> {
     console.log(this.position.value)
-    this.position.setValue(val);
+    this.position.setValue(val.id);
     console.log(this.position.value)
+    console.log(this.positions)
     this.cdr.detectChanges()
   }
 }

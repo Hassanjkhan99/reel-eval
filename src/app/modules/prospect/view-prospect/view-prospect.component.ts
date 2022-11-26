@@ -33,7 +33,9 @@ import {
 import {
   SchoolSelectSearchComponent
 } from '../../../shared/components/school-select-search/school-select-search.component';
+import {UntilDestroy} from "@ngneat/until-destroy";
 
+@UntilDestroy()
 @Component({
   selector: 'app-view-prospect',
   standalone: true,
