@@ -2,7 +2,7 @@
   <app-positions-select></app-positions-select>
 </div>
 
-<div class="bg-white" nz-row>
+<div [nzGutter]="8" class="bg-white" nz-row>
 
   <div [nzSpan]="16" nz-col>
     <div class="w-100 text-align-center p-0">
@@ -10,26 +10,46 @@
       <p>Traits defaults to 5 traits. You can delete/add as many traits as they want.</p>
     </div>
     <div class="w-100 text-align-center p-0">
+      <div>
+        <h3>Selected Traits</h3>
+
+      </div>
+      <div>
+
+        <div [class.container-list]="selectedTraits.length > 0" [class.container-noList]="selectedTraits.length < 1"
+             nz-col nzSpan="24">
+          <p *ngIf="selectedTraits.length < 1">There are no selected Traits</p>
+          <nz-list nzGrid>
+            <div [nzGutter]="8" nz-row>
+              <div *ngFor="let item of selectedTraits" [nzSpan]="12" nz-col>
+                <nz-list-item (click)="unSelectItem(item)">
+                  <app-pill [item]="item" [selectedList]="true"></app-pill>
+                </nz-list-item>
+              </div>
+            </div>
+          </nz-list>
+        </div>
+      </div>
+
+
+      <div [nzSpan]="24" class="p-2 pb-3" nz-col>
+        <app-traits-select [blacklistItems]="combinedArray" [formControl]="selectedTrait"></app-traits-select>
+
+      </div>
+
       <nz-list nzGrid>
-        <div [nzGutter]="16" nz-row>
-          <div *ngFor="let item of unSelectedTraits" [nzSpan]="8" nz-col>
-            <nz-list-item>
-              <app-pill [item]="item" [selectedList]="true"></app-pill>
-            </nz-list-item>
-          </div>
-          <div [nzSpan]="8" nz-col>
-            <app-traits-select [formControl]="selectedTrait"></app-traits-select>
-          </div>
-          <div *ngFor="let item of unSelectedTraits" [nzSpan]="8" nz-col>
-            <nz-list-item>
+        <div [nzGutter]="8" nz-row>
+          <div *ngFor="let item of unSelectedTraits" [nzSpan]="12" nz-col>
+            <nz-list-item (click)="selectItem(item)">
               <app-pill [item]="item" [selectedList]="false"></app-pill>
             </nz-list-item>
           </div>
-
         </div>
       </nz-list>
     </div>
 
   </div>
-  <div [nzSpan]="8" nz-col></div>
+  <div [nzSpan]="8" nz-col>
+    <app-assign-weights [list]="selectedTraits" [traits]="traits"></app-assign-weights>
+  </div>
 </div>

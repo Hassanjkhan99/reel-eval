@@ -7,8 +7,13 @@
   nzShowSearch
 >
   <nz-option
+    *ngIf="searchValue.trim().length > 0 && this.traitsList.length < 1"
+    nzDisabled="true"
+    nzLabel="The item you searched is either in selected or unselected traits list"
+  ></nz-option>
+  <nz-option
     *ngFor="let item of traitsList"
     [nzLabel]="item.trait"
-    [nzValue]="item.trait"
+    [nzValue]="item"
   ></nz-option>
 </nz-select>
