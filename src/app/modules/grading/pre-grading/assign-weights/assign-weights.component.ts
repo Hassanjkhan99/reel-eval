@@ -5,11 +5,12 @@ import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {NzGridModule} from "ng-zorro-antd/grid";
 import {NzListModule} from "ng-zorro-antd/list";
 import {PillWithInputComponent} from "./pill-with-input/pill-with-input.component";
+import {CdkDragDrop, DragDropModule, moveItemInArray} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'app-assign-weights',
   standalone: true,
-  imports: [CommonModule, PillWithInputComponent, NzGridModule, NzListModule, ReactiveFormsModule],
+  imports: [CommonModule, PillWithInputComponent, NzGridModule, NzListModule, ReactiveFormsModule, DragDropModule],
   templateUrl: './assign-weights.component.html',
   styleUrls: ['./assign-weights.component.scss'],
 })
@@ -39,6 +40,11 @@ export class AssignWeightsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+  }
+
+  drop(event: CdkDragDrop<string[]>): void {
+    console.log(event)
+    moveItemInArray(this.list, event.previousIndex, event.currentIndex);
   }
 
 

@@ -1,5 +1,5 @@
 .container-noList {
-  height: 300px;
+  height: 27vh;
   background: white;
   display: flex;
   justify-content: center;
@@ -8,10 +8,11 @@
 }
 
 .container-list {
-  height: 300px;
+  height: 27vh;
   background: white;
   border: 1px solid rgba(63, 135, 245, 0.53);
   padding: 10px;
   overflow: scroll;
   overflow-x: hidden;
 }
+

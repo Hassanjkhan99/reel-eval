@@ -1,13 +1,18 @@
-<nz-list nzGrid>
-  <div [formGroup]="traits" [nzGutter]="8" nz-row>
-    <div *ngFor="let item of list" [nzSpan]="24" nz-col>
-      <nz-list-item>
-        <app-pill-with-input [formControlName]="item.id.toString()" [isLimitReached]="isLimitReached"
-                             [item]="item"></app-pill-with-input>
-      </nz-list-item>
+<div [class.weights-noList]="list.length < 1"
+     [class.weights_list]="list.length > 0">
+  <p *ngIf="list.length < 1">There are no selected Traits</p>
+  <nz-list nzGrid>
+    <div (cdkDropListDropped)="drop($event)" [formGroup]="traits" [nzGutter]="8" cdkDropList nz-row>
+      <div *ngFor="let item of list" [nzSpan]="24" cdkDrag nz-col>
+        <nz-list-item>
+          <app-pill-with-input [formControlName]="item.id.toString()" [isLimitReached]="isLimitReached"
+                               [item]="item"></app-pill-with-input>
+        </nz-list-item>
+      </div>
     </div>
-  </div>
-</nz-list>
-
-<h3>Remaining: {{remainingValue}}</h3>
-<h3>Total: {{total}}</h3>
+  </nz-list>
+</div>
+<div class="p-2">
+  <h3>Remaining: {{remainingValue}}</h3>
+  <h3>Total: {{total}}</h3>
+</div>

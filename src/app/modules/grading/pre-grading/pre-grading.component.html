@@ -1,23 +1,23 @@
-<div class="p-5">
+<div class="p-2">
   <app-positions-select></app-positions-select>
 </div>
 
 <div [nzGutter]="8" class="bg-white" nz-row>
-
   <div [nzLg]="16" [nzMd]="16" [nzSm]="24" [nzXl]="16" [nzXs]="24" nz-col>
-    <div class="w-100 text-align-center p-0">
+    <div class="w-100 text-align-center p-3">
       <h2>Choose the Traits</h2>
-      <p>Traits defaults to 5 traits. You can delete/add as many traits as they want.</p>
     </div>
     <div class="w-100 text-align-center p-0">
       <div>
         <h3>Selected Traits</h3>
-
       </div>
       <div>
-
-        <div [class.container-list]="selectedTraits.length > 0" [class.container-noList]="selectedTraits.length < 1"
-             nz-col nzSpan="24">
+        <div
+          [class.container-list]="selectedTraits.length > 0"
+          [class.container-noList]="selectedTraits.length < 1"
+          nz-col
+          nzSpan="24"
+        >
           <p *ngIf="selectedTraits.length < 1">There are no selected Traits</p>
           <nz-list nzGrid>
             <div [nzGutter]="8" nz-row>
@@ -30,28 +30,51 @@
           </nz-list>
         </div>
       </div>
-
-
-      <div [nzSpan]="24" class="p-2 pb-3" nz-col>
-        <app-traits-select [blacklistItems]="combinedArray" [formControl]="selectedTrait"></app-traits-select>
-
+      <div [nzSpan]="24" class="p-3" nz-col>
+        <!--        <app-traits-select-->
+        <!--          [blacklistItems]="combinedArray"-->
+        <!--          [formControl]="selectedTrait"-->
+        <!--        ></app-traits-select>-->
+        <h3>Unselected Traits</h3>
       </div>
-
-      <nz-list nzGrid>
-        <div [nzGutter]="8" nz-row>
-          <div *ngFor="let item of unSelectedTraits" [nzSpan]="12" nz-col>
-            <nz-list-item (click)="selectItem(item)">
-              <app-pill [item]="item" [selectedList]="false"></app-pill>
-            </nz-list-item>
+      <div
+        [class.container-list]="unSelectedTraits.length > 0"
+        [class.container-noList]="unSelectedTraits.length < 1"
+        nz-col
+        nzSpan="24"
+      >
+        <p *ngIf="unSelectedTraits.length < 1">There are no unselected Traits</p>
+        <nz-list nzGrid>
+          <div [nzGutter]="8" nz-row>
+            <div *ngFor="let item of unSelectedTraits" [nzSpan]="12" nz-col>
+              <nz-list-item (click)="selectItem(item)">
+                <app-pill [item]="item" [selectedList]="false"></app-pill>
+              </nz-list-item>
+            </div>
           </div>
-        </div>
-      </nz-list>
+        </nz-list>
+      </div>
+    </div>
+  </div>
+  <div
+    [nzLg]="8"
+    [nzMd]="8"
+    [nzSm]="24"
+    [nzXl]="8"
+    [nzXs]="24"
+    class="text-center p-3"
+    nz-col
+  >
+    <div>
+      <h2>Assign the Weights</h2>
+    </div>
+    <div>
+
+      <app-assign-weights
+        [list]="selectedTraits"
+        [traits]="traits"
+      ></app-assign-weights>
     </div>
 
-  </div>
-  <div [nzLg]="8" [nzMd]="8" [nzSm]="24" [nzXl]="8" [nzXs]="24" class="text-center" nz-col>
-    <h2>Assign the Weights</h2>
-    <p *ngIf="selectedTraits.length < 1">There are no selected Traits</p>
-    <app-assign-weights [list]="selectedTraits" [traits]="traits"></app-assign-weights>
   </div>
 </div>

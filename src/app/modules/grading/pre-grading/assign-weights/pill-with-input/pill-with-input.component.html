@@ -1,6 +1,6 @@
 <div class="pill background-white" nz-row>
-  <div [nzSpan]="18" nz-col>{{item.trait}}</div>
+  <div [nzSpan]="16" class="d-flex justify-content-start" nz-col>{{item.trait}}</div>
 
-  <input [disabled]="isLimitReached" [formControl]="control" [nzSpan]="4" max="100" min="0" nz-col nz-input
+  <input [disabled]="isLimitReached" [formControl]="control" [nzSpan]="8" max="100" min="0" nz-col nz-input
          nzSize="small" type="number"/>
 </div>

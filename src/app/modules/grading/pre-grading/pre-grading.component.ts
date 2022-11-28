@@ -12,6 +12,7 @@ import {Trait} from '../../../shared/interfaces/trait';
 import {TraitsSelectComponent} from '../../../shared/components/traits-select/traits-select.component';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {AssignWeightsComponent} from "./assign-weights/assign-weights.component";
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 @UntilDestroy()
 @Component({
@@ -28,6 +29,7 @@ import {AssignWeightsComponent} from "./assign-weights/assign-weights.component"
     TraitsSelectComponent,
     ReactiveFormsModule,
     AssignWeightsComponent,
+    DragDropModule,
   ],
   templateUrl: './pre-grading.component.html',
   styleUrls: ['./pre-grading.component.scss'],
@@ -81,6 +83,7 @@ export class PreGradingComponent implements OnInit {
       this.selectedTraits.findIndex((trait) => trait.id === item.id),
       1
     );
+    this.unSelectedTraits.unshift(item)
     this.setCombinedArray()
     this.traits.removeControl(item.id.toString())
   }
