@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NzIconModule} from "ng-zorro-antd/icon";
 import {NzInputModule} from "ng-zorro-antd/input";
@@ -14,21 +14,25 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
   imports: [CommonModule, NzIconModule, NzInputModule, NzGridModule, ReactiveFormsModule],
   templateUrl: './pill-with-input.component.html',
   styleUrls: ['./pill-with-input.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => PillWithInputComponent),
     multi: true,
   }],
 })
-export class PillWithInputComponent implements OnInit, ControlValueAccessor {
+export class PillWithInputComponent implements OnInit, ControlValueAccessor, OnChanges {
 
-  @Input() item: Trait
-  @Input() isLimitReached: boolean = false
-  control = new FormControl<number>(null);
+  @Input() item: Trait;
+  @Input() remainingLimit: number;
+  control = new FormControl<number>(0);
 
+  prevValue = 0;
 
   constructor(private cdr: ChangeDetectorRef) {
+  }
+
+  get value(): number {
+    return this.control.value;
   }
 
   ngOnInit(): void {
@@ -36,17 +40,7 @@ export class PillWithInputComponent implements OnInit, ControlValueAccessor {
 
   registerOnChange(fn: (val: number) => unknown): void {
     this.control.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
-      if (this.isLimitReached) {
-        console.log({'limit': this.isLimitReached})
-        this.control.disable({emitEvent: false});
-      }
-      if (value > 100) {
-        fn(100);
-      } else if (value < 0) {
-        fn(0);
-      } else {
-        fn(value);
-      }
+      fn(value)
     });
   }
 
@@ -64,7 +58,7 @@ export class PillWithInputComponent implements OnInit, ControlValueAccessor {
       this.control.setValue(val);
       this.cdr.detectChanges();
     } else {
-      this.control.reset();
+      this.control.reset(0);
     }
   }
 

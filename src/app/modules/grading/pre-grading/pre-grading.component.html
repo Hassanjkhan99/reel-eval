@@ -1,9 +1,9 @@
 <div class="p-2">
-  <app-positions-select></app-positions-select>
+  <app-positions-select [formControl]="selectedPosition"></app-positions-select>
 </div>
 
 <div [nzGutter]="8" class="bg-white" nz-row>
-  <div [nzLg]="16" [nzMd]="16" [nzSm]="24" [nzXl]="16" [nzXs]="24" nz-col>
+  <div nz-col nzLg="16" nzMd="12" nzSm="24" nzXXl="16" nzXl="16" nzXs="24">
     <div class="w-100 text-align-center p-3">
       <h2>Choose the Traits</h2>
     </div>
@@ -21,9 +21,10 @@
           <p *ngIf="selectedTraits.length < 1">There are no selected Traits</p>
           <nz-list nzGrid>
             <div [nzGutter]="8" nz-row>
-              <div *ngFor="let item of selectedTraits" [nzSpan]="12" nz-col>
+              <div *ngFor="let item of selectedTraits" nz-col nzLg="12" nzMd="24" nzSm="24" nzXXl="8" nzXl="8"
+                   nzXs="24">
                 <nz-list-item (click)="unSelectItem(item)">
-                  <app-pill [item]="item" [selectedList]="true"></app-pill>
+                  <app-pill [disabled]="!selectedPosition.value" [item]="item" [selectedList]="true"></app-pill>
                 </nz-list-item>
               </div>
             </div>
@@ -31,10 +32,6 @@
         </div>
       </div>
       <div [nzSpan]="24" class="p-3" nz-col>
-        <!--        <app-traits-select-->
-        <!--          [blacklistItems]="combinedArray"-->
-        <!--          [formControl]="selectedTrait"-->
-        <!--        ></app-traits-select>-->
         <h3>Unselected Traits</h3>
       </div>
       <div
@@ -46,9 +43,10 @@
         <p *ngIf="unSelectedTraits.length < 1">There are no unselected Traits</p>
         <nz-list nzGrid>
           <div [nzGutter]="8" nz-row>
-            <div *ngFor="let item of unSelectedTraits" [nzSpan]="12" nz-col>
+            <div *ngFor="let item of unSelectedTraits" nz-col nzLg="12" nzMd="24" nzSm="24" nzXXl="8" nzXl="8"
+                 nzXs="24">
               <nz-list-item (click)="selectItem(item)">
-                <app-pill [item]="item" [selectedList]="false"></app-pill>
+                <app-pill [disabled]="!selectedPosition.value" [item]="item" [selectedList]="false"></app-pill>
               </nz-list-item>
             </div>
           </div>
@@ -57,11 +55,11 @@
     </div>
   </div>
   <div
-    [nzLg]="8"
-    [nzMd]="8"
-    [nzSm]="24"
-    [nzXl]="8"
-    [nzXs]="24"
+    nzLg="8"
+    nzMd="12"
+    nzSm="24"
+    nzXl="8"
+    nzXs="24"
     class="text-center p-3"
     nz-col
   >

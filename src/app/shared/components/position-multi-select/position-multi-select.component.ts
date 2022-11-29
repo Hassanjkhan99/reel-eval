@@ -8,12 +8,12 @@ import {
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule
 } from "@angular/forms";
-import {Positions} from "../../interfaces/positions.interface";
 import {ProspectService} from "../../services/prospect.service";
 import {NzSelectModule} from "ng-zorro-antd/select";
 import {NzMenuModule} from "ng-zorro-antd/menu";
 import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {Position} from "../../interfaces/prospect.interface";
 
 @UntilDestroy()
 @Component({
@@ -31,10 +31,10 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 })
 export class PositionMultiSelectComponent implements OnInit, ControlValueAccessor {
 
-  positions: Positions[] = []
+  positions: Position[] = []
   control = new FormControl<string>(null)
 
-  @Input() selectedPosition: Positions;
+  @Input() selectedPosition: Position;
   @Input() resetForm: boolean = false;
 
 

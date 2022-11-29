@@ -8,7 +8,7 @@ import {NzInputModule} from "ng-zorro-antd/input";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzSelectModule} from "ng-zorro-antd/select";
 import {PositionsSelectComponent} from "../../../shared/components/positions-select/positions-select.component";
-import {Positions} from "../../../shared/interfaces/positions.interface";
+import {Position} from "../../../shared/interfaces/positions.interface";
 import {Router} from "@angular/router";
 import {NotificationService} from "../../../shared/services/notification.service";
 
@@ -58,7 +58,7 @@ export class AddProspectComponent implements OnInit {
     );
   }
 
-  setPosition(position: Positions) {
+  setPosition(position: Position) {
     console.log(position)
     this.prospectForm.get('position').setValue(position)
     this.prospectForm.updateValueAndValidity()

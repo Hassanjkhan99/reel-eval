@@ -13,6 +13,8 @@ import {TraitsSelectComponent} from '../../../shared/components/traits-select/tr
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {AssignWeightsComponent} from "./assign-weights/assign-weights.component";
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import {Position} from "../../../shared/interfaces/positions.interface";
+import {NotificationService} from "../../../shared/services/notification.service";
 
 @UntilDestroy()
 @Component({
@@ -39,15 +41,17 @@ export class PreGradingComponent implements OnInit {
   selectedTraits: Trait[] = [];
   combinedArray: Trait[] = [];
 
-  selectedTrait = new FormControl<Trait>(null);
+  selectedTrait = new FormControl<Trait>({value: null, disabled: true});
+  selectedPosition = new FormControl<Position>(null);
   traits: FormGroup = new FormGroup({})
 
-  constructor(private traitsService: TraitsService) {
+  constructor(private traitsService: TraitsService, private notificationService: NotificationService) {
   }
 
   ngOnInit(): void {
     this.traitsService
       .getAllTraits(0, 1000, null, null, null)
+      .pipe(untilDestroyed(this))
       .subscribe((traits) => {
         this.unSelectedTraits = traits.results;
         this.setCombinedArray()
@@ -65,6 +69,11 @@ export class PreGradingComponent implements OnInit {
   }
 
   selectItem(item: Trait) {
+    if (!this.selectedPosition.value) {
+      this.notificationService.error('No Position Selected', 'Please select a position first');
+      return;
+    }
+
     if (!this.selectedTraits.find((trait) => trait.id === item.id)) {
       this.selectedTraits.push(item);
     }
@@ -73,9 +82,7 @@ export class PreGradingComponent implements OnInit {
       1
     );
     this.setCombinedArray()
-    const traitId = item.id
-    this.traits.setControl(item.id.toString(), new FormControl(0))
-    console.log(this.traits.controls)
+    this.traits.setControl(item.id.toString(), new FormControl({value: 0, disabled: true}))
   }
 
   unSelectItem(item: Trait) {

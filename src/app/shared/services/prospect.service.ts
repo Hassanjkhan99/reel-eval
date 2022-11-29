@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Prospect, ProspectApi} from "../interfaces/prospect.interface";
 import {main_url} from "../../../environments/environment";
-import {Positions, Result} from "../interfaces/positions.interface";
+import {Position, Result} from "../interfaces/positions.interface";
 import {map} from "rxjs/operators";
 import {SchoolApi, Schools} from "../interfaces/school.interface";
 import {StateApi, States} from "../interfaces/state.interface";
@@ -79,7 +79,7 @@ export class ProspectService {
   }
 
 
-  getPositions(): Observable<Positions[]> {
+  getPositions(): Observable<Position[]> {
     return this.http.get<Result>(`${main_url}positions/`).pipe(map(e => e.results));
   }
 

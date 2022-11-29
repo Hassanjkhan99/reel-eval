@@ -13,7 +13,7 @@ import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule,} 
 import {ProspectService} from '../../../shared/services/prospect.service';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {PositionsSelectComponent} from '../../../shared/components/positions-select/positions-select.component';
-import {Positions} from '../../../shared/interfaces/positions.interface';
+import {Position} from '../../../shared/interfaces/positions.interface';
 import {Prospect} from '../../../shared/interfaces/prospect.interface';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
@@ -158,14 +158,14 @@ export class ViewProspectComponent {
   });
 
   currentEditIndex: number;
-  currentPosition: Positions;
+  currentPosition: Position;
   currentSchool: string;
   currentState: string;
 
   stateSearchFormControl = new FormControl<string>(null);
   positionSearchFormControl = new FormControl<string>(null);
   schoolSearchFormControl = new FormControl<string>(null);
-  positionFormControl = new FormControl<Positions>(null);
+  positionFormControl = new FormControl<Position>(null);
 
   checked = false;
   indeterminate = false;
@@ -280,7 +280,7 @@ export class ViewProspectComponent {
     });
   }
 
-  setPosition(position: Positions) {
+  setPosition(position: Position) {
     this.prospectForm.get('position').setValue(position);
     console.log(position.position_name);
   }

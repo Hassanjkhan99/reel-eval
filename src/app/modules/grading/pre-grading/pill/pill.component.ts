@@ -14,7 +14,8 @@ import {Trait} from "../../../../shared/interfaces/trait";
 export class PillComponent implements OnInit {
 
   @Input() item: Trait
-  @Input() selectedList: boolean = false
+  @Input() selectedList: boolean = false;
+  @Input() disabled: boolean = false;
 
   constructor() {
   }
@@ -22,4 +23,11 @@ export class PillComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  vibrateDiv(div: HTMLDivElement) {
+    div.classList.add('vibrate')
+
+    setTimeout(() => {
+      div.classList.remove('vibrate')
+    }, 1000)
+  }
 }

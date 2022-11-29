@@ -10,7 +10,7 @@ import {
 } from "@angular/forms";
 import {NzSelectModule} from "ng-zorro-antd/select";
 import {ProspectService} from "../../services/prospect.service";
-import {Positions} from "../../interfaces/positions.interface";
+import {Position} from "../../interfaces/positions.interface";
 import {NzGridModule} from "ng-zorro-antd/grid";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
@@ -29,7 +29,7 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 })
 export class PositionsSelectComponent implements OnInit, ControlValueAccessor {
 
-  positions: Positions[] = []
+  positions: Position[] = []
   position: FormControl = new FormControl<number>(null)
 
   constructor(private prospectService: ProspectService, private cdr: ChangeDetectorRef) {
@@ -47,7 +47,7 @@ export class PositionsSelectComponent implements OnInit, ControlValueAccessor {
 
   }
 
-  registerOnChange(fn: (val: Positions) => unknown): void {
+  registerOnChange(fn: (val: Position) => unknown): void {
     this.position.valueChanges.pipe(untilDestroyed(this)).subscribe(value => {
       console.log({value})
       const position = this.positions.find(({id}) => id === value)
@@ -65,11 +65,13 @@ export class PositionsSelectComponent implements OnInit, ControlValueAccessor {
   setDisabledState(isDisabled: boolean): void {
   }
 
-  async writeValue(val: Positions): Promise<void> {
-    console.log(this.position.value)
-    this.position.setValue(val.id);
-    console.log(this.position.value)
-    console.log(this.positions)
-    this.cdr.detectChanges()
+  async writeValue(val: Position): Promise<void> {
+    console.log(this.position?.value)
+    if (val) {
+      this.position.setValue(val.id);
+      console.log(this.position.value)
+      console.log(this.positions)
+      this.cdr.detectChanges()
+    }
   }
 }

@@ -1,15 +1,20 @@
-<div class=" w-100 d-flex justify-content-end">
-  <div class="p-2  d-flex justify-content-end">
+<div class="w-100 d-flex justify-content-end">
+  <div class="p-2 d-flex justify-content-end">
     <button (click)="exportCompleteListToExcel()" nz-button nzType="primary">
       Export Complete List To Excel
     </button>
   </div>
-  <div class="p-2  d-flex justify-content-end">
-    <button (click)="exportListToExcel()" [disabled]="checkedIds.length < 1" nz-button nzType="primary">
+  <div class="p-2 d-flex justify-content-end">
+    <button
+      (click)="exportListToExcel()"
+      [disabled]="checkedIds.length < 1"
+      nz-button
+      nzType="primary"
+    >
       Export Selected Prospects List To Excel
     </button>
   </div>
-  <div *ngIf="!achievedTable" class="p-2  d-flex justify-content-end">
+  <div *ngIf="!achievedTable" class="p-2 d-flex justify-content-end">
     <button (click)="addProspect()" nz-button nzType="primary">
       Add Prospect
     </button>
@@ -135,7 +140,9 @@
     </td>
     <td>
         <span>
-          <app-states-select-search formControlName="state"></app-states-select-search>
+          <app-states-select-search
+            formControlName="state"
+          ></app-states-select-search>
         </span>
     </td>
     <td>
@@ -201,8 +208,11 @@
     [formGroup]="prospectForm"
     class="text-center"
   >
-    <td (nzCheckedChange)="onItemChecked(data.id, $event)" [nzChecked]="setOfCheckedId.has(data.id)"
-        [nzShowCheckbox]="!( currentEditIndex === i)"></td>
+    <td
+      (nzCheckedChange)="onItemChecked(data.id, $event)"
+      [nzChecked]="setOfCheckedId.has(data.id)"
+      [nzShowCheckbox]="!(currentEditIndex === i)"
+    ></td>
     <td>
         <span *ngIf="currentEditIndex != i">
           {{ data.first_name }}
