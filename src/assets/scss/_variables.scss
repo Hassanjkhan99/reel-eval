@@ -120,23 +120,22 @@ $theme-color-loop: (
 //
 // Style anchor elements.
 $link-color:                $blue !default;
-$link-decoration:           none !default;
-$link-hover-color:          darken($link-color, 15%) !default;
-$link-hover-decoration:     underline !default;
+$link-decoration: none !default;
+$link-hover-color: darken($link-color, 15%) !default;
+$link-hover-decoration: underline !default;
 
 
 // Options
 //
 // Quickly modify global styling by enabling or disabling optional features.
-$enable-flex:               true !default;
-$enable-rounded:            true !default;
-$enable-shadows:            false !default;
-$enable-gradients:          false !default;
-$enable-transitions:        true !default;
-$enable-hover-media-query:  false !default;
-$enable-grid-classes:       true !default;
-$enable-print-styles:       true !default;
-
+$enable-flex: true !default;
+$enable-rounded: true !default;
+$enable-shadows: true !default;
+$enable-gradients: true !default;
+$enable-transitions: true !default;
+$enable-hover-media-query: true !default;
+$enable-grid-classes: true !default;
+$enable-print-styles: true !default;
 
 
 // Grid breakpoints
@@ -299,26 +298,25 @@ $btn-border-radius-sm:           $border-radius-sm !default;
 $btn-transition:                 all .2s ease-in-out !default;
 
 
-
 // Tables
 //
 // Customizes the `.table` component with basic values, each used across all table variations.
-$table-cell-padding:            .75rem !default;
-$table-sm-cell-padding:         .3rem !default;
-$table-bg:                      transparent !default;
-$table-color:                   $body-color;
-$table-head-bg: $white !default;
-$table-head-color: $gray-dark !default;
+$table-cell-padding: .75rem !default;
+$table-sm-cell-padding: .3rem !default;
+$table-bg: transparent !default;
+$table-color: $body-color;
+$table-head-bg: $brand-primary !default;
+$table-head-color: $white !default;
 $table-foot-bg: transparent !default;
 $table-foot-color: $gray-dark !default;
 $table-border-color: $gray-lighter !default;
 $table-spacing: 0.9375rem !default;
 $table-spacing-sm: 0.9375rem !default;
 $table-spacing-lg: 0.9375rem !default;
-$table-hover: #fcfcfc !default;
-$table-selected: rgba($brand-primary, 0.1) !default;
+$table-hover: rgba(63, 135, 245, 0.1) !default;
+$table-selected: $brand-primary !default;
 $table-has-action-hover-bg: darken(#f2f2f2, 2%) !default;
-$table-column-sort-bg: $table-hover !default;
+$table-column-sort-bg: $brand-primary !default;
 $table-border: $border-color !default;
 $table-border-radius: 4px !default;
 $table-column-sorter-size: 0.9375rem;
@@ -328,7 +326,7 @@ $table-row-expand-icon-size: 1.0625rem !default;
 // Form states and alerts
 //
 // Define colors for form feedback states and, by default, alerts.
-$state-success-text:             $brand-success !default;
+$state-success-text: $brand-success !default;
 $state-success-bg:               rgba($brand-success, 0.1) !default;
 $state-success-border:           rgba($brand-success, 0.15) !default;
 
