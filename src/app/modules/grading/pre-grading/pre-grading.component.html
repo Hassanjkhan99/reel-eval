@@ -1,78 +1,82 @@
-<div class="p-2">
-  <app-positions-select [formControl]="selectedPosition"></app-positions-select>
-</div>
-
 <div [nzGutter]="8" class="bg-white" nz-row>
-  <div nz-col nzLg="16" nzMd="12" nzSm="24" nzXXl="16" nzXl="16" nzXs="24">
-    <div class="w-100 text-align-center p-3">
-      <h2>Choose the Traits</h2>
-    </div>
-    <div class="w-100 text-align-center p-0">
-      <div>
-        <h3>Selected Traits</h3>
-      </div>
-      <div>
+  <div
+    class="text-center"
+    nz-col
+    nzLg="6"
+    nzMd="6"
+    nzSm="24"
+    nzXl="6"
+    nzXs="24"
+  >
+    <app-card headerSubText="Search and select any player to grade" headerText="Select Player">
+      <app-player-select></app-player-select>
+    </app-card>
+    <app-card headerSubText="Select player's position to grade" headerText="Select Position">
+      <app-positions-select [formControl]="selectedPosition"></app-positions-select>
+    </app-card>
+  </div>
+
+  <div nz-col nzLg="10" nzMd="10" nzSm="24" nzXXl="10" nzXl="10" nzXs="24">
+
+    <app-card class="w-100 text-align-center" headerText="Choose the Traits" padding="5px">
+      <app-card class="w-100 text-align-center " headerText="Selected Traits">
+        <div>
+          <div
+            [class.container-list]="selectedTraits.length > 0"
+            [class.container-noList]="selectedTraits.length < 1"
+            nz-col
+            nzSpan="24"
+          >
+            <p *ngIf="selectedTraits.length < 1">There are no selected Traits</p>
+            <nz-list nzGrid>
+              <div [nzGutter]="8" nz-row>
+                <div *ngFor="let item of selectedTraits" nz-col nzLg="12" nzMd="24" nzSm="24" nzXXl="12" nzXl="12"
+                     nzXs="24">
+                  <nz-list-item (click)="unSelectItem(item)">
+                    <app-pill [disabled]="!selectedPosition.value" [item]="item" [selectedList]="true"></app-pill>
+                  </nz-list-item>
+                </div>
+              </div>
+            </nz-list>
+          </div>
+        </div>
+      </app-card>
+      <app-card class="w-100 text-align-center " headerText="Unselected Traits">
         <div
-          [class.container-list]="selectedTraits.length > 0"
-          [class.container-noList]="selectedTraits.length < 1"
+          [class.container-list]="unSelectedTraits.length > 0"
+          [class.container-noList]="unSelectedTraits.length < 1"
           nz-col
           nzSpan="24"
         >
-          <p *ngIf="selectedTraits.length < 1">There are no selected Traits</p>
+          <p *ngIf="unSelectedTraits.length < 1">There are no unselected Traits</p>
           <nz-list nzGrid>
             <div [nzGutter]="8" nz-row>
-              <div *ngFor="let item of selectedTraits" nz-col nzLg="12" nzMd="24" nzSm="24" nzXXl="8" nzXl="8"
+              <div *ngFor="let item of unSelectedTraits" nz-col nzLg="12" nzMd="24" nzSm="24" nzXXl="12" nzXl="12"
                    nzXs="24">
-                <nz-list-item (click)="unSelectItem(item)">
-                  <app-pill [disabled]="!selectedPosition.value" [item]="item" [selectedList]="true"></app-pill>
+                <nz-list-item (click)="selectItem(item)">
+                  <app-pill [disabled]="!selectedPosition.value" [item]="item" [selectedList]="false"></app-pill>
                 </nz-list-item>
               </div>
             </div>
           </nz-list>
         </div>
-      </div>
-      <div [nzSpan]="24" class="p-3" nz-col>
-        <h3>Unselected Traits</h3>
-      </div>
-      <div
-        [class.container-list]="unSelectedTraits.length > 0"
-        [class.container-noList]="unSelectedTraits.length < 1"
-        nz-col
-        nzSpan="24"
-      >
-        <p *ngIf="unSelectedTraits.length < 1">There are no unselected Traits</p>
-        <nz-list nzGrid>
-          <div [nzGutter]="8" nz-row>
-            <div *ngFor="let item of unSelectedTraits" nz-col nzLg="12" nzMd="24" nzSm="24" nzXXl="8" nzXl="8"
-                 nzXs="24">
-              <nz-list-item (click)="selectItem(item)">
-                <app-pill [disabled]="!selectedPosition.value" [item]="item" [selectedList]="false"></app-pill>
-              </nz-list-item>
-            </div>
-          </div>
-        </nz-list>
-      </div>
-    </div>
+      </app-card>
+    </app-card>
   </div>
   <div
     nzLg="8"
-    nzMd="12"
+    class="text-center"
     nzSm="24"
     nzXl="8"
     nzXs="24"
-    class="text-center p-3"
+    nzMd="8"
     nz-col
   >
-    <div>
-      <h2>Assign the Weights</h2>
-    </div>
-    <div>
-
+    <app-card headerText="Assign the Weights & Order">
       <app-assign-weights
         [list]="selectedTraits"
         [traits]="traits"
       ></app-assign-weights>
-    </div>
-
+    </app-card>
   </div>
 </div>

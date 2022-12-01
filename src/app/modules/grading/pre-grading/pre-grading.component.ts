@@ -15,6 +15,8 @@ import {AssignWeightsComponent} from "./assign-weights/assign-weights.component"
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {Position} from "../../../shared/interfaces/positions.interface";
 import {NotificationService} from "../../../shared/services/notification.service";
+import {CardComponent} from "../../../shared/components/card/card.component";
+import {PlayerSelectComponent} from "../../../shared/components/player-select/player-select.component";
 
 @UntilDestroy()
 @Component({
@@ -32,6 +34,8 @@ import {NotificationService} from "../../../shared/services/notification.service
     ReactiveFormsModule,
     AssignWeightsComponent,
     DragDropModule,
+    CardComponent,
+    PlayerSelectComponent,
   ],
   templateUrl: './pre-grading.component.html',
   styleUrls: ['./pre-grading.component.scss'],
