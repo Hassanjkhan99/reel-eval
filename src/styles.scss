@@ -6,6 +6,8 @@
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";
 
+$primary-color: #1adbfe;
+
 .text-align-center {
   text-align: center !important;
 }
@@ -109,3 +111,14 @@
     transform: translate(1px, -1px);
   }
 }
+
+.ant-card-head, .ant-table-fixed-header .ant-table-thead > tr > th, .ant-table-column-sorter, .ant-table-column-sorters:hover .ant-table-column-sorter {
+  background: $primary-color !important;
+  color: white;
+}
+
+
+.stripes {
+  background: rgba(26, 219, 254, 0.16);
+}
+

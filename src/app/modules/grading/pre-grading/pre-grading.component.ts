@@ -17,6 +17,7 @@ import {Position} from "../../../shared/interfaces/positions.interface";
 import {NotificationService} from "../../../shared/services/notification.service";
 import {CardComponent} from "../../../shared/components/card/card.component";
 import {PlayerSelectComponent} from "../../../shared/components/player-select/player-select.component";
+import {Prospect} from "../../../shared/interfaces/prospect.interface";
 
 @UntilDestroy()
 @Component({
@@ -46,8 +47,9 @@ export class PreGradingComponent implements OnInit {
   combinedArray: Trait[] = [];
 
   selectedTrait = new FormControl<Trait>({value: null, disabled: true});
-  selectedPosition = new FormControl<Position>(null);
+  selectedPosition = new FormControl<Position>({value: null, disabled: true});
   traits: FormGroup = new FormGroup({})
+  selectProspect = new FormControl<Prospect>(null);
 
   constructor(private traitsService: TraitsService, private notificationService: NotificationService) {
   }
@@ -67,6 +69,17 @@ export class PreGradingComponent implements OnInit {
         this.setCombinedArray()
       },
     });
+    this.selectProspect.valueChanges.pipe(untilDestroyed(this)).subscribe({
+      next: (value) => {
+        console.log({value})
+        if (value) {
+          this.selectedPosition.enable()
+        } else {
+          this.selectedPosition.disable()
+        }
+      },
+    })
+
   }
 
   onClose() {
@@ -74,7 +87,8 @@ export class PreGradingComponent implements OnInit {
 
   selectItem(item: Trait) {
     if (!this.selectedPosition.value) {
-      this.notificationService.error('No Position Selected', 'Please select a position first');
+      const isProspectSelected = !!this.selectProspect.value
+      this.notificationService.error(`No ${isProspectSelected ? 'Position' : 'Prospect'} Selected`, `Please select a ${isProspectSelected ? 'position' : 'prospect'} first`);
       return;
     }
 
@@ -102,5 +116,6 @@ export class PreGradingComponent implements OnInit {
   setCombinedArray() {
     this.combinedArray = [...this.selectedTraits, ...this.unSelectedTraits]
   }
+
 
 }

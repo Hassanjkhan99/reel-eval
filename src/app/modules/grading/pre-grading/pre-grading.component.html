@@ -9,7 +9,7 @@
     nzXs="24"
   >
     <app-card headerSubText="Search and select any player to grade" headerText="Select Prospect">
-      <app-player-select></app-player-select>
+      <app-player-select [formControl]="selectProspect"></app-player-select>
     </app-card>
     <app-card headerSubText="Select player's position to grade" headerText="Choose Position">
       <app-positions-select [formControl]="selectedPosition"></app-positions-select>

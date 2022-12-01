@@ -1,5 +1,6 @@
 <div class="pill background-white" nz-row>
-  <div [nzSpan]="16" class="d-flex justify-content-start" nz-col>{{item.trait}}</div>
+  <div [nzSpan]="16" cdkDrag class="d-flex justify-content-start" nz-col>{{item.trait}}
+  </div>
 
   <input [formControl]="control" [max]="remainingLimit + value" [nzSpan]="8" autofocus
          class="ant-input ant-input-focused" min="0" nz-col nz-input value="0"

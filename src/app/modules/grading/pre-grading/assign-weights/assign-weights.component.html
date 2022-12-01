@@ -11,7 +11,7 @@
       cdkDropList
       nz-row
     >
-      <div *ngFor="let item of list" [nzSpan]="24" cdkDrag nz-col>
+      <div *ngFor="let item of list" [nzSpan]="24" nz-col>
         <nz-list-item>
           <app-pill-with-input
             [formControlName]="item.id"

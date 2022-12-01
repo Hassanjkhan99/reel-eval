@@ -6,6 +6,7 @@ import {NzGridModule} from 'ng-zorro-antd/grid';
 import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule,} from '@angular/forms';
 import {Trait} from '../../../../../shared/interfaces/trait';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 @UntilDestroy()
 @Component({
@@ -17,6 +18,7 @@ import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
     NzInputModule,
     NzGridModule,
     ReactiveFormsModule,
+    DragDropModule,
   ],
   templateUrl: './pill-with-input.component.html',
   styleUrls: ['./pill-with-input.component.scss'],

@@ -9,9 +9,10 @@ import {
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule
 } from "@angular/forms";
-import {untilDestroyed} from "@ngneat/until-destroy";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {Prospect} from "../../interfaces/prospect.interface";
 
+@UntilDestroy()
 @Component({
   selector: 'app-player-select',
   standalone: true,
