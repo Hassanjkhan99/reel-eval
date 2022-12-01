@@ -127,7 +127,6 @@
       *ngFor="let data of table.data; let i = index"
       [formGroup]="traitForm"
       class="text-align-center"
-      [class.stripes]="i % 2 != 0"
     >
       <td>
           <span *ngIf="currentEditIndex != i">
