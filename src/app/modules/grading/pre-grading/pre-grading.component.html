@@ -8,10 +8,10 @@
     nzXl="6"
     nzXs="24"
   >
-    <app-card headerSubText="Search and select any player to grade" headerText="Select Player">
+    <app-card headerSubText="Search and select any player to grade" headerText="Select Prospect">
       <app-player-select></app-player-select>
     </app-card>
-    <app-card headerSubText="Select player's position to grade" headerText="Select Position">
+    <app-card headerSubText="Select player's position to grade" headerText="Choose Position">
       <app-positions-select [formControl]="selectedPosition"></app-positions-select>
     </app-card>
   </div>
@@ -41,7 +41,7 @@
           </div>
         </div>
       </app-card>
-      <app-card class="w-100 text-align-center " headerText="Unselected Traits">
+      <app-card class="w-100 text-align-center " headerText="List Of Traits">
         <div
           [class.container-list]="unSelectedTraits.length > 0"
           [class.container-noList]="unSelectedTraits.length < 1"
