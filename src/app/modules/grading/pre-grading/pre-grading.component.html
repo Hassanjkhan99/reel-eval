@@ -1,24 +1,23 @@
-<div [nzGutter]="8" class="bg-white" nz-row>
-  <div
-    class="text-center"
-    nz-col
-    nzLg="6"
-    nzMd="6"
-    nzSm="24"
-    nzXl="6"
-    nzXs="24"
-  >
-    <app-card headerSubText="Search and select any player to grade" headerText="Select Prospect">
-      <app-player-select [formControl]="selectProspect"></app-player-select>
-    </app-card>
-    <app-card headerSubText="Select player's position to grade" headerText="Choose Position">
-      <app-positions-select [formControl]="selectedPosition"></app-positions-select>
-    </app-card>
-  </div>
+<div class="bg-white " nz-row nzJustify="center">
+  <div [nzGutter]="24" class="w-80" nz-row nzJustify="center">
+    <div
+      class="text-center"
+      nz-col
+      nzLg="6"
+      nzMd="6"
+      nzSm="24"
+      nzXl="6"
+      nzXs="24"
+    >
+      <app-card headerText="Select Prospect">
+        <app-player-select [formControl]="selectProspect"></app-player-select>
+      </app-card>
+      <app-card headerText="Choose Position">
+        <app-positions-select [formControl]="selectedPosition"></app-positions-select>
+      </app-card>
+    </div>
 
-  <div nz-col nzLg="10" nzMd="10" nzSm="24" nzXXl="10" nzXl="10" nzXs="24">
-
-    <app-card class="w-100 text-align-center" headerText="Choose the Traits" padding="5px">
+    <div nz-col nzLg="10" nzMd="10" nzSm="24" nzXXl="10" nzXl="10" nzXs="24">
       <app-card class="w-100 text-align-center " headerText="Selected Traits">
         <div>
           <div
@@ -61,22 +60,22 @@
           </nz-list>
         </div>
       </app-card>
-    </app-card>
-  </div>
-  <div
-    nzLg="8"
-    class="text-center"
-    nzSm="24"
-    nzXl="8"
-    nzXs="24"
-    nzMd="8"
-    nz-col
-  >
-    <app-card headerText="Assign the Weights & Order">
-      <app-assign-weights
-        [list]="selectedTraits"
-        [traits]="traits"
-      ></app-assign-weights>
-    </app-card>
+    </div>
+    <div
+      class="text-center"
+      nz-col
+      nzLg="8"
+      nzMd="8"
+      nzSm="24"
+      nzXl="8"
+      nzXs="24"
+    >
+      <app-card headerText="Assign Weights ">
+        <app-assign-weights
+          [list]="selectedTraits"
+          [traits]="traits"
+        ></app-assign-weights>
+      </app-card>
+    </div>
   </div>
 </div>

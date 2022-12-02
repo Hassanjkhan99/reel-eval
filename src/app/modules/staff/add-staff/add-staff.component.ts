@@ -14,11 +14,12 @@ import {NzAlertModule} from "ng-zorro-antd/alert";
 import {GroupList} from "../../../shared/interfaces/staff.interface";
 import {NzSelectModule} from "ng-zorro-antd/select";
 import {NotificationService} from "../../../shared/services/notification.service";
+import {CardComponent} from "../../../shared/components/card/card.component";
 
 @Component({
   selector: 'app-add-staff',
   standalone: true,
-  imports: [CommonModule, NzInputModule, FormsModule, NzIconModule, NzFormModule, ReactiveFormsModule, NzWaveModule, NzButtonModule, NzCardModule, NzCheckboxModule, NzAlertModule, NzSelectModule],
+  imports: [CommonModule, NzInputModule, FormsModule, NzIconModule, NzFormModule, ReactiveFormsModule, NzWaveModule, NzButtonModule, NzCardModule, NzCheckboxModule, NzAlertModule, NzSelectModule, CardComponent],
   templateUrl: './add-staff.component.html',
   styleUrls: ['./add-staff.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

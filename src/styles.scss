@@ -126,3 +126,11 @@ $primary-color: #3f87f5;
 .ant-table-column-sorter-up.active, .ant-table-column-sorter-down.active {
   color: black;
 }
+
+.ant-card-type-inner .ant-card-head-title, .ant-select, .ant-input, .ant-input-affix-wrapper, .ant-form-item-label > label, .ant-table.ant-table-bordered > .ant-table-container > .ant-table-header > table > thead > tr > th {
+  font-size: 20px;
+}
+
+.ant-table {
+  font-size: 19px;
+}

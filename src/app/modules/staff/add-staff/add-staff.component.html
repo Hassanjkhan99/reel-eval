@@ -5,7 +5,8 @@
   </div>
 </div>
 
-<div [nzGutter]="24" nz-row>
+
+<div [nzGutter]="24" class="w-50" nz-row>
   <div [nzLg]="24" [nzMd]="24" [nzSm]="24" [nzXl]="24" [nzXs]="24" nz-col>
     <div *ngIf="staffCount >= 20">
       <nz-alert
@@ -15,151 +16,157 @@
         nzType="error"
       ></nz-alert>
     </div>
-    <form [formGroup]="coachForm" nz-form>
-      <div nz-row>
-        <div [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXl]="12" [nzXs]="24" nz-col>
-          <nz-form-item nz-row>
-            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
-              <nz-form-label>First name</nz-form-label>
-            </div>
-            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
-              <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
-                <input formControlName="first_name" nz-input placeholder="First Name"/>
-                <ng-template #userErrorTpl let-control>
-                  <ng-container *ngIf="control.hasError('required')">
-                    Please enter your First Name!
-                  </ng-container>
-                </ng-template>
-              </nz-form-control>
-            </div>
-          </nz-form-item>
-          <nz-form-item>
-            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
-              <nz-form-label>Last Name</nz-form-label>
-            </div>
-            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
-              <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
-                <input formControlName="last_name" nz-input placeholder="Last Name"/>
-                <ng-template #userErrorTpl let-control>
-                  <ng-container *ngIf="control.hasError('required')">
-                    Please enter your Last Name!
-                  </ng-container>
-                </ng-template>
-              </nz-form-control>
-            </div>
-          </nz-form-item>
-          <nz-form-item>
-            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
-              <nz-form-label>E-mail</nz-form-label>
-            </div>
-            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
-              <nz-form-control [nzErrorTip]="emailErrorTpl" nzHasFeedback>
-                <input formControlName="email" nz-input placeholder="email" type="email"/>
-                <ng-template #emailErrorTpl let-control>
-                  <ng-container *ngIf="control.hasError('email')">
-                    The input is not valid E-mail!
-                  </ng-container>
-                  <ng-container *ngIf="control.hasError('required')">
-                    Please input your E-mail!
-                  </ng-container>
-                </ng-template>
-              </nz-form-control>
+    <app-card>
 
-            </div>
-          </nz-form-item>
-          <nz-form-item>
-            <div [nzLg]="6" [nzMd]="6" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
-              <nz-form-label>Permissions</nz-form-label>
-            </div>
-            <div [nzLg]="18" [nzMd]="18" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
-              <nz-form-control>
-                <nz-select
-                  [nzMaxTagPlaceholder]="tagPlaceHolder"
-                  formControlName="groups"
-                  nzMode="multiple"
-                  nzPlaceHolder="Select Permissions"
-                >
-                  <nz-option *ngFor="let permissions of options" [nzLabel]="permissions.name"
-                             [nzValue]="permissions.id">
-                  </nz-option>
-                </nz-select>
-                <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
-              </nz-form-control>
+      <form [formGroup]="coachForm" nz-form>
+        <div nz-row>
+          <div [nzLg]="24" [nzMd]="24" [nzSm]="24" [nzXl]="24" [nzXs]="24" nz-col>
+            <nz-form-item nz-row>
+              <div [nzLg]="7" [nzMd]="7" [nzSm]="24" [nzXl]="7" [nzXs]="24" class="t-right" nz-col>
+                <nz-form-label>First name</nz-form-label>
+              </div>
+              <div [nzLg]="14" [nzMd]="14" [nzSm]="24" [nzXl]="14" [nzXs]="24" nz-col>
+                <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
+                  <input formControlName="first_name" nz-input placeholder="First Name"/>
+                  <ng-template #userErrorTpl let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Please enter your First Name!
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </div>
+            </nz-form-item>
+            <nz-form-item>
+              <div [nzLg]="7" [nzMd]="7" [nzSm]="24" [nzXl]="7" [nzXs]="24" class="t-right" nz-col>
+                <nz-form-label>Last Name</nz-form-label>
+              </div>
+              <div [nzLg]="14" [nzMd]="14" [nzSm]="24" [nzXl]="14" [nzXs]="24" nz-col>
+                <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
+                  <input formControlName="last_name" nz-input placeholder="Last Name"/>
+                  <ng-template #userErrorTpl let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Please enter your Last Name!
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </div>
+            </nz-form-item>
+            <nz-form-item>
+              <div [nzLg]="7" [nzMd]="7" [nzSm]="24" [nzXl]="7" [nzXs]="24" class="t-right" nz-col>
+                <nz-form-label>E-mail</nz-form-label>
+              </div>
+              <div [nzLg]="14" [nzMd]="14" [nzSm]="24" [nzXl]="14" [nzXs]="24" nz-col>
+                <nz-form-control [nzErrorTip]="emailErrorTpl" nzHasFeedback>
+                  <input formControlName="email" nz-input placeholder="email" type="email"/>
+                  <ng-template #emailErrorTpl let-control>
+                    <ng-container *ngIf="control.hasError('email')">
+                      The input is not valid E-mail!
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Please input your E-mail!
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
 
-            </div>
-          </nz-form-item>
+              </div>
+            </nz-form-item>
 
-        </div>
-        <div [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXl]="12" [nzXs]="24" nz-col>
-          <nz-form-item>
-            <div [nzLg]="6" [nzMd]="8" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
-              <nz-form-label>Username</nz-form-label>
-            </div>
-            <div [nzLg]="18" [nzMd]="16" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
-              <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
-                <input formControlName="username" nz-input placeholder="Username"/>
-                <ng-template #userErrorTpl let-control>
-                  <ng-container *ngIf="control.hasError('required')">
-                    Please input your username!
-                  </ng-container>
-                </ng-template>
-              </nz-form-control>
-            </div>
-          </nz-form-item>
 
-          <nz-form-item>
-            <div [nzLg]="6" [nzMd]="8" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
-              <nz-form-label>Password</nz-form-label>
-            </div>
-            <div [nzLg]="18" [nzMd]="16" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
-              <nz-form-control nzErrorTip="Please input your password!" nzHasFeedback>
-                <nz-input-group [nzSuffix]="suffixTemplate">
-                  <input (ngModelChange)="validateConfirmPassword()" [type]="passwordVisible ? 'text' : 'password'"
-                         formControlName="password1" id="password1" nz-input placeholder="Password"
+          </div>
+          <div [nzLg]="24" [nzMd]="24" [nzSm]="24" [nzXl]="24" [nzXs]="24" nz-col>
+            <nz-form-item>
+              <div [nzLg]="7" [nzMd]="7" [nzSm]="24" [nzXl]="7" [nzXs]="24" class="t-right" nz-col>
+                <nz-form-label>Username</nz-form-label>
+              </div>
+              <div [nzLg]="14" [nzMd]="14" [nzSm]="24" [nzXl]="14" [nzXs]="24" nz-col>
+                <nz-form-control [nzErrorTip]="userErrorTpl" nzHasFeedback>
+                  <input formControlName="username" nz-input placeholder="Username"/>
+                  <ng-template #userErrorTpl let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Please input your username!
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </div>
+            </nz-form-item>
+
+            <nz-form-item>
+              <div [nzLg]="7" [nzMd]="7" [nzSm]="24" [nzXl]="7" [nzXs]="24" class="t-right" nz-col>
+                <nz-form-label>Password</nz-form-label>
+              </div>
+              <div [nzLg]="14" [nzMd]="14" [nzSm]="24" [nzXl]="14" [nzXs]="24" nz-col>
+                <nz-form-control nzErrorTip="Please input your password!" nzHasFeedback>
+                  <nz-input-group [nzSuffix]="suffixTemplate">
+                    <input (ngModelChange)="validateConfirmPassword()" [type]="passwordVisible ? 'text' : 'password'"
+                           formControlName="password1" id="password1" nz-input placeholder="Password"
+                    >
+                  </nz-input-group>
+                  <ng-template #suffixTemplate>
+                    <i (click)="passwordVisible = !passwordVisible"
+                       [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" nz-icon></i>
+                  </ng-template>
+                </nz-form-control>
+              </div>
+            </nz-form-item>
+
+
+            <nz-form-item>
+              <div [nzLg]="7" [nzMd]="7" [nzSm]="24" [nzXl]="7" [nzXs]="24" class="t-right" nz-col>
+                <nz-form-label>Confirm Password</nz-form-label>
+
+              </div>
+              <div [nzLg]="14" [nzMd]="14" [nzSm]="24" [nzXl]="14" [nzXs]="24" nz-col>
+                <nz-form-control [nzErrorTip]="passwordErrorTpl" nzHasFeedback>
+                  <nz-input-group [nzSuffix]="suffixTemplate2">
+                    <input [type]="passwordVisible2 ? 'text' : 'password'"
+                           formControlName="password2" id="password2" nz-input
+                           placeholder="Confirm Password">
+                  </nz-input-group>
+                  <ng-template #passwordErrorTpl let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Please confirm your password!
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('confirm')">
+                      Password is inconsistent!
+                    </ng-container>
+                  </ng-template>
+                  <ng-template #suffixTemplate2>
+                    <i (click)="passwordVisible2 = !passwordVisible2"
+                       [nzType]="passwordVisible2 ? 'eye-invisible' : 'eye'" nz-icon></i>
+                  </ng-template>
+                </nz-form-control>
+
+              </div>
+            </nz-form-item>
+            <nz-form-item>
+              <div [nzLg]="7" [nzMd]="7" [nzSm]="24" [nzXl]="7" [nzXs]="24" class="t-right" nz-col>
+                <nz-form-label>Permissions</nz-form-label>
+              </div>
+              <div [nzLg]="14" [nzMd]="14" [nzSm]="24" [nzXl]="14" [nzXs]="24" nz-col>
+                <nz-form-control>
+                  <nz-select
+                    [nzMaxTagPlaceholder]="tagPlaceHolder"
+                    formControlName="groups"
+                    nzMode="multiple"
+                    nzPlaceHolder="Select Permissions"
                   >
-                </nz-input-group>
-                <ng-template #suffixTemplate>
-                  <i (click)="passwordVisible = !passwordVisible"
-                     [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" nz-icon></i>
-                </ng-template>
-              </nz-form-control>
-            </div>
-          </nz-form-item>
+                    <nz-option *ngFor="let permissions of options" [nzLabel]="permissions.name"
+                               [nzValue]="permissions.id">
+                    </nz-option>
+                  </nz-select>
+                  <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected
+                  </ng-template>
+                </nz-form-control>
 
+              </div>
+            </nz-form-item>
+          </div>
 
-          <nz-form-item>
-            <div [nzLg]="6" [nzMd]="8" [nzSm]="24" [nzXl]="6" [nzXs]="24" class="t-right" nz-col>
-              <nz-form-label>Confirm Password</nz-form-label>
-
-            </div>
-            <div [nzLg]="18" [nzMd]="16" [nzSm]="24" [nzXl]="18" [nzXs]="24" nz-col>
-              <nz-form-control [nzErrorTip]="passwordErrorTpl" nzHasFeedback>
-                <nz-input-group [nzSuffix]="suffixTemplate2">
-                  <input [type]="passwordVisible2 ? 'text' : 'password'"
-                         formControlName="password2" id="password2" nz-input
-                         placeholder="Confirm Password">
-                </nz-input-group>
-                <ng-template #passwordErrorTpl let-control>
-                  <ng-container *ngIf="control.hasError('required')">
-                    Please confirm your password!
-                  </ng-container>
-                  <ng-container *ngIf="control.hasError('confirm')">
-                    Password is inconsistent!
-                  </ng-container>
-                </ng-template>
-                <ng-template #suffixTemplate2>
-                  <i (click)="passwordVisible2 = !passwordVisible2"
-                     [nzType]="passwordVisible2 ? 'eye-invisible' : 'eye'" nz-icon></i>
-                </ng-template>
-              </nz-form-control>
-
-            </div>
-          </nz-form-item>
         </div>
 
-      </div>
+      </form>
+    </app-card>
 
-    </form>
   </div>
   <!--  <div [nzLg]="8" [nzMd]="8" [nzSm]="24" [nzXl]="8" [nzXs]="24" nz-col>-->
   <!--    <nz-card [nzBordered]="false" nzTitle="Permissions" style="width:100%; display: block">-->

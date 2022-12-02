@@ -26,6 +26,7 @@
   [nzData]="dataSet"
   [nzLoading]="isLoading"
   nzBordered
+  nzTableLayout="fixed"
   (nzQueryParams)="onQueryParamsChange($event)"
   [nzFrontPagination]="false"
   [nzPageIndex]="pageIndex"
@@ -278,7 +279,7 @@
           <input formControlName="video_link" nz-input/>
         </span>
     </td>
-    <td class="d-flex justify-content-center">
+    <td class="d-flex justify-content-center align-items-center">
       <a
         (click)="isEdit(i)"
         *ngIf="currentEditIndex != i"
