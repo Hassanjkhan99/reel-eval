@@ -127,10 +127,16 @@ $primary-color: #3f87f5;
   color: black;
 }
 
+.anticon-search {
+  color: white;
+}
+
 .ant-card-type-inner .ant-card-head-title, .ant-select, .ant-input, .ant-input-affix-wrapper, .ant-form-item-label > label, .ant-table.ant-table-bordered > .ant-table-container > .ant-table-header > table > thead > tr > th {
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .ant-table {
-  font-size: 19px;
+  font-size: 15px;
 }
+
+

@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
-import { ROUTES } from './side-nav-routes.config';
-import { ThemeConstantService } from '../../services/theme-constant.service';
+import {Component} from '@angular/core';
+import {ROUTES} from './side-nav-routes.config';
+import {ThemeConstantService} from '../../services/theme-constant.service';
 import {SideNavInterface} from "../../interfaces/side-nav.type";
 
 @Component({
   selector: 'app-sidenav',
-  templateUrl: './side-nav.component.html'
+  templateUrl: './side-nav.component.html',
+  styleUrls: ['./side-nav.component.scss'],
+
 })
 
 export class SideNavComponent {
