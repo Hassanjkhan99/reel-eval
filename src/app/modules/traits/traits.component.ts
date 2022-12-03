@@ -69,7 +69,7 @@ export class TraitsComponent implements OnInit {
     description: '',
   };
   listOfFilter = ['trait', 'description'];
-  pageSize: number = 8;
+  pageSize: number = 5;
   pageIndex: number = 1;
   private params: NzTableQueryParams;
   private filterField: string = '';

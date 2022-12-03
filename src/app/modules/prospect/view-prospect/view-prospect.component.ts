@@ -69,7 +69,7 @@ export class ViewProspectComponent {
   @Input() schoolList: { name: string }[] = [];
   @Input() achievedTable: boolean = false;
   @Input() isLoading: boolean = false;
-  @Input() pageSize: number = 8;
+  @Input() pageSize: number = 5;
   @Input() pageIndex: number;
   @Input() params: NzTableQueryParams;
   @Input() total = 0;

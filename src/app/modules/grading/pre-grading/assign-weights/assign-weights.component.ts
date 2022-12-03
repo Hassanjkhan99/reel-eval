@@ -48,7 +48,6 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
   }
 
   drop(event: CdkDragDrop<string[]>): void {
-    console.log(event);
     moveItemInArray(this.list, event.previousIndex, event.currentIndex);
   }
 

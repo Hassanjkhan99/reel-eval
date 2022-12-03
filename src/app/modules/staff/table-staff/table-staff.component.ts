@@ -29,7 +29,7 @@ export class TableStaffComponent implements OnInit {
   listOfData: StaffList[] = [];
   originalListOfData: StaffList[] = [];
   total = 0;
-  pageSize: number = 8;
+  pageSize: number = 5;
   pageIndex: number = 1;
   options: GroupList[];
   private params: NzTableQueryParams;
