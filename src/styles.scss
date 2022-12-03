@@ -131,12 +131,14 @@ $primary-color: #3f87f5;
   color: white;
 }
 
-.ant-card-type-inner .ant-card-head-title, .ant-select, .ant-input, .ant-input-affix-wrapper, .ant-form-item-label > label, .ant-table.ant-table-bordered > .ant-table-container > .ant-table-header > table > thead > tr > th {
-  font-size: 16px;
+.ant-card-type-inner .ant-card-head-title, .ant-select, .ant-input, .ant-input-affix-wrapper, .ant-form-item-label > label, .ant-table.ant-table-bordered > .ant-table-container > .ant-table-header > table > thead > tr > th, .ant-tabs-large > .ant-tabs-nav .ant-tabs-tab, .ant-table, .ant-btn {
+  font-size: 20px;
 }
 
-.ant-table {
-  font-size: 15px;
+.ant-btn {
+  height: 3.5rem;
 }
 
-
+.box-shadow {
+  box-shadow: 0 2px 15px #000000;
+}

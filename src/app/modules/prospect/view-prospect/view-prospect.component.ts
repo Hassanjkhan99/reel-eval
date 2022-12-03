@@ -34,6 +34,7 @@ import {
   SchoolSelectSearchComponent
 } from '../../../shared/components/school-select-search/school-select-search.component';
 import {UntilDestroy} from "@ngneat/until-destroy";
+import {NzGridModule} from "ng-zorro-antd/grid";
 
 @UntilDestroy()
 @Component({
@@ -56,6 +57,7 @@ import {UntilDestroy} from "@ngneat/until-destroy";
     PositionMultiSelectComponent,
     StatesSelectSearchComponent,
     SchoolSelectSearchComponent,
+    NzGridModule,
   ],
   templateUrl: './view-prospect.component.html',
   styleUrls: ['./view-prospect.component.scss'],

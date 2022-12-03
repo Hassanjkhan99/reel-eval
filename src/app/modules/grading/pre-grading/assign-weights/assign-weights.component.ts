@@ -38,7 +38,7 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
   @Input() list: Trait[] = [];
   @Input() traits: FormGroup = new FormGroup({});
   remainingValue = 0;
-  total = 100;
+  total = 0;
 
   constructor(private cdr: ChangeDetectorRef, private fb: FormBuilder) {
   }
@@ -58,7 +58,8 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
         (prev, curr) => +prev + +curr,
         0
       ) as number;
-      this.remainingValue = this.total - currValue;
+      this.remainingValue = 100 - currValue;
+      this.total = currValue;
       this.cdr.detectChanges()
     });
   }

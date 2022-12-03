@@ -1,9 +1,4 @@
-<div class="w-100 d-flex justify-content-end">
-  <div class="p-2 d-flex justify-content-end">
-    <button (click)="exportCompleteListToExcel()" nz-button nzType="primary">
-      Export Complete List To Excel
-    </button>
-  </div>
+<div class="w-100 d-flex justify-content-between">
   <div class="p-2 d-flex justify-content-end"
   >
     <button
@@ -12,13 +7,20 @@
       nz-button
       nzType="primary"
     >
-      Export Selected Prospects List To Excel
+      Export To Excel
     </button>
   </div>
-  <div *ngIf="!achievedTable" class="p-2 d-flex justify-content-end">
-    <button (click)="addProspect()" nz-button nzType="primary">
-      Add Prospect
-    </button>
+  <div nz-row>
+    <div class="p-2 d-flex justify-content-end">
+      <button (click)="exportCompleteListToExcel()" nz-button nzType="primary">
+        Export Complete List To Excel
+      </button>
+    </div>
+    <div *ngIf="!achievedTable" class="p-2 d-flex justify-content-end">
+      <button (click)="addProspect()" nz-button nzType="primary">
+        Add Prospect
+      </button>
+    </div>
   </div>
 </div>
 
@@ -34,10 +36,11 @@
   [nzPageSizeOptions]="[8, 10, 20, 30, 40, 50]"
   [nzPageSize]="pageSize"
   [nzTotal]="total"
-  [nzScroll]="{ y: '580px' }"
+  [nzScroll]="{ y: '640px' }"
   nzShowSizeChanger
   (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
   class="w-100"
+
 >
   <thead>
   <tr class="align-content-center">
@@ -46,6 +49,7 @@
       [(nzChecked)]="checked"
       [nzIndeterminate]="indeterminate"
       nzWidth="80px"
+      nzEllipsis
     ></th>
     <th
       *ngFor="let column of listOfColumns; let i = index"
@@ -54,6 +58,7 @@
       [nzCustomFilter]="column.name !== 'Video Link'"
       [nzSortFn]="true"
       class="text-center"
+      nzEllipsis
     >
       {{ column.name }}
 
@@ -111,7 +116,7 @@
         </div>
       </nz-dropdown-menu>
     </th>
-    <th class="text-center" nzWidth="130px">Action</th>
+    <th class="text-center" nzWidth="150px">Action</th>
   </tr>
   </thead>
   <tbody>
@@ -215,8 +220,10 @@
       [nzChecked]="setOfCheckedId.has(data.id)"
       [nzShowCheckbox]="!(currentEditIndex === i)"
     ></td>
-    <td>
-        <span *ngIf="currentEditIndex != i">
+    <td nzEllipsis>
+        <span *ngIf="currentEditIndex != i"
+              [nzTooltipColor]="'blue'"
+              [nzTooltipTitle]="data.first_name" nz-tooltip>
           {{ data.first_name }}
         </span>
       <span *ngIf="currentEditIndex == i">
@@ -227,16 +234,20 @@
           />
         </span>
     </td>
-    <td>
-        <span *ngIf="currentEditIndex != i">
+    <td nzEllipsis>
+        <span *ngIf="currentEditIndex != i"
+              [nzTooltipColor]="'blue'"
+              [nzTooltipTitle]="data.last_name" nz-tooltip>
           {{ data.last_name }}
         </span>
       <span *ngIf="currentEditIndex == i">
           <input formControlName="last_name" nz-input/>
         </span>
     </td>
-    <td>
-        <span *ngIf="currentEditIndex != i">
+    <td nzEllipsis>
+        <span *ngIf="currentEditIndex != i"
+              [nzTooltipColor]="'blue'"
+              [nzTooltipTitle]="data.position.position_name" nz-tooltip>
           {{ data.position.position_name }}
         </span>
       <span *ngIf="currentEditIndex == i">
@@ -245,16 +256,20 @@
           ></app-positions-select>
         </span>
     </td>
-    <td>
-        <span *ngIf="currentEditIndex != i">
+    <td nzEllipsis>
+        <span *ngIf="currentEditIndex != i"
+              [nzTooltipColor]="'blue'"
+              [nzTooltipTitle]="data.classification" nz-tooltip>
           {{ data.classification }}
         </span>
       <span *ngIf="currentEditIndex == i">
           <input formControlName="classification" nz-input/>
         </span>
     </td>
-    <td>
-        <span *ngIf="currentEditIndex != i">
+    <td nzEllipsis>
+        <span *ngIf="currentEditIndex != i"
+              [nzTooltipColor]="'blue'"
+              [nzTooltipTitle]="data.state" nz-tooltip>
           {{ data.state }}
         </span>
       <span *ngIf="currentEditIndex == i">
@@ -262,8 +277,10 @@
           </app-states-select-search>
         </span>
     </td>
-    <td>
-        <span *ngIf="currentEditIndex != i">
+    <td nzEllipsis>
+        <span *ngIf="currentEditIndex != i"
+              [nzTooltipColor]="'blue'"
+              [nzTooltipTitle]="data.school" nz-tooltip>
           {{ data.school }}
         </span>
       <span *ngIf="currentEditIndex == i">
@@ -272,8 +289,10 @@
         </span>
     </td>
 
-    <td>
-        <span *ngIf="currentEditIndex != i">
+    <td nzEllipsis>
+        <span *ngIf="currentEditIndex != i"
+              [nzTooltipColor]="'blue'"
+              [nzTooltipTitle]="data.video_link" nz-tooltip>
           {{ data.video_link }}
         </span>
       <span *ngIf="currentEditIndex == i">
@@ -284,9 +303,9 @@
       <a
         (click)="isEdit(i)"
         *ngIf="currentEditIndex != i"
+        class="p-2"
         [nzTooltipColor]="'blue'"
         [nzTooltipTitle]="'Edit Prospect'"
-        class="p-2"
         nz-tooltip
       >
         <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
