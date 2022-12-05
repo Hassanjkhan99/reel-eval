@@ -40,7 +40,7 @@
   nzShowSizeChanger
   (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
   class="w-100"
-
+  [nzScroll]="{ x: '1100px' }"
 >
   <thead>
   <tr class="align-content-center">
@@ -59,6 +59,7 @@
       [nzSortFn]="true"
       class="text-center"
       nzEllipsis
+      [nzWidth]="column.name == 'School/Team'? '350px' : '250px'"
     >
       {{ column.name }}
 
@@ -116,7 +117,7 @@
         </div>
       </nz-dropdown-menu>
     </th>
-    <th class="text-center" nzWidth="150px">Action</th>
+    <th class="text-center .ant-table-column-title" nzRight nzWidth="150px" style="color: white">Action</th>
   </tr>
   </thead>
   <tbody>
@@ -163,7 +164,7 @@
           <input formControlName="video_link" nz-input/>
         </span>
     </td>
-    <td class="d-flex justify-content-center">
+    <td class="d-flex justify-content-center" nzRight>
       <a (click)="isSaveNew(false)" class="p-2">
         <i
           [nzTheme]="'twotone'"
@@ -299,7 +300,7 @@
           <input formControlName="video_link" nz-input/>
         </span>
     </td>
-    <td class="d-flex justify-content-center align-items-center">
+    <td class="d-flex justify-content-center align-items-center" nzRight>
       <a
         (click)="isEdit(i)"
         *ngIf="currentEditIndex != i"

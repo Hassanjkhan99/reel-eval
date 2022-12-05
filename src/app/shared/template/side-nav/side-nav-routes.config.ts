@@ -57,8 +57,8 @@ export const ROUTES: SideNavInterface[] = [
     icon: 'trophy',
     iconType: 'nzIcon'
   }, {
-    path: 'pre-grading',
-    title: 'Pre-Grading',
+    path: 'grade',
+    title: 'Grade',
     iconTheme: 'fill',
     submenu: [],
     icon: 'trophy',

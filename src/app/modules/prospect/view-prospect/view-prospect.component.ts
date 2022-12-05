@@ -104,7 +104,7 @@ export class ViewProspectComponent {
       tooltipText: 'Classification/Year',
     },
     {
-      name: 'St./Prov',
+      name: 'State/Province',
       tooltip: true,
       tooltipText: 'State/Province',
     },

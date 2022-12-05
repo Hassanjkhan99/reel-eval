@@ -4,22 +4,22 @@
                 <img src="assets/images/logo/logo.png" alt="">
             </div>
             <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-md-6 d-none d-md-block">
-                        <img class="img-fluid" src="assets/images/others/sign-up-2.png" alt="">
-                    </div>
-                    <div class="m-l-auto col-md-5">
-                        <nz-card>
-                          <h2 class="m-t-20">Sign Up</h2>
-                          <p class="m-b-30">Create your account to get access</p>
-                          <form  [formGroup]="signUpForm" class="login-form"
-                                nz-form nzLayout="vertical">
-                            <nz-form-item>
-                              <nz-form-label nzFor="first_name" nzRequired>First name</nz-form-label>
-                              <nz-form-control nzErrorTip="Please input your First name!">
-                                <input formControlName="first_name" id="first_name" nz-input placeholder="First name"
-                                       type="text">
-                              </nz-form-control>
+              <div class="align-items-center d-flex justify-content-center">
+                <!--                    <div class="col-md-6 d-none d-md-block">-->
+                <!--                        <img class="img-fluid" src="assets/images/others/sign-up-2.png" alt="">-->
+                <!--                    </div>-->
+                <div class="w-50">
+                  <nz-card class="box-shadow">
+                    <h2 class="m-t-20">Sign Up</h2>
+                    <p class="m-b-30">Create your account to get access</p>
+                    <form [formGroup]="signUpForm" class="login-form"
+                          nz-form nzLayout="vertical">
+                      <nz-form-item>
+                        <nz-form-label nzFor="first_name" nzRequired>First name</nz-form-label>
+                        <nz-form-control nzErrorTip="Please input your First name!">
+                          <input formControlName="first_name" id="first_name" nz-input placeholder="First name"
+                                 type="text">
+                        </nz-form-control>
                             </nz-form-item>
                             <nz-form-item>
                               <nz-form-label nzFor="last_name" nzRequired>Last name</nz-form-label>
@@ -48,7 +48,7 @@
                               <nz-form-label nzRequired nzFor="email">Email</nz-form-label>
                               <nz-form-control
                                 [nzErrorTip]="email.errors?.['msg'] ?  email.errors?.['msg'] : 'The input is not valid E-mail!'">
-                                <input type="text" nz-input formControlName="email" placeholder="Username" id="email">
+                                <input formControlName="email" id="email" nz-input placeholder="Email" type="text">
                               </nz-form-control>
                             </nz-form-item>
                             <nz-form-item>
