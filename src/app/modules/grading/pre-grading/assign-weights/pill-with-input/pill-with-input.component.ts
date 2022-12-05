@@ -37,6 +37,7 @@ export class PillWithInputComponent
   control = new FormControl<number>(0);
 
   prevValue = 0;
+  isDragDisabled: boolean = false;
 
   constructor(private cdr: ChangeDetectorRef) {
   }
@@ -83,5 +84,14 @@ export class PillWithInputComponent
     } else {
       this.control.reset(0);
     }
+  }
+
+  disableDrag() {
+    this.isDragDisabled = true
+  }
+
+  enableDrag() {
+    this.isDragDisabled = false
+
   }
 }
