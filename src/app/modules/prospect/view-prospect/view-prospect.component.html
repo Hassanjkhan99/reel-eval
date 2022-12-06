@@ -36,11 +36,11 @@
   [nzPageSizeOptions]="[8, 10, 20, 30, 40, 50]"
   [nzPageSize]="pageSize"
   [nzTotal]="total"
-  [nzScroll]="{ y: '640px' }"
+  [nzScroll]="{ x: '1100px',y: '640px' }"
   nzShowSizeChanger
   (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
   class="w-100"
-  [nzScroll]="{ x: '1100px' }"
+  nzSize="small"
 >
   <thead>
   <tr class="align-content-center">
@@ -60,6 +60,7 @@
       class="text-center"
       nzEllipsis
       [nzWidth]="column.name == 'School/Team'? '350px' : '250px'"
+      [nzLeft]="column.name === 'First Name'"
     >
       {{ column.name }}
 
@@ -221,7 +222,7 @@
       [nzChecked]="setOfCheckedId.has(data.id)"
       [nzShowCheckbox]="!(currentEditIndex === i)"
     ></td>
-    <td nzEllipsis>
+    <td nzEllipsis nzLeft>
         <span *ngIf="currentEditIndex != i"
               [nzTooltipColor]="'blue'"
               [nzTooltipTitle]="data.first_name" nz-tooltip>
@@ -300,7 +301,7 @@
           <input formControlName="video_link" nz-input/>
         </span>
     </td>
-    <td class="d-flex justify-content-center align-items-center" nzRight>
+    <td class="d-flex justify-content-center align-items-center " nzRight>
       <a
         (click)="isEdit(i)"
         *ngIf="currentEditIndex != i"
