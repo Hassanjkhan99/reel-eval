@@ -77,7 +77,7 @@
             <input
               *ngIf="
                   column.name !== 'Position' &&
-                  column.name !== 'St./Prov' &&
+                  column.name !== 'State/Province' &&
                   column.name !== 'School/Team'
                 "
               [(ngModel)]="searchValue[listOfFilter[i]]"
@@ -91,7 +91,7 @@
             ></app-position-multi-select>
 
             <app-states-select-search
-              *ngIf="column.name === 'St./Prov'"
+              *ngIf="column.name === 'State/Province'"
               [formControl]="stateSearchFormControl"
             >
             </app-states-select-search>
