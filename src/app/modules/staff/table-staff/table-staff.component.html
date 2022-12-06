@@ -3,17 +3,21 @@
           [nzFrontPagination]="false"
           [nzPageIndex]="pageIndex"
           [nzPageSize]="pageSize" [nzTotal]="total"
-          [nzPageSizeOptions]="[8,10,20,30,40,50]" [nzScroll]="{ y: '640px' }"
+          [nzPageSizeOptions]="[8,10,20,30,40,50]"
+          [nzScroll]="{ y: '640px' }"
           nzBordered
           nzShowSizeChanger
           nzTableLayout="fixed"
+          [nzScroll]="{ x: '1100px' }"
 >
   <thead>
   <tr>
     <th *ngFor="let column of listOfColumns; let i = index"
         [nzColumnKey]="listOfFilter[i]"
         [nzSortFn]="true"
-        [class]="'text-center ' + listOfFilter[i]" nzCustomFilter>
+        [class]="'text-center ' + listOfFilter[i]" [nzWidth]="column == 'Email'? '450px' : '250px'"
+        nzCustomFilter
+    >
       {{column}}
       <nz-filter-trigger *ngIf="column !== 'Actions' && column !== 'Permissions'"
                          [(nzVisible)]="visible[listOfFilter[i]]"
@@ -47,10 +51,10 @@
       </nz-dropdown-menu>
 
     </th>
-    <th class="text-center">
+    <th class="text-center" style="color: white">
       Permissions
     </th>
-    <th class="text-center" nzWidth="120px">
+    <th class="text-center" nzRight nzWidth="120px" style="color: white">
       Actions
     </th>
   </tr>
@@ -111,7 +115,7 @@
         <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
         </span>
     </td>
-    <td class="d-flex justify-content-center">
+    <td class="d-flex justify-content-center" nzRight>
       <a (click)="isEdit(i)" *ngIf="currentEditIndex != i" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Edit Staff'"
          class="p-2" nz-tooltip>
         <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>

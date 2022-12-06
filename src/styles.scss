@@ -129,6 +129,7 @@ $primary-color: #3f87f5;
 
 .anticon-search {
   color: white;
+  font-size: 15px;
 }
 
 .ant-card-type-inner .ant-card-head-title, .ant-select, .ant-input, .ant-input-affix-wrapper, .ant-form-item-label > label, .ant-table.ant-table-bordered > .ant-table-container > .ant-table-header > table > thead > tr > th, .ant-tabs-large > .ant-tabs-nav .ant-tabs-tab, .ant-table, .ant-btn {
@@ -142,6 +143,13 @@ $primary-color: #3f87f5;
 .box-shadow {
   box-shadow: 0 2px 15px #000000;
 }
+
 .ant-table-column-title {
   color: white;
+}
+
+.ant-dropdown-trigger.ant-table-filter-trigger.active {
+  .anticon-search {
+    color: black;
+  }
 }
