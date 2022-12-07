@@ -15,7 +15,7 @@
     <th *ngFor="let column of listOfColumns; let i = index"
         [nzColumnKey]="listOfFilter[i]"
         [nzSortFn]="true"
-        [class]="'text-center ' + listOfFilter[i]" [nzWidth]="column == 'Email'? '450px' : '250px'"
+        [class]="'text-align-left ' + listOfFilter[i]" [nzWidth]="column == 'Email'? '450px' : '250px'"
         nzCustomFilter
     >
       {{column}}
@@ -51,17 +51,17 @@
       </nz-dropdown-menu>
 
     </th>
-    <th class="text-center" style="color: white">
+    <th class="text-align-left" style="color: white">
       Permissions
     </th>
-    <th class="text-center" nzRight nzWidth="120px" style="color: white">
+    <th class="text-align-left" nzRight nzWidth="120px" style="color: white">
       Actions
     </th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let data of borderedTable.data; let i = index" [formGroup]="staffForm"
-      class="text-center"
+      class="text-align-left"
       [class.stripes]="i % 2 != 0"
   >
 

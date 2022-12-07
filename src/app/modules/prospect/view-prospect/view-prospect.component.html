@@ -64,7 +64,7 @@
         [nzLeft]="column.name === 'First Name'"
         [nzSortFn]="true"
         [nzWidth]="column.name == 'School/Team' ? '350px' : '250px'"
-        class="text-center"
+        class="text-align-left"
         nzEllipsis
       >
         {{ column.name }}
@@ -128,7 +128,7 @@
         </nz-dropdown-menu>
       </th>
       <th
-        class="text-center .ant-table-column-title"
+        class="text-align-left .ant-table-column-title"
         nzRight
         nzWidth="150px"
         style="color: white"
@@ -138,7 +138,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngIf="showRow" [formGroup]="prospectForm" class="text-center">
+    <tr *ngIf="showRow" [formGroup]="prospectForm" class="text-align-left">
       <td></td>
       <td>
           <span>
@@ -231,7 +231,7 @@
       *ngFor="let data of borderedTable.data; let i = index"
       [class.stripes]="i % 2 != 0"
       [formGroup]="prospectForm"
-      class="text-center"
+      class="text-align-left"
     >
       <td
         (nzCheckedChange)="onItemChecked(data.id, $event)"
