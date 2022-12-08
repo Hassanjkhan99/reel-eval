@@ -36,7 +36,7 @@ import {
 import {UntilDestroy} from "@ngneat/until-destroy";
 import {NzGridModule} from "ng-zorro-antd/grid";
 import {NzSelectModule} from "ng-zorro-antd/select";
-import {NzResizableModule, NzResizeEvent} from "ng-zorro-antd/resizable";
+import {NzResizableModule} from "ng-zorro-antd/resizable";
 
 @UntilDestroy()
 @Component({
@@ -503,11 +503,6 @@ export class ViewProspectComponent {
       this.listOfCurrentPageData.some((item) =>
         this.setOfCheckedId.has(item.id)
       ) && !this.checked;
-  }
-
-  onResize({width}: NzResizeEvent, col: string): void {
-    console.log({width, col})
-    this.listOfColumns = this.listOfColumns.map(e => (e.name === col ? {...e, width: `${width}px`} : e));
   }
 }
 

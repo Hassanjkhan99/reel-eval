@@ -57,84 +57,75 @@
         nzWidth="80px"
       ></th>
       <th
-        (nzResizeEnd)="onResize($event, column.name)"
         *ngFor="let column of listOfColumns; let i = index"
         [nz-tooltip]="column.tooltipText"
         [nzColumnKey]="listOfFilter[i]"
         [nzCustomFilter]="column.name !== 'Video Link'"
         [nzLeft]="column.name === 'First Name'"
-        [nzMaxWidth]="400"
-        [nzMinWidth]="60"
         [nzSortFn]="true"
         [nzWidth]="column.width"
         class="text-align-left"
-        nz-resizable
-        nzBounds="window"
         nzEllipsis
-        nzPreview
       >
         {{ column.name }}
 
-        <!--          <nz-filter-trigger-->
-        <!--            *ngIf="column.name !== 'Video Link'"-->
-        <!--            [(nzVisible)]="visible[listOfFilter?.[i]]"-->
-        <!--            [nzActive]="searchValue[listOfFilter[i]]?.length > 0"-->
-        <!--            [nzDropdownMenu]="menu"-->
-        <!--          >-->
-        <!--            <span nz-icon nzType="search"></span>-->
-        <!--          </nz-filter-trigger>-->
-        <!--          <nz-dropdown-menu #menu="nzDropdownMenu">-->
-        <!--            <div class="ant-table-filter-dropdown">-->
-        <!--              <div class="search-box">-->
-        <!--                <input-->
-        <!--                  *ngIf="-->
-        <!--                    column.name !== 'Positions' &&-->
-        <!--                    column.name !== 'State/Province' &&-->
-        <!--                    column.name !== 'School/Team'-->
-        <!--                  "-->
-        <!--                  [(ngModel)]="searchValue[listOfFilter[i]]"-->
-        <!--                  [placeholder]="'Search ' + column.name"-->
-        <!--                  nz-input-->
-        <!--                  type="text"-->
-        <!--                />-->
-        <!--                <app-position-multi-select-->
-        <!--                  *ngIf="column.name === 'Positions'"-->
-        <!--                  [formControl]="positionSearchFormControl"-->
-        <!--                ></app-position-multi-select>-->
+        <nz-filter-trigger
+          *ngIf="column.name !== 'Video Link'"
+          [(nzVisible)]="visible[listOfFilter?.[i]]"
+          [nzActive]="searchValue[listOfFilter[i]]?.length > 0"
+          [nzDropdownMenu]="menu"
+        >
+          <span nz-icon nzType="search"></span>
+        </nz-filter-trigger>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <div class="ant-table-filter-dropdown">
+            <div class="search-box">
+              <input
+                *ngIf="
+                    column.name !== 'Positions' &&
+                    column.name !== 'State/Province' &&
+                    column.name !== 'School/Team'
+                  "
+                [(ngModel)]="searchValue[listOfFilter[i]]"
+                [placeholder]="'Search ' + column.name"
+                nz-input
+                type="text"
+              />
+              <app-position-multi-select
+                *ngIf="column.name === 'Positions'"
+                [formControl]="positionSearchFormControl"
+              ></app-position-multi-select>
 
-        <!--                <app-states-select-search-->
-        <!--                  *ngIf="column.name === 'State/Province'"-->
-        <!--                  [formControl]="stateSearchFormControl"-->
-        <!--                >-->
-        <!--                </app-states-select-search>-->
-        <!--                <app-school-select-search-->
-        <!--                  *ngIf="column.name === 'School/Team'"-->
-        <!--                  [formControl]="schoolSearchFormControl"-->
-        <!--                >-->
-        <!--                </app-school-select-search>-->
+              <app-states-select-search
+                *ngIf="column.name === 'State/Province'"
+                [formControl]="stateSearchFormControl"
+              >
+              </app-states-select-search>
+              <app-school-select-search
+                *ngIf="column.name === 'School/Team'"
+                [formControl]="schoolSearchFormControl"
+              >
+              </app-school-select-search>
 
-        <!--                <button-->
-        <!--                  (click)="search(listOfFilter[i])"-->
-        <!--                  class="search-button"-->
-        <!--                  nz-button-->
-        <!--                  nzSize="small"-->
-        <!--                  nzType="primary"-->
-        <!--                >-->
-        <!--                  Search-->
-        <!--                </button>-->
-        <!--                <button-->
-        <!--                  (click)="reset(listOfFilter[i])"-->
-        <!--                  nz-button-->
-        <!--                  nzSize="small"-->
-        <!--                >-->
-        <!--                  Reset-->
-        <!--                </button>-->
-        <!--              </div>-->
-        <!--            </div>-->
-        <!--          </nz-dropdown-menu>-->
-        <nz-resize-handle nzDirection="right">
-          <div class="resize-trigger"></div>
-        </nz-resize-handle>
+              <button
+                (click)="search(listOfFilter[i])"
+                class="search-button"
+                nz-button
+                nzSize="small"
+                nzType="primary"
+              >
+                Search
+              </button>
+              <button
+                (click)="reset(listOfFilter[i])"
+                nz-button
+                nzSize="small"
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+        </nz-dropdown-menu>
       </th>
       <th
         class="text-align-left .ant-table-column-title"
@@ -162,9 +153,9 @@
       <td>
           <span>
             <nz-select
-              class="w-100 select"
               formControlName="position"
               nzMode="multiple"
+              class="w-100 select"
               nzPlaceHolder="Select a position"
             >
               <nz-option
@@ -287,20 +278,20 @@
           </span>
       </td>
       <td class="posData">
-          <span
-            *ngIf="currentEditIndex != i"
-            [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="data.pos"
-            nz-tooltip
-          >
+          <span *ngIf="currentEditIndex != i">
             <span
-              *ngFor="let position of data.pos; last as isLast">{{ position.position_name}} {{isLast ? '' : ', '}}</span>
+              *ngFor="let position of data.pos; last as isLast"
+              [nzTooltipColor]="'blue'"
+              [nzTooltipTitle]="position.position_name"
+              nz-tooltip
+            >{{ position.position_name }} {{ isLast ? "" : ", " }}</span
+            >
           </span>
         <span *ngIf="currentEditIndex == i">
             <nz-select
-              class="w-100 select"
               formControlName="position"
               nzMode="multiple"
+              class="w-100 select"
               nzPlaceHolder="Select a position"
             >
               <nz-option
