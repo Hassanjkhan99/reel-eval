@@ -9,7 +9,8 @@ export interface Prospect {
   id: number;
   first_name: string;
   last_name: string;
-  position: Position;
+  position: number[];
+  pos: Pos[];
   classification: string;
   state: string;
   school: string;
@@ -21,6 +22,12 @@ export interface Prospect {
   unique_id_without_club: string;
   created: string;
   modified: string;
+}
+
+export interface Pos {
+  id: number;
+  position_name: string;
+  abbreviation: string;
 }
 
 export interface ProspectForm {

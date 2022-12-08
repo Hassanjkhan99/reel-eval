@@ -35,6 +35,8 @@ import {
 } from '../../../shared/components/school-select-search/school-select-search.component';
 import {UntilDestroy} from "@ngneat/until-destroy";
 import {NzGridModule} from "ng-zorro-antd/grid";
+import {NzSelectModule} from "ng-zorro-antd/select";
+import {NzResizableModule, NzResizeEvent} from "ng-zorro-antd/resizable";
 
 @UntilDestroy()
 @Component({
@@ -58,6 +60,8 @@ import {NzGridModule} from "ng-zorro-antd/grid";
     StatesSelectSearchComponent,
     SchoolSelectSearchComponent,
     NzGridModule,
+    NzSelectModule,
+    NzResizableModule,
   ],
   templateUrl: './view-prospect.component.html',
   styleUrls: ['./view-prospect.component.scss'],
@@ -91,28 +95,35 @@ export class ViewProspectComponent {
   listOfColumns: ColumnItem[] = [
     {
       name: 'First Name',
+      width: '250px'
     },
     {
       name: 'Last Name',
+      width: '250px'
     },
     {
-      name: 'Position',
+      name: 'Positions',
+      width: '450px'
     },
     {
       name: 'Class/Yr',
+      width: '250px',
       tooltip: true,
       tooltipText: 'Classification/Year',
     },
     {
       name: 'State/Province',
+      width: '250px',
       tooltip: true,
       tooltipText: 'State/Province',
     },
     {
       name: 'School/Team',
+      width: '350px'
     },
     {
       name: 'Video Link',
+      width: '250px'
     },
   ];
 
@@ -148,10 +159,7 @@ export class ViewProspectComponent {
   prospectForm = new FormGroup({
     first_name: new FormControl(''),
     last_name: new FormControl(''),
-    position: new FormControl({
-      id: 0,
-      position_name: '',
-    }),
+    position: new FormControl([null]),
     classification: new FormControl(''),
     state: new FormControl(''),
     school: new FormControl(''),
@@ -167,7 +175,7 @@ export class ViewProspectComponent {
   stateSearchFormControl = new FormControl<string>(null);
   positionSearchFormControl = new FormControl<string>(null);
   schoolSearchFormControl = new FormControl<string>(null);
-  positionFormControl = new FormControl<Position>(null);
+  positionFormControl = new FormControl([null]);
 
   checked = false;
   indeterminate = false;
@@ -176,13 +184,15 @@ export class ViewProspectComponent {
   checkedIds: number[] = [];
   private filterField: string = '';
   private currentFilterValue: Array<{ key: string; value: NzTableFilterValue }>;
+  positions: Position[];
 
   constructor(
     private fb: FormBuilder,
     private prospectSer: ProspectService,
     private cdr: ChangeDetectorRef,
     private nzMessageService: NzMessageService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private prospectService: ProspectService
   ) {
   }
 
@@ -207,7 +217,16 @@ export class ViewProspectComponent {
     });
     this.positionFormControl.valueChanges.subscribe((val) => {
       this.prospectForm.controls.position.setValue(val);
-    });
+      console.log(this.positionFormControl.value)
+    })
+    this.prospectService.getPositions().subscribe(positions => {
+      this.positions = positions.map(e => {
+        return {
+          id: e.id, position_name: e.position_name
+        }
+      })
+      this.cdr.detectChanges()
+    })
   }
 
   isEdit(i: number) {
@@ -282,9 +301,8 @@ export class ViewProspectComponent {
     });
   }
 
-  setPosition(position: Position) {
+  setPosition(position: any[]) {
     this.prospectForm.get('position').setValue(position);
-    console.log(position.position_name);
   }
 
 
@@ -400,7 +418,7 @@ export class ViewProspectComponent {
     this.prospectForm.reset({
       school: '',
       archived: false,
-      position: null,
+      position: [],
       classification: '',
       first_name: '',
       last_name: '',
@@ -486,10 +504,16 @@ export class ViewProspectComponent {
         this.setOfCheckedId.has(item.id)
       ) && !this.checked;
   }
+
+  onResize({width}: NzResizeEvent, col: string): void {
+    console.log({width, col})
+    this.listOfColumns = this.listOfColumns.map(e => (e.name === col ? {...e, width: `${width}px`} : e));
+  }
 }
 
 interface ColumnItem {
   name: string;
+  width?: string;
   sortOrder?: NzTableSortOrder | null;
   sortFn?: NzTableSortFn<Partial<Prospect>> | null;
   listOfFilter?: NzTableFilterList;

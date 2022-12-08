@@ -30,7 +30,7 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 export class PositionsSelectComponent implements OnInit, ControlValueAccessor {
 
   positions: Position[] = []
-  position: FormControl = new FormControl<number>(null)
+  position: FormControl = new FormControl([0])
 
   constructor(private prospectService: ProspectService, private cdr: ChangeDetectorRef) {
   }

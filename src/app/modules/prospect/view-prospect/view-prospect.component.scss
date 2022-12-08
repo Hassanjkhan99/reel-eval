@@ -22,10 +22,21 @@ input {
   margin-bottom: 8px;
   display: block;
 }
+
 .search-button {
   margin-right: 8px;
 }
 
 i {
   font-size: 25px;
+}
+
+.select {
+  height: 30px;
+  overflow-y: scroll;
+}
+
+.posData {
+  overflow-x: scroll;
+  white-space: nowrap;
 }
