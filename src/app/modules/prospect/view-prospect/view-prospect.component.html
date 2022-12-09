@@ -128,7 +128,7 @@
         </nz-dropdown-menu>
       </th>
       <th
-        class="text-align-left .ant-table-column-title"
+        class="text-align-center ant-table-column-title"
         nzRight
         nzWidth="150px"
         style="color: white"
@@ -138,7 +138,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngIf="showRow" [formGroup]="prospectForm" class="text-align-left">
+    <tr *ngIf="showRow" [formGroup]="prospectForm" class="text-align-left background-primary">
       <td></td>
       <td>
           <span>
@@ -155,7 +155,7 @@
             <nz-select
               formControlName="position"
               nzMode="multiple"
-              class="w-100 select"
+              class="w-100 "
               nzPlaceHolder="Select a position"
             >
               <nz-option
@@ -274,14 +274,14 @@
           <span *ngIf="currentEditIndex != i">
             <span
               *ngFor="let position of data.pos; last as isLast"
-            >{{ position.position_name }} {{ isLast ? "" : ", " }}</span
+            >{{ position.abbreviation.trim() }} {{ isLast ? "" : "/" }}</span
             >
           </span>
         <span *ngIf="currentEditIndex == i">
             <nz-select
               formControlName="position"
               nzMode="multiple"
-              class="w-100 select"
+              class="w-100"
               nzPlaceHolder="Select a position"
             >
               <nz-option
@@ -329,7 +329,8 @@
           <span
             *ngIf="currentEditIndex != i"
           >
-            {{ data.video_link }}
+            <a *ngIf="data.video_link" [href]="data.video_link" nz-icon nzTheme="outline" nzType="video-camera"
+               target="_blank"></a>
           </span>
         <span *ngIf="currentEditIndex == i">
             <input formControlName="video_link" nz-input/>

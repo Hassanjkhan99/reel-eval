@@ -22,7 +22,7 @@ $primary-color: #3f87f5;
 
 /* width */
 ::-webkit-scrollbar {
-  height: 10px;
+  height: 20px;
   width: 10px;
 }
 
@@ -61,7 +61,7 @@ $primary-color: #3f87f5;
 }
 
 .background-primary {
-  background: rgba(63, 135, 245, 0.53);
+  background: lighten(rgba(63, 135, 245), 30%);
   color: white;
 }
 
@@ -165,6 +165,7 @@ th {
 td {
   font-size: 19px;
   border: 2px solid rgba(63, 135, 245, 0.45);
+
 }
 
 

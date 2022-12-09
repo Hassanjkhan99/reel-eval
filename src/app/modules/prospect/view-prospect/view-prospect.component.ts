@@ -103,7 +103,7 @@ export class ViewProspectComponent {
     },
     {
       name: 'Positions',
-      width: '450px'
+      width: '250px'
     },
     {
       name: 'Class/Yr',
@@ -121,7 +121,7 @@ export class ViewProspectComponent {
     },
     {
       name: 'Video Link',
-      width: '250px'
+      width: '180px'
     },
   ];
 
@@ -239,7 +239,7 @@ export class ViewProspectComponent {
       );
       return;
     }
-
+    this.listOfColumns[2].width = '600px';
     this.currentSchool = this.dataSet[i].school;
     this.currentState = this.dataSet[i].state;
     this.currentEditIndex = i;
@@ -257,6 +257,7 @@ export class ViewProspectComponent {
   }
 
   isSave(i: number) {
+    this.listOfColumns[2].width = '450px';
     this.prospectSer
       .editProspect(this.dataSet[i].id, {
         ...this.dataSet[i],
@@ -306,12 +307,14 @@ export class ViewProspectComponent {
 
   cancel(): void {
     this.nzMessageService.info('clicked cancel');
+    this.listOfColumns[2].width = '450px';
   }
 
   confirm(): void {
     this.nzMessageService.info('clicked confirm');
     this.currentEditIndex = -1;
     this.showRow = false;
+    this.listOfColumns[2].width = '450px';
   }
 
   isArchive(i: number) {
