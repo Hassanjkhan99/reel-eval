@@ -313,7 +313,7 @@ $table-border-color: $gray-lighter !default;
 $table-spacing: 0.9375rem !default;
 $table-spacing-sm: 0.9375rem !default;
 $table-spacing-lg: 0.9375rem !default;
-$table-hover: white !default;
+$table-hover: rgba(63, 135, 245, 0.35) !default;
 $table-selected: $brand-primary !default;
 $table-has-action-hover-bg: darken(#f2f2f2, 2%) !default;
 $table-column-sort-bg: $brand-primary !default;

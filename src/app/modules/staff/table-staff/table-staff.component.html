@@ -62,7 +62,6 @@
   <tbody>
   <tr *ngFor="let data of borderedTable.data; let i = index" [formGroup]="staffForm"
       class="text-align-left"
-      [class.stripes]="i % 2 != 0"
   >
 
     <td>

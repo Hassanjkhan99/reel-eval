@@ -114,8 +114,6 @@ export class ViewProspectComponent {
     {
       name: 'State/Province',
       width: '250px',
-      tooltip: true,
-      tooltipText: 'State/Province',
     },
     {
       name: 'School/Team',

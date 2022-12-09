@@ -22,8 +22,8 @@ $primary-color: #3f87f5;
 
 /* width */
 ::-webkit-scrollbar {
-  height: 5px;
-  width: 5px;
+  height: 10px;
+  width: 10px;
 }
 
 /* Track */
@@ -164,16 +164,7 @@ th {
 
 td {
   font-size: 19px;
+  border: 2px solid rgba(63, 135, 245, 0.45);
 }
-
-.ant-select.ant-select-show-search.ant-select-show-arrow.ant-select-show-search.ant-select-single, .ant-select.ant-select-lg.ant-select-show-arrow.ant-select-single {
-  border: 1px solid $primary-color;
-  border-radius: 5px;
-}
-
-.ant-select.ant-select-show-search.ant-select-show-arrow.ant-select-show-search.ant-select-single:hover, .ant-select.ant-select-show-arrow.ant-select-show-search.ant-select-single.ant-select-focused.ant-select-open {
-  border: 0px;
-}
-
 
 

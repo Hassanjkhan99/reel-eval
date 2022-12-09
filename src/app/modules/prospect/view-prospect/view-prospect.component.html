@@ -238,7 +238,6 @@
     </tr>
     <tr
       *ngFor="let data of borderedTable.data; let i = index"
-      [class.stripes]="i % 2 != 0"
       [formGroup]="prospectForm"
       class="text-align-left"
     >
@@ -250,9 +249,6 @@
       <td nzEllipsis nzLeft>
           <span
             *ngIf="currentEditIndex != i"
-            [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="data.first_name"
-            nz-tooltip
           >
             {{ data.first_name }}
           </span>
@@ -267,9 +263,6 @@
       <td nzEllipsis>
           <span
             *ngIf="currentEditIndex != i"
-            [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="data.last_name"
-            nz-tooltip
           >
             {{ data.last_name }}
           </span>
@@ -281,9 +274,6 @@
           <span *ngIf="currentEditIndex != i">
             <span
               *ngFor="let position of data.pos; last as isLast"
-              [nzTooltipColor]="'blue'"
-              [nzTooltipTitle]="position.position_name"
-              nz-tooltip
             >{{ position.position_name }} {{ isLast ? "" : ", " }}</span
             >
           </span>
@@ -305,9 +295,6 @@
       <td nzEllipsis>
           <span
             *ngIf="currentEditIndex != i"
-            [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="data.classification"
-            nz-tooltip
           >
             {{ data.classification }}
           </span>
@@ -318,9 +305,6 @@
       <td nzEllipsis>
           <span
             *ngIf="currentEditIndex != i"
-            [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="data.state"
-            nz-tooltip
           >
             {{ data.state }}
           </span>
@@ -332,9 +316,6 @@
       <td nzEllipsis>
           <span
             *ngIf="currentEditIndex != i"
-            [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="data.school"
-            nz-tooltip
           >
             {{ data.school }}
           </span>
@@ -347,9 +328,6 @@
       <td nzEllipsis>
           <span
             *ngIf="currentEditIndex != i"
-            [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="data.video_link"
-            nz-tooltip
           >
             {{ data.video_link }}
           </span>

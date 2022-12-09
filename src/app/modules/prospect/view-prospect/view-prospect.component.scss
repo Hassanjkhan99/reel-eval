@@ -18,7 +18,7 @@ input {
 }
 
 .search-box input {
-  width: 188px;
+  width: 100%;
   margin-bottom: 8px;
   display: block;
 }
@@ -31,7 +31,7 @@ i {
 }
 
 .select {
-  height: 30px;
+  height: 32px;
   overflow-y: scroll;
 }
 
@@ -39,3 +39,4 @@ i {
   overflow-x: scroll;
   white-space: nowrap;
 }
+
