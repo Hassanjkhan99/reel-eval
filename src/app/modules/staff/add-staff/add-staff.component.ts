@@ -44,13 +44,17 @@ export class AddStaffComponent implements OnInit {
     });
   }
 
+  get groupsFC(): FormControl {
+    return <FormControl<any>>this.coachForm.get('groups');
+  }
+
   submitForm(): void {
 
     for (const key in this.coachForm.controls) {
       this.coachForm.controls[key].markAsDirty();
       this.coachForm.controls[key].updateValueAndValidity();
     }
-    this.staffService.postAddCoach(this.coachForm.value).subscribe(
+    this.staffService.postAddCoach({...this.coachForm.value, groups: [this.groupsFC.value]}).subscribe(
       () => {
         this.router.navigateByUrl(`app/staff/view`);
         this.notification.success('Success', 'Your Staff member has been added!')

@@ -46,22 +46,27 @@
                 nz-input
                 type="text"
               />
-              <button
-                (click)="search(listOfFilter[i])"
-                class="search-button"
-                nz-button
-                nzSize="small"
-                nzType="primary"
-              >
-                Search
-              </button>
-              <button
-                (click)="reset(listOfFilter[i])"
-                nz-button
-                nzSize="small"
-              >
-                Reset
-              </button>
+              <div class="d-flex justify-content-center">
+                <button
+                  (click)="search(listOfFilter[i])"
+                  class="search-button"
+                  nz-button
+                  nzSize="small"
+                  nzType="primary"
+                >
+                  Search
+                </button>
+                <button
+                  (click)="reset(listOfFilter[i])"
+                  nz-button
+                  nzSize="small"
+                  [nzTooltipColor]="'blue'"
+                  [nzTooltipTitle]="'Clear Search'"
+                  nz-tooltip
+                >
+                  Reset
+                </button>
+              </div>
             </div>
           </div>
         </nz-dropdown-menu>
@@ -151,17 +156,19 @@
           </span>
       </td>
 
-      <td class="d-flex justify-content-center">
-        <a (click)="isEdit(i)" *ngIf="currentEditIndex != i" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Edit Trait'"
-           class="p-2" nz-tooltip>
-          <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
-        </a>
-        <a (click)="isSave(i)" *ngIf="currentEditIndex == i" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Save changes'"
-           class="p-2" nz-tooltip>
-          <i
-            [nzTheme]="'twotone'"
-            [nzTwotoneColor]="'#46c40a'"
-            nz-icon
+      <td>
+        <div class="d-flex justify-content-center">
+          <a (click)="isEdit(i)" *ngIf="currentEditIndex != i" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Edit Trait'"
+             class="p-2" nz-tooltip>
+            <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
+          </a>
+          <a (click)="isSave(i)" *ngIf="currentEditIndex == i" [nzTooltipColor]="'blue'"
+             [nzTooltipTitle]="'Save changes'"
+             class="p-2" nz-tooltip>
+            <i
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#46c40a'"
+              nz-icon
             nzType="save"
           ></i>
         </a>
@@ -199,6 +206,7 @@
             nzType="delete"
           ></i>
         </a>
+        </div>
       </td>
     </tr>
     </tbody>

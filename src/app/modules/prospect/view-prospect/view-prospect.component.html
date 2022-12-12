@@ -59,7 +59,7 @@
       <th
         *ngFor="let column of listOfColumns; let i = index"
         [nz-tooltip]="column.tooltipText"
-        [nzColumnKey]="listOfFilter[i]"
+        [nzColumnKey]="listOfSort[i]"
         [nzCustomFilter]="column.name !== 'Video Link'"
         [nzLeft]="column.name === 'First Name'"
         [nzSortFn]="true"
@@ -107,22 +107,27 @@
               >
               </app-school-select-search>
 
-              <button
-                (click)="search(listOfFilter[i])"
-                class="search-button"
-                nz-button
-                nzSize="small"
-                nzType="primary"
-              >
-                Search
-              </button>
-              <button
-                (click)="reset(listOfFilter[i])"
-                nz-button
-                nzSize="small"
-              >
-                Reset
-              </button>
+              <div class="d-flex justify-content-center">
+                <button
+                  (click)="search(listOfFilter[i])"
+                  class="search-button"
+                  nz-button
+                  nzSize="small"
+                  nzType="primary"
+                >
+                  Search
+                </button>
+                <button
+                  (click)="reset(listOfFilter[i])"
+                  [nzTooltipColor]="'blue'"
+                  [nzTooltipTitle]="'Clear Search'"
+                  nz-button
+                  nz-tooltip
+                  nzSize="small"
+                >
+                  Reset
+                </button>
+              </div>
             </div>
           </div>
         </nz-dropdown-menu>
@@ -138,9 +143,13 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngIf="showRow" [formGroup]="prospectForm" class="text-align-left background-primary">
+    <tr
+      *ngIf="showRow"
+      [formGroup]="prospectForm"
+      class="text-align-left background-primary"
+    >
       <td></td>
-      <td>
+      <td nzLeft>
           <span>
             <input formControlName="first_name" nz-input/>
           </span>
@@ -155,7 +164,7 @@
             <nz-select
               formControlName="position"
               nzMode="multiple"
-              class="w-100 "
+              class="w-100"
               nzPlaceHolder="Select a position"
             >
               <nz-option
@@ -190,7 +199,7 @@
             <input formControlName="video_link" nz-input/>
           </span>
       </td>
-      <td class="d-flex justify-content-center" nzRight>
+      <td nzRight>
         <a (click)="isSaveNew(false)" class="p-2">
           <i
             [nzTheme]="'twotone'"
@@ -247,9 +256,7 @@
         [nzShowCheckbox]="!(currentEditIndex === i)"
       ></td>
       <td nzEllipsis nzLeft>
-          <span
-            *ngIf="currentEditIndex != i"
-          >
+          <span *ngIf="currentEditIndex != i">
             {{ data.first_name }}
           </span>
         <span *ngIf="currentEditIndex == i">
@@ -261,19 +268,16 @@
           </span>
       </td>
       <td nzEllipsis>
-          <span
-            *ngIf="currentEditIndex != i"
-          >
+          <span *ngIf="currentEditIndex != i">
             {{ data.last_name }}
           </span>
         <span *ngIf="currentEditIndex == i">
             <input formControlName="last_name" nz-input/>
           </span>
       </td>
-      <td class="posData">
+      <td class="posData" nzEllipsis>
           <span *ngIf="currentEditIndex != i">
-            <span
-              *ngFor="let position of data.pos; last as isLast"
+            <span *ngFor="let position of data.pos; last as isLast"
             >{{ position.abbreviation.trim() }} {{ isLast ? "" : "/" }}</span
             >
           </span>
@@ -293,9 +297,7 @@
           </span>
       </td>
       <td nzEllipsis>
-          <span
-            *ngIf="currentEditIndex != i"
-          >
+          <span *ngIf="currentEditIndex != i">
             {{ data.classification }}
           </span>
         <span *ngIf="currentEditIndex == i">
@@ -303,9 +305,7 @@
           </span>
       </td>
       <td nzEllipsis>
-          <span
-            *ngIf="currentEditIndex != i"
-          >
+          <span *ngIf="currentEditIndex != i">
             {{ data.state }}
           </span>
         <span *ngIf="currentEditIndex == i">
@@ -314,9 +314,7 @@
           </span>
       </td>
       <td nzEllipsis>
-          <span
-            *ngIf="currentEditIndex != i"
-          >
+          <span *ngIf="currentEditIndex != i">
             {{ data.school }}
           </span>
         <span *ngIf="currentEditIndex == i">
@@ -326,104 +324,110 @@
       </td>
 
       <td nzEllipsis>
-          <span
-            *ngIf="currentEditIndex != i"
-          >
-            <a *ngIf="data.video_link" [href]="data.video_link" nz-icon nzTheme="outline" nzType="video-camera"
-               target="_blank"></a>
+          <span *ngIf="currentEditIndex != i">
+            <a
+              *ngIf="data.video_link"
+              [href]="data.video_link"
+              nz-icon
+              nzTheme="outline"
+              nzType="video-camera"
+              target="_blank"
+            ></a>
           </span>
         <span *ngIf="currentEditIndex == i">
             <input formControlName="video_link" nz-input/>
           </span>
       </td>
-      <td class="d-flex justify-content-center align-items-center" nzRight>
-        <a
-          (click)="isEdit(i)"
-          *ngIf="currentEditIndex != i"
-          [nzTooltipColor]="'blue'"
-          [nzTooltipTitle]="'Edit Prospect'"
-          class="p-2"
-          nz-tooltip
-        >
-          <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
-        </a>
-        <a
-          (click)="isSave(i)"
-          *ngIf="currentEditIndex == i"
-          [nzTooltipColor]="'blue'"
-          [nzTooltipTitle]="'Save changes'"
-          class="p-2"
-          nz-tooltip
-        >
-          <i
-            [nzTheme]="'twotone'"
-            [nzTwotoneColor]="'#46c40a'"
-            nz-icon
-            nzType="save"
-          ></i>
-        </a>
-        <a
-          (nzOnCancel)="cancel()"
-          (nzOnConfirm)="confirm()"
-          *ngIf="currentEditIndex == i"
-          [nzTooltipColor]="'blue'"
-          [nzTooltipTitle]="'Discard changes'"
-          class="p-2"
-          nz-popconfirm
-          nz-tooltip
-          nzPopconfirmPlacement="top"
-          nzPopconfirmTitle="Are you sure you want to discard changes?"
-        >
-          <i
-            [nzTheme]="'twotone'"
-            [nzTwotoneColor]="'#c00206'"
-            nz-icon
-            nzType="close-circle"
-          ></i>
-        </a>
-        <a
-          (nzOnCancel)="cancel()"
-          (nzOnConfirm)="isDelete(i)"
-          *ngIf="currentEditIndex != i"
-          [nzTooltipColor]="'blue'"
-          [nzTooltipTitle]="'Delete Prospect'"
-          class="p-2"
-          nz-popconfirm
-          nz-tooltip
-          nzPopconfirmPlacement="top"
-          nzPopconfirmTitle="Are you sure you want to delete prospect?"
-        >
-          <i
-            [nzTheme]="'twotone'"
-            [nzTwotoneColor]="'#c00206'"
-            nz-icon
-            nzType="delete"
-          ></i>
-        </a>
-        <ng-template [ngIf]="!achievedTable">
+      <td nzRight>
+        <div class="d-flex justify-content-center">
           <a
-            (click)="isArchive(i)"
+            (click)="isEdit(i)"
             *ngIf="currentEditIndex != i"
             [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="'Archive Prospect'"
+            [nzTooltipTitle]="'Edit Prospect'"
             class="p-2"
             nz-tooltip
           >
-            <i nz-icon nzTheme="outline" nzType="export"></i>
+            <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
           </a>
-        </ng-template>
-        <ng-template [ngIf]="achievedTable">
           <a
-            (click)="isUnArchive(i)"
-            *ngIf="currentEditIndex != i"
+            (click)="isSave(i)"
+            *ngIf="currentEditIndex == i"
             [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="'UnArchive Prospect'"
+            [nzTooltipTitle]="'Save changes'"
             class="p-2"
             nz-tooltip
           >
-            <i nz-icon nzTheme="outline" nzType="export"></i>
+            <i
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#46c40a'"
+              nz-icon
+              nzType="save"
+            ></i>
           </a>
-        </ng-template>
+          <a
+            (nzOnCancel)="cancel()"
+            (nzOnConfirm)="confirm()"
+            *ngIf="currentEditIndex == i"
+            [nzTooltipColor]="'blue'"
+            [nzTooltipTitle]="'Discard changes'"
+            class="p-2"
+            nz-popconfirm
+            nz-tooltip
+            nzPopconfirmPlacement="top"
+            nzPopconfirmTitle="Are you sure you want to discard changes?"
+          >
+            <i
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#c00206'"
+              nz-icon
+              nzType="close-circle"
+            ></i>
+          </a>
+          <a
+            (nzOnCancel)="cancel()"
+            (nzOnConfirm)="isDelete(i)"
+            *ngIf="currentEditIndex != i"
+            [nzTooltipColor]="'blue'"
+            [nzTooltipTitle]="'Delete Prospect'"
+            class="p-2"
+            nz-popconfirm
+            nz-tooltip
+            nzPopconfirmPlacement="top"
+            nzPopconfirmTitle="Are you sure you want to delete prospect?"
+          >
+            <i
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#c00206'"
+              nz-icon
+              nzType="delete"
+            ></i>
+          </a>
+          <ng-template [ngIf]="!achievedTable">
+            <a
+              (click)="isArchive(i)"
+              *ngIf="currentEditIndex != i"
+              [nzTooltipColor]="'blue'"
+              [nzTooltipTitle]="'Archive Prospect'"
+              class="p-2"
+              nz-tooltip
+            >
+              <i nz-icon nzTheme="outline" nzType="export"></i>
+            </a>
+          </ng-template>
+          <ng-template [ngIf]="achievedTable">
+            <a
+              (click)="isUnArchive(i)"
+              *ngIf="currentEditIndex != i"
+              [nzTooltipColor]="'blue'"
+              [nzTooltipTitle]="'UnArchive Prospect'"
+              class="p-2"
+              nz-tooltip
+            >
+              <i nz-icon nzTheme="outline" nzType="export"></i>
+            </a>
+          </ng-template>
+        </div>
       </td>
     </tr>
     </tbody>

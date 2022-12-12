@@ -4,7 +4,7 @@
           [nzPageIndex]="pageIndex"
           [nzPageSize]="pageSize" [nzTotal]="total"
           [nzPageSizeOptions]="[8,10,20,30,40,50]"
-          [nzScroll]="{ y: '640px' , x: '1100px'}"
+          [nzScroll]="{ y: '640px' , x: '900px'}"
           nzBordered
           nzShowSizeChanger
           nzTableLayout="fixed"
@@ -15,7 +15,7 @@
     <th *ngFor="let column of listOfColumns; let i = index"
         [nzColumnKey]="listOfFilter[i]"
         [nzSortFn]="true"
-        [class]="'text-align-left ' + listOfFilter[i]" [nzWidth]="column == 'Email'? '450px' : '250px'"
+        [class]="'text-align-left ' + listOfFilter[i]" [nzWidth]="column == 'Email'? '300px' : '220px'"
         nzCustomFilter
     >
       {{column}}
@@ -34,24 +34,29 @@
               nz-input
               type="text"
             />
-            <button
-              (click)="search(listOfFilter[i])"
-              class="search-button"
-              nz-button
-              nzSize="small"
-              nzType="primary"
-            >
-              Search
-            </button>
-            <button (click)="reset(listOfFilter[i])" nz-button nzSize="small">
-              Reset
-            </button>
+            <div class="d-flex justify-content-center">
+              <button
+                (click)="search(listOfFilter[i])"
+                class="search-button"
+                nz-button
+                nzSize="small"
+                nzType="primary"
+              >
+                Search
+              </button>
+              <button (click)="reset(listOfFilter[i])" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Clear Search'"
+                      nz-button
+                      nz-tooltip
+                      nzSize="small">
+                Reset
+              </button>
+            </div>
           </div>
         </div>
       </nz-dropdown-menu>
 
     </th>
-    <th class="text-align-left" style="color: white">
+    <th class="text-align-left" nzWidth="250px" style="color: white">
       Permissions
     </th>
     <th class="text-align-left" nzRight nzWidth="120px" style="color: white">
@@ -104,7 +109,6 @@
           <nz-select
             [nzMaxTagPlaceholder]="tagPlaceHolder"
             formControlName="groups"
-            nzMode="multiple"
             nzPlaceHolder="Select Permissions"
             class="w-100"
           >
@@ -115,59 +119,63 @@
         <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
         </span>
     </td>
-    <td class="d-flex justify-content-center" nzRight>
-      <a (click)="isEdit(i)" *ngIf="currentEditIndex != i" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Edit Staff'"
-         class="p-2" nz-tooltip>
-        <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
-      </a>
-      <a (click)="isSave(i)" *ngIf="currentEditIndex == i" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Save changes'"
-         class="p-2" nz-tooltip>
-        <i
-          [nzTheme]="'twotone'"
-          [nzTwotoneColor]="'#46c40a'"
-          nz-icon
-          nzType="save"
-        ></i>
-      </a>
-      <a
-        (nzOnCancel)="cancel()"
-        (nzOnConfirm)="confirm()"
-        *ngIf="currentEditIndex == i"
-        class="p-2"
-        nz-popconfirm
-        nzPopconfirmPlacement="top"
-        nzPopconfirmTitle="Are you sure you want to discard changes?"
-        [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Discard changes'" nz-tooltip
-      >
-        <i
-          [nzTheme]="'twotone'"
-          [nzTwotoneColor]="'#c00206'"
-          nz-icon
-          nzType="close-circle"
-        ></i>
-      </a>
-      <div
-        *ngIf="staffCount != 1" class="p-2"
-      >
+    <td nzRight>
+      <div class="d-flex justify-content-center">
+        <a (click)="isEdit(i)" *ngIf="currentEditIndex != i" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Edit Staff'"
+           class="p-2" nz-tooltip>
+          <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
+        </a>
+        <a (click)="isSave(i)" *ngIf="currentEditIndex == i" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Save changes'"
+           class="p-2" nz-tooltip>
+          <i
+            [nzTheme]="'twotone'"
+            [nzTwotoneColor]="'#46c40a'"
+            nz-icon
+            nzType="save"
+          ></i>
+        </a>
         <a
           (nzOnCancel)="cancel()"
-          (nzOnConfirm)="isDelete(i)"
-          *ngIf="currentEditIndex != i"
-
+          (nzOnConfirm)="confirm()"
+          *ngIf="currentEditIndex == i"
+          [nzTooltipColor]="'blue'"
+          [nzTooltipTitle]="'Discard changes'"
+          class="p-2"
           nz-popconfirm
-          nzPopconfirmPlacement="top"
-          nzPopconfirmTitle="Are you sure you want to delete prospect?"
-          [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Delete Staff'" nz-tooltip
+          nz-tooltip nzPopconfirmPlacement="top" nzPopconfirmTitle="Are you sure you want to discard changes?"
         >
           <i
-
             [nzTheme]="'twotone'"
             [nzTwotoneColor]="'#c00206'"
             nz-icon
-            nzType="delete"
+            nzType="close-circle"
           ></i>
         </a>
+        <div
+          *ngIf="staffCount != 1" class="p-2"
+        >
+          <a
+            (nzOnCancel)="cancel()"
+            (nzOnConfirm)="isDelete(i)"
+            *ngIf="currentEditIndex != i"
+
+            [nzTooltipColor]="'blue'"
+            [nzTooltipTitle]="'Delete Staff'"
+            nz-popconfirm
+            nz-tooltip nzPopconfirmPlacement="top" nzPopconfirmTitle="Are you sure you want to delete prospect?"
+          >
+            <i
+
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#c00206'"
+              nz-icon
+              nzType="delete"
+            ></i>
+          </a>
+        </div>
       </div>
+
+
     </td>
   </tr>
   </tbody>

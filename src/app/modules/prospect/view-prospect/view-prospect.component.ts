@@ -107,7 +107,7 @@ export class ViewProspectComponent {
     },
     {
       name: 'Class/Yr',
-      width: '250px',
+      width: '200px',
       tooltip: true,
       tooltipText: 'Classification/Year',
     },
@@ -129,6 +129,15 @@ export class ViewProspectComponent {
     'first_name',
     'last_name',
     'position__position_name',
+    'classification',
+    'state',
+    'school',
+    'video_link',
+  ];
+  listOfSort = [
+    'first_name',
+    'last_name',
+    'position',
     'classification',
     'state',
     'school',
@@ -166,9 +175,6 @@ export class ViewProspectComponent {
   });
 
   currentEditIndex: number;
-  currentPosition: Position;
-  currentSchool: string;
-  currentState: string;
 
   stateSearchFormControl = new FormControl<string>(null);
   positionSearchFormControl = new FormControl<string>(null);
@@ -239,9 +245,7 @@ export class ViewProspectComponent {
       );
       return;
     }
-    this.listOfColumns[2].width = '600px';
-    this.currentSchool = this.dataSet[i].school;
-    this.currentState = this.dataSet[i].state;
+    // this.listOfColumns[2].width = '600px';
     this.currentEditIndex = i;
     this.positionFormControl.setValue(this.dataSet[i].position)
     this.prospectForm.setValue({
@@ -257,7 +261,7 @@ export class ViewProspectComponent {
   }
 
   isSave(i: number) {
-    this.listOfColumns[2].width = '450px';
+    // this.listOfColumns[2].width = '250px';
     this.prospectSer
       .editProspect(this.dataSet[i].id, {
         ...this.dataSet[i],
@@ -395,8 +399,6 @@ export class ViewProspectComponent {
       if (isAddAnother) {
         this.prospectForm.reset();
         this.prospectForm.controls.archived.setValue(false);
-        this.currentSchool = '';
-        this.currentState = '';
         this.showRow = false;
         this.cdr.detectChanges();
         this.showRow = true;

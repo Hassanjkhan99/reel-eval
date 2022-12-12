@@ -62,7 +62,7 @@ export const ROUTES: SideNavInterface[] = [
     iconTheme: 'fill',
     submenu: [],
     icon: 'trophy',
-    iconType: 'nzIcon'
+    iconType: 'svg'
   },
 
 ]

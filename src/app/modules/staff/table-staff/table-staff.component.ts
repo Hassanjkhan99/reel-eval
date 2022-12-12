@@ -44,7 +44,7 @@ export class TableStaffComponent implements OnInit {
     last_name: new FormControl(''),
     username: new FormControl(''),
     email: new FormControl(''),
-    groups: new FormControl([0])
+    groups: new FormControl([null])
   });
   private filterField: string = '';
   private currentFilterValue: Array<{ key: string; value: NzTableFilterValue }>;
@@ -62,6 +62,10 @@ export class TableStaffComponent implements OnInit {
         this.staffCount = x.count;
       }
     )
+  }
+
+  get groupsFC(): FormControl {
+    return <FormControl<any>>this.staffForm.get('groups');
   }
 
   ngOnInit(): void {
@@ -105,7 +109,10 @@ export class TableStaffComponent implements OnInit {
 
   isSave(i: number) {
 
-    this.staffSer.editStaff(this.listOfData[i].id, {...this.listOfData[i], ...this.staffForm.value}).subscribe(
+    this.staffSer.editStaff(this.listOfData[i].id, {
+      ...this.listOfData[i], ...this.staffForm.value,
+      groups: [this.groupsFC.value]
+    }).subscribe(
       x => {
         this.notificationService.success('Success', 'Your changes has been saved!');
         this.listOfData = this.listOfData.map(item => {

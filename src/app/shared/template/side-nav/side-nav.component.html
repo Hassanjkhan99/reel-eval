@@ -14,12 +14,14 @@
       <a *ngIf="item.submenu.length > 0" class="ant-menu-submenu-title" href="javascript:void(0);">
         <i *ngIf="item.iconType == 'nzIcon'" [nzType]="item.icon" [theme]="item.iconTheme" nz-icon></i>
         <i *ngIf="item.iconType == 'fontawesome'" [ngClass]="[item.iconTheme , item.icon]" class="m-r-10"></i>
+        <img *ngIf="item.iconType == 'svg'" src="assets/grading.svg">
         <span>{{item.title}}</span>
         <i class="ant-menu-submenu-arrow"></i>
       </a>
       <a (click)="closeMobileMenu()" *ngIf="item.submenu.length === 0" [routerLink]="item.path">
         <i *ngIf="item.iconType == 'nzIcon'" [nzType]="item.icon" [theme]="item.iconTheme" nz-icon></i>
         <i *ngIf="item.iconType == 'fontawesome'" [ngClass]="[item.iconTheme , item.icon]" class="m-r-10"></i>
+        <img *ngIf="item.iconType == 'svg'" class="m-r-10" src="assets/grading.svg" style="width: 19px; height: 19px">
         <span>{{item.title}}</span>
       </a>
 
@@ -39,7 +41,7 @@
             <i class="ant-menu-submenu-arrow"></i>
           </a>
           <a (click)="closeMobileMenu()" *ngIf="subItem.submenu.length === 0" [routerLink]="subItem.path"
-             class="p-l-30">
+             class="p-l-30 subMenu">
             <i *ngIf="subItem.iconType == 'nzIcon'" [nzType]="subItem.icon" [theme]="subItem.iconTheme" nz-icon></i>
             <i *ngIf="subItem.iconType == 'fontawesome'" [ngClass]="[subItem.iconTheme , subItem.icon]"
                class="m-r-10"></i>
