@@ -249,6 +249,7 @@
       *ngFor="let data of borderedTable.data; let i = index"
       [formGroup]="prospectForm"
       class="text-align-left"
+      [class.background-primary]="currentEditIndex == i"
     >
       <td
         (nzCheckedChange)="onItemChecked(data.id, $event)"

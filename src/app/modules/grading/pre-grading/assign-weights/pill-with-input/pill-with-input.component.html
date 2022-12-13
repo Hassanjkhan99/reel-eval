@@ -2,11 +2,11 @@
   <div [nzSpan]="2" class="d-flex justify-content-start" nz-col>
     <i nz-icon nzTheme="outline" nzType="menu"></i>
   </div>
-  <div [nzSpan]="14" class="d-flex justify-content-start" nz-col> {{item.trait}}
+  <div [nzSpan]="17" class="d-flex justify-content-start" nz-col> {{item.trait}}
   </div>
 
   <input (mouseenter)="disableDrag()" (mouseleave)="enableDrag()" [formControl]="control" [max]="remainingLimit + value"
-         [nzSpan]="8" autofocus
+         [nzSpan]="5" autofocus
          class="ant-input ant-input-focused" min="0" nz-col nz-input value="0"
          nzSize="small" type="number"/>
 </div>

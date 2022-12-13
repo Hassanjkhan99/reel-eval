@@ -76,7 +76,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngIf="showRow" [formGroup]="traitForm" class="text-align-center">
+    <tr *ngIf="showRow" [formGroup]="traitForm" class="text-align-center background-primary">
       <td>
         <input
           formControlName="trait"
@@ -93,46 +93,50 @@
           placeholder="Description"
         />
       </td>
-      <td class="d-flex justify-content-center">
-        <a (click)="isSaveNew(false)" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Save Trait'" class="p-2" nz-tooltip>
-          <i
-            [nzTheme]="'twotone'"
-            [nzTwotoneColor]="'#46c40a'"
-            nz-icon
-            nzType="save"
-          ></i>
-        </a>
-        <a
-          (nzOnCancel)="cancel()"
-          (nzOnConfirm)="confirm()"
-          class="p-2"
-          nz-popconfirm
-          nzPopconfirmPlacement="top"
-          nzPopconfirmTitle="Are you sure you want to discard changes?"
-          [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Discard Changes'" nz-tooltip
-        >
-          <i
-            [nzTheme]="'twotone'"
-            [nzTwotoneColor]="'#c00206'"
-            nz-icon
-            nzType="close-circle"
-          ></i>
-        </a>
-        <a (click)="isSaveNew(true)" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Add New Trait'" class="p-2"
-           nz-tooltip>
-          <i
-            [nzTheme]="'twotone'"
-            [nzTwotoneColor]="'#f5d50a'"
-            nz-icon
-            nzType="plus-circle"
-          ></i>
-        </a>
+      <td>
+        <div class="d-flex justify-content-center">
+          <a (click)="isSaveNew(false)" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Save Trait'" class="p-2"
+             nz-tooltip>
+            <i
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#46c40a'"
+              nz-icon
+              nzType="save"
+            ></i>
+          </a>
+          <a
+            (nzOnCancel)="cancel()"
+            (nzOnConfirm)="confirm()"
+            [nzTooltipColor]="'blue'"
+            [nzTooltipTitle]="'Discard Changes'"
+            class="p-2"
+            nz-popconfirm
+            nz-tooltip nzPopconfirmPlacement="top" nzPopconfirmTitle="Are you sure you want to discard changes?"
+          >
+            <i
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#c00206'"
+              nz-icon
+              nzType="close-circle"
+            ></i>
+          </a>
+          <a (click)="isSaveNew(true)" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Add New Trait'" class="p-2"
+             nz-tooltip>
+            <i
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#f5d50a'"
+              nz-icon
+              nzType="plus-circle"
+            ></i>
+          </a>
+        </div>
       </td>
     </tr>
     <tr
       *ngFor="let data of table.data; let i = index"
       [formGroup]="traitForm"
       class="text-align-center"
+      [class.background-primary]="currentEditIndex == i"
     >
       <td>
           <span *ngIf="currentEditIndex != i">
