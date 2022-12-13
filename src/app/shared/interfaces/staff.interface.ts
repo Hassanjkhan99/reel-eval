@@ -19,7 +19,7 @@ export interface StaffList {
   club_id: number;
   club_name: string;
   group: string;
-  groups: number[];
+  groups: number;
 }
 
 export interface StaffApi {

@@ -44,7 +44,7 @@ export class TableStaffComponent implements OnInit {
     last_name: new FormControl(''),
     username: new FormControl(''),
     email: new FormControl(''),
-    groups: new FormControl([null])
+    groups: new FormControl(0)
   });
   private filterField: string = '';
   private currentFilterValue: Array<{ key: string; value: NzTableFilterValue }>;
@@ -73,6 +73,7 @@ export class TableStaffComponent implements OnInit {
     this.staffSer.getGroupList().subscribe(e => {
       this.options = e;
     })
+    this.cdr.detectChanges()
   }
 
   reset(key) {
@@ -102,9 +103,11 @@ export class TableStaffComponent implements OnInit {
       last_name: this.listOfData[i].last_name,
       username: this.listOfData[i].username,
       email: this.listOfData[i].email,
-      groups: this.listOfData[i].groups
-
+      groups: this.listOfData[i].groups[0]
     })
+    this.cdr.detectChanges()
+    console.log(this.staffForm.value)
+    console.log(this.listOfData[i])
   }
 
   isSave(i: number) {

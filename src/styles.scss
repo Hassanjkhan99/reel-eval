@@ -151,8 +151,8 @@ $primary-color: #3f87f5;
 
 .ant-dropdown-trigger.ant-table-filter-trigger.active {
   .anticon-search {
-    color: rgba(63, 135, 245, 0.98);
-    background: white;
+    color: black;
+    background: rgba(255, 255, 0, 0.99);
     padding: 10px;
     border-radius: 10px;
   }

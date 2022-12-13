@@ -1,5 +1,8 @@
 <div [cdkDragDisabled]="isDragDisabled" cdkDrag class="pill background-white" nz-row>
-  <div [nzSpan]="16" class="d-flex justify-content-start" nz-col>{{item.trait}}
+  <div [nzSpan]="2" class="d-flex justify-content-start" nz-col>
+    <i nz-icon nzTheme="outline" nzType="menu"></i>
+  </div>
+  <div [nzSpan]="14" class="d-flex justify-content-start" nz-col> {{item.trait}}
   </div>
 
   <input (mouseenter)="disableDrag()" (mouseleave)="enableDrag()" [formControl]="control" [max]="remainingLimit + value"

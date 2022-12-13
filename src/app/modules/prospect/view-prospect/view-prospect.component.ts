@@ -113,7 +113,7 @@ export class ViewProspectComponent {
     },
     {
       name: 'State/Province',
-      width: '250px',
+      width: '260px',
     },
     {
       name: 'School/Team',

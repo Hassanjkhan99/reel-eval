@@ -107,7 +107,6 @@
         </span>
       <span *ngIf="currentEditIndex == i">
           <nz-select
-            [nzMaxTagPlaceholder]="tagPlaceHolder"
             formControlName="groups"
             nzPlaceHolder="Select Permissions"
             class="w-100"
@@ -116,7 +115,6 @@
                              [nzValue]="permissions.id">
                   </nz-option>
                 </nz-select>
-        <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
         </span>
     </td>
     <td nzRight>
