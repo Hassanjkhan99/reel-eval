@@ -66,6 +66,14 @@ export const CommonLayout_ROUTES: Routes = [
       path: 'grade'
     },
     canActivate: [AuthGuard]
+  }, {
+    path: 'grading',
+    loadComponent: () => import('../../modules/grading/grading/grading.component').then(c => c.GradingComponent),
+    data: {
+      label: 'grading',
+      path: 'grading'
+    },
+    canActivate: [AuthGuard]
   },
 
   {
