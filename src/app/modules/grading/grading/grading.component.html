@@ -1,0 +1,176 @@
+<div class="d-flex justify-content-center">
+  <nz-table
+    #table
+    [nzData]="grading"
+    class="box-shadow"
+    nzBordered
+    nzShowSizeChanger
+    nzTableLayout="fixed"
+  >
+    <thead>
+    <tr>
+      <th class="text-align-center">Play</th>
+      <th *ngFor="let column of listOfColumns; let i = index" class="text-align-center">
+        <div class="">
+          <span> {{ column }} </span>
+          <span class="pill-grading"> 100% </span>
+        </div>
+      </th>
+      <th class="text-align-center">Clear</th>
+      <th class="text-align-center">Next Play</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr
+      *ngFor="let data of table.data; let i = index"
+      class="text-align-center"
+    >
+      <td>{{ i }}</td>
+      <td>
+        <div class="d-flex justify-content-center">
+          <a
+          ><span
+            [nzTwotoneColor]="'#1d4601'"
+            nz-icon
+            nzTheme="twotone"
+            nzType="plus-circle"
+          ></span
+          ></a>
+          <a
+          ><span
+            [nzTwotoneColor]="'#79081a'"
+            nz-icon
+            nzTheme="twotone"
+            nzType="minus-circle"
+          ></span
+          ></a>
+        </div>
+      </td>
+      <td>
+        <div class="d-flex justify-content-center">
+          <a
+          ><span
+            [nzTwotoneColor]="'#1d4601'"
+            nz-icon
+            nzTheme="twotone"
+            nzType="plus-circle"
+          ></span
+          ></a>
+          <a
+          ><span
+            [nzTwotoneColor]="'#79081a'"
+            nz-icon
+            nzTheme="twotone"
+            nzType="minus-circle"
+          ></span
+          ></a>
+        </div>
+      </td>
+      <td>
+        <div class="d-flex justify-content-center">
+          <a
+          ><span
+            [nzTwotoneColor]="'#1d4601'"
+            nz-icon
+            nzTheme="twotone"
+            nzType="plus-circle"
+          ></span
+          ></a>
+          <a
+          ><span
+            [nzTwotoneColor]="'#79081a'"
+            nz-icon
+            nzTheme="twotone"
+            nzType="minus-circle"
+          ></span
+          ></a>
+        </div>
+      </td>
+      <td>
+        <div class="d-flex justify-content-center">
+          <a
+          ><span
+            [nzTwotoneColor]="'#1d4601'"
+            nz-icon
+            nzTheme="twotone"
+            nzType="plus-circle"
+          ></span
+          ></a>
+          <a
+          ><span
+            [nzTwotoneColor]="'#79081a'"
+            nz-icon
+            nzTheme="twotone"
+            nzType="minus-circle"
+          ></span
+          ></a>
+        </div>
+      </td>
+      <td>
+        <div class="d-flex justify-content-center">
+          <a
+          ><span
+            [nzTwotoneColor]="'#1d4601'"
+            nz-icon
+            nzTheme="twotone"
+            nzType="plus-circle"
+          ></span
+          ></a>
+          <a
+          ><span
+            [nzTwotoneColor]="'#79081a'"
+            nz-icon
+            nzTheme="twotone"
+            nzType="minus-circle"
+          ></span
+          ></a>
+        </div>
+      </td>
+      <td>
+        <div class="d-flex justify-content-center">
+          <a
+          ><span
+            [nzTwotoneColor]="'#1d4601'"
+            nz-icon
+            nzTheme="twotone"
+            nzType="plus-circle"
+          ></span
+          ></a>
+          <a
+          ><span
+            [nzTwotoneColor]="'#081779'"
+            nz-icon
+            nzTheme="twotone"
+            nzType="arrow-right"
+          ></span
+          ></a>
+        </div>
+      </td>
+      <td>
+        <div class="d-flex justify-content-center">
+          <a
+          ><span
+            [nzTwotoneColor]="'#1d4601'"
+            nz-icon
+            nzTheme="twotone"
+            nzType="plus-circle"
+          ></span
+          ></a>
+          <a
+          ><span
+            [nzTwotoneColor]="'#081779'"
+            nz-icon
+            nzTheme="twotone"
+            nzType="arrow-right"
+          ></span
+          ></a>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>
+<div class="p-10 m-t-50">
+  <h4>Evaluation Summary: </h4>
+  <input class="w-100" style="height: 200px" type="text">
+</div>
