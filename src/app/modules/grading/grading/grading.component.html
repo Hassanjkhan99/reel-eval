@@ -6,14 +6,16 @@
     nzBordered
     nzShowSizeChanger
     nzTableLayout="fixed"
+    [nzTitle]="content"
+    nzFooter="jnascnjkascnjk"
   >
     <thead>
     <tr>
       <th class="text-align-center">Play</th>
       <th *ngFor="let column of listOfColumns; let i = index" class="text-align-center">
         <div class="">
-          <span> {{ column }} </span>
-          <span class="pill-grading"> 100% </span>
+          <span> {{ listOfColumns[i] }} </span>
+          <span class="pill-grading"> {{columnValue[column].toFixed(1)}} </span>
         </div>
       </th>
       <th class="text-align-center">Clear</th>
@@ -25,145 +27,50 @@
       *ngFor="let data of table.data; let i = index"
       class="text-align-center"
     >
-      <td>{{ i }}</td>
-      <td>
+      <td>{{ data.rowNumber }}</td>
+      <td *ngFor="let column of listOfColumns">
         <div class="d-flex justify-content-center">
-          <a
-          ><span
+          <span
+            (click)="increment(column,i)"
+          ><i
             [nzTwotoneColor]="'#1d4601'"
             nz-icon
             nzTheme="twotone"
             nzType="plus-circle"
-          ></span
-          ></a>
-          <a
-          ><span
+          ></i
+          ></span>
+          <span
+            (click)="decrement(column,i)"
+          ><i
             [nzTwotoneColor]="'#79081a'"
             nz-icon
             nzTheme="twotone"
             nzType="minus-circle"
-          ></span
-          ></a>
+          ></i
+          ></span>
         </div>
       </td>
       <td>
         <div class="d-flex justify-content-center">
-          <a
-          ><span
+          <span
+            (click)="removeRow(i)"
+          ><i
             [nzTwotoneColor]="'#1d4601'"
             nz-icon
             nzTheme="twotone"
             nzType="plus-circle"
-          ></span
-          ></a>
-          <a
-          ><span
-            [nzTwotoneColor]="'#79081a'"
-            nz-icon
-            nzTheme="twotone"
-            nzType="minus-circle"
-          ></span
-          ></a>
+          ></i
+          ></span>
         </div>
       </td>
       <td>
         <div class="d-flex justify-content-center">
-          <a
-          ><span
-            [nzTwotoneColor]="'#1d4601'"
-            nz-icon
-            nzTheme="twotone"
-            nzType="plus-circle"
-          ></span
-          ></a>
-          <a
-          ><span
-            [nzTwotoneColor]="'#79081a'"
-            nz-icon
-            nzTheme="twotone"
-            nzType="minus-circle"
-          ></span
-          ></a>
-        </div>
-      </td>
-      <td>
-        <div class="d-flex justify-content-center">
-          <a
-          ><span
-            [nzTwotoneColor]="'#1d4601'"
-            nz-icon
-            nzTheme="twotone"
-            nzType="plus-circle"
-          ></span
-          ></a>
-          <a
-          ><span
-            [nzTwotoneColor]="'#79081a'"
-            nz-icon
-            nzTheme="twotone"
-            nzType="minus-circle"
-          ></span
-          ></a>
-        </div>
-      </td>
-      <td>
-        <div class="d-flex justify-content-center">
-          <a
-          ><span
-            [nzTwotoneColor]="'#1d4601'"
-            nz-icon
-            nzTheme="twotone"
-            nzType="plus-circle"
-          ></span
-          ></a>
-          <a
-          ><span
-            [nzTwotoneColor]="'#79081a'"
-            nz-icon
-            nzTheme="twotone"
-            nzType="minus-circle"
-          ></span
-          ></a>
-        </div>
-      </td>
-      <td>
-        <div class="d-flex justify-content-center">
-          <a
-          ><span
-            [nzTwotoneColor]="'#1d4601'"
-            nz-icon
-            nzTheme="twotone"
-            nzType="plus-circle"
-          ></span
-          ></a>
-          <a
-          ><span
-            [nzTwotoneColor]="'#081779'"
-            nz-icon
-            nzTheme="twotone"
-            nzType="arrow-right"
-          ></span
-          ></a>
-        </div>
-      </td>
-      <td>
-        <div class="d-flex justify-content-center">
-          <a
-          ><span
-            [nzTwotoneColor]="'#1d4601'"
-            nz-icon
-            nzTheme="twotone"
-            nzType="plus-circle"
-          ></span
-          ></a>
-          <a
-          ><span
-            [nzTwotoneColor]="'#081779'"
-            nz-icon
-            nzTheme="twotone"
-            nzType="arrow-right"
-          ></span
-          ></a>
+          <span
+            (click)="addRow()"
+          ><i
+            nz-icon nzTheme="outline" nzType="arrow-right"
+          ></i
+          ></span>
         </div>
       </td>
     </tr>
@@ -174,3 +81,6 @@
   <h4>Evaluation Summary: </h4>
   <input class="w-100" style="height: 200px" type="text">
 </div>
+<ng-template #content>
+  <button nz-button nzType="primary">{{totalValue}}</button>
+</ng-template>
