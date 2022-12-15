@@ -12,6 +12,24 @@
   cursor: pointer;
 }
 
+.red-pill-grading {
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  border-radius: 14px;
+  background: #e10404;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.48);
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.darkGreen-pill-grading {
+  background: #028f02;
+}
+
 i {
   font-size: 32px;
   cursor: pointer;
@@ -24,4 +42,7 @@ i {
   border-radius: 14px;
 }
 
+i:active {
+  transform: translateY(3px);
+}
 
