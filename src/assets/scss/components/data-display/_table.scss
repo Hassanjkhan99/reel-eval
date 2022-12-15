@@ -6,15 +6,17 @@
     &.ant-table-bordered {
 
         .ant-table-title {
-            border: 1px solid $table-border;
-            border-bottom: 0;;
+          border: 1px solid $table-border;
+          border-bottom: 0;;
+          color: white;
+          background: #336fcc;;
         }
         .ant-table-footer {
             border: 1px solid $table-border;
             margin-top: -2px;
             border-top: 0px;
         }
-    } 
+    }
 
     .ant-table-content {
         @include screen-mobile {
@@ -54,7 +56,7 @@
                 background: $table-has-action-hover-bg;
             }
 
-            
+
             &.ant-table-column-has-actions {
                 &.ant-table-column-has-sorters {
 
@@ -88,11 +90,11 @@
         &:first-child {
             >th{
                 &:first-child {
-                    border-top-left-radius: $table-border-radius; 
+                  border-top-left-radius: $table-border-radius;
                 }
 
                 &:last-child {
-                    border-top-right-radius: $table-border-radius; 
+                  border-top-right-radius: $table-border-radius;
                 }
             }
         }
@@ -120,31 +122,31 @@
 
             &:hover {
                 > td {
-                    background: $table-hover; 
+                  background: $table-hover;
                 }
             }
         }
 
         &.ant-table-row-selected  {
             > td {
-                background: $table-selected !important; 
+              background: $table-selected !important;
             }
         }
-        
+
 
         &:last-child {
             >td{
                 &:first-child {
-                    border-bottom-left-radius: $table-border-radius; 
+                  border-bottom-left-radius: $table-border-radius;
                 }
 
                 &:last-child {
-                    border-bottom-right-radius: $table-border-radius; 
+                  border-bottom-right-radius: $table-border-radius;
                 }
             }
         }
     }
-}  
+}
 
 tbody > tr.ant-table-placeholder:hover > td {
     background: $white !important;
@@ -217,17 +219,17 @@ tbody > tr.ant-table-placeholder:hover > td {
 }
 
 .ant-table-title {
-    padding: $table-spacing;
-    border-top-left-radius: $table-border-radius;
-    border-top-right-radius: $table-border-radius; 
+  padding: $table-spacing;
+  border-top-left-radius: $table-border-radius;
+  border-top-right-radius: $table-border-radius;
 }
 
 .ant-table-footer {
-    padding: $table-spacing;
-    background: $table-foot-bg;
-    border-bottom-left-radius: $table-border-radius;
-    border-bottom-right-radius: $table-border-radius; 
-    border-top: 1px solid $table-border;
+  padding: $table-spacing;
+  background: $table-foot-bg;
+  border-bottom-left-radius: $table-border-radius;
+  border-bottom-right-radius: $table-border-radius;
+  border-top: 1px solid $table-border;
 }
 
 .ant-table-row-expand-icon {
@@ -253,12 +255,12 @@ tr.ant-table-expanded-row {
 .ant-table-fixed-header {
     .ant-table-thead {
         > tr {
-    
-            > th {
+
+          > th {
                 background: $gray-lightest;
             }
         }
-    }                   
+    }
 }
 
 .editable-cell {
@@ -302,16 +304,16 @@ tr.ant-table-expanded-row {
 
 .no-border-last {
     .ant-table {
-        .ant-table-tbody {
+      .ant-table-tbody {
 
-            > tr {
+        > tr {
 
-                &:last-child {
-                    > td {
-                        border-bottom: 0px;
-                    }
-                }
+          &:last-child {
+            > td {
+              border-bottom: 0px;
             }
-        }  
-    }  
+          }
+        }
+      }
+    }
 }

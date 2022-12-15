@@ -38,11 +38,10 @@ i {
 .overall-pill {
   padding: 10px;
   color: white;
-  background: #336fcc;
   border-radius: 14px;
+  border: 2px solid white;
 }
 
 i:active {
   transform: translateY(3px);
 }
-
