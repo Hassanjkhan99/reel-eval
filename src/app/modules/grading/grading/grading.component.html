@@ -36,7 +36,7 @@
             (click)="increment(column,i)"
             class="p-1"
           ><i
-            [nzTwotoneColor]="'#5bd703'"
+            [nzTwotoneColor]="grading[i][column]=== 1 ? '#5bd703' : 'grey'"
             nz-icon
             nzTheme="twotone"
             nzType="plus-circle"
@@ -46,7 +46,7 @@
             (click)="decrement(column,i)"
             class="p-1"
           ><i
-            [nzTwotoneColor]="'#e10428'"
+            [nzTwotoneColor]="grading[i][column] === -1 ? '#e10428' :   'grey'"
             nz-icon
             nzTheme="twotone"
             nzType="minus-circle"
@@ -87,6 +87,7 @@
 </div>
 <ng-template #content>
   <div class="d-flex justify-content-between align-items-center">
+    <div></div>
     <h2><strong>Prospect Name | Position | Year | School</strong></h2>
     <div class="overall-pill">
       <span class="p-3">Overall Grade</span>

@@ -22,7 +22,7 @@ export class GradingComponent implements OnInit {
 
   ngOnInit(): void {
     this.columnValue = this.listOfColumns.reduce(
-      (a, v) => ({...a, [v]: 100}),
+      (a, v) => ({...a, [v]: 0}),
       {}
     );
     console.log(this.columnValue);
@@ -31,7 +31,7 @@ export class GradingComponent implements OnInit {
 
   addRow() {
     const columnsWithValue = this.listOfColumns.reduce(
-      (a, v) => ({...a, [v]: 100}),
+      (a, v) => ({...a, [v]: 0}),
       {}
     );
     let obj = {...columnsWithValue, rowNumber: this.grading.length + 1};
@@ -54,16 +54,32 @@ export class GradingComponent implements OnInit {
   }
 
   calculateColumn(columnName: string) {
-    const value = this.grading.map((e) => {
-      return e[columnName];
-    });
-    const length = value.length;
-    this.columnValue[columnName] =
-      value.reduce((prev, curr, i) => {
-        return prev + curr;
-      }) / length;
-    console.log({value});
-    this.calculateOverAll()
+    const plus = []
+    let minus = []
+    this.grading.forEach(e => {
+      if (e[columnName] > 0) {
+        plus.push(e[columnName])
+      }
+      if (e[columnName] < 0) {
+        minus.push(e[columnName])
+      }
+    })
+    if (plus.length > 0 && minus.length > 0) {
+      console.log(plus.length / minus.length)
+    }
+
+    // let value = this.grading.map((e) => {
+    //   return e[columnName] * 100  ;
+    // }).filter(e => e !== 0)
+    // value = value.map(e => e/ value.length)
+    // console.log({value})
+    // const length = value.length;
+    // this.columnValue[columnName] =
+    //   value.reduce((prev, curr, i) => {
+    //     return prev + curr;
+    //   }) ;
+    // console.log({value});
+    // this.calculateOverAll()
   }
 
   calculateOverAll() {
@@ -75,7 +91,7 @@ export class GradingComponent implements OnInit {
   }
 
   increment(column: string, i: number) {
-    if (this.grading[i][column] > 99) {
+    if (this.grading[i][column] >= 1) {
       return;
     }
     this.grading[i][column]++;
@@ -83,7 +99,7 @@ export class GradingComponent implements OnInit {
   }
 
   decrement(column: string, i: number) {
-    if (this.grading[i][column] < 1) {
+    if (this.grading[i][column] <= -1) {
       return;
     }
     this.grading[i][column]--;
