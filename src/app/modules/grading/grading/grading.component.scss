@@ -45,3 +45,9 @@ i {
 i:active {
   transform: translateY(3px);
 }
+
+.disabled {
+  cursor: none;
+  opacity: .5;
+  pointer-events: none;
+}
