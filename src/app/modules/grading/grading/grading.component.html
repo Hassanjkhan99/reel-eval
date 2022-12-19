@@ -2,7 +2,7 @@
   <nz-table
     #table
     [nzData]="grading"
-    [nzScroll]="{ x: '1700px', y: '450px' }"
+    [nzScroll]="{ x: '1900px', y: '225px' }"
     nzBordered
     nzShowSizeChanger
     nzTableLayout="fixed"
@@ -17,7 +17,6 @@
         *ngFor="let column of listOfColumns; let i = index"
         class="text-align-center"
         nzWidth="200px"
-
       >
         <div class="d-flex justify-content-center align-items-center flex-column">
           <span> {{ listOfColumns[i] }} </span>
@@ -78,7 +77,7 @@
       <td nzRight>
         <div class="d-flex justify-content-center">
             <span
-              (click)="removeRow(i)"
+              (click)="clear(i)"
               [nzTooltipColor]="'blue'"
               [nzTooltipTitle]="'Clear'"
               class="p-2"
@@ -118,9 +117,18 @@
     </tbody>
   </nz-table>
 </div>
-<div class="p-10 m-t-50">
+<div class="p-3 d-flex justify-content-end" style="font-size: 15px">
+  <div class="text-align-center">
+    <span>Last modified date stamp: </span>
+    <p style="font-weight: bold">{{today | date:'longDate'}}</p>
+  </div>
+</div>
+<div class="p-2">
   <h4 style="font-weight: bold">Evaluation Summary:</h4>
-  <textarea class="w-100 box-shadow" nz-input rows="10"></textarea>
+  <textarea class="w-100 box-shadow" nz-input rows="7"></textarea>
+</div>
+<div class="d-flex justify-content-center">
+  <button nz-button nzType="primary">Finish Grading</button>
 </div>
 <ng-template #content>
   <div class="d-flex justify-content-between align-items-center">
@@ -128,12 +136,16 @@
     <h1 style="color: white; font-weight: bold">
       Prospect Name | Position | Year | School
     </h1>
-    <div class="overall-pill">
+    <div class="overall-pill text-align-center">
       <span class="p-3">Overall Grade</span>
       <span
-        [class.darkGreen-pill-grading]="totalValue == 100"
-        [class.pill-grading]="totalValue > 50"
-        [class.red-pill-grading]="totalValue <= 50"
+        [class.darkGreen-pill-grading]="totalValue >= 90 && totalValue <= 100"
+        [class.green-pill-grading]="totalValue >= 80 && totalValue < 90"
+        [class.grey-pill-grading]="totalValue === 0"
+        [class.orange-pill-grading]="totalValue >= 60 && totalValue < 70"
+        [class.red-pill-grading]="totalValue < 60"
+        [class.yellow-pill-grading]="totalValue >= 70 && totalValue < 80"
+        class="pill-grading"
       >{{ totalValue.toFixed(1) }}%
       </span>
     </div>

@@ -4,6 +4,7 @@ import {NzTableModule} from 'ng-zorro-antd/table';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzToolTipModule} from "ng-zorro-antd/tooltip";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-grading',
@@ -13,15 +14,20 @@ import {NzToolTipModule} from "ng-zorro-antd/tooltip";
   styleUrls: ['./grading.component.scss'],
 })
 export class GradingComponent implements OnInit {
-  listOfColumns = ['Bend', 'Effort', 'Heavy Hands'];
+  listOfColumns = [];
   grading = [];
   columnValue = {};
   totalValue = 0
+  today: number = Date.now();
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor(private cdr: ChangeDetectorRef, private router: Router, private activatedRoute: ActivatedRoute) {
+
   }
 
   ngOnInit(): void {
+    const traits = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('traits'))
+    this.listOfColumns = traits;
+    console.log({traits})
     this.columnValue = this.listOfColumns.reduce(
       (a, v) => ({...a, [v]: 0}),
       {}
@@ -114,4 +120,18 @@ export class GradingComponent implements OnInit {
   }
 
 
+  clear(i: number) {
+    const columnsWithValue = this.listOfColumns.reduce(
+      (a, v) => ({...a, [v]: 0}),
+      {}
+    );
+    console.log({columnsWithValue})
+    let obj = {...columnsWithValue, rowNumber: this.grading.length};
+    this.grading = [...this.grading, obj];
+
+    this.listOfColumns.forEach((e) => {
+      this.calculateColumn(e);
+    });
+    this.cdr.detectChanges()
+  }
 }

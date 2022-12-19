@@ -16,6 +16,8 @@ import {PillWithInputComponent} from './pill-with-input/pill-with-input.componen
 import {CdkDragDrop, DragDropModule, moveItemInArray,} from '@angular/cdk/drag-drop';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {SharedModule} from "../../../../shared/shared.module";
+import {NzButtonModule} from "ng-zorro-antd/button";
+import {NavigationExtras, Router, RouterLink} from "@angular/router";
 
 @UntilDestroy()
 @Component({
@@ -29,6 +31,8 @@ import {SharedModule} from "../../../../shared/shared.module";
     ReactiveFormsModule,
     DragDropModule,
     SharedModule,
+    NzButtonModule,
+    RouterLink,
   ],
   templateUrl: './assign-weights.component.html',
   styleUrls: ['./assign-weights.component.scss'],
@@ -40,7 +44,7 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
   remainingValue = 0;
   total = 0;
 
-  constructor(private cdr: ChangeDetectorRef, private fb: FormBuilder) {
+  constructor(private cdr: ChangeDetectorRef, private fb: FormBuilder, private router: Router) {
   }
 
 
@@ -61,5 +65,18 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
       this.total = currValue;
       this.cdr.detectChanges()
     });
+  }
+
+  startGrading() {
+    const queryParams: any = {};
+    const list = this.list.map(e => e.trait)
+    console.log({list})
+    queryParams.traits = JSON.stringify(list);
+
+    const navigationExtras: NavigationExtras = {
+      queryParams
+    };
+
+    this.router.navigate(['/app/grading'], navigationExtras)
   }
 }
