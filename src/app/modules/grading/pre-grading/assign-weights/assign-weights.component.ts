@@ -41,14 +41,15 @@ import {NavigationExtras, Router, RouterLink} from "@angular/router";
 export class AssignWeightsComponent implements OnChanges, AfterViewInit {
   @Input() list: Trait[] = [];
   @Input() traits: FormGroup = new FormGroup({});
-  remainingValue = 0;
+  remainingValue: number;
   total = 0;
 
   constructor(private cdr: ChangeDetectorRef, private fb: FormBuilder, private router: Router) {
+
   }
 
-
   ngOnChanges(changes: SimpleChanges): void {
+
   }
 
   drop(event: CdkDragDrop<string[]>): void {

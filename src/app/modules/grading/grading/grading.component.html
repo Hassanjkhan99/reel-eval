@@ -2,7 +2,7 @@
   <nz-table
     #table
     [nzData]="grading"
-    [nzScroll]="{ x: '1900px', y: '225px' }"
+    [nzScroll]="{ x: '1900px', y: '300px' }"
     nzBordered
     nzShowSizeChanger
     nzTableLayout="fixed"
@@ -91,6 +91,7 @@
             ></span>
           <span
             (click)="removeRow(i)"
+            [class.disabled]="grading.length < 2"
             [nzTooltipColor]="'blue'"
             [nzTooltipTitle]="'Delete Play'"
             class="p-2"
