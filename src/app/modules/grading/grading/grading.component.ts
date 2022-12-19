@@ -125,9 +125,8 @@ export class GradingComponent implements OnInit {
       (a, v) => ({...a, [v]: 0}),
       {}
     );
-    console.log({columnsWithValue})
-    let obj = {...columnsWithValue, rowNumber: this.grading.length};
-    this.grading = [...this.grading, obj];
+    let obj = {...columnsWithValue, rowNumber: this.grading[i].rowNumber};
+    this.grading[i] = obj;
 
     this.listOfColumns.forEach((e) => {
       this.calculateColumn(e);

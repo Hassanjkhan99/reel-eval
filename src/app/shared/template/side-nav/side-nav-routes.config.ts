@@ -63,13 +63,5 @@ export const ROUTES: SideNavInterface[] = [
     submenu: [],
     icon: 'trophy',
     iconType: 'svg'
-  }, {
-    path: 'grading',
-    title: 'Grading',
-    iconTheme: 'fill',
-    submenu: [],
-    icon: 'trophy',
-    iconType: 'svg'
   },
-
 ]
