@@ -1,7 +1,8 @@
 .pill-grading {
-  width: 100%;
+  width: max-content;
   padding: 10px;
   text-align: center;
+  min-width: 150px;
   border-radius: 14px;
   background: #64b702;
   display: flex;
@@ -12,23 +13,31 @@
   cursor: pointer;
 }
 
-.red-pill-grading {
-  width: 100%;
-  padding: 10px;
-  text-align: center;
-  border-radius: 14px;
-  background: #e10404;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.48);
-  font-size: 22px;
-  cursor: pointer;
-}
 
 .darkGreen-pill-grading {
-  background: #028f02;
+  background: #00af50;
 }
+
+.green-pill-grading {
+  background: #92d14f;
+}
+
+.yellow-pill-grading {
+  background: #92d14f;
+}
+
+.orange-pill-grading {
+  background: #ffc000;
+}
+
+.red-pill-grading {
+  background: #fe0000;
+}
+
+.grey-pill-grading {
+  background: grey;
+}
+
 
 i {
   font-size: 32px;

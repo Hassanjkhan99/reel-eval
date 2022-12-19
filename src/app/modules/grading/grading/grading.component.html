@@ -2,12 +2,13 @@
   <nz-table
     #table
     [nzData]="grading"
-    class="box-shadow"
+    [nzScroll]="{ x: '1700px', y: '450px' }"
     nzBordered
     nzShowSizeChanger
     nzTableLayout="fixed"
     [nzTitle]="content"
-    [nzScroll]="{ x: '1700px', y: '250px' }"
+    class="box-shadow w-100"
+    nzSize="small"
   >
     <thead>
     <tr>
@@ -15,19 +16,31 @@
       <th
         *ngFor="let column of listOfColumns; let i = index"
         class="text-align-center"
+        nzWidth="200px"
+
       >
-        <div class="">
+        <div class="d-flex justify-content-center align-items-center flex-column">
           <span> {{ listOfColumns[i] }} </span>
           <span
-            [class.darkGreen-pill-grading]="columnValue[column] == 100"
-            [class.pill-grading]="columnValue[column] > 50"
-            [class.red-pill-grading]="columnValue[column] <= 50"
+            [class.darkGreen-pill-grading]="columnValue[column] >= 90 && columnValue[column] <= 100"
+            [class.green-pill-grading]="columnValue[column] >= 80 && columnValue[column] < 90"
+            [class.grey-pill-grading]="columnValue[column] === 0"
+            [class.orange-pill-grading]="columnValue[column] >= 60 && columnValue[column] < 70"
+            [class.red-pill-grading]="columnValue[column] < 60"
+            [class.yellow-pill-grading]="columnValue[column] >= 70 && columnValue[column] < 80"
+            class="pill-grading"
           >
-              {{ columnValue[column].toFixed(1) }}%
+              <span [class.disabled]="columnValue[column] === 0">
+                {{
+                columnValue[column] === 0
+                  ? "-"
+                  : columnValue[column].toFixed(1) + "%"
+                }}
+              </span>
             </span>
         </div>
       </th>
-      <th class="text-align-center" nzRight nzWidth="150px">Actions</th>
+      <th class="text-align-center" nzRight nzRight nzWidth="150px">Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -36,8 +49,8 @@
       class="text-align-center"
     >
       <td nzLeft>
-          <span style="font-size: 30px;font-weight: bold">
-            {{i + 1}}
+          <span style="font-size: 30px; font-weight: bold">
+            {{ i + 1 }}
           </span>
       </td>
       <td *ngFor="let column of listOfColumns">

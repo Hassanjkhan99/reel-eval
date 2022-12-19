@@ -13,7 +13,7 @@ import {NzToolTipModule} from "ng-zorro-antd/tooltip";
   styleUrls: ['./grading.component.scss'],
 })
 export class GradingComponent implements OnInit {
-  listOfColumns = ['Bend', 'Effort', 'Heavy Hands', 'Pad Level', 'Technique'];
+  listOfColumns = ['Bend', 'Effort', 'Heavy Hands'];
   grading = [];
   columnValue = {};
   totalValue = 0
@@ -65,8 +65,11 @@ export class GradingComponent implements OnInit {
         minus.push(e[columnName])
       }
     })
-    if (plus.length > 0 && minus.length > 0) {
-      console.log(plus.length / minus.length)
+    if (isFinite((plus.length - minus.length) / (plus.length + minus.length))) {
+      this.columnValue[columnName] = (plus.length) / (plus.length + minus.length) * 100
+      console.log(this.columnValue[columnName] = (plus.length) / (plus.length + minus.length) * 100)
+    } else {
+      this.columnValue[columnName] = 0
     }
 
     // let value = this.grading.map((e) => {
@@ -93,17 +96,20 @@ export class GradingComponent implements OnInit {
 
   increment(column: string, i: number) {
     if (this.grading[i][column] >= 1) {
+      this.grading[i][column] = 1;
       return;
+    } else {
+      this.grading[i][column]++;
     }
-    this.grading[i][column]++;
     this.calculateColumn(column);
   }
 
   decrement(column: string, i: number) {
     if (this.grading[i][column] <= -1) {
-      return;
+      this.grading[i][column] = -1;
+    } else {
+      this.grading[i][column]--;
     }
-    this.grading[i][column]--;
     this.calculateColumn(column);
   }
 
