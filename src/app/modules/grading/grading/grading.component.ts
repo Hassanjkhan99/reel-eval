@@ -18,6 +18,10 @@ export class GradingComponent implements OnInit {
   grading = [];
   columnValue = {};
   totalValue = 0
+  position = ''
+  prospect = {
+    first_name: '', last_name: '', classification: '', school: ''
+  }
   today: number = Date.now();
 
   constructor(private cdr: ChangeDetectorRef, private router: Router, private activatedRoute: ActivatedRoute) {
@@ -26,6 +30,12 @@ export class GradingComponent implements OnInit {
 
   ngOnInit(): void {
     const traits = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('traits'))
+    const selectedPosition = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('positionSelected'))
+    const selectedProspect = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('prospectSelected'))
+    this.position = selectedPosition;
+    this.prospect = selectedProspect;
+    console.log(this.prospect)
+    console.log(this.position)
     this.listOfColumns = traits;
     console.log({traits})
     this.columnValue = this.listOfColumns.reduce(

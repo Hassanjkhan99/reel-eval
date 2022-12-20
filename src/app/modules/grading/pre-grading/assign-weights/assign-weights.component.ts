@@ -18,6 +18,8 @@ import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {SharedModule} from "../../../../shared/shared.module";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NavigationExtras, Router, RouterLink} from "@angular/router";
+import {Position} from "../../../../shared/interfaces/positions.interface";
+import {Prospect} from "../../../../shared/interfaces/prospect.interface";
 
 @UntilDestroy()
 @Component({
@@ -40,6 +42,8 @@ import {NavigationExtras, Router, RouterLink} from "@angular/router";
 })
 export class AssignWeightsComponent implements OnChanges, AfterViewInit {
   @Input() list: Trait[] = [];
+  @Input() position: Position;
+  @Input() prospect: Prospect;
   @Input() traits: FormGroup = new FormGroup({});
   remainingValue: number;
   total = 0;
@@ -71,8 +75,13 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
   startGrading() {
     const queryParams: any = {};
     const list = this.list.map(e => e.trait)
+    const position = this.position.position_name
+    const prospect = this.prospect
+    console.log(prospect)
     console.log({list})
     queryParams.traits = JSON.stringify(list);
+    queryParams.positionSelected = JSON.stringify(position);
+    queryParams.prospectSelected = JSON.stringify(prospect);
 
     const navigationExtras: NavigationExtras = {
       queryParams

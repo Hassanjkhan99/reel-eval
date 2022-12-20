@@ -72,6 +72,8 @@
     >
       <app-card headerText="Assign Weights ">
         <app-assign-weights
+          [position]="selectedPosition.value"
+          [prospect]="selectProspect.value"
           [list]="selectedTraits"
           [traits]="traits"
         ></app-assign-weights>
