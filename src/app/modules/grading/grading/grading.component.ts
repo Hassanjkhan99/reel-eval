@@ -56,6 +56,9 @@ export class GradingComponent implements OnInit {
       return;
     }
     this.grading = this.grading.filter((e, i) => i !== index);
+    this.listOfColumns.forEach((e) => {
+      this.calculateColumn(e);
+    });
     this.cdr.detectChanges();
     console.log(this.grading);
   }

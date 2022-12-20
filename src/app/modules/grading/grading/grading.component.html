@@ -2,7 +2,7 @@
   <nz-table
     #table
     [nzData]="grading"
-    [nzScroll]="{ x: '1900px', y: '300px' }"
+    [nzScroll]="{ x: '1700px', y: '420px' }"
     nzBordered
     nzShowSizeChanger
     nzTableLayout="fixed"
@@ -120,8 +120,8 @@
 </div>
 <div class="p-3 d-flex justify-content-end" style="font-size: 15px">
   <div class="text-align-center">
-    <span>Last modified date stamp: </span>
-    <p style="font-weight: bold">{{today | date:'longDate'}}</p>
+    <span>Last modified date and time stamp: </span>
+    <p style="font-weight: bold">{{today | date:'medium'}}</p>
   </div>
 </div>
 <div class="p-2">
