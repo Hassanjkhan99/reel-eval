@@ -1,10 +1,14 @@
-
-.ant-select.ant-select-show-search.ant-select-show-arrow.ant-select-show-search.ant-select-single, .ant-select.ant-select-lg.ant-select-show-arrow.ant-select-single {
+.ant-select.ant-select-show-search.ant-select-show-arrow.ant-select-show-search.ant-select-single,
+.ant-select.ant-select-lg.ant-select-show-arrow.ant-select-single {
   border: 1px solid #3f87f5;
   border-radius: 5px;
 }
 
-.ant-select.ant-select-show-search.ant-select-show-arrow.ant-select-show-search.ant-select-single:hover, .ant-select.ant-select-show-arrow.ant-select-show-search.ant-select-single.ant-select-focused.ant-select-open {
+.ant-select.ant-select-show-search.ant-select-show-arrow.ant-select-show-search.ant-select-single:hover,
+.ant-select.ant-select-show-arrow.ant-select-show-search.ant-select-single.ant-select-focused.ant-select-open {
   border: 0px;
 }
 
+nz-select {
+  font-size: 13px;
+}

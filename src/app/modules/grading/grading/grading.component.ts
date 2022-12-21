@@ -16,6 +16,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class GradingComponent implements OnInit {
   listOfColumns = [];
   grading = [];
+  weights = {}
   columnValue = {};
   totalValue = 0
   position = ''
@@ -32,11 +33,14 @@ export class GradingComponent implements OnInit {
     const traits = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('traits'))
     const selectedPosition = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('positionSelected'))
     const selectedProspect = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('prospectSelected'))
+    const selectedWeights = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('weightsSelected'))
     this.position = selectedPosition;
     this.prospect = selectedProspect;
+    this.weights = selectedWeights;
+    console.log(this.weights)
     console.log(this.prospect)
     console.log(this.position)
-    this.listOfColumns = traits;
+    this.listOfColumns = traits.map(e => e.trait);
     console.log({traits})
     this.columnValue = this.listOfColumns.reduce(
       (a, v) => ({...a, [v]: 0}),
@@ -59,6 +63,8 @@ export class GradingComponent implements OnInit {
     this.listOfColumns.forEach((e) => {
       this.calculateColumn(e);
     });
+    this.today = Date.now();
+    this.cdr.detectChanges();
   }
 
   removeRow(index: number) {
@@ -71,6 +77,8 @@ export class GradingComponent implements OnInit {
     });
     this.cdr.detectChanges();
     console.log(this.grading);
+    this.today = Date.now();
+    this.cdr.detectChanges();
   }
 
   calculateColumn(columnName: string) {
@@ -90,6 +98,8 @@ export class GradingComponent implements OnInit {
     } else {
       this.columnValue[columnName] = 0
     }
+    this.today = Date.now();
+    this.cdr.detectChanges();
 
     // let value = this.grading.map((e) => {
     //   return e[columnName] * 100  ;
@@ -121,6 +131,8 @@ export class GradingComponent implements OnInit {
       this.grading[i][column]++;
     }
     this.calculateColumn(column);
+    this.today = Date.now();
+    this.cdr.detectChanges();
   }
 
   decrement(column: string, i: number) {
@@ -130,6 +142,8 @@ export class GradingComponent implements OnInit {
       this.grading[i][column]--;
     }
     this.calculateColumn(column);
+    this.today = Date.now();
+    this.cdr.detectChanges();
   }
 
 
@@ -144,6 +158,7 @@ export class GradingComponent implements OnInit {
     this.listOfColumns.forEach((e) => {
       this.calculateColumn(e);
     });
-    this.cdr.detectChanges()
+    this.today = Date.now();
+    this.cdr.detectChanges();
   }
 }

@@ -45,7 +45,7 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
   @Input() position: Position;
   @Input() prospect: Prospect;
   @Input() traits: FormGroup = new FormGroup({});
-  remainingValue: number;
+  remainingValue: number = 100;
   total = 0;
 
   constructor(private cdr: ChangeDetectorRef, private fb: FormBuilder, private router: Router) {
@@ -74,7 +74,10 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
 
   startGrading() {
     const queryParams: any = {};
-    const list = this.list.map(e => e.trait)
+    console.log(this.traits.value)
+    console.log(this.list)
+    const list = this.list
+    const weights = this.traits.value
     const position = this.position.position_name
     const prospect = this.prospect
     console.log(prospect)
@@ -82,6 +85,7 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
     queryParams.traits = JSON.stringify(list);
     queryParams.positionSelected = JSON.stringify(position);
     queryParams.prospectSelected = JSON.stringify(prospect);
+    queryParams.weightsSelected = JSON.stringify(weights);
 
     const navigationExtras: NavigationExtras = {
       queryParams
