@@ -48,15 +48,15 @@ $primary-color: #3f87f5;
 
 .pill {
   width: 100%;
-  padding: 10px;
+  padding: 5px;
   text-align: center;
   border-radius: 14px;
   background: white;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.48);
-  font-size: 22px;
+  font-size: 13px;
   cursor: pointer;
 }
 
@@ -134,7 +134,8 @@ $primary-color: #3f87f5;
 }
 
 .ant-card-type-inner .ant-card-head-title, .ant-select, .ant-input, .ant-input-affix-wrapper, .ant-form-item-label > label, .ant-table.ant-table-bordered > .ant-table-container > .ant-table-header > table > thead > tr > th, .ant-tabs-large > .ant-tabs-nav .ant-tabs-tab, .ant-table, .ant-btn {
-  font-size: 20px;
+  font-size: 15px;
+  padding: 0 !important;
 }
 
 .ant-btn {
@@ -159,12 +160,12 @@ $primary-color: #3f87f5;
 }
 
 th {
-  font-size: 23px !important;
+  font-size: 15px !important;
   color: white !important;
 }
 
 td {
-  font-size: 19px;
+  font-size: 15px;
   border: 2px solid rgba(63, 135, 245, 0.45);
 
 }
@@ -183,3 +184,10 @@ td {
   margin-right: 8px;
 }
 
+td {
+  padding: 0px !important;
+}
+
+.ant-table.ant-table-bordered .ant-table-title {
+  background: #28579d;
+}

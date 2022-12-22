@@ -1,14 +1,5 @@
 <div #div (click)="vibrateDiv(div)" [class.background-primary]="selectedList" [class.pillDisabled]="disabled"
      class="pill">
   <div></div>
-  <h5>{{item.trait}}</h5>
-
-  <i
-    *ngIf="selectedList"
-    [nzTheme]="'fill'"
-    nz-icon
-    nzType="close-circle"
-  ></i>
-  <i *ngIf="!selectedList" [nzTheme]="'twotone'"
-     [nzTwotoneColor]="disabled ? 'grey' : '#46c40a'" nz-icon nzType="plus-circle"></i>
+  <span>{{item.trait}}</span>
 </div>

@@ -39,7 +39,7 @@
     [nzPageIndex]="pageIndex"
     [nzPageSizeOptions]="[8, 10, 20, 30, 40, 50]"
     [nzPageSize]="pageSize"
-    [nzScroll]="{ x: '1100px', y: '640px' }"
+    [nzScroll]="{ x: '1100px', y: '400px' }"
     [nzTotal]="total"
     class="w-100"
     nzBordered
@@ -60,7 +60,7 @@
         *ngFor="let column of listOfColumns; let i = index"
         [nz-tooltip]="column.tooltipText"
         [nzColumnKey]="listOfSort[i]"
-        [nzCustomFilter]="column.name !== 'Video Link'"
+        [nzCustomFilter]="column.name !== 'Video url'"
         [nzLeft]="column.name === 'First Name'"
         [nzSortFn]="true"
         [nzWidth]="column.width"
@@ -70,7 +70,7 @@
         {{ column.name }}
 
         <nz-filter-trigger
-          *ngIf="column.name !== 'Video Link'"
+          *ngIf="column.name !== 'Video url'"
           [(nzVisible)]="visible[listOfFilter?.[i]]"
           [nzActive]="searchValue[listOfFilter[i]]?.length > 0"
           [nzDropdownMenu]="menu"

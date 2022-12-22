@@ -17,7 +17,7 @@
       </app-card>
     </div>
 
-    <div nz-col nzLg="10" nzMd="10" nzSm="24" nzXXl="10" nzXl="10" nzXs="24">
+    <div nz-col nzLg="12" nzMd="12" nzSm="24" nzXXl="12" nzXl="12" nzXs="24">
       <app-card class="w-100 text-align-center " headerText="Selected Traits">
         <div>
           <div
@@ -29,7 +29,7 @@
             <p *ngIf="selectedTraits.length < 1">There are no selected Traits</p>
             <nz-list nzGrid>
               <div [nzGutter]="8" nz-row>
-                <div *ngFor="let item of selectedTraits" nz-col nzLg="24" nzMd="24" nzSm="24" nzXXl="12" nzXl="12"
+                <div *ngFor="let item of selectedTraits" nz-col nzLg="8" nzMd="24" nzSm="24" nzXXl="8" nzXl="8"
                      nzXs="24">
                   <nz-list-item (click)="unSelectItem(item)">
                     <app-pill [disabled]="!selectedPosition.value" [item]="item" [selectedList]="true"></app-pill>
@@ -50,7 +50,7 @@
           <p *ngIf="unSelectedTraits.length < 1">There are no unselected Traits</p>
           <nz-list nzGrid>
             <div [nzGutter]="8" nz-row>
-              <div *ngFor="let item of unSelectedTraits" nz-col nzLg="24" nzMd="24" nzSm="24" nzXXl="12" nzXl="12"
+              <div *ngFor="let item of unSelectedTraits" nz-col nzLg="8" nzMd="24" nzSm="24" nzXXl="8" nzXl="8"
                    nzXs="24">
                 <nz-list-item (click)="selectItem(item)">
                   <app-pill [disabled]="!selectedPosition.value" [item]="item" [selectedList]="false"></app-pill>
@@ -64,10 +64,10 @@
     <div
       class="text-center"
       nz-col
-      nzLg="8"
-      nzMd="8"
+      nzLg="6"
+      nzMd="6"
       nzSm="24"
-      nzXl="8"
+      nzXl="6"
       nzXs="24"
     >
       <app-card headerText="Assign Weights ">

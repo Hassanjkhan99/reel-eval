@@ -73,7 +73,7 @@ export class ViewProspectComponent {
   @Input() schoolList: { name: string }[] = [];
   @Input() achievedTable: boolean = false;
   @Input() isLoading: boolean = false;
-  @Input() pageSize: number = 5;
+  @Input() pageSize: number = 10;
   @Input() pageIndex: number;
   @Input() params: NzTableQueryParams;
   @Input() total = 0;
@@ -95,33 +95,33 @@ export class ViewProspectComponent {
   listOfColumns: ColumnItem[] = [
     {
       name: 'First Name',
-      width: '250px'
+      width: '160px'
     },
     {
       name: 'Last Name',
-      width: '250px'
+      width: '150px'
     },
     {
       name: 'Positions',
-      width: '250px'
+      width: '150px'
     },
     {
       name: 'Class/Yr',
-      width: '200px',
+      width: '130px',
       tooltip: true,
       tooltipText: 'Classification/Year',
     },
     {
       name: 'State/Province',
-      width: '260px',
+      width: '200px',
     },
     {
       name: 'School/Team',
-      width: '350px'
+      width: '220px'
     },
     {
-      name: 'Video Link',
-      width: '180px'
+      name: 'Video url',
+      width: '100px'
     },
   ];
 

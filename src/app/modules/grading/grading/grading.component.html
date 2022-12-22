@@ -2,7 +2,7 @@
   <nz-table
     #table
     [nzData]="grading"
-    [nzScroll]="{ x: '800px', y: '420px' }"
+    [nzScroll]="{ x: '400px', y: '420px' }"
     nzBordered
     nzShowSizeChanger
     nzTableLayout="fixed"
@@ -134,11 +134,14 @@
 <ng-template #content>
   <div class="d-flex justify-content-between align-items-center">
     <div></div>
-    <h2 style="color: white; font-weight: bold">
-      {{prospect.first_name}} {{prospect.last_name}} | {{position}} | {{prospect.classification}} | {{prospect.school}}
-    </h2>
+    <div style="color: white;font-size: 20px">
+      {{prospect.first_name}} {{prospect.last_name}}  •  {{position}}  •  {{prospect.classification}}
+    </div>
+    <div style="color: white;font-size: 20px">
+      {{prospect.state}}  •  {{prospect.school}}
+    </div>
     <div class="overall-pill text-align-center">
-      <span class="p-3">Overall Grade</span>
+      <span class="p-1">Overall Grade</span>
       <span
         [class.darkGreen-pill-grading]="totalValue >= 90 && totalValue <= 100"
         [class.green-pill-grading]="totalValue >= 80 && totalValue < 90"

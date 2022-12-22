@@ -21,7 +21,7 @@ export class GradingComponent implements OnInit {
   totalValue = 0
   position = ''
   prospect = {
-    first_name: '', last_name: '', classification: '', school: ''
+    first_name: '', last_name: '', classification: '', school: '', state: ''
   }
   today: number = Date.now();
 

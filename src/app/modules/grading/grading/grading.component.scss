@@ -1,16 +1,17 @@
 .pill-grading {
   width: max-content;
-  padding: 10px;
+  padding: 5px;
   text-align: center;
-  min-width: 150px;
+  min-width: 100px;
   border-radius: 14px;
   background: #64b702;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.48);
-  font-size: 22px;
+  font-size: 15px;
   cursor: pointer;
+  margin-bottom: 5px;
 }
 
 
@@ -40,7 +41,7 @@
 
 
 i {
-  font-size: 32px;
+  font-size: 25px;
   cursor: pointer;
 }
 
