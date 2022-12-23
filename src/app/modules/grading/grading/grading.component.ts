@@ -5,11 +5,12 @@ import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzToolTipModule} from "ng-zorro-antd/tooltip";
 import {ActivatedRoute, Router} from "@angular/router";
+import {NzModalModule} from "ng-zorro-antd/modal";
 
 @Component({
   selector: 'app-grading',
   standalone: true,
-  imports: [CommonModule, NzTableModule, NzIconModule, NzButtonModule, NzToolTipModule],
+  imports: [CommonModule, NzTableModule, NzIconModule, NzButtonModule, NzToolTipModule, NzModalModule],
   templateUrl: './grading.component.html',
   styleUrls: ['./grading.component.scss'],
 })
@@ -24,6 +25,8 @@ export class GradingComponent implements OnInit {
     first_name: '', last_name: '', classification: '', school: '', state: ''
   }
   today: number = Date.now();
+  isVisible = false;
+  isOkLoading = false;
 
   constructor(private cdr: ChangeDetectorRef, private router: Router, private activatedRoute: ActivatedRoute) {
 
@@ -160,5 +163,21 @@ export class GradingComponent implements OnInit {
     });
     this.today = Date.now();
     this.cdr.detectChanges();
+  }
+
+  showModal(): void {
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    this.isOkLoading = true;
+    setTimeout(() => {
+      this.isVisible = false;
+      this.isOkLoading = false;
+    }, 3000);
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
   }
 }

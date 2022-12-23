@@ -135,7 +135,6 @@ $primary-color: #3f87f5;
 
 .ant-card-type-inner .ant-card-head-title, .ant-select, .ant-input, .ant-input-affix-wrapper, .ant-form-item-label > label, .ant-table.ant-table-bordered > .ant-table-container > .ant-table-header > table > thead > tr > th, .ant-tabs-large > .ant-tabs-nav .ant-tabs-tab, .ant-table, .ant-btn {
   font-size: 15px;
-  padding: 0 !important;
 }
 
 .ant-btn {
@@ -186,8 +185,13 @@ td {
 
 td {
   padding: 0px !important;
+  padding-left: 5px !important;
 }
 
 .ant-table.ant-table-bordered .ant-table-title {
   background: #28579d;
+}
+
+button {
+  height: 40px !important;
 }

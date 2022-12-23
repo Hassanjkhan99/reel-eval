@@ -124,12 +124,12 @@
     <p style="font-weight: bold">{{today | date:'medium'}}</p>
   </div>
 </div>
-<div class="p-2">
-  <h4 style="font-weight: bold">Evaluation Summary:</h4>
-  <textarea class="w-100 box-shadow" nz-input rows="7"></textarea>
-</div>
+<!--<div class="p-2">-->
+<!--  <h4 style="font-weight: bold">Evaluation Summary:</h4>-->
+<!--  <textarea class="w-100 box-shadow" nz-input rows="7"></textarea>-->
+<!--</div>-->
 <div class="d-flex justify-content-center">
-  <button nz-button nzType="primary">Finish Grading</button>
+  <button (click)="showModal()" nz-button nzType="primary">Finish Grading</button>
 </div>
 <ng-template #content>
   <div class="d-flex justify-content-between align-items-center">
@@ -155,3 +155,12 @@
     </div>
   </div>
 </ng-template>
+<nz-modal
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [(nzVisible)]="isVisible"
+  [nzOkLoading]="isOkLoading"
+  nzTitle="Evaluation Summary(Optional)"
+>
+  <textarea *nzModalContent class="w-100 box-shadow" nz-input rows="7"></textarea>
+</nz-modal>
