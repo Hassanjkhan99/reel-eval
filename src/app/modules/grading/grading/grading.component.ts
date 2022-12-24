@@ -24,6 +24,7 @@ export class GradingComponent implements OnInit {
   prospect = {
     first_name: '', last_name: '', classification: '', school: '', state: ''
   }
+  isNeutral = {}
   today: number = Date.now();
   isVisible = false;
   isOkLoading = false;
@@ -40,11 +41,11 @@ export class GradingComponent implements OnInit {
     this.position = selectedPosition;
     this.prospect = selectedProspect;
     this.weights = selectedWeights;
-    console.log(this.weights)
-    console.log(this.prospect)
-    console.log(this.position)
     this.listOfColumns = traits.map(e => e.trait);
-    console.log({traits})
+    traits.forEach(e => {
+      this.isNeutral[e.trait] = true
+    });
+    console.log('this.isNeutral', this.isNeutral)
     this.columnValue = this.listOfColumns.reduce(
       (a, v) => ({...a, [v]: 0}),
       {}
@@ -95,6 +96,8 @@ export class GradingComponent implements OnInit {
         minus.push(e[columnName])
       }
     })
+
+    this.isNeutral[columnName] = !(plus.length + minus.length);
     if (isFinite((plus.length - minus.length) / (plus.length + minus.length))) {
       this.columnValue[columnName] = (plus.length) / (plus.length + minus.length) * 100
       console.log(this.columnValue[columnName] = (plus.length) / (plus.length + minus.length) * 100)
