@@ -26,8 +26,8 @@ export class TabsComponent implements OnInit {
   params: NzTableQueryParams;
   pageIndexArchived: number = 1;
   pageIndexUnArchived: number = 1;
-  pageSizeArchived: number = 5;
-  pageSizeUnArchived: number = 5;
+  pageSizeArchived: number = 10;
+  pageSizeUnArchived: number = 10;
   filterList: Array<{ text: string; value: NzSafeAny; byDefault?: boolean }> = [];
   unArchivedClassificationList: { name: string }[] = [];
   archivedClassificationList: { name: string }[] = [];

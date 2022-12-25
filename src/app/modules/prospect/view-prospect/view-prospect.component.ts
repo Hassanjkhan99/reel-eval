@@ -121,7 +121,7 @@ export class ViewProspectComponent {
     },
     {
       name: 'Video url',
-      width: '100px'
+      width: '130px'
     },
   ];
 

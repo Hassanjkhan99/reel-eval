@@ -37,7 +37,7 @@
     [nzFrontPagination]="false"
     [nzLoading]="isLoading"
     [nzPageIndex]="pageIndex"
-    [nzPageSizeOptions]="[8, 10, 20, 30, 40, 50]"
+    [nzPageSizeOptions]="[10, 20, 30, 40, 50]"
     [nzPageSize]="pageSize"
     [nzScroll]="{ x: '1100px', y: '400px' }"
     [nzTotal]="total"
@@ -315,7 +315,11 @@
           </span>
       </td>
       <td nzEllipsis>
-          <span *ngIf="currentEditIndex != i">
+          <span *ngIf="currentEditIndex != i"
+                [nzTooltipColor]="'blue'"
+                [nzTooltipTitle]="data.school"
+                nz-tooltip
+          >
             {{ data.school }}
           </span>
         <span *ngIf="currentEditIndex == i">

@@ -23,10 +23,10 @@
           <span
             [class.darkGreen-pill-grading]="columnValue[column] >= 90 && columnValue[column] <= 100"
             [class.green-pill-grading]="columnValue[column] >= 80 && columnValue[column] < 90"
-            [class.orange-pill-grading]="columnValue[column] >= 60 && columnValue[column] < 70"
-            [class.grey-pill-grading]="isNeutral[column] && columnValue[column] === 0"
             [class.red-pill-grading]="columnValue[column] < 60"
+            [class.orange-pill-grading]="columnValue[column] >= 60 && columnValue[column] < 70"
             [class.yellow-pill-grading]="columnValue[column] >= 70 && columnValue[column] < 80"
+            [class.grey-pill-grading]="isNeutral[column] && columnValue[column] === 0"
             class="pill-grading"
           >
               <span [class.disabled]="isNeutral[column] && columnValue[column] === 0">
