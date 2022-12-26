@@ -75,6 +75,15 @@ export const CommonLayout_ROUTES: Routes = [
     },
     canActivate: [AuthGuard]
   },
+  {
+    path: 'report',
+    loadComponent: () => import('../../modules/report/plot-report/plot-report.component').then(c => c.PlotReportComponent),
+    data: {
+      label: 'report',
+      path: 'report'
+    },
+    canActivate: [AuthGuard]
+  },
 
   {
     path: '**',

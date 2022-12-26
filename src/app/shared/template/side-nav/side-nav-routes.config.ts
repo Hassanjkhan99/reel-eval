@@ -64,4 +64,12 @@ export const ROUTES: SideNavInterface[] = [
     icon: 'trophy',
     iconType: 'svg'
   },
+  {
+    path: 'report',
+    title: 'Report',
+    iconTheme: 'outline',
+    submenu: [],
+    icon: 'dot-chart',
+    iconType: 'nzIcon'
+  },
 ]
