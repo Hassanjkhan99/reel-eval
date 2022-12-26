@@ -18,21 +18,37 @@
         class="text-align-center"
         nzWidth="200px"
       >
-        <div class="d-flex justify-content-center align-items-center flex-column">
+        <div
+          class="d-flex justify-content-center align-items-center flex-column"
+        >
           <span> {{ listOfColumns[i] }} </span>
           <span
-            [class.darkGreen-pill-grading]="columnValue[column] >= 90 && columnValue[column] <= 100"
-            [class.green-pill-grading]="columnValue[column] >= 80 && columnValue[column] < 90"
+            [class.darkGreen-pill-grading]="
+                columnValue[column] >= 90 && columnValue[column] <= 100
+              "
+            [class.green-pill-grading]="
+                columnValue[column] >= 80 && columnValue[column] < 90
+              "
+            [class.grey-pill-grading]="
+                isNeutral[column] && columnValue[column] === 0
+              "
+            [class.orange-pill-grading]="
+                columnValue[column] >= 60 && columnValue[column] < 70
+              "
             [class.red-pill-grading]="columnValue[column] < 60"
-            [class.orange-pill-grading]="columnValue[column] >= 60 && columnValue[column] < 70"
-            [class.yellow-pill-grading]="columnValue[column] >= 70 && columnValue[column] < 80"
-            [class.grey-pill-grading]="isNeutral[column] && columnValue[column] === 0"
+            [class.yellow-pill-grading]="
+                columnValue[column] >= 70 && columnValue[column] < 80
+              "
             class="pill-grading"
           >
-              <span [class.disabled]="isNeutral[column] && columnValue[column] === 0">
+              <span
+                [class.disabled]="
+                  isNeutral[column] && columnValue[column] === 0
+                "
+              >
                 {{
-                isNeutral[column] && columnValue[column] === 0 ?
-                  "-"
+                isNeutral[column] && columnValue[column] === 0
+                  ? "-"
                   : columnValue[column].toFixed(1) + "%"
                 }}
               </span>
@@ -121,7 +137,7 @@
 <div class="p-3 d-flex justify-content-end" style="font-size: 15px">
   <div class="text-align-center">
     <span>Last modified date and time stamp: </span>
-    <p style="font-weight: bold">{{today | date:'medium'}}</p>
+    <p style="font-weight: bold">{{ today | date : "medium" }}</p>
   </div>
 </div>
 <!--<div class="p-2">-->
@@ -129,16 +145,17 @@
 <!--  <textarea class="w-100 box-shadow" nz-input rows="7"></textarea>-->
 <!--</div>-->
 <div class="d-flex justify-content-center">
-  <button (click)="showModal()" nz-button nzType="primary">Finish Grading</button>
+  <button (click)="showModal()" nz-button nzType="primary">
+    Finish Grading
+  </button>
 </div>
 <ng-template #content>
   <div class="d-flex justify-content-between align-items-center">
     <div></div>
-    <div style="color: white;font-size: 20px">
-      {{prospect.first_name}} {{prospect.last_name}}  •  {{position}}  •  {{prospect.classification}}
-    </div>
-    <div style="color: white;font-size: 20px">
-      {{prospect.state}}  •  {{prospect.school}}
+    <div style="color: white; font-size: 22px; font-weight: bold">
+      • {{ prospect.first_name }} {{ prospect.last_name }} &nbsp; •
+      {{ position }} &nbsp; • {{ prospect.state }} &nbsp; •
+      {{ prospect.school }} &nbsp; • {{ prospect.classification }}
     </div>
     <div class="overall-pill text-align-center">
       <span class="p-1">Overall Grade</span>
@@ -162,5 +179,10 @@
   [nzOkLoading]="isOkLoading"
   nzTitle="Evaluation Summary(Optional)"
 >
-  <textarea *nzModalContent class="w-100 box-shadow" nz-input rows="7"></textarea>
+  <textarea
+    *nzModalContent
+    class="w-100 box-shadow"
+    nz-input
+    rows="7"
+  ></textarea>
 </nz-modal>
