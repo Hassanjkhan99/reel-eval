@@ -1,68 +1,91 @@
 import {SideNavInterface} from '../../interfaces/side-nav.type';
+import {Permissions} from '../../enums/permissions';
 
 export const ROUTES: SideNavInterface[] = [
-    {
-      path: '',
-      title: 'Staff',
-      iconType: 'nzIcon',
-      iconTheme: 'outline',
-      icon: 'user',
-      submenu: [
-        {
-          path: 'staff/add',
-          title: 'Add Staff Member',
-          iconType: '',
-          icon: '',
-          submenu: [],
-          iconTheme: 'fill',
-        }, {
-            path: 'staff/view',
-            title: 'View Staff Members',
-            iconType: '',
-            icon: '',
-            submenu: [],
-            iconTheme: "fill"
-          },
+  {
+    path: '',
+    title: 'Staff',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'user',
+    permission: [
+      Permissions.clubAdmin,
+      Permissions.CreateGradeProspects,
+      Permissions.GradeProspects,
+      Permissions.ViewOnly,
+      Permissions.CreateProspects,
+    ],
+    submenu: [
+      {
+        path: 'staff/add',
+        title: 'Add Staff Member',
+        iconType: '',
+        icon: '',
+        submenu: [],
+        iconTheme: 'fill',
+        permission: [
+          Permissions.clubAdmin
         ]
-    },
+      },
+      {
+        path: 'staff/view',
+        title: 'View Staff Members',
+        iconType: '',
+        icon: '',
+        submenu: [],
+        iconTheme: 'fill',
+        permission: [
+          Permissions.clubAdmin,
+          Permissions.CreateGradeProspects,
+          Permissions.GradeProspects,
+          Permissions.ViewOnly,
+          Permissions.CreateProspects,
+        ]
+      },
+    ],
+  },
   {
     path: 'prospects',
     title: 'Prospects',
     iconType: 'nzIcon',
     iconTheme: 'outline',
     icon: 'team',
-    submenu: [
-      // {
-      //   path: 'prospect/add',
-      //   title: 'Add Prospect',
-      //   iconType: '',
-      //   icon: '',
-      //   iconTheme: 'fill',
-      //   submenu: []
-      // },
-      // {
-      //   path: 'prospect/view',
-      //   title: 'View Prospects',
-      //   iconType: '',
-      //   icon: '',
-      //   iconTheme: 'fill',
-      //   submenu: []
-      // },
+    submenu: [],
+    permission: [
+      Permissions.clubAdmin,
+      Permissions.CreateGradeProspects,
+      Permissions.GradeProspects,
+      Permissions.ViewOnly,
+      Permissions.CreateProspects,
     ]
-  }, {
+  },
+  {
     path: 'traits',
     title: 'Traits',
     iconTheme: 'fill',
     submenu: [],
     icon: 'trophy',
-    iconType: 'nzIcon'
-  }, {
+    iconType: 'nzIcon',
+    permission: [
+      Permissions.clubAdmin,
+      Permissions.CreateGradeProspects,
+      Permissions.GradeProspects,
+      Permissions.ViewOnly,
+      Permissions.CreateProspects,
+    ]
+  },
+  {
     path: 'grade',
     title: 'Grade',
     iconTheme: 'fill',
     submenu: [],
     icon: 'trophy',
-    iconType: 'svg'
+    iconType: 'svg',
+    permission: [
+      Permissions.clubAdmin,
+      Permissions.CreateGradeProspects,
+      Permissions.GradeProspects,
+    ]
   },
   {
     path: 'report',
@@ -70,6 +93,13 @@ export const ROUTES: SideNavInterface[] = [
     iconTheme: 'outline',
     submenu: [],
     icon: 'dot-chart',
-    iconType: 'nzIcon'
+    iconType: 'nzIcon',
+    permission: [
+      Permissions.clubAdmin,
+      Permissions.CreateGradeProspects,
+      Permissions.GradeProspects,
+      Permissions.ViewOnly,
+      Permissions.CreateProspects,
+    ]
   },
-]
+];

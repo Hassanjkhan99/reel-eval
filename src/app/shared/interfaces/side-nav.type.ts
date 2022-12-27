@@ -6,4 +6,5 @@ export interface SideNavInterface {
   icon: string,
   submenu: SideNavInterface[];
   toolTip?: string
+  permission: number[]
 }

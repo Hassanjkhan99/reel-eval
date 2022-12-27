@@ -21,6 +21,8 @@ import {NotificationService} from '../../shared/services/notification.service';
 import {Prospect} from '../../shared/interfaces/prospect.interface';
 import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
 import {NzToolTipModule} from "ng-zorro-antd/tooltip";
+import {AuthenticationService} from "../../shared/services/authentication.service";
+import {Permissions} from '../../shared/enums/permissions';
 
 @Component({
   selector: 'app-traits',
@@ -71,6 +73,7 @@ export class TraitsComponent implements OnInit {
   listOfFilter = ['trait', 'description'];
   pageSize: number = 10;
   pageIndex: number = 1;
+  permissions = Permissions
   private params: NzTableQueryParams;
   private filterField: string = '';
   private currentFilterValue: Array<{ key: string; value: NzTableFilterValue }>;
@@ -78,7 +81,8 @@ export class TraitsComponent implements OnInit {
   constructor(
     private traitsService: TraitsService,
     private notificationService: NotificationService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    protected authService: AuthenticationService
   ) {
   }
 

@@ -1,27 +1,40 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {NzTableFilterValue, NzTableModule, NzTableQueryParams} from "ng-zorro-antd/table";
-import {NzDropDownModule} from "ng-zorro-antd/dropdown";
-import {NzInputModule} from "ng-zorro-antd/input";
-import {NzButtonModule} from "ng-zorro-antd/button";
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {NzIconModule} from "ng-zorro-antd/icon";
-import {StaffService} from "../../../shared/services/staff.service";
-import {GroupList, StaffList} from "../../../shared/interfaces/staff.interface";
-import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
-import {NotificationService} from "../../../shared/services/notification.service";
-import {NzToolTipModule} from "ng-zorro-antd/tooltip";
-import {NzSelectModule} from "ng-zorro-antd/select";
+import {NzTableFilterValue, NzTableModule, NzTableQueryParams,} from 'ng-zorro-antd/table';
+import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
+import {NzInputModule} from 'ng-zorro-antd/input';
+import {NzButtonModule} from 'ng-zorro-antd/button';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule,} from '@angular/forms';
+import {NzIconModule} from 'ng-zorro-antd/icon';
+import {StaffService} from '../../../shared/services/staff.service';
+import {GroupList, StaffList,} from '../../../shared/interfaces/staff.interface';
+import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
+import {NotificationService} from '../../../shared/services/notification.service';
+import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
+import {NzSelectModule} from 'ng-zorro-antd/select';
+import {Permissions} from '../../../shared/enums/permissions';
+import {AuthenticationService} from '../../../shared/services/authentication.service';
 
 @Component({
   selector: 'app-table-staff',
   standalone: true,
-  imports: [CommonModule, NzTableModule, NzDropDownModule, NzInputModule, NzButtonModule, FormsModule, NzIconModule, NzPopconfirmModule, ReactiveFormsModule, NzToolTipModule, NzSelectModule],
+  imports: [
+    CommonModule,
+    NzTableModule,
+    NzDropDownModule,
+    NzInputModule,
+    NzButtonModule,
+    FormsModule,
+    NzIconModule,
+    NzPopconfirmModule,
+    ReactiveFormsModule,
+    NzToolTipModule,
+    NzSelectModule,
+  ],
   templateUrl: './table-staff.component.html',
   styleUrls: ['./table-staff.component.scss'],
 })
 export class TableStaffComponent implements OnInit {
-
   staffCount: number = 0;
   currentEditIndex: number = -1;
   listOfColumns = ['First Name', 'Last Name', 'Username', 'Email'];
@@ -32,36 +45,50 @@ export class TableStaffComponent implements OnInit {
   pageSize: number = 10;
   pageIndex: number = 1;
   options: GroupList[];
+  permissions = Permissions;
   private params: NzTableQueryParams;
   visible = {
-    first_name: false, last_name: false, username: false, email: false, actions: false
+    first_name: false,
+    last_name: false,
+    username: false,
+    email: false,
+    actions: false,
   };
   searchValue = {
-    first_name: '', last_name: '', username: '', email: '', actions: ''
+    first_name: '',
+    last_name: '',
+    username: '',
+    email: '',
+    actions: '',
   };
   staffForm = new FormGroup({
     first_name: new FormControl(''),
     last_name: new FormControl(''),
     username: new FormControl(''),
     email: new FormControl(''),
-    groups: new FormControl(0)
+    groups: new FormControl(0),
   });
   private filterField: string = '';
   private currentFilterValue: Array<{ key: string; value: NzTableFilterValue }>;
 
-  constructor(private cdr: ChangeDetectorRef, private staffSer: StaffService, private notificationService: NotificationService) {
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private staffSer: StaffService,
+    private notificationService: NotificationService,
+    protected authService: AuthenticationService
+  ) {
   }
 
   getStaff() {
-    this.staffSer.getStaff(this.pageIndex, this.pageSize, null, null, null).subscribe(
-      x => {
+    this.staffSer
+      .getStaff(this.pageIndex, this.pageSize, null, null, null)
+      .subscribe((x) => {
         console.log(x);
         this.cdr.detectChanges();
         this.listOfData = x.results;
         this.originalListOfData = x.results;
         this.staffCount = x.count;
-      }
-    )
+      });
   }
 
   get groupsFC(): FormControl {
@@ -70,14 +97,14 @@ export class TableStaffComponent implements OnInit {
 
   ngOnInit(): void {
     this.getStaff();
-    this.staffSer.getGroupList().subscribe(e => {
+    this.staffSer.getGroupList().subscribe((e) => {
       this.options = e;
-    })
-    this.cdr.detectChanges()
+    });
+    this.cdr.detectChanges();
   }
 
   reset(key) {
-    this.searchValue[key] = ''
+    this.searchValue[key] = '';
 
     this.search(key);
   }
@@ -91,10 +118,13 @@ export class TableStaffComponent implements OnInit {
   }
 
   isEdit(i: number) {
-    if ((this.currentEditIndex != i && this.currentEditIndex > -1)) {
-      this.notificationService.error("Can't edit another row while editing a row", 'You are currently editing a row , ' +
-        'please discard or save the changes')
-      return
+    if (this.currentEditIndex != i && this.currentEditIndex > -1) {
+      this.notificationService.error(
+        "Can't edit another row while editing a row",
+        'You are currently editing a row , ' +
+        'please discard or save the changes'
+      );
+      return;
     }
 
     this.currentEditIndex = i;
@@ -103,50 +133,55 @@ export class TableStaffComponent implements OnInit {
       last_name: this.listOfData[i].last_name,
       username: this.listOfData[i].username,
       email: this.listOfData[i].email,
-      groups: this.listOfData[i].groups[0]
-    })
-    this.cdr.detectChanges()
-    console.log(this.staffForm.value)
-    console.log(this.listOfData[i])
+      groups: this.listOfData[i].groups[0],
+    });
+    this.cdr.detectChanges();
+    console.log(this.staffForm.value);
+    console.log(this.listOfData[i]);
   }
 
   isSave(i: number) {
-
-    this.staffSer.editStaff(this.listOfData[i].id, {
-      ...this.listOfData[i], ...this.staffForm.value,
-      groups: [this.groupsFC.value]
-    }).subscribe(
-      x => {
-        this.notificationService.success('Success', 'Your changes has been saved!');
-        this.listOfData = this.listOfData.map(item => {
+    this.staffSer
+      .editStaff(this.listOfData[i].id, {
+        ...this.listOfData[i],
+        ...this.staffForm.value,
+        groups: [this.groupsFC.value],
+      })
+      .subscribe((x) => {
+        this.notificationService.success(
+          'Success',
+          'Your changes has been saved!'
+        );
+        this.listOfData = this.listOfData.map((item) => {
           if (item.id === x.id) {
-            return x
+            return x;
           } else {
-            return item
+            return item;
           }
-        })
+        });
         this.currentEditIndex = -1;
         this.cdr.detectChanges();
-      }
-    )
+      });
   }
 
   isDelete(i: number) {
-
-    this.staffSer.deleteStaff(this.listOfData[i].id).subscribe(
-      x => {
-        this.notificationService.success('Success', 'Selected Staff has been deleted!')
-        // this.listOfData.splice(i,1)
-        this.listOfData = this.listOfData.map((item) => {
+    this.staffSer.deleteStaff(this.listOfData[i].id).subscribe((x) => {
+      this.notificationService.success(
+        'Success',
+        'Selected Staff has been deleted!'
+      );
+      // this.listOfData.splice(i,1)
+      this.listOfData = this.listOfData
+        .map((item) => {
           if (item.id == this.listOfData[i].id) {
-            return
+            return;
           }
-          return item
-        }).filter(e => e)
-        this.currentEditIndex = -1
-        this.cdr.detectChanges();
-      },
-    )
+          return item;
+        })
+        .filter((e) => e);
+      this.currentEditIndex = -1;
+      this.cdr.detectChanges();
+    });
   }
 
   cancel(): void {
@@ -164,7 +199,7 @@ export class TableStaffComponent implements OnInit {
       this.currentFilterValue = params.filter;
     }
     const {pageSize, pageIndex, sort, filter} = params;
-    this.params = {...params, filter: this.currentFilterValue}
+    this.params = {...params, filter: this.currentFilterValue};
 
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || null;
@@ -184,7 +219,4 @@ export class TableStaffComponent implements OnInit {
         this.total = e.count;
       });
   }
-
-
 }
-

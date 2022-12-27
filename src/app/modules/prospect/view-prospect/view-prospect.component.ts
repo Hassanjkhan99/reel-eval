@@ -37,6 +37,8 @@ import {UntilDestroy} from "@ngneat/until-destroy";
 import {NzGridModule} from "ng-zorro-antd/grid";
 import {NzSelectModule} from "ng-zorro-antd/select";
 import {NzResizableModule} from "ng-zorro-antd/resizable";
+import {AuthenticationService} from "../../../shared/services/authentication.service";
+import {Permissions} from '../../../shared/enums/permissions';
 
 @UntilDestroy()
 @Component({
@@ -91,6 +93,7 @@ export class ViewProspectComponent {
     new EventEmitter<Prospect>();
   @Output() prospectUnArchived: EventEmitter<Prospect> =
     new EventEmitter<Prospect>();
+  permissions = Permissions
 
   listOfColumns: ColumnItem[] = [
     {
@@ -196,7 +199,8 @@ export class ViewProspectComponent {
     private cdr: ChangeDetectorRef,
     private nzMessageService: NzMessageService,
     private notificationService: NotificationService,
-    private prospectService: ProspectService
+    private prospectService: ProspectService,
+    protected authService: AuthenticationService
   ) {
   }
 

@@ -1,5 +1,6 @@
 <div class="w-100 d-flex justify-content-between">
-  <div class="p-2 d-flex justify-content-end">
+  <div *ngIf="(authService.currentUser$ | async).groups[0] !== permissions.ViewOnly"
+       class="p-2 d-flex justify-content-end">
     <button
       (click)="exportListToExcel()"
       [disabled]="checkedIds.length < 1"
@@ -9,7 +10,7 @@
       Export Selected
     </button>
   </div>
-  <div nz-row>
+  <div *ngIf="(authService.currentUser$ | async).groups[0] !== permissions.ViewOnly" nz-row>
     <div class="p-2 d-flex justify-content-end">
       <button
         (click)="exportCompleteListToExcel()"
@@ -20,7 +21,15 @@
         Export List
       </button>
     </div>
-    <div *ngIf="!achievedTable" class="p-2 d-flex justify-content-end">
+    <div
+      *ngIf="
+        !achievedTable &&
+        (authService.currentUser$ | async).groups[0] !== permissions.ViewOnly &&
+        (authService.currentUser$ | async).groups[0] !==
+          permissions.GradeProspects
+      "
+      class="p-2 d-flex justify-content-end"
+    >
       <button (click)="addProspect()" nz-button nzType="primary">
         Add Prospect
       </button>
@@ -51,6 +60,7 @@
     <tr class="align-content-center">
       <th
         (nzCheckedChange)="onAllChecked($event)"
+        *ngIf="(authService.currentUser$ | async).groups[0] !== permissions.ViewOnly"
         [(nzChecked)]="checked"
         [nzIndeterminate]="indeterminate"
         nzEllipsis
@@ -133,6 +143,7 @@
         </nz-dropdown-menu>
       </th>
       <th
+        *ngIf="(authService.currentUser$ | async).groups[0] !== permissions.ViewOnly"
         class="text-align-center ant-table-column-title"
         nzRight
         nzWidth="150px"
@@ -200,18 +211,18 @@
           </span>
       </td>
       <td nzRight>
-        <a (click)="isSaveNew(false)" class="p-2">
-          <i
-            [nzTheme]="'twotone'"
-            [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="'Save Prospect'"
-            [nzTwotoneColor]="'#46c40a'"
-            nz-icon
-            nz-tooltip
-            nzType="save"
-          ></i>
-        </a>
-        <a
+          <span (click)="isSaveNew(false)" class="p-2">
+            <i
+              [nzTheme]="'twotone'"
+              [nzTooltipColor]="'blue'"
+              [nzTooltipTitle]="'Save Prospect'"
+              [nzTwotoneColor]="'#46c40a'"
+              nz-icon
+              nz-tooltip
+              nzType="save"
+            ></i>
+          </span>
+        <span
           (nzOnCancel)="cancel()"
           (nzOnConfirm)="confirm()"
           [nzTooltipColor]="'blue'"
@@ -222,37 +233,38 @@
           nzPopconfirmPlacement="top"
           nzPopconfirmTitle="Are you sure you want to discard changes?"
         >
-          <i
-            [nzTheme]="'twotone'"
-            [nzTwotoneColor]="'#c00206'"
-            nz-icon
-            nzType="close-circle"
-          ></i>
-        </a>
-        <a
+            <i
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#c00206'"
+              nz-icon
+              nzType="close-circle"
+            ></i>
+          </span>
+        <span
           (click)="isSaveNew(true)"
           [nzTooltipColor]="'blue'"
           [nzTooltipTitle]="'Add New Prospect'"
           class="p-2"
           nz-tooltip
         >
-          <i
-            [nzTheme]="'twotone'"
-            [nzTwotoneColor]="'#f5d50a'"
-            nz-icon
-            nzType="plus-circle"
-          ></i>
-        </a>
+            <i
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#f5d50a'"
+              nz-icon
+              nzType="plus-circle"
+            ></i>
+          </span>
       </td>
     </tr>
     <tr
       *ngFor="let data of borderedTable.data; let i = index"
+      [class.background-primary]="currentEditIndex == i"
       [formGroup]="prospectForm"
       class="text-align-left"
-      [class.background-primary]="currentEditIndex == i"
     >
       <td
         (nzCheckedChange)="onItemChecked(data.id, $event)"
+        *ngIf="(authService.currentUser$ | async).groups[0] !== permissions.ViewOnly"
         [nzChecked]="setOfCheckedId.has(data.id)"
         [nzShowCheckbox]="!(currentEditIndex === i)"
       ></td>
@@ -315,10 +327,11 @@
           </span>
       </td>
       <td nzEllipsis>
-          <span *ngIf="currentEditIndex != i"
-                [nzTooltipColor]="'blue'"
-                [nzTooltipTitle]="data.school"
-                nz-tooltip
+          <span
+            *ngIf="currentEditIndex != i"
+            [nzTooltipColor]="'blue'"
+            [nzTooltipTitle]="data.school"
+            nz-tooltip
           >
             {{ data.school }}
           </span>
@@ -343,34 +356,41 @@
             <input formControlName="video_link" nz-input/>
           </span>
       </td>
-      <td nzRight>
+      <td *ngIf="(authService.currentUser$ | async).groups[0] !== permissions.ViewOnly"
+          nzRight
+      >
         <div class="d-flex justify-content-center">
-          <a
-            (click)="isEdit(i)"
-            *ngIf="currentEditIndex != i"
-            [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="'Edit Prospect'"
-            class="p-2"
-            nz-tooltip
-          >
-            <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
-          </a>
-          <a
+            <span
+              (click)="isEdit(i)"
+              *ngIf="currentEditIndex != i  &&
+              (authService.currentUser$ | async).groups[0] !==
+              permissions.GradeProspects
+            "
+              [nzTooltipColor]="'blue'"
+              [nzTooltipTitle]="'Edit Prospect'"
+              class="p-2"
+              nz-tooltip
+            >
+              <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
+            </span>
+          <span
             (click)="isSave(i)"
-            *ngIf="currentEditIndex == i"
+            *ngIf="currentEditIndex == i &&
+              (authService.currentUser$ | async).groups[0] !==
+              permissions.GradeProspects"
             [nzTooltipColor]="'blue'"
             [nzTooltipTitle]="'Save changes'"
             class="p-2"
             nz-tooltip
           >
-            <i
-              [nzTheme]="'twotone'"
-              [nzTwotoneColor]="'#46c40a'"
-              nz-icon
-              nzType="save"
-            ></i>
-          </a>
-          <a
+              <i
+                [nzTheme]="'twotone'"
+                [nzTwotoneColor]="'#46c40a'"
+                nz-icon
+                nzType="save"
+              ></i>
+            </span>
+          <span
             (nzOnCancel)="cancel()"
             (nzOnConfirm)="confirm()"
             *ngIf="currentEditIndex == i"
@@ -382,17 +402,19 @@
             nzPopconfirmPlacement="top"
             nzPopconfirmTitle="Are you sure you want to discard changes?"
           >
-            <i
-              [nzTheme]="'twotone'"
-              [nzTwotoneColor]="'#c00206'"
-              nz-icon
-              nzType="close-circle"
-            ></i>
-          </a>
-          <a
+              <i
+                [nzTheme]="'twotone'"
+                [nzTwotoneColor]="'#c00206'"
+                nz-icon
+                nzType="close-circle"
+              ></i>
+            </span>
+          <span
             (nzOnCancel)="cancel()"
             (nzOnConfirm)="isDelete(i)"
-            *ngIf="currentEditIndex != i"
+            *ngIf="currentEditIndex != i &&
+              (authService.currentUser$ | async).groups[0] !==
+              permissions.GradeProspects"
             [nzTooltipColor]="'blue'"
             [nzTooltipTitle]="'Delete Prospect'"
             class="p-2"
@@ -401,36 +423,36 @@
             nzPopconfirmPlacement="top"
             nzPopconfirmTitle="Are you sure you want to delete prospect?"
           >
-            <i
-              [nzTheme]="'twotone'"
-              [nzTwotoneColor]="'#c00206'"
-              nz-icon
-              nzType="delete"
-            ></i>
-          </a>
+              <i
+                [nzTheme]="'twotone'"
+                [nzTwotoneColor]="'#c00206'"
+                nz-icon
+                nzType="delete"
+              ></i>
+            </span>
           <ng-template [ngIf]="!achievedTable">
-            <a
-              (click)="isArchive(i)"
-              *ngIf="currentEditIndex != i"
-              [nzTooltipColor]="'blue'"
-              [nzTooltipTitle]="'Archive Prospect'"
-              class="p-2"
-              nz-tooltip
-            >
-              <i nz-icon nzTheme="outline" nzType="export"></i>
-            </a>
+              <span
+                (click)="isArchive(i)"
+                *ngIf="currentEditIndex != i"
+                [nzTooltipColor]="'blue'"
+                [nzTooltipTitle]="'Archive Prospect'"
+                class="p-2"
+                nz-tooltip
+              >
+                <i nz-icon nzTheme="outline" nzType="export"></i>
+              </span>
           </ng-template>
           <ng-template [ngIf]="achievedTable">
-            <a
-              (click)="isUnArchive(i)"
-              *ngIf="currentEditIndex != i"
-              [nzTooltipColor]="'blue'"
-              [nzTooltipTitle]="'UnArchive Prospect'"
-              class="p-2"
-              nz-tooltip
-            >
-              <i nz-icon nzTheme="outline" nzType="export"></i>
-            </a>
+              <span
+                (click)="isUnArchive(i)"
+                *ngIf="currentEditIndex != i"
+                [nzTooltipColor]="'blue'"
+                [nzTooltipTitle]="'UnArchive Prospect'"
+                class="p-2"
+                nz-tooltip
+              >
+                <i nz-icon nzTheme="outline" nzType="export"></i>
+              </span>
           </ng-template>
         </div>
       </td>

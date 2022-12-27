@@ -59,7 +59,8 @@
     <th class="text-align-left" nzWidth="250px" style="color: white">
       Permissions
     </th>
-    <th class="text-align-left" nzRight nzWidth="120px" style="color: white">
+    <th *ngIf="(authService.currentUser$ | async).groups[0] === permissions.clubAdmin" class="text-align-left" nzRight
+        nzWidth="120px" style="color: white">
       Actions
     </th>
   </tr>
@@ -118,7 +119,7 @@
                 </nz-select>
         </span>
     </td>
-    <td nzRight>
+    <td *ngIf="(authService.currentUser$ | async).groups[0] === permissions.clubAdmin" nzRight>
       <div class="d-flex justify-content-center">
         <a (click)="isEdit(i)" *ngIf="currentEditIndex != i" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Edit Staff'"
            class="p-2" nz-tooltip>

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Login, SignUp} from '../interfaces/authentication.interface';
+import {Login, SignUp, UserMe} from '../interfaces/authentication.interface';
 import {main_url} from '../../../environments/environment';
 
 @Injectable({
@@ -9,7 +9,7 @@ import {main_url} from '../../../environments/environment';
 })
 export class AuthenticationService {
 
-  currentUser$: BehaviorSubject<any> = new BehaviorSubject<any>(null)
+  currentUser$: BehaviorSubject<UserMe> = new BehaviorSubject<UserMe>(null)
 
   constructor(private http: HttpClient) {
   }
@@ -29,8 +29,8 @@ export class AuthenticationService {
     return this.http.post<Login>(`${main_url}dj-rest-auth/login/`, payload);
   }
 
-  checkLogin(): Observable<any> {
-    return this.http.get<any>(`${main_url}accounts/me/`);
+  checkLogin(): Observable<UserMe> {
+    return this.http.get<UserMe>(`${main_url}accounts/me/`);
   }
 
   forget(email): Observable<string> {

@@ -1,4 +1,6 @@
-<div class="p-2 w-85 d-flex justify-content-end">
+<div *ngIf="
+        (authService.currentUser$ | async).groups[0] === permissions.clubAdmin"
+     class="p-2 w-85 d-flex justify-content-end">
   <button (click)="addNewTraitRow()" nz-button nzType="primary">
     Add Trait
   </button>
@@ -72,7 +74,11 @@
         </nz-dropdown-menu>
       </th>
 
-      <th class="Action" nzWidth="120px"> Action</th>
+      <th
+        *ngIf="
+        (authService.currentUser$ | async).groups[0] === permissions.clubAdmin"
+        class="Action" nzWidth="120px"> Action
+      </th>
     </tr>
     </thead>
     <tbody>
@@ -160,7 +166,8 @@
           </span>
       </td>
 
-      <td>
+      <td *ngIf="
+        (authService.currentUser$ | async).groups[0] === permissions.clubAdmin">
         <div class="d-flex justify-content-center">
           <a (click)="isEdit(i)" *ngIf="currentEditIndex != i" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Edit Trait'"
              class="p-2" nz-tooltip>
