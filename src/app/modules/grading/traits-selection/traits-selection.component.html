@@ -1,23 +1,10 @@
-<div class="bg-white " nz-row nzJustify="center">
-  <div [nzGutter]="24" class="w-90" nz-row nzJustify="center">
-    <div
-      class="text-center"
-      nz-col
-      nzLg="7"
-      nzMd="7"
-      nzSm="24"
-      nzXl="7"
-      nzXs="24"
-    >
-      <app-card headerText="Select Prospect">
-        <app-player-select [formControl]="selectProspect"></app-player-select>
-      </app-card>
-      <app-card headerText="Choose Position">
-        <app-positions-select [formControl]="selectedPosition"></app-positions-select>
-      </app-card>
-    </div>
+<div class="bg-white" nz-row nzJustify="center">
+  <div class="p-2" nz-row nzJustify="center">
+    <h2 style="font-weight: bold">Selected Position</h2>
+  </div>
 
-    <div nz-col nzLg="9" nzMd="9" nzSm="24" nzXXl="9" nzXl="9" nzXs="24">
+  <div [nzGutter]="24" class="w-100" nz-row nzJustify="center">
+    <div nz-col nzLg="12" nzMd="12" nzSm="24" nzXXl="12" nzXl="12" nzXs="24">
       <app-card class="w-100 text-align-center " headerText="Selected Traits">
         <div>
           <div
@@ -32,7 +19,7 @@
                 <div *ngFor="let item of selectedTraits" nz-col nzLg="8" nzMd="24" nzSm="24" nzXXl="8" nzXl="8"
                      nzXs="24">
                   <nz-list-item (click)="unSelectItem(item)">
-                    <app-pill [disabled]="!selectedPosition.value" [item]="item" [selectedList]="true"></app-pill>
+                    <app-pill [item]="item" [selectedList]="true"></app-pill>
                   </nz-list-item>
                 </div>
               </div>
@@ -53,7 +40,7 @@
               <div *ngFor="let item of unSelectedTraits" nz-col nzLg="8" nzMd="24" nzSm="24" nzXXl="8" nzXl="8"
                    nzXs="24">
                 <nz-list-item (click)="selectItem(item)">
-                  <app-pill [disabled]="!selectedPosition.value" [item]="item" [selectedList]="false"></app-pill>
+                  <app-pill [item]="item" [selectedList]="false"></app-pill>
                 </nz-list-item>
               </div>
             </div>
@@ -64,20 +51,19 @@
     <div
       class="text-center"
       nz-col
-      nzLg="6"
-      nzMd="6"
+      nzLg="8"
+      nzMd="8"
       nzSm="24"
-      nzXl="6"
+      nzXl="8"
       nzXs="24"
     >
       <app-card headerText="Assign Weights ">
         <app-assign-weights
-          [position]="selectedPosition.value"
-          [prospect]="selectProspect.value"
           [list]="selectedTraits"
           [traits]="traits"
         ></app-assign-weights>
       </app-card>
     </div>
+
   </div>
 </div>

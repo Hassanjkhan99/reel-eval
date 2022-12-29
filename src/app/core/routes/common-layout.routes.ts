@@ -76,6 +76,15 @@ export const CommonLayout_ROUTES: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'traits-selection',
+    loadComponent: () => import('../../modules/grading/traits-selection/traits-selection.component').then(c => c.TraitsSelectionComponent),
+    data: {
+      label: 'traits-selection',
+      path: 'traits-selection'
+    },
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'report',
     loadComponent: () => import('../../modules/report/plot-report/plot-report.component').then(c => c.PlotReportComponent),
     data: {
