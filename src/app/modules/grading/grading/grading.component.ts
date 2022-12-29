@@ -34,10 +34,11 @@ export class GradingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const traits = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('traits'))
+    let traits = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('traits'))
     const selectedPosition = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('positionSelected'))
     const selectedProspect = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('prospectSelected'))
     const selectedWeights = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('weightsSelected'))
+    console.log({traits})
     this.position = selectedPosition;
     this.prospect = selectedProspect;
     this.weights = selectedWeights;
@@ -118,12 +119,14 @@ export class GradingComponent implements OnInit {
     //     return prev + curr;
     //   }) ;
     // console.log({value});
-    // this.calculateOverAll()
+    this.calculateOverAll()
   }
 
   calculateOverAll() {
     let sum = 0
+
     for (const key in this.columnValue) {
+      console.log({key})
       sum += this.columnValue[key]
     }
     this.totalValue = sum / this.listOfColumns.length
