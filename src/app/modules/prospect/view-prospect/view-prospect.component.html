@@ -143,7 +143,9 @@
         </nz-dropdown-menu>
       </th>
       <th
-        *ngIf="(authService.currentUser$ | async).groups[0] !== permissions.ViewOnly"
+        *ngIf="(authService.currentUser$ | async).groups[0] !== permissions.ViewOnly  &&
+              (authService.currentUser$ | async).groups[0] !==
+              permissions.GradeProspects"
         class="text-align-center ant-table-column-title"
         nzRight
         nzWidth="150px"
@@ -356,16 +358,15 @@
             <input formControlName="video_link" nz-input/>
           </span>
       </td>
-      <td *ngIf="(authService.currentUser$ | async).groups[0] !== permissions.ViewOnly"
+      <td *ngIf="(authService.currentUser$ | async).groups[0] !== permissions.ViewOnly &&
+              (authService.currentUser$ | async).groups[0] !==
+              permissions.GradeProspects"
           nzRight
       >
         <div class="d-flex justify-content-center">
             <span
               (click)="isEdit(i)"
-              *ngIf="currentEditIndex != i  &&
-              (authService.currentUser$ | async).groups[0] !==
-              permissions.GradeProspects
-            "
+              *ngIf="currentEditIndex != i"
               [nzTooltipColor]="'blue'"
               [nzTooltipTitle]="'Edit Prospect'"
               class="p-2"
@@ -375,9 +376,7 @@
             </span>
           <span
             (click)="isSave(i)"
-            *ngIf="currentEditIndex == i &&
-              (authService.currentUser$ | async).groups[0] !==
-              permissions.GradeProspects"
+            *ngIf="currentEditIndex == i"
             [nzTooltipColor]="'blue'"
             [nzTooltipTitle]="'Save changes'"
             class="p-2"
@@ -412,9 +411,7 @@
           <span
             (nzOnCancel)="cancel()"
             (nzOnConfirm)="isDelete(i)"
-            *ngIf="currentEditIndex != i &&
-              (authService.currentUser$ | async).groups[0] !==
-              permissions.GradeProspects"
+            *ngIf="currentEditIndex != i"
             [nzTooltipColor]="'blue'"
             [nzTooltipTitle]="'Delete Prospect'"
             class="p-2"
