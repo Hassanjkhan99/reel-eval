@@ -1,9 +1,17 @@
-<div *ngIf="
-        (authService.currentUser$ | async).groups[0] === permissions.clubAdmin"
-     class="p-2 w-85 d-flex justify-content-end">
-  <button (click)="addNewTraitRow()" nz-button nzType="primary">
-    Add Trait
-  </button>
+<div
+  *ngIf="(authService.currentUser$ | async).groups[0] === permissions.clubAdmin"
+  class="p-2 w-100 d-flex justify-content-center"
+>
+  <div class="positions-pill p-1">
+    <span (click)="grading(position)" *ngFor="let position of positions" class="p-1 m-10 offense">
+      {{ position.abbreviation }}
+    </span>
+  </div>
+  <div class="d-flex align-items-end">
+    <button (click)="addNewTraitRow()" nz-button nzType="primary">
+      Add Trait
+    </button>
+  </div>
 </div>
 <div class="d-flex justify-content-center">
   <nz-table
@@ -26,7 +34,6 @@
     <tr>
       <th
         *ngFor="let column of listOfColumns; let i = index"
-        [class]="'text-center ' + column.name"
         [nzColumnKey]="column.name"
         [nzSortFn]="true"
         nzCustomFilter
@@ -60,11 +67,11 @@
                 </button>
                 <button
                   (click)="reset(listOfFilter[i])"
-                  nz-button
-                  nzSize="small"
                   [nzTooltipColor]="'blue'"
                   [nzTooltipTitle]="'Clear Search'"
+                  nz-button
                   nz-tooltip
+                  nzSize="small"
                 >
                   Reset
                 </button>
@@ -76,13 +83,22 @@
 
       <th
         *ngIf="
-        (authService.currentUser$ | async).groups[0] === permissions.clubAdmin"
-        class="Action" nzWidth="120px"> Action
+            (authService.currentUser$ | async).groups[0] ===
+            permissions.clubAdmin
+          "
+        class="Action text-align-center"
+        nzWidth="120px"
+      >
+        Action
       </th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngIf="showRow" [formGroup]="traitForm" class="text-align-center background-primary">
+    <tr
+      *ngIf="showRow"
+      [formGroup]="traitForm"
+      class="background-primary"
+    >
       <td>
         <input
           formControlName="trait"
@@ -101,8 +117,13 @@
       </td>
       <td>
         <div class="d-flex justify-content-center">
-          <a (click)="isSaveNew(false)" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Save Trait'" class="p-2"
-             nz-tooltip>
+          <a
+            (click)="isSaveNew(false)"
+            [nzTooltipColor]="'blue'"
+            [nzTooltipTitle]="'Save Trait'"
+            class="p-2"
+            nz-tooltip
+          >
             <i
               [nzTheme]="'twotone'"
               [nzTwotoneColor]="'#46c40a'"
@@ -117,7 +138,9 @@
             [nzTooltipTitle]="'Discard Changes'"
             class="p-2"
             nz-popconfirm
-            nz-tooltip nzPopconfirmPlacement="top" nzPopconfirmTitle="Are you sure you want to discard changes?"
+            nz-tooltip
+            nzPopconfirmPlacement="top"
+            nzPopconfirmTitle="Are you sure you want to discard changes?"
           >
             <i
               [nzTheme]="'twotone'"
@@ -126,8 +149,13 @@
               nzType="close-circle"
             ></i>
           </a>
-          <a (click)="isSaveNew(true)" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Add New Trait'" class="p-2"
-             nz-tooltip>
+          <a
+            (click)="isSaveNew(true)"
+            [nzTooltipColor]="'blue'"
+            [nzTooltipTitle]="'Add New Trait'"
+            class="p-2"
+            nz-tooltip
+          >
             <i
               [nzTheme]="'twotone'"
               [nzTwotoneColor]="'#f5d50a'"
@@ -140,9 +168,8 @@
     </tr>
     <tr
       *ngFor="let data of table.data; let i = index"
-      [formGroup]="traitForm"
-      class="text-align-center"
       [class.background-primary]="currentEditIndex == i"
+      [formGroup]="traitForm"
     >
       <td>
           <span *ngIf="currentEditIndex != i">
@@ -166,57 +193,76 @@
           </span>
       </td>
 
-      <td *ngIf="
-        (authService.currentUser$ | async).groups[0] === permissions.clubAdmin">
+      <td
+        *ngIf="
+            (authService.currentUser$ | async).groups[0] ===
+            permissions.clubAdmin
+          "
+      >
         <div class="d-flex justify-content-center">
-          <a (click)="isEdit(i)" *ngIf="currentEditIndex != i" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Edit Trait'"
-             class="p-2" nz-tooltip>
+          <a
+            (click)="isEdit(i)"
+            *ngIf="currentEditIndex != i"
+            [nzTooltipColor]="'blue'"
+            [nzTooltipTitle]="'Edit Trait'"
+            class="p-2"
+            nz-tooltip
+          >
             <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
           </a>
-          <a (click)="isSave(i)" *ngIf="currentEditIndex == i" [nzTooltipColor]="'blue'"
-             [nzTooltipTitle]="'Save changes'"
-             class="p-2" nz-tooltip>
+          <a
+            (click)="isSave(i)"
+            *ngIf="currentEditIndex == i"
+            [nzTooltipColor]="'blue'"
+            [nzTooltipTitle]="'Save changes'"
+            class="p-2"
+            nz-tooltip
+          >
             <i
               [nzTheme]="'twotone'"
               [nzTwotoneColor]="'#46c40a'"
               nz-icon
-            nzType="save"
-          ></i>
-        </a>
-        <a
-          (nzOnCancel)="cancel()"
-          (nzOnConfirm)="confirm()"
-          *ngIf="currentEditIndex == i"
-          class="p-2"
-          nz-popconfirm
-          nzPopconfirmPlacement="top"
-          nzPopconfirmTitle="Are you sure you want to discard changes?"
-          [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Discard Changes'" nz-tooltip
-        >
-          <i
-            [nzTheme]="'twotone'"
-            [nzTwotoneColor]="'#c00206'"
-            nz-icon
-            nzType="close-circle"
-          ></i>
-        </a>
-        <a
-          (nzOnCancel)="cancel()"
-          (nzOnConfirm)="isDelete(i)"
-          *ngIf="currentEditIndex != i"
-          class="p-2"
-          nz-popconfirm
-          nzPopconfirmPlacement="top"
-          nzPopconfirmTitle="Are you sure you want to delete trait?"
-          [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Delete Trait'" nz-tooltip
-        >
-          <i
-            [nzTheme]="'twotone'"
-            [nzTwotoneColor]="'#c00206'"
-            nz-icon
-            nzType="delete"
-          ></i>
-        </a>
+              nzType="save"
+            ></i>
+          </a>
+          <a
+            (nzOnCancel)="cancel()"
+            (nzOnConfirm)="confirm()"
+            *ngIf="currentEditIndex == i"
+            [nzTooltipColor]="'blue'"
+            [nzTooltipTitle]="'Discard Changes'"
+            class="p-2"
+            nz-popconfirm
+            nz-tooltip
+            nzPopconfirmPlacement="top"
+            nzPopconfirmTitle="Are you sure you want to discard changes?"
+          >
+            <i
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#c00206'"
+              nz-icon
+              nzType="close-circle"
+            ></i>
+          </a>
+          <a
+            (nzOnCancel)="cancel()"
+            (nzOnConfirm)="isDelete(i)"
+            *ngIf="currentEditIndex != i"
+            [nzTooltipColor]="'blue'"
+            [nzTooltipTitle]="'Delete Trait'"
+            class="p-2"
+            nz-popconfirm
+            nz-tooltip
+            nzPopconfirmPlacement="top"
+            nzPopconfirmTitle="Are you sure you want to delete trait?"
+          >
+            <i
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#c00206'"
+              nz-icon
+              nzType="delete"
+            ></i>
+          </a>
         </div>
       </td>
     </tr>

@@ -23,6 +23,9 @@ import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
 import {NzToolTipModule} from "ng-zorro-antd/tooltip";
 import {AuthenticationService} from "../../shared/services/authentication.service";
 import {Permissions} from '../../shared/enums/permissions';
+import {ProspectService} from "../../shared/services/prospect.service";
+import {Position} from "../../shared/interfaces/positions.interface";
+import {NavigationExtras, Router} from "@angular/router";
 
 @Component({
   selector: 'app-traits',
@@ -74,6 +77,7 @@ export class TraitsComponent implements OnInit {
   pageSize: number = 10;
   pageIndex: number = 1;
   permissions = Permissions
+  positions: Position[];
   private params: NzTableQueryParams;
   private filterField: string = '';
   private currentFilterValue: Array<{ key: string; value: NzTableFilterValue }>;
@@ -82,7 +86,9 @@ export class TraitsComponent implements OnInit {
     private traitsService: TraitsService,
     private notificationService: NotificationService,
     private cdr: ChangeDetectorRef,
-    protected authService: AuthenticationService
+    protected authService: AuthenticationService,
+    private prospectService: ProspectService,
+    private router: Router
   ) {
   }
 
@@ -93,6 +99,10 @@ export class TraitsComponent implements OnInit {
         this.traits = traits.results;
         this.total = traits.count;
       });
+    this.prospectService.getPositions().subscribe(pos => {
+      this.positions = pos
+      console.log(this.positions)
+    })
   }
 
   addNewTraitRow() {
@@ -240,6 +250,17 @@ export class TraitsComponent implements OnInit {
         this.traits = e.results;
         this.total = e.count;
       });
+  }
+
+  grading(position) {
+    const queryParams: any = {};
+    queryParams.positionSelected = JSON.stringify(position);
+
+    const navigationExtras: NavigationExtras = {
+      queryParams
+    };
+    console.log(position)
+    this.router.navigate(['/app/traits-selection'], navigationExtras)
   }
 }
 

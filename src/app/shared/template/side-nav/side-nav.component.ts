@@ -29,12 +29,12 @@ export class SideNavComponent {
       .subscribe((user) => {
         const permission = user.groups[0];
         this.menuItems = ROUTES.filter((menuItem) =>
-          menuItem.permission.includes(permission)
+          menuItem.permission.includes(permission),
         );
         this.menuItems.forEach(
           (menuItem, index) =>
             (this.menuItems[index].submenu = menuItem.submenu.filter((item) =>
-              item.permission.includes(permission)
+              item.permission.includes(permission),
             ))
         );
         console.log(this.menuItems);
@@ -49,6 +49,7 @@ export class SideNavComponent {
     this.themeService.isSideNavDarkChanges.subscribe(
       (isDark) => (this.isSideNavDark = isDark)
     );
+
   }
 
   closeMobileMenu(): void {
@@ -58,5 +59,6 @@ export class SideNavComponent {
       this.themeService.toggleExpand(this.isExpand);
       this.themeService.toggleFold(this.isFolded);
     }
+
   }
 }

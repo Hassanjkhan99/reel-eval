@@ -1,16 +1,24 @@
-th, input {
-  text-align: center !important;
-}
 
 i {
   font-size: 25px;
 }
 
-.Trait {
-  width: 20%;
+.positions-pill {
+  display: flex;
+  justify-content: center;
+  margin-right: 12px;
+  border: 2px solid black;
+  background: white;
+
+  .offense {
+    display: flex;
+    width: max-content;
+    background: #0087f5;
+    border-radius: 50px;
+    border: 1px solid black;
+    color: white;
+    cursor: pointer;
+  }
 }
 
 
-.Action {
-  width: 15%;
-}
