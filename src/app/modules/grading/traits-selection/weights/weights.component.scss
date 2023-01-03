@@ -1,0 +1,22 @@
+
+.weights-noList {
+  height: 38vh;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(63, 135, 245, 0.53);
+}
+
+.weights_list {
+  height: 38vh;
+  background: white;
+  border: 1px solid rgba(63, 135, 245, 0.53);
+  padding: 10px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.bordered {
+  border: 1px solid #c6c8d0;
+}
