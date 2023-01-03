@@ -36,6 +36,8 @@ export class TraitsSelectionComponent implements OnInit {
   selectedPosition: Position
   selectedTrait = new FormControl<Trait>({value: null, disabled: true});
   traits: FormGroup = new FormGroup({});
+  selected: number = null;
+  unselected: number = null
 
   constructor(
     private traitsService: TraitsService,
@@ -46,8 +48,7 @@ export class TraitsSelectionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let position = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('positionSelected'))
-    this.selectedPosition = position;
+    this.selectedPosition = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('positionSelected'));
     this.traitsService
       .getAllTraits(0, 1000, null, null, null)
       .pipe(untilDestroyed(this))
@@ -80,6 +81,8 @@ export class TraitsSelectionComponent implements OnInit {
       item.id.toString(),
       new FormControl({value: 0, disabled: true})
     );
+    this.selected = item.id;
+    this.cdr.detectChanges()
   }
 
   unSelectItem(item: Trait) {
@@ -90,6 +93,8 @@ export class TraitsSelectionComponent implements OnInit {
     this.unSelectedTraits.unshift(item);
     this.setCombinedArray();
     this.traits.removeControl(item.id.toString());
+    this.unselected = item.id;
+    this.cdr.detectChanges()
   }
 
   setCombinedArray() {
