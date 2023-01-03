@@ -58,10 +58,11 @@
       nzXs="24"
     >
       <app-card headerText="Assign Weights ">
-        <app-assign-weights
+        <app-weights
+          [position]="selectedPosition"
           [list]="selectedTraits"
           [traits]="traits"
-        ></app-assign-weights>
+        ></app-weights>
       </app-card>
     </div>
 

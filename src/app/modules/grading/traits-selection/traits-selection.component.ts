@@ -9,9 +9,9 @@ import {NzGridModule} from 'ng-zorro-antd/grid';
 import {NzListModule} from 'ng-zorro-antd/list';
 import {PillComponent} from '../pre-grading/pill/pill.component';
 import {CardComponent} from '../../../shared/components/card/card.component';
-import {AssignWeightsComponent} from '../pre-grading/assign-weights/assign-weights.component';
 import {ActivatedRoute} from '@angular/router';
 import {Position} from "../../../shared/interfaces/prospect.interface";
+import {WeightsComponent} from "./weights/weights.component";
 
 @UntilDestroy()
 @Component({
@@ -23,7 +23,7 @@ import {Position} from "../../../shared/interfaces/prospect.interface";
     NzListModule,
     PillComponent,
     CardComponent,
-    AssignWeightsComponent,
+    WeightsComponent,
   ],
   templateUrl: './traits-selection.component.html',
   styleUrls: ['./traits-selection.component.scss'],
@@ -67,11 +67,6 @@ export class TraitsSelectionComponent implements OnInit {
   }
 
   selectItem(item: Trait) {
-    // if (!this.selectedPosition.value) {
-    //   const isProspectSelected = !!this.selectProspect.value
-    //   this.notificationService.error(`No ${isProspectSelected ? 'Position' : 'Prospect'} Selected`, `Please select a ${isProspectSelected ? 'position' : 'prospect'} first`);
-    //   return;
-    // }
 
     if (!this.selectedTraits.find((trait) => trait.id === item.id)) {
       this.selectedTraits.push(item);

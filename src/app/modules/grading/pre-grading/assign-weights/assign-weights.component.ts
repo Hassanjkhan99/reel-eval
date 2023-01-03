@@ -48,6 +48,7 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
   remainingValue: number = 100;
   total = 0;
 
+
   constructor(private cdr: ChangeDetectorRef, private fb: FormBuilder, private router: Router) {
 
   }
@@ -78,6 +79,7 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
     console.log(this.list)
     const list = this.list
     const weights = this.traits.value
+    console.log(weights)
     const position = this.position.position_name
     const prospect = this.prospect
     console.log(prospect)

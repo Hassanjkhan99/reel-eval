@@ -24,9 +24,10 @@
   </nz-list>
 </div>
 <div class="p-2 my-2 bordered">
-  <h3>Total: {{ total }}</h3>
-  <h3>Remaining: {{ remainingValue }}</h3>
+  <h4>Total: {{ total }}</h4>
+  <h4>Remaining: {{ remainingValue }}</h4>
 </div>
 
-<button (click)="startGrading()" [disabled]="remainingValue != 0" nz-button nzBlock nzType="primary">Start Grading
+<button (click)="startGrading()" [disabled]="remainingValue != 0" nz-button nzBlock nzType="primary">
+  Start Grading
 </button>

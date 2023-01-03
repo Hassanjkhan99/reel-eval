@@ -4,6 +4,7 @@ i {
 }
 
 .positions-pill {
+  font-size: 10px;
   display: flex;
   justify-content: center;
   margin-right: 12px;
@@ -15,7 +16,7 @@ i {
     width: max-content;
     background: #0087f5;
     border-radius: 50px;
-    border: 1px solid black;
+    border: 1px solid #004f94;
     color: white;
     cursor: pointer;
   }

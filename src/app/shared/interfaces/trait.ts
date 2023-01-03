@@ -11,20 +11,8 @@ export interface TraitsApiResponse {
   results: Trait[];
 }
 
-export interface TraitPos {
-  id: number;
-  trait: string;
-  club_id: number;
-  description?: any;
-}
-
 export interface TraitsByPosition {
-  id: number;
-  trait: TraitPos;
+  trait: number;
   position: number;
   weight: number;
-  user: number;
-  club_id: number;
-  created: string;
-  modified: string;
 }

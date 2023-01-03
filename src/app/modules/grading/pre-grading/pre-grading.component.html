@@ -1,5 +1,5 @@
 <div class="bg-white " nz-row nzJustify="center">
-  <div [nzGutter]="24" class="w-90" nz-row nzJustify="center">
+  <div [nzGutter]="24" class="w-100" nz-row nzJustify="center">
     <div
       class="text-center"
       nz-col
@@ -40,26 +40,26 @@
           </div>
         </div>
       </app-card>
-      <app-card class="w-100 text-align-center " headerText="List Of Traits">
-        <div
-          [class.container-list]="unSelectedTraits.length > 0"
-          [class.container-noList]="unSelectedTraits.length < 1"
-          nz-col
-          nzSpan="24"
-        >
-          <p *ngIf="unSelectedTraits.length < 1">There are no unselected Traits</p>
-          <nz-list nzGrid>
-            <div [nzGutter]="8" nz-row>
-              <div *ngFor="let item of unSelectedTraits" nz-col nzLg="8" nzMd="24" nzSm="24" nzXXl="8" nzXl="8"
-                   nzXs="24">
-                <nz-list-item (click)="selectItem(item)">
-                  <app-pill [disabled]="!selectedPosition.value" [item]="item" [selectedList]="false"></app-pill>
-                </nz-list-item>
-              </div>
-            </div>
-          </nz-list>
-        </div>
-      </app-card>
+      <!--      <app-card class="w-100 text-align-center " headerText="List Of Traits">-->
+      <!--        <div-->
+      <!--          [class.container-list]="unSelectedTraits.length > 0"-->
+      <!--          [class.container-noList]="unSelectedTraits.length < 1"-->
+      <!--          nz-col-->
+      <!--          nzSpan="24"-->
+      <!--        >-->
+      <!--          <p *ngIf="unSelectedTraits.length < 1">There are no unselected Traits</p>-->
+      <!--          <nz-list nzGrid>-->
+      <!--            <div [nzGutter]="8" nz-row>-->
+      <!--              <div *ngFor="let item of unSelectedTraits" nz-col nzLg="8" nzMd="24" nzSm="24" nzXXl="8" nzXl="8"-->
+      <!--                   nzXs="24">-->
+      <!--                <nz-list-item (click)="selectItem(item)">-->
+      <!--                  <app-pill [disabled]="!selectedPosition.value" [item]="item" [selectedList]="false"></app-pill>-->
+      <!--                </nz-list-item>-->
+      <!--              </div>-->
+      <!--            </div>-->
+      <!--          </nz-list>-->
+      <!--        </div>-->
+      <!--      </app-card>-->
     </div>
     <div
       class="text-center"
