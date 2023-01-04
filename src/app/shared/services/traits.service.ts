@@ -9,7 +9,7 @@ import {map} from "rxjs/operators";
   providedIn: 'root'
 })
 export class TraitsService {
-
+  traitsArr: number[] = []
   constructor(private http: HttpClient) {
   }
 
@@ -61,8 +61,12 @@ export class TraitsService {
     return this.http.post<PostTraitsByPosition>(`${main_url}position_traits/`, payload);
   }
 
-  getTraitByPosition(): Observable<TraitByPos[]> {
-    return this.http.get<GetTraitByPosApi>(`${main_url}position_traits/`).pipe(map(e => e.results));
+  getTraitByPosition(id: number): Observable<TraitByPos[]> {
+    return this.http.get<GetTraitByPosApi>(`${main_url}position_traits/`, {
+      params: {
+        position__id: id
+      }
+    }).pipe(map(e => e.results));
   }
 
 }

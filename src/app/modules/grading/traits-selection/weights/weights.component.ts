@@ -13,7 +13,7 @@ import {Position} from "../../../../shared/interfaces/positions.interface";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {NavigationExtras, Router} from "@angular/router";
 import {CdkDragDrop, DragDropModule, moveItemInArray} from "@angular/cdk/drag-drop";
-import {UntilDestroy} from "@ngneat/until-destroy";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {NzListModule} from "ng-zorro-antd/list";
 import {NzGridModule} from "ng-zorro-antd/grid";
 import {InputComponent} from "./input/input.component";
@@ -47,14 +47,30 @@ export class WeightsComponent implements OnChanges, AfterViewInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes?.selectedChanged?.currentValue) {
+      console.log('test', changes?.selectedChanged?.currentValue)
       const fbName = changes.selectedChanged.currentValue.toString()
       this.subArr[fbName] = this.traits.get(fbName).valueChanges.pipe(distinctUntilChanged(), debounceTime(2000)).subscribe(e => {
-        console.log(parseInt(fbName), e, this.position.id)
-        // this.traitsService.postTraitByPosition({trait: parseInt(fbName),position: this.position.id,weight: e/100}).subscribe();
+        if (!(this.traitsService.traitsArr.includes(parseInt(fbName))) && e > 0) {
+          console.log('post')
+          this.traitsService.postTraitByPosition({
+            trait: parseInt(fbName),
+            position: this.position.id,
+            weight: e / 100
+          }).subscribe(e => {
+            this.traitsService.traitsArr.push(parseInt(fbName));
+          });
+        } else {
+          console.log('put')
+          // this.traitsService.postTraitByPosition({trait: parseInt(fbName),position: this.position.id,weight: e/100}).subscribe(e => {
+          //   this.traitsService.traitsArr.push(parseInt(fbName));
+          // });
+        }
+
       })
     }
     if (changes?.unSelectedChanged?.currentValue) {
       const fbName = changes.unSelectedChanged.currentValue
+      console.log({fbName})
       const sub = this.subArr[fbName]
       sub.unsubscribe()
     }
@@ -65,21 +81,16 @@ export class WeightsComponent implements OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // this.traits.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
-    //   const weights = this.traits.value
-    //   // for (const weight in weights) {
-    //   //  this.subArr.push(this.traits.get(weight).valueChanges.pipe(untilDestroyed(this)).subscribe(e =>{
-    //   //    console.log(e);
-    //   //   }))
-    //   // }
-    //   const currValue: number = Object.values(value).reduce(
-    //     (prev, curr) => +prev + +curr,
-    //     0
-    //   ) as number;
-    //   this.remainingValue = 100 - currValue;
-    //   this.total = currValue;
-    //   this.cdr.detectChanges()
-    // });
+    this.traits.valueChanges.pipe(untilDestroyed(this), debounceTime(10)).subscribe((value) => {
+      console.log({value})
+      const currValue: number = Object.values(value).reduce(
+        (prev, curr) => +prev + +curr,
+        0
+      ) as number;
+      this.remainingValue = 100 - currValue;
+      this.total = currValue;
+      this.cdr.detectChanges()
+    });
   }
 
   submitWeights() {

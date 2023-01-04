@@ -49,19 +49,6 @@ export class TraitsSelectionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.traitsService.getTraitByPosition().subscribe((e) => {
-      this.traitsByPosList = e.filter(
-        (e) => e.position == this.selectedPosition.id
-      );
-      console.log(this.traitsByPosList);
-      e.forEach(trait => {
-        this.selectItem(trait.trait_obj)
-      })
-      this.cdr.detectChanges();
-    });
-    this.selectedPosition = JSON.parse(
-      this.activatedRoute.snapshot.queryParamMap.get('positionSelected')
-    );
     this.traitsService
       .getAllTraits(0, 1000, null, null, null)
       .pipe(untilDestroyed(this))
@@ -70,6 +57,21 @@ export class TraitsSelectionComponent implements OnInit {
         this.setCombinedArray();
         this.cdr.detectChanges();
       });
+    this.selectedPosition = JSON.parse(
+      this.activatedRoute.snapshot.queryParamMap.get('positionSelected')
+    );
+    this.traitsService.getTraitByPosition(this.selectedPosition.id).subscribe((e) => {
+      this.traitsService.traitsArr = []
+      this.traitsByPosList = e
+      console.log(this.traitsByPosList);
+      this.traitsByPosList.forEach((trait) => {
+        this.traitsService.traitsArr.push(trait.trait_obj.id);
+        this.selectItem(trait.trait_obj, trait.weight * 100);
+      });
+      this.cdr.detectChanges();
+    });
+
+
     this.selectedTrait.valueChanges.pipe(untilDestroyed(this)).subscribe({
       next: (value) => {
         this.selectItem(value);
@@ -80,8 +82,8 @@ export class TraitsSelectionComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  selectItem(item: Trait) {
-    console.log(item);
+  selectItem(item: Trait, weight?: number) {
+
     if (!this.selectedTraits.find((trait) => trait.id === item.id)) {
       this.selectedTraits.push(item);
     }
@@ -92,21 +94,25 @@ export class TraitsSelectionComponent implements OnInit {
     this.setCombinedArray();
     this.traits.setControl(
       item.id.toString(),
-      new FormControl({value: 0, disabled: true})
+      new FormControl({value: weight ? weight : 0, disabled: true})
     );
+    console.log(this.traits.value)
     this.selected = item.id;
     this.cdr.detectChanges();
   }
 
   unSelectItem(item: Trait) {
+
+
+    this.unSelectedTraits.unshift(item);
+    this.setCombinedArray();
+    this.traits.removeControl(item.id.toString());
     this.selectedTraits.splice(
       this.selectedTraits.findIndex((trait) => trait.id === item.id),
       1
     );
-    this.unSelectedTraits.unshift(item);
-    this.setCombinedArray();
-    this.traits.removeControl(item.id.toString());
     this.unselected = item.id;
+
     this.cdr.detectChanges();
   }
 

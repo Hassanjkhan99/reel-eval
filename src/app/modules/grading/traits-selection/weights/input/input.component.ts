@@ -49,19 +49,19 @@ export class InputComponent implements OnInit, ControlValueAccessor, OnChanges {
   }
 
   ngOnInit(): void {
-    // this.control.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
-    //   if (value > this.prevValue + this.remainingLimit) {
-    //     this.control.setValue(this.prevValue, {emitEvent: false});
-    //   } else {
-    //     this.prevValue = value;
-    //   }
-    // });
+    this.control.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
+      if (value > (this.prevValue + this.remainingLimit)) {
+        this.control.setValue(this.prevValue, {emitEvent: false});
+      } else {
+        this.prevValue = value;
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // if (changes.remainingLimit) {
-    //   this.prevValue = this.control.value;
-    // }
+    if (changes.remainingLimit) {
+      this.prevValue = this.control.value;
+    }
   }
 
   registerOnChange(fn: (val: number) => unknown): void {
@@ -71,21 +71,21 @@ export class InputComponent implements OnInit, ControlValueAccessor, OnChanges {
   }
 
   registerOnTouched(fn: any): void {
-    // this.control.statusChanges.pipe(untilDestroyed(this)).subscribe((value) => {
-    //   fn(value);
-    // });
+    this.control.statusChanges.pipe(untilDestroyed(this)).subscribe((value) => {
+      fn(value);
+    });
   }
 
   setDisabledState(isDisabled: boolean): void {
   }
 
   async writeValue(val: number): Promise<void> {
-    // if (val) {
-    //   this.control.setValue(val);
-    //   this.cdr.detectChanges();
-    // } else {
-    //   this.control.reset(0);
-    // }
+    if (val) {
+      this.control.setValue(val);
+      this.cdr.detectChanges();
+    } else {
+      this.control.reset(0);
+    }
   }
 
   disableDrag() {
