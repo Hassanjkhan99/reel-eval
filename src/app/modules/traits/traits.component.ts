@@ -77,7 +77,9 @@ export class TraitsComponent implements OnInit {
   pageSize: number = 10;
   pageIndex: number = 1;
   permissions = Permissions
-  positions: SobPositionApi[];
+  positionOF: SobPositionApi[];
+  positionDF: SobPositionApi[];
+  positionST: SobPositionApi[];
   private params: NzTableQueryParams;
   private filterField: string = '';
   private currentFilterValue: Array<{ key: string; value: NzTableFilterValue }>;
@@ -100,8 +102,10 @@ export class TraitsComponent implements OnInit {
         this.total = traits.count;
       });
     this.prospectService.getSobPositions().subscribe(pos => {
-      this.positions = pos
-      console.log(this.positions)
+      this.positionOF = pos.filter(e => e.sob == 'OFFENSE');
+      this.positionDF = pos.filter(e => e.sob == 'DEFENSE');
+      this.positionST = pos.filter(e => e.sob == 'SPECIAL_TEAM');
+      console.log(this.positionOF)
     })
   }
 

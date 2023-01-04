@@ -10,8 +10,8 @@ import {NzListModule} from 'ng-zorro-antd/list';
 import {PillComponent} from '../pre-grading/pill/pill.component';
 import {CardComponent} from '../../../shared/components/card/card.component';
 import {ActivatedRoute} from '@angular/router';
-import {Position} from "../../../shared/interfaces/prospect.interface";
-import {WeightsComponent} from "./weights/weights.component";
+import {Position} from '../../../shared/interfaces/prospect.interface';
+import {WeightsComponent} from './weights/weights.component';
 
 @UntilDestroy()
 @Component({
@@ -33,12 +33,12 @@ export class TraitsSelectionComponent implements OnInit {
   unSelectedTraits: Trait[] = [];
   selectedTraits: Trait[] = [];
   combinedArray: Trait[] = [];
-  selectedPosition: Position
+  selectedPosition: Position;
   traitsByPosList: TraitByPos[];
   selectedTrait = new FormControl<Trait>({value: null, disabled: true});
   traits: FormGroup = new FormGroup({});
   selected: number = null;
-  unselected: number = null
+  unselected: number = null;
 
   constructor(
     private traitsService: TraitsService,
@@ -49,13 +49,19 @@ export class TraitsSelectionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.traitsService.getTraitByPosition().subscribe(e => {
-        this.traitsByPosList = e.filter(e => e.position == this.selectedPosition.id)
-        console.log(this.traitsByPosList)
-        // this.selectedTraits.push(this.traitsByPosList.map(e => e.trait))
-      }
-    )
-    this.selectedPosition = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('positionSelected'));
+    this.traitsService.getTraitByPosition().subscribe((e) => {
+      this.traitsByPosList = e.filter(
+        (e) => e.position == this.selectedPosition.id
+      );
+      console.log(this.traitsByPosList);
+      e.forEach(trait => {
+        this.selectItem(trait.trait_obj)
+      })
+      this.cdr.detectChanges();
+    });
+    this.selectedPosition = JSON.parse(
+      this.activatedRoute.snapshot.queryParamMap.get('positionSelected')
+    );
     this.traitsService
       .getAllTraits(0, 1000, null, null, null)
       .pipe(untilDestroyed(this))
@@ -75,7 +81,7 @@ export class TraitsSelectionComponent implements OnInit {
   }
 
   selectItem(item: Trait) {
-    console.log(item)
+    console.log(item);
     if (!this.selectedTraits.find((trait) => trait.id === item.id)) {
       this.selectedTraits.push(item);
     }
@@ -89,7 +95,7 @@ export class TraitsSelectionComponent implements OnInit {
       new FormControl({value: 0, disabled: true})
     );
     this.selected = item.id;
-    this.cdr.detectChanges()
+    this.cdr.detectChanges();
   }
 
   unSelectItem(item: Trait) {
@@ -101,7 +107,7 @@ export class TraitsSelectionComponent implements OnInit {
     this.setCombinedArray();
     this.traits.removeControl(item.id.toString());
     this.unselected = item.id;
-    this.cdr.detectChanges()
+    this.cdr.detectChanges();
   }
 
   setCombinedArray() {

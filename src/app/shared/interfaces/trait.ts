@@ -20,12 +20,19 @@ export interface PostTraitsByPosition {
 export interface TraitByPos {
   id: number;
   trait: number;
+  trait_obj: TraitObj;
   position: number;
   weight: number;
   user: number;
   club_id: number;
   created: string;
   modified: string;
+}
+
+export interface TraitObj {
+  id: number;
+  trait: string;
+  description?: any;
 }
 
 export interface GetTraitByPosApi {
