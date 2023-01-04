@@ -11,8 +11,26 @@ export interface TraitsApiResponse {
   results: Trait[];
 }
 
-export interface TraitsByPosition {
+export interface PostTraitsByPosition {
   trait: number;
   position: number;
   weight: number;
+}
+
+export interface TraitByPos {
+  id: number;
+  trait: number;
+  position: number;
+  weight: number;
+  user: number;
+  club_id: number;
+  created: string;
+  modified: string;
+}
+
+export interface GetTraitByPosApi {
+  count: number;
+  next?: any;
+  previous?: any;
+  results: TraitByPos[];
 }

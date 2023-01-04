@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {main_url} from "../../../environments/environment";
-import {Trait, TraitsApiResponse, TraitsByPosition} from "../interfaces/trait";
+import {GetTraitByPosApi, PostTraitsByPosition, Trait, TraitByPos, TraitsApiResponse} from "../interfaces/trait";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 
@@ -57,9 +57,12 @@ export class TraitsService {
     }).pipe(map(e => e.results));
   }
 
-  postTraitByPosition(payload: TraitsByPosition): Observable<TraitsByPosition> {
-    return this.http.post<TraitsByPosition>(`${main_url}position_traits/`, payload);
+  postTraitByPosition(payload: PostTraitsByPosition): Observable<PostTraitsByPosition> {
+    return this.http.post<PostTraitsByPosition>(`${main_url}position_traits/`, payload);
   }
 
+  getTraitByPosition(): Observable<TraitByPos[]> {
+    return this.http.get<GetTraitByPosApi>(`${main_url}position_traits/`).pipe(map(e => e.results));
+  }
 
 }

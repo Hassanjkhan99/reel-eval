@@ -20,6 +20,7 @@ import {InputComponent} from "./input/input.component";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {debounceTime} from "rxjs";
 import {distinctUntilChanged} from "rxjs/operators";
+import {TraitsService} from "../../../../shared/services/traits.service";
 
 @UntilDestroy()
 @Component({
@@ -40,7 +41,7 @@ export class WeightsComponent implements OnChanges, AfterViewInit {
   total = 0;
   subArr: {} = {}
 
-  constructor(private cdr: ChangeDetectorRef, private fb: FormBuilder, private router: Router) {
+  constructor(private cdr: ChangeDetectorRef, private fb: FormBuilder, private router: Router, private traitsService: TraitsService) {
 
   }
 
@@ -49,6 +50,7 @@ export class WeightsComponent implements OnChanges, AfterViewInit {
       const fbName = changes.selectedChanged.currentValue.toString()
       this.subArr[fbName] = this.traits.get(fbName).valueChanges.pipe(distinctUntilChanged(), debounceTime(2000)).subscribe(e => {
         console.log(parseInt(fbName), e, this.position.id)
+        // this.traitsService.postTraitByPosition({trait: parseInt(fbName),position: this.position.id,weight: e/100}).subscribe();
       })
     }
     if (changes?.unSelectedChanged?.currentValue) {

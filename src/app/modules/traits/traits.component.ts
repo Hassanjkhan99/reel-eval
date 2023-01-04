@@ -24,7 +24,7 @@ import {NzToolTipModule} from "ng-zorro-antd/tooltip";
 import {AuthenticationService} from "../../shared/services/authentication.service";
 import {Permissions} from '../../shared/enums/permissions';
 import {ProspectService} from "../../shared/services/prospect.service";
-import {Position} from "../../shared/interfaces/positions.interface";
+import {SobPositionApi} from "../../shared/interfaces/positions.interface";
 import {NavigationExtras, Router} from "@angular/router";
 
 @Component({
@@ -77,7 +77,7 @@ export class TraitsComponent implements OnInit {
   pageSize: number = 10;
   pageIndex: number = 1;
   permissions = Permissions
-  positions: Position[];
+  positions: SobPositionApi[];
   private params: NzTableQueryParams;
   private filterField: string = '';
   private currentFilterValue: Array<{ key: string; value: NzTableFilterValue }>;
@@ -99,7 +99,7 @@ export class TraitsComponent implements OnInit {
         this.traits = traits.results;
         this.total = traits.count;
       });
-    this.prospectService.getPositions().subscribe(pos => {
+    this.prospectService.getSobPositions().subscribe(pos => {
       this.positions = pos
       console.log(this.positions)
     })

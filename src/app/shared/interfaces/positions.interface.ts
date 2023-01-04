@@ -10,3 +10,17 @@ export interface Result {
   previous?: any;
   results: Position[];
 }
+
+export interface SobPositionApi {
+  id: number;
+  position_name: string;
+  abbreviation: string;
+  sob: string;
+}
+
+export interface SobPosition {
+  count: number;
+  next?: any;
+  previous?: any;
+  results: SobPositionApi[];
+}

@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit,} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {Trait} from '../../../shared/interfaces/trait';
+import {Trait, TraitByPos} from '../../../shared/interfaces/trait';
 import {FormControl, FormGroup} from '@angular/forms';
 import {TraitsService} from '../../../shared/services/traits.service';
 import {NotificationService} from '../../../shared/services/notification.service';
@@ -34,6 +34,7 @@ export class TraitsSelectionComponent implements OnInit {
   selectedTraits: Trait[] = [];
   combinedArray: Trait[] = [];
   selectedPosition: Position
+  traitsByPosList: TraitByPos[];
   selectedTrait = new FormControl<Trait>({value: null, disabled: true});
   traits: FormGroup = new FormGroup({});
   selected: number = null;
@@ -48,6 +49,12 @@ export class TraitsSelectionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.traitsService.getTraitByPosition().subscribe(e => {
+        this.traitsByPosList = e.filter(e => e.position == this.selectedPosition.id)
+        console.log(this.traitsByPosList)
+        // this.selectedTraits.push(this.traitsByPosList.map(e => e.trait))
+      }
+    )
     this.selectedPosition = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('positionSelected'));
     this.traitsService
       .getAllTraits(0, 1000, null, null, null)
@@ -68,7 +75,7 @@ export class TraitsSelectionComponent implements OnInit {
   }
 
   selectItem(item: Trait) {
-
+    console.log(item)
     if (!this.selectedTraits.find((trait) => trait.id === item.id)) {
       this.selectedTraits.push(item);
     }
