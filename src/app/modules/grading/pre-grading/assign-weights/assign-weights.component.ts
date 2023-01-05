@@ -20,6 +20,7 @@ import {NzButtonModule} from "ng-zorro-antd/button";
 import {NavigationExtras, Router, RouterLink} from "@angular/router";
 import {Position} from "../../../../shared/interfaces/positions.interface";
 import {Prospect} from "../../../../shared/interfaces/prospect.interface";
+import {debounceTime} from "rxjs";
 
 @UntilDestroy()
 @Component({
@@ -45,6 +46,8 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
   @Input() position: Position;
   @Input() prospect: Prospect;
   @Input() traits: FormGroup = new FormGroup({});
+  @Input() selectedChanged: number = null
+  @Input() unSelectedChanged: number = null
   remainingValue: number = 100;
   total = 0;
 
@@ -62,7 +65,8 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.traits.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
+    this.traits.valueChanges.pipe(untilDestroyed(this), debounceTime(10)).subscribe((value) => {
+      console.log({value})
       const currValue: number = Object.values(value).reduce(
         (prev, curr) => +prev + +curr,
         0

@@ -38,7 +38,6 @@ export class TraitsSelectionComponent implements OnInit {
   selectedTrait = new FormControl<Trait>({value: null, disabled: true});
   traits: FormGroup = new FormGroup({});
   selected: number = null;
-  selectedId: number = null;
   unselected: number = null;
 
   constructor(
@@ -99,7 +98,6 @@ export class TraitsSelectionComponent implements OnInit {
     );
     console.log(this.traits.value)
     this.selected = item.id;
-    this.selectedId = id
     this.cdr.detectChanges();
   }
 

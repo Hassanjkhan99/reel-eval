@@ -5,8 +5,11 @@
   <div [nzSpan]="15" class="d-flex justify-content-start" nz-col> {{item.trait}}
   </div>
 
-  <input (mouseenter)="disableDrag()" (mouseleave)="enableDrag()" [formControl]="control" [max]="remainingLimit + value"
-         [nzSpan]="7" autofocus
-         class="ant-input ant-input-focused" min="0" nz-col nz-input value="0"
-         nzSize="small" type="number"/>
+  <!--  <input (mouseenter)="disableDrag()" (mouseleave)="enableDrag()" [formControl]="control" [max]="remainingLimit + value"-->
+  <!--         [nzSpan]="7" autofocus-->
+  <!--         class="ant-input ant-input-focused" min="0" nz-col nz-input value="0"-->
+  <!--         nzSize="small" type="number"/>-->
+  <span (mouseenter)="disableDrag()" (mouseleave)="enableDrag()" [nzSpan]="7" autofocus
+        class="ant-input ant-input-focused" nz-col style="cursor: default">{{control.value}}</span>
+
 </div>

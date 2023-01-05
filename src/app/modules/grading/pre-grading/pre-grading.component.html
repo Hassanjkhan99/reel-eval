@@ -31,7 +31,7 @@
               <div [nzGutter]="8" nz-row>
                 <div *ngFor="let item of selectedTraits" nz-col nzLg="8" nzMd="24" nzSm="24" nzXXl="8" nzXl="8"
                      nzXs="24">
-                  <nz-list-item (click)="unSelectItem(item)">
+                  <nz-list-item>
                     <app-pill [disabled]="!selectedPosition.value" [item]="item" [selectedList]="true"></app-pill>
                   </nz-list-item>
                 </div>
@@ -76,6 +76,8 @@
           [prospect]="selectProspect.value"
           [list]="selectedTraits"
           [traits]="traits"
+          [selectedChanged]="selected"
+          [unSelectedChanged]="unselected"
         ></app-assign-weights>
       </app-card>
     </div>

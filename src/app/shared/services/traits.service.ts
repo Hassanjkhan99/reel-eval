@@ -69,8 +69,8 @@ export class TraitsService {
     }).pipe(map(e => e.results));
   }
 
-  editTraitByPosition(id: number, payload: Partial<TraitByPos>): Observable<Trait> {
-    return this.http.put<Trait>(`${main_url}position_traits/${id}/`, payload);
+  editTraitByPosition(payload: PostTraitsByPosition): Observable<PostTraitsByPosition> {
+    return this.http.put<PostTraitsByPosition>(`${main_url}position_traits/update_position_trait/`, payload);
   }
 
 }

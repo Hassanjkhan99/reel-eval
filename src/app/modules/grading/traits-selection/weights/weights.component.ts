@@ -11,7 +11,7 @@ import {CommonModule} from '@angular/common';
 import {Trait} from "../../../../shared/interfaces/trait";
 import {Position} from "../../../../shared/interfaces/positions.interface";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {NavigationExtras, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {CdkDragDrop, DragDropModule, moveItemInArray} from "@angular/cdk/drag-drop";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {NzListModule} from "ng-zorro-antd/list";
@@ -36,7 +36,6 @@ export class WeightsComponent implements OnChanges, AfterViewInit {
   @Input() position: Position;
   @Input() traits: FormGroup = new FormGroup({});
   @Input() selectedChanged: number = null
-  @Input() selectedId: number = null
   @Input() unSelectedChanged: number = null
   remainingValue = 100;
   total = 0;
@@ -50,7 +49,7 @@ export class WeightsComponent implements OnChanges, AfterViewInit {
     if (changes?.selectedChanged?.currentValue) {
       console.log('test', changes?.selectedChanged?.currentValue)
       const fbName = changes.selectedChanged.currentValue.toString()
-      this.subArr[fbName] = this.traits.get(fbName).valueChanges.pipe(distinctUntilChanged(), debounceTime(2000)).subscribe(e => {
+      this.subArr[fbName] = this.traits.get(fbName).valueChanges.pipe(distinctUntilChanged(), debounceTime(3000)).subscribe(e => {
         if (!(this.traitsService.traitsArr.includes(parseInt(fbName))) && e > 0) {
           console.log('post')
           this.traitsService.postTraitByPosition({
@@ -62,7 +61,7 @@ export class WeightsComponent implements OnChanges, AfterViewInit {
           });
         } else {
           console.log('put')
-          this.traitsService.editTraitByPosition(this.selectedId, {
+          this.traitsService.editTraitByPosition({
             trait: parseInt(fbName),
             position: this.position.id,
             weight: e / 100
@@ -99,12 +98,7 @@ export class WeightsComponent implements OnChanges, AfterViewInit {
   }
 
   submitWeights() {
-    const queryParams: any = {};
-    const list = this.list
-    const position = this.position.id
-    const navigationExtras: NavigationExtras = {
-      queryParams
-    };
+    this.router.navigate(['/app/traits'])
   }
 
   ngOnInit(): void {
