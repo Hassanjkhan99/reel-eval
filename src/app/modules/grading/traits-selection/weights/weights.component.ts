@@ -36,6 +36,7 @@ export class WeightsComponent implements OnChanges, AfterViewInit {
   @Input() position: Position;
   @Input() traits: FormGroup = new FormGroup({});
   @Input() selectedChanged: number = null
+  @Input() selectedId: number = null
   @Input() unSelectedChanged: number = null
   remainingValue = 100;
   total = 0;
@@ -61,9 +62,13 @@ export class WeightsComponent implements OnChanges, AfterViewInit {
           });
         } else {
           console.log('put')
-          // this.traitsService.postTraitByPosition({trait: parseInt(fbName),position: this.position.id,weight: e/100}).subscribe(e => {
-          //   this.traitsService.traitsArr.push(parseInt(fbName));
-          // });
+          this.traitsService.editTraitByPosition(this.selectedId, {
+            trait: parseInt(fbName),
+            position: this.position.id,
+            weight: e / 100
+          }).subscribe(e => {
+            this.traitsService.traitsArr.push(parseInt(fbName));
+          });
         }
 
       })

@@ -38,6 +38,7 @@ export class TraitsSelectionComponent implements OnInit {
   selectedTrait = new FormControl<Trait>({value: null, disabled: true});
   traits: FormGroup = new FormGroup({});
   selected: number = null;
+  selectedId: number = null;
   unselected: number = null;
 
   constructor(
@@ -66,7 +67,7 @@ export class TraitsSelectionComponent implements OnInit {
       console.log(this.traitsByPosList);
       this.traitsByPosList.forEach((trait) => {
         this.traitsService.traitsArr.push(trait.trait_obj.id);
-        this.selectItem(trait.trait_obj, trait.weight * 100);
+        this.selectItem(trait.trait_obj, trait.weight * 100, trait.id);
       });
       this.cdr.detectChanges();
     });
@@ -82,7 +83,7 @@ export class TraitsSelectionComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  selectItem(item: Trait, weight?: number) {
+  selectItem(item: Trait, weight?: number, id?: number) {
 
     if (!this.selectedTraits.find((trait) => trait.id === item.id)) {
       this.selectedTraits.push(item);
@@ -98,6 +99,7 @@ export class TraitsSelectionComponent implements OnInit {
     );
     console.log(this.traits.value)
     this.selected = item.id;
+    this.selectedId = id
     this.cdr.detectChanges();
   }
 
