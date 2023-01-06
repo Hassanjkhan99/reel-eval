@@ -2,7 +2,8 @@
   [class.weights-noList]="list.length < 1"
   [class.weights_list]="list.length > 0"
 >
-  <p *ngIf="list.length < 1">There are no selected Traits</p>
+  <p *ngIf="position == null">There are no selected Traits</p>
+  <p *ngIf="position != null && list.length == 0">There are no assigned traits for this position</p>
   <nz-list nzGrid>
     <div
       (cdkDropListDropped)="drop($event)"

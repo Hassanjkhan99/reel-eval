@@ -21,6 +21,7 @@ import {NavigationExtras, Router, RouterLink} from "@angular/router";
 import {Position} from "../../../../shared/interfaces/positions.interface";
 import {Prospect} from "../../../../shared/interfaces/prospect.interface";
 import {debounceTime} from "rxjs";
+import {NotificationService} from "../../../../shared/services/notification.service";
 
 @UntilDestroy()
 @Component({
@@ -52,7 +53,7 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
   total = 0;
 
 
-  constructor(private cdr: ChangeDetectorRef, private fb: FormBuilder, private router: Router) {
+  constructor(private cdr: ChangeDetectorRef, private fb: FormBuilder, private router: Router, private notificationService: NotificationService) {
 
   }
 
@@ -74,6 +75,9 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
       this.remainingValue = 100 - currValue;
       this.total = currValue;
       this.cdr.detectChanges()
+      if (this.total != 100) {
+        this.notificationService.error('Weights of assigned trait(s) does not equal 100');
+      }
     });
   }
 
