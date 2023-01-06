@@ -88,18 +88,35 @@ export const ROUTES: SideNavInterface[] = [
     ]
   },
   {
-    path: 'report',
+    path: '',
     title: 'Report',
-    iconTheme: 'outline',
-    submenu: [],
-    icon: 'dot-chart',
     iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'dot-chart',
     permission: [
       Permissions.clubAdmin,
       Permissions.CreateGradeProspects,
       Permissions.GradeProspects,
       Permissions.ViewOnly,
       Permissions.CreateProspects,
-    ]
+    ],
+    submenu: [
+      {
+        path: 'report',
+        title: 'Trajectory Report',
+        iconType: '',
+        icon: '',
+        submenu: [],
+        iconTheme: 'fill',
+        permission: [
+          Permissions.clubAdmin,
+          Permissions.CreateGradeProspects,
+          Permissions.GradeProspects,
+          Permissions.ViewOnly,
+          Permissions.CreateProspects,
+        ]
+      },
+    ],
   },
+
 ];

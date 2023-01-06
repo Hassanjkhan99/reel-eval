@@ -108,7 +108,7 @@ export class PlotReportComponent implements OnInit {
         },
         elements: {
           point: {
-            radius: 10,
+            radius: 5,
           }
         },
         plugins: {
