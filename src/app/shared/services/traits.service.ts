@@ -73,4 +73,8 @@ export class TraitsService {
     return this.http.put<PostTraitsByPosition>(`${main_url}position_traits/update_position_trait/`, payload);
   }
 
+  deleteTraitByPosition(posId: number, traitId: number): Observable<PostTraitsByPosition> {
+    return this.http.delete<PostTraitsByPosition>(`${main_url}position_traits/delete_position_trait/${posId}/${traitId}/`);
+  }
+
 }

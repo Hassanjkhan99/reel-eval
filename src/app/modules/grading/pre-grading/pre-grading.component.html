@@ -70,12 +70,14 @@
       nzXl="6"
       nzXs="24"
     >
-      <app-card headerText="Assign Weights ">
+      <app-card headerText="Traits">
         <app-assign-weights
           [position]="selectedPosition.value"
           [prospect]="selectProspect.value"
           [list]="selectedTraits"
           [traits]="traits"
+          [remainingValue]="remainingValue"
+          [total]="total"
           [selectedChanged]="selected"
           [unSelectedChanged]="unselected"
         ></app-assign-weights>

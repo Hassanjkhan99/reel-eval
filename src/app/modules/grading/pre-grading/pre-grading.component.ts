@@ -47,6 +47,8 @@ export class PreGradingComponent implements OnInit {
   combinedArray: Trait[] = [];
   selected: number = null;
   unselected: number = null;
+  total: number = 0;
+  remainingValue: number = 100;
   selectedTrait = new FormControl<Trait>({value: null, disabled: true});
   selectedPosition = new FormControl<Position>({value: null, disabled: true});
   traits: FormGroup = new FormGroup({})
@@ -89,11 +91,18 @@ export class PreGradingComponent implements OnInit {
           this.selectedTraits = [];
           this.traitsService.traitsArr = []
           this.traitsByPosList = e
+          this.total = 0
+          this.remainingValue = 100
           console.log(this.traitsByPosList);
           this.traitsByPosList.forEach((trait) => {
             this.traitsService.traitsArr.push(trait.trait_obj.id);
             this.selectItem(trait.trait_obj, trait.weight * 100, trait.id);
+            this.total = this.total + (trait.weight * 100)
+            this.remainingValue = this.remainingValue - (trait.weight * 100)
           });
+          if (this.total >= 1 && this.total != 100) {
+            this.notificationService.error('Weights of assigned trait(s) does not equal 100');
+          }
           this.cdr.detectChanges();
 
         });
@@ -111,7 +120,6 @@ export class PreGradingComponent implements OnInit {
       this.notificationService.error(`No ${isProspectSelected ? 'Position' : 'Prospect'} Selected`, `Please select a ${isProspectSelected ? 'position' : 'prospect'} first`);
       return;
     }
-
     if (!this.selectedTraits.find((trait) => trait.id === item.id)) {
       this.selectedTraits.push(item);
     }
@@ -120,6 +128,7 @@ export class PreGradingComponent implements OnInit {
     //   1
     // );
     // this.setCombinedArray();
+
     this.traits.setControl(
       item.id.toString(),
       new FormControl({value: weight ? weight : 0, disabled: true})

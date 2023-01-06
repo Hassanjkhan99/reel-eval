@@ -197,6 +197,7 @@ button {
 }
 
 
-.cdk-drag:active {
+.cdk-drag-preview {
   color: #0087f5 !important;
+  font-weight: bold;
 }

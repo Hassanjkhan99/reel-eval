@@ -14,13 +14,12 @@ import {NzGridModule} from 'ng-zorro-antd/grid';
 import {NzListModule} from 'ng-zorro-antd/list';
 import {PillWithInputComponent} from './pill-with-input/pill-with-input.component';
 import {CdkDragDrop, DragDropModule, moveItemInArray,} from '@angular/cdk/drag-drop';
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {UntilDestroy} from '@ngneat/until-destroy';
 import {SharedModule} from "../../../../shared/shared.module";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NavigationExtras, Router, RouterLink} from "@angular/router";
 import {Position} from "../../../../shared/interfaces/positions.interface";
 import {Prospect} from "../../../../shared/interfaces/prospect.interface";
-import {debounceTime} from "rxjs";
 import {NotificationService} from "../../../../shared/services/notification.service";
 
 @UntilDestroy()
@@ -49,8 +48,8 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
   @Input() traits: FormGroup = new FormGroup({});
   @Input() selectedChanged: number = null
   @Input() unSelectedChanged: number = null
-  remainingValue: number = 100;
-  total = 0;
+  @Input() total: number;
+  @Input() remainingValue: number;
 
 
   constructor(private cdr: ChangeDetectorRef, private fb: FormBuilder, private router: Router, private notificationService: NotificationService) {
@@ -66,20 +65,23 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.traits.valueChanges.pipe(untilDestroyed(this), debounceTime(10)).subscribe((value) => {
-      console.log({value})
-      const currValue: number = Object.values(value).reduce(
-        (prev, curr) => +prev + +curr,
-        0
-      ) as number;
-      this.remainingValue = 100 - currValue;
-      this.total = currValue;
-      this.cdr.detectChanges()
-      if (this.total != 100) {
-        this.notificationService.error('Weights of assigned trait(s) does not equal 100');
-      }
-    });
+
+    // this.traits.valueChanges.pipe(untilDestroyed(this), debounceTime(10)).subscribe((value) => {
+    //   console.log({value})
+    //   const currValue: number = Object.values(value).reduce(
+    //     (prev, curr) => +prev + +curr,
+    //     0
+    //   ) as number;
+    //   this.remainingValue = 100 - currValue;
+    //   this.total = currValue;
+    //   this.cdr.detectChanges()
+    //   if (this.total != 100) {
+    //     this.notificationService.error('Weights of assigned trait(s) does not equal 100');
+    //   }
+    // });
+
   }
+
 
   startGrading() {
     const queryParams: any = {};

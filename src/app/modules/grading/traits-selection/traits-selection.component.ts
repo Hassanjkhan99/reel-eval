@@ -114,7 +114,9 @@ export class TraitsSelectionComponent implements OnInit {
     this.unselected = item.id;
 
     this.cdr.detectChanges();
+    this.traitsService.deleteTraitByPosition(this.selectedPosition.id, item.id).subscribe()
   }
+
 
   setCombinedArray() {
     this.combinedArray = [...this.selectedTraits, ...this.unSelectedTraits];

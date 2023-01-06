@@ -22,7 +22,7 @@ export class PlotReportComponent implements OnInit {
   RenderScatterchart() {
     const data = {
       datasets: [{
-        label: 'Scatter Dataset',
+        label: '',
         data: [
           {
             x: 100,
@@ -97,12 +97,18 @@ export class PlotReportComponent implements OnInit {
             position: 'center',
             max: 100,
             min: 0,
+            grid: {
+              display: false
+            },
           },
           y: {
             type: 'linear',
             position: 'center',
             max: 100,
             min: 0,
+            grid: {
+              display: false
+            }
           },
 
         },
@@ -114,11 +120,16 @@ export class PlotReportComponent implements OnInit {
         plugins: {
           // @ts-ignore
           quadrants: {
+
             topLeft: 'black',
             topRight: 'white',
             bottomRight: 'white',
             bottomLeft: 'white',
+          },
+          legend: {
+            display: false
           }
+
         }
       },
       plugins: [quadrants]
