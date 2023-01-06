@@ -1,24 +1,24 @@
 <div
   *ngIf="(authService.currentUser$ | async).groups[0] === permissions.clubAdmin"
-  class="p-2 w-100 d-flex justify-content-center"
+  class="p-2 w-100 d-flex justify-content-center "
   nz-row
-  nzGutter="24"
+  nzGutter="6"
 >
-  <div nz-col nzLg="8" nzMd="7" nzSm="10" nzXXl="6">
+  <div nz-col nzLg="7" nzMd="6" nzSm="10" nzXXl="6">
     <div class="d-flex justify-content-center">
       <h6>Offense</h6>
     </div>
-    <div class="positions-pill" nz-row>
+    <div class="positions-pill" nz-row nzGutter="8">
       <div
         (click)="grading(position)"
         *ngFor="let position of positionOF"
         class="offense"
       >
-        {{ position.abbreviation }}
+        {{ position.abbreviation.trim().replace(' ', '') }}
       </div>
     </div>
   </div>
-  <div nz-col nzLg="7" nzMd="7" nzSm="10" nzXXl="6">
+  <div nz-col nzLg="5" nzMd="5" nzSm="10" nzXXl="6">
     <div class="d-flex justify-content-center">
       <h6>Defense</h6>
     </div>
@@ -29,11 +29,11 @@
         class="defense"
         nz-col
       >
-        {{ position.abbreviation }}
+        {{position.abbreviation.trim().replace(' ', '')}}
       </div>
     </div>
   </div>
-  <div nz-col nzLg="5" nzMd="5" nzSm="10" nzXXl="3">
+  <div nz-col nzLg="3" nzMd="4" nzSm="10" nzXXl="3">
     <div class="d-flex justify-content-center">
       <h6>Special Teams</h6>
     </div>
@@ -44,7 +44,7 @@
         *ngFor="let position of positionST"
         class="special-team"
       >
-        {{ position.abbreviation }}
+        {{ position.abbreviation.trim().replace(' ', '') }}
       </div>
     </div>
   </div>
