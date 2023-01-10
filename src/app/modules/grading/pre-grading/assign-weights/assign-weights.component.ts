@@ -90,7 +90,7 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
     const list = this.list
     const weights = this.traits.value
     console.log(weights)
-    const position = this.position.position_name
+    const position = this.position
     const prospect = this.prospect
     console.log(prospect)
     console.log({list})

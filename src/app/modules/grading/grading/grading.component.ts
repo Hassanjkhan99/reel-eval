@@ -6,6 +6,10 @@ import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzToolTipModule} from "ng-zorro-antd/tooltip";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NzModalModule} from "ng-zorro-antd/modal";
+import {GradingService} from "../../../shared/services/grading.service";
+import {Position} from "../../../shared/interfaces/positions.interface";
+import {Prospect} from "../../../shared/interfaces/prospect.interface";
+import {Trait} from "../../../shared/interfaces/grading";
 
 @Component({
   selector: 'app-grading',
@@ -15,7 +19,7 @@ import {NzModalModule} from "ng-zorro-antd/modal";
   styleUrls: ['./grading.component.scss'],
 })
 export class GradingComponent implements OnInit {
-  listOfColumns = [];
+  listOfColumns: Trait[] = [];
   grading = [];
   weights = {}
   columnValue = {};
@@ -29,60 +33,60 @@ export class GradingComponent implements OnInit {
   isVisible = false;
   isOkLoading = false;
 
-  constructor(private cdr: ChangeDetectorRef, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private cdr: ChangeDetectorRef, private router: Router, private activatedRoute: ActivatedRoute, private gradeService: GradingService) {
 
   }
 
   ngOnInit(): void {
     let traits = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('traits'))
-    const selectedPosition = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('positionSelected'))
-    const selectedProspect = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('prospectSelected'))
+    const selectedPosition: Position = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('positionSelected'))
+    const selectedProspect: Prospect = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('prospectSelected'))
     const selectedWeights = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('weightsSelected'))
-    console.log({traits})
-    this.position = selectedPosition;
+    this.position = selectedPosition.position_name;
+
     this.prospect = selectedProspect;
     this.weights = selectedWeights;
-    this.listOfColumns = traits.map(e => e.trait);
+
     traits.forEach(e => {
       this.isNeutral[e.trait] = true
     });
-    console.log('this.isNeutral', this.isNeutral)
-    this.columnValue = this.listOfColumns.reduce(
-      (a, v) => ({...a, [v]: 0}),
-      {}
-    );
-    console.log(this.columnValue);
+
+    this.gradeService.getPlays(selectedPosition.id, selectedProspect.id).subscribe(e => {
+      this.listOfColumns = e.grade[0].grade.map(f => f.position_trait.trait)
+      // this.columnValue = this.listOfColumns.reduce((a,v) => {})
+      console.log(this.listOfColumns)
+      console.log(e.overall_position_trait)
+    })
+
     this.addRow();
   }
 
   addRow() {
-    const columnsWithValue = this.listOfColumns.reduce(
-      (a, v) => ({...a, [v]: 0}),
-      {}
-    );
-    let obj = {...columnsWithValue, rowNumber: this.grading.length + 1};
+    // const columnsWithValue = this.listOfColumns.reduce(
+    //   (a, v) => ({...a, [v]: 0}),
+    //   {}
+    // );
+    // let obj = {...columnsWithValue, rowNumber: this.grading.length + 1};
 
-    this.grading = [...this.grading, obj];
-    this.cdr.detectChanges();
-    console.log(this.grading);
-    this.listOfColumns.forEach((e) => {
-      this.calculateColumn(e);
-    });
+    // this.grading = [...this.grading, obj];
+    // this.cdr.detectChanges();
+    // this.listOfColumns.forEach((e) => {
+    //   this.calculateColumn(e.trait);
+    // });
     this.today = Date.now();
     this.cdr.detectChanges();
   }
 
   removeRow(index: number) {
-    if (this.grading.length < 2) {
-      return;
-    }
-    this.grading = this.grading.filter((e, i) => i !== index);
-    this.listOfColumns.forEach((e) => {
-      this.calculateColumn(e);
-    });
-    this.cdr.detectChanges();
-    console.log(this.grading);
-    this.today = Date.now();
+    // if (this.grading.length < 2) {
+    //   return;
+    // }
+    // this.grading = this.grading.filter((e, i) => i !== index);
+    // this.listOfColumns.forEach((e) => {
+    //   this.calculateColumn(e);
+    // });
+    // this.cdr.detectChanges();
+    // this.today = Date.now();
     this.cdr.detectChanges();
   }
 
@@ -132,41 +136,41 @@ export class GradingComponent implements OnInit {
     this.totalValue = sum / this.listOfColumns.length
   }
 
-  increment(column: string, i: number) {
-    if (this.grading[i][column] >= 1) {
-      this.grading[i][column] = 1;
+  increment(column: Trait, i: number) {
+    if (this.grading[i][column.trait] >= 1) {
+      this.grading[i][column.trait] = 1;
       return;
     } else {
-      this.grading[i][column]++;
+      this.grading[i][column.trait]++;
     }
-    this.calculateColumn(column);
+    this.calculateColumn(column.trait);
     this.today = Date.now();
     this.cdr.detectChanges();
   }
 
-  decrement(column: string, i: number) {
-    if (this.grading[i][column] <= -1) {
-      this.grading[i][column] = -1;
+  decrement(column: Trait, i: number) {
+    if (this.grading[i][column.trait] <= -1) {
+      this.grading[i][column.trait] = -1;
     } else {
-      this.grading[i][column]--;
+      this.grading[i][column.trait]--;
     }
-    this.calculateColumn(column);
+    this.calculateColumn(column.trait);
     this.today = Date.now();
     this.cdr.detectChanges();
   }
 
 
   clear(i: number) {
-    const columnsWithValue = this.listOfColumns.reduce(
-      (a, v) => ({...a, [v]: 0}),
-      {}
-    );
-    let obj = {...columnsWithValue, rowNumber: this.grading[i].rowNumber};
-    this.grading[i] = obj;
-
-    this.listOfColumns.forEach((e) => {
-      this.calculateColumn(e);
-    });
+    // const columnsWithValue = this.listOfColumns.reduce(
+    //   (a, v) => ({...a, [v]: 0}),
+    //   {}
+    // );
+    // let obj = {...columnsWithValue, rowNumber: this.grading[i].rowNumber};
+    // this.grading[i] = obj;
+    //
+    // this.listOfColumns.forEach((e) => {
+    //   this.calculateColumn(e);
+    // });
     this.today = Date.now();
     this.cdr.detectChanges();
   }
