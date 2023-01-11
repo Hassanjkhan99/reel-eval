@@ -1,14 +1,11 @@
 export interface Trait {
   id: number;
   trait: string;
-  description?: any;
 }
 
 export interface PositionTrait {
   id: number;
   trait: Trait;
-  position: number;
-  weight: number;
 }
 
 export interface Grade2 {
@@ -21,12 +18,16 @@ export interface Grade2 {
 export interface Grade {
   id: number;
   number: number;
-  position_prospect: number;
   grade: Grade2[];
 }
 
+export interface Trait2 {
+  id: number;
+  trait: string;
+}
+
 export interface OverallPositionTrait {
-  position_trait: number;
+  trait: Trait2;
   percentage_score?: number;
   weighted_percentage_score?: number;
 }

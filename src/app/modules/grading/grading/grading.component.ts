@@ -9,7 +9,7 @@ import {NzModalModule} from "ng-zorro-antd/modal";
 import {GradingService} from "../../../shared/services/grading.service";
 import {Position} from "../../../shared/interfaces/positions.interface";
 import {Prospect} from "../../../shared/interfaces/prospect.interface";
-import {Trait} from "../../../shared/interfaces/grading";
+import {Grade, Trait} from "../../../shared/interfaces/grading";
 
 @Component({
   selector: 'app-grading',
@@ -20,8 +20,8 @@ import {Trait} from "../../../shared/interfaces/grading";
 })
 export class GradingComponent implements OnInit {
   listOfColumns: Trait[] = [];
-  grading = [];
-  weights = {}
+  grading: Grade[] = [];
+  weights = {};
   columnValue = {};
   totalValue = 0
   position = ''
@@ -52,10 +52,21 @@ export class GradingComponent implements OnInit {
     });
 
     this.gradeService.getPlays(selectedPosition.id, selectedProspect.id).subscribe(e => {
-      this.listOfColumns = e.grade[0].grade.map(f => f.position_trait.trait)
-      // this.columnValue = this.listOfColumns.reduce((a,v) => {})
+      this.listOfColumns = e.overall_position_trait.map(f => f.trait)
+
+      e.overall_position_trait.forEach(f => {
+        this.columnValue[f.trait.id] = f.percentage_score ? f.percentage_score : 0
+      })
+      this.grading = e.grade
+
       console.log(this.listOfColumns)
       console.log(e.overall_position_trait)
+    }, err => {
+      this.gradeService.createNewPlay(selectedPosition.id, selectedProspect.id).subscribe(e => {
+        this.listOfColumns = e.grade[0].grade.map(f => f.position_trait.trait)
+        console.log(this.listOfColumns)
+      })
+      console.log(err)
     })
 
     this.addRow();

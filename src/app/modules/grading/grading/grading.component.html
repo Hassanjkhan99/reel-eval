@@ -24,32 +24,32 @@
           <span> {{ listOfColumns[i].trait }} </span>
           <span
             [class.darkGreen-pill-grading]="
-                columnValue[column] >= 90 && columnValue[column] <= 100
+                columnValue[column.id] >= 90 && columnValue[column.id] <= 100
               "
             [class.green-pill-grading]="
-                columnValue[column] >= 80 && columnValue[column] < 90
+                columnValue[column.id] >= 80 && columnValue[column.id] < 90
               "
             [class.grey-pill-grading]="
-                isNeutral[column] && columnValue[column] === 0
+                isNeutral[column.id] && columnValue[column.id] === 0
               "
             [class.orange-pill-grading]="
-                columnValue[column] >= 60 && columnValue[column] < 70
+                columnValue[column.id] >= 60 && columnValue[column.id] < 70
               "
-            [class.red-pill-grading]="columnValue[column] < 60"
+            [class.red-pill-grading]="columnValue[column.id] < 60"
             [class.yellow-pill-grading]="
-                columnValue[column] >= 70 && columnValue[column] < 80
+                columnValue[column.id] >= 70 && columnValue[column.id] < 80
               "
             class="pill-grading"
           >
               <span
                 [class.disabled]="
-                  isNeutral[column] && columnValue[column] === 0
+                  isNeutral[column.id] && columnValue[column.id] === 0
                 "
               >
                 {{
-                isNeutral[column] && columnValue[column] === 0
+                isNeutral[column.id] && columnValue[column.id] === 0
                   ? "-"
-                  : columnValue[column].toFixed(1) + "%"
+                  : columnValue[column.id].toFixed(1) + "%"
                 }}
               </span>
             </span>
@@ -65,14 +65,14 @@
     >
       <td nzLeft>
           <span style="font-size: 30px; font-weight: bold">
-            {{ i + 1 }}
+            {{ data.number}}
           </span>
       </td>
       <td *ngFor="let column of listOfColumns">
         <div class="d-flex justify-content-center">
             <span (click)="increment(column, i)" class="p-1"
             ><i
-              [nzTwotoneColor]="grading[i][column] === 1 ? '#5bd703' : 'grey'"
+              [nzTwotoneColor]="grading[i][column.id] === 1 ? '#5bd703' : 'grey'"
               nz-icon
               nzTheme="twotone"
               nzType="plus-circle"
@@ -81,7 +81,7 @@
           <span (click)="decrement(column, i)" class="p-1"
           ><i
             [nzTwotoneColor]="
-                  grading[i][column] === -1 ? '#e10428' : 'grey'
+                  grading[i][column.id] === -1 ? '#e10428' : 'grey'
                 "
             nz-icon
             nzTheme="twotone"

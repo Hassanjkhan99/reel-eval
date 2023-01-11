@@ -25,7 +25,10 @@ export class JwtInterceptor implements HttpInterceptor {
       let {status} = error;
 
       if (status == 404) {
-        this.notification.error('Error', error.error['detail']);
+        if (!error.error?.['detail']) {
+          return error
+        }
+        this.notification.error('Error', error.error?.['detail']);
       } else if (status == 0) {
         this.notification.warning(
           'warning', 'There might be a problem. Please, try again.'
