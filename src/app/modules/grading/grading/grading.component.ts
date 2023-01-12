@@ -32,6 +32,8 @@ export class GradingComponent implements OnInit {
   today: number = Date.now();
   isVisible = false;
   isOkLoading = false;
+  private selectedPosition: Position;
+  private selectedProspect: Prospect;
 
   constructor(private cdr: ChangeDetectorRef, private router: Router, private activatedRoute: ActivatedRoute, private gradeService: GradingService) {
 
@@ -39,156 +41,50 @@ export class GradingComponent implements OnInit {
 
   ngOnInit(): void {
     let traits = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('traits'))
-    const selectedPosition: Position = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('positionSelected'))
-    const selectedProspect: Prospect = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('prospectSelected'))
-    const selectedWeights = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('weightsSelected'))
-    this.position = selectedPosition.position_name;
+    this.selectedPosition = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('positionSelected'))
+    this.selectedProspect = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('prospectSelected'))
+    this.position = this.selectedPosition.position_name;
 
-    this.prospect = selectedProspect;
-    this.weights = selectedWeights;
+    this.prospect = this.selectedProspect;
 
     traits.forEach(e => {
       this.isNeutral[e.trait] = true
     });
 
-    this.gradeService.getPlays(selectedPosition.id, selectedProspect.id).subscribe(e => {
-      this.listOfColumns = e.overall_position_trait.map(f => f.position_trait.trait)
-      console.log(e)
-      this.totalValue = e.overall_grade
-      e.overall_position_trait.forEach(f => {
-        this.columnValue[f.position_trait.trait.id] = f.percentage_score ? f.percentage_score : 0
-      })
-      this.grading = e.grade
-
-      this.cdr.detectChanges();
-      console.log(this.listOfColumns)
-      console.log(e.overall_position_trait)
+    this.gradeService.getPlays(this.selectedPosition.id, this.selectedProspect.id).subscribe(response => {
+      this.assignData(response)
     }, err => {
-      this.gradeService.createNewPlay(selectedPosition.id, selectedProspect.id).subscribe(e => {
-        this.listOfColumns = e.grade[0].grade.map(f => f.position_trait.trait)
-        console.log(this.listOfColumns)
-      })
-      console.log(err)
+      this.addRow()
     })
 
-    this.addRow();
   }
 
   addRow() {
-    // const columnsWithValue = this.listOfColumns.reduce(
-    //   (a, v) => ({...a, [v]: 0}),
-    //   {}
-    // );
-    // let obj = {...columnsWithValue, rowNumber: this.grading.length + 1};
-
-    // this.grading = [...this.grading, obj];
-    // this.cdr.detectChanges();
-    // this.listOfColumns.forEach((e) => {
-    //   this.calculateColumn(e.trait);
-    // });
+    this.gradeService.createNewPlay(this.selectedPosition.id, this.selectedProspect.id).subscribe(response => {
+      this.assignData(response)
+    })
     this.today = Date.now();
     this.cdr.detectChanges();
   }
 
   removeRow(playId: number) {
-    // if (this.grading.length < 2) {
-    //   return;
-    // }
-    // this.grading = this.grading.filter((e, i) => i !== index);
-    // this.listOfColumns.forEach((e) => {
-    //   this.calculateColumn(e);
-    // });
-    // this.cdr.detectChanges();
+
     this.today = Date.now();
     this.gradeService.deletePlays(playId).subscribe(e => {
-      this.listOfColumns = e.overall_position_trait.map(f => f.position_trait.trait)
-      this.totalValue = e.overall_grade
-      e.overall_position_trait.forEach(f => {
-        this.columnValue[f.position_trait.trait.id] = f.percentage_score ? f.percentage_score : 0
-      })
-      this.grading = e.grade
-      this.cdr.detectChanges();
-      this.cdr.detectChanges();
+      this.assignData(e);
     })
     this.cdr.detectChanges();
   }
 
-  // calculateColumn(columnName: string) {
-  //   const plus = []
-  //   let minus = []
-  //   this.grading.forEach(e => {
-  //     if (e[columnName] > 0) {
-  //       plus.push(e[columnName])
-  //     }
-  //     if (e[columnName] < 0) {
-  //       minus.push(e[columnName])
-  //     }
-  //   })
-  //
-  //   this.isNeutral[columnName] = !(plus.length + minus.length);
-  //   if (isFinite((plus.length - minus.length) / (plus.length + minus.length))) {
-  //     this.columnValue[columnName] = (plus.length) / (plus.length + minus.length) * 100
-  //     console.log(this.columnValue[columnName] = (plus.length) / (plus.length + minus.length) * 100)
-  //   } else {
-  //     this.columnValue[columnName] = 0
-  //   }
-  //   this.today = Date.now();
-  //   this.cdr.detectChanges();
-  //
-  //   // let value = this.grading.map((e) => {
-  //   //   return e[columnName] * 100  ;
-  //   // }).filter(e => e !== 0)
-  //   // value = value.map(e => e/ value.length)
-  //   // console.log({value})
-  //   // const length = value.length;
-  //   // this.columnValue[columnName] =
-  //   //   value.reduce((prev, curr, i) => {
-  //   //     return prev + curr;
-  //   //   }) ;
-  //   // console.log({value});
-  //   // this.calculateOverAll()
-  // }
-
-  // calculateOverAll() {
-  //   let sum = 0
-  //
-  //   for (const key in this.columnValue) {
-  //     console.log({key})
-  //     sum += this.columnValue[key]
-  //   }
-  //   this.totalValue = sum / this.listOfColumns.length
-  // }
-
   increment(column: any, i: number) {
-    // if (this.grading[i][column.trait] >= 1) {
-    //   this.grading[i][column.trait] = 1;
-    //   return;
-    // } else {
-    //   this.grading[i][column.trait]++;
-    // }
-    // this.calculateColumn(column.trait);
-    // this.today = Date.now();
-    // this.cdr.detectChanges();
     console.log(this.grading[i][column.score])
     if (column.score == null) {
       this.gradeService.incrementScore(column.id).subscribe(e => {
-        this.listOfColumns = e.overall_position_trait.map(f => f.position_trait.trait)
-        this.totalValue = e.overall_grade
-        e.overall_position_trait.forEach(f => {
-          this.columnValue[f.position_trait.trait.id] = f.percentage_score ? f.percentage_score : 0
-        })
-        this.grading = e.grade
-        this.cdr.detectChanges();
+        this.assignData(e);
       })
     } else if (column.score == 0) {
       this.gradeService.neutralScore(column.id).subscribe(e => {
-        this.listOfColumns = e.overall_position_trait.map(f => f.position_trait.trait)
-        this.totalValue = e.overall_grade
-        e.overall_position_trait.forEach(f => {
-          this.columnValue[f.position_trait.trait.id] = f.percentage_score ? f.percentage_score : 0
-        })
-        this.grading = e.grade
-        this.cdr.detectChanges();
+        this.assignData(e);
       })
     } else {
       return
@@ -200,33 +96,13 @@ export class GradingComponent implements OnInit {
   }
 
   decrement(column: any, i: number) {
-    // if (this.grading[i][column.trait] <= -1) {
-    //   this.grading[i][column.trait] = -1;
-    // } else {
-    //   this.grading[i][column.trait]--;
-    // }
-    // this.calculateColumn(column.trait);
-    // this.today = Date.now();
-    // this.cdr.detectChanges();
     if (column.score == null) {
       this.gradeService.decrementScore(column.id).subscribe(e => {
-        this.listOfColumns = e.overall_position_trait.map(f => f.position_trait.trait)
-        this.totalValue = e.overall_grade
-        e.overall_position_trait.forEach(f => {
-          this.columnValue[f.position_trait.trait.id] = f.percentage_score ? f.percentage_score : 0
-        })
-        this.grading = e.grade
-        this.cdr.detectChanges();
+        this.assignData(e);
       })
     } else if (column.score == 1) {
       this.gradeService.neutralScore(column.id).subscribe(e => {
-        this.listOfColumns = e.overall_position_trait.map(f => f.position_trait.trait)
-        this.totalValue = e.overall_grade
-        e.overall_position_trait.forEach(f => {
-          this.columnValue[f.position_trait.trait.id] = f.percentage_score ? f.percentage_score : 0
-        })
-        this.grading = e.grade
-        this.cdr.detectChanges();
+        this.assignData(e);
       })
     } else {
       return
@@ -237,26 +113,9 @@ export class GradingComponent implements OnInit {
 
 
   clear(row: any) {
-    // const columnsWithValue = this.listOfColumns.reduce(
-    //   (a, v) => ({...a, [v]: 0}),
-    //   {}
-    // );
-    // let obj = {...columnsWithValue, rowNumber: this.grading[i].rowNumber};
-    // this.grading[i] = obj;
-    //
-    // this.listOfColumns.forEach((e) => {
-    //   this.calculateColumn(e);
-    // });
-
     this.listOfColumns.forEach((e, index) => {
       this.gradeService.neutralScore(row[index].id).subscribe(x => {
-        this.listOfColumns = x.overall_position_trait.map(f => f.position_trait.trait)
-        this.totalValue = x.overall_grade
-        x.overall_position_trait.forEach(f => {
-          this.columnValue[f.position_trait.trait.id] = f.percentage_score ? f.percentage_score : 0
-        })
-        this.grading = x.grade
-        this.cdr.detectChanges();
+        this.assignData(e);
       })
     })
     this.today = Date.now();
@@ -275,7 +134,20 @@ export class GradingComponent implements OnInit {
     }, 3000);
   }
 
+
   handleCancel(): void {
     this.isVisible = false;
+  }
+
+  private assignData(response) {
+    this.listOfColumns = response.overall_position_trait.map(f => f.position_trait.trait)
+    console.log(response)
+    this.totalValue = response.overall_grade
+    response.overall_position_trait.forEach(f => {
+      this.columnValue[f.position_trait.trait.id] = f.percentage_score
+    })
+    this.grading = response.grade
+
+    this.cdr.detectChanges();
   }
 }

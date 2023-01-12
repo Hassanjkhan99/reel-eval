@@ -30,7 +30,7 @@
                 columnValue[column.id] >= 80 && columnValue[column.id] < 90
               "
             [class.grey-pill-grading]="
-                isNeutral[column.id] && columnValue[column.id] === 0
+                 columnValue[column.id] === null
               "
             [class.orange-pill-grading]="
                 columnValue[column.id] >= 60 && columnValue[column.id] < 70
@@ -43,11 +43,11 @@
           >
               <span
                 [class.disabled]="
-                  isNeutral[column.id] && columnValue[column.id] === 0
+                  columnValue[column.id] === null
                 "
               >
                 {{
-                isNeutral[column.id] && columnValue[column.id] === 0
+                columnValue[column.id] === null
                   ? "-"
                   : columnValue[column.id].toFixed(1) + "%"
                 }}
@@ -162,12 +162,12 @@
       <span
         [class.darkGreen-pill-grading]="totalValue >= 90 && totalValue <= 100"
         [class.green-pill-grading]="totalValue >= 80 && totalValue < 90"
-        [class.grey-pill-grading]="totalValue === 0"
+        [class.grey-pill-grading]="totalValue === null"
         [class.orange-pill-grading]="totalValue >= 60 && totalValue < 70"
         [class.red-pill-grading]="totalValue < 60"
         [class.yellow-pill-grading]="totalValue >= 70 && totalValue < 80"
         class="pill-grading"
-      >{{ totalValue.toFixed(1) }}%
+      >{{ totalValue ? totalValue?.toFixed(1) + '%' : '-' }}
       </span>
     </div>
   </div>
