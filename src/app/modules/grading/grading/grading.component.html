@@ -68,11 +68,11 @@
             {{ data.number}}
           </span>
       </td>
-      <td *ngFor="let column of listOfColumns">
+      <td *ngFor="let column of data.grade">
         <div class="d-flex justify-content-center">
             <span (click)="increment(column, i)" class="p-1"
             ><i
-              [nzTwotoneColor]="grading[i][column.id] === 1 ? '#5bd703' : 'grey'"
+              [nzTwotoneColor]="column.score === 1 ? '#5bd703' : 'grey'"
               nz-icon
               nzTheme="twotone"
               nzType="plus-circle"
@@ -81,7 +81,7 @@
           <span (click)="decrement(column, i)" class="p-1"
           ><i
             [nzTwotoneColor]="
-                  grading[i][column.id] === -1 ? '#e10428' : 'grey'
+                  column.score === 0 ? '#e10428' : 'grey'
                 "
             nz-icon
             nzTheme="twotone"
@@ -93,7 +93,7 @@
       <td nzRight>
         <div class="d-flex justify-content-center">
             <span
-              (click)="clear(i)"
+              (click)="clear(data.grade[i])"
               [nzTooltipColor]="'blue'"
               [nzTooltipTitle]="'Clear'"
               class="p-2"
@@ -106,7 +106,7 @@
             ></i
             ></span>
           <span
-            (click)="removeRow(i)"
+            (click)="removeRow(data.id)"
             [class.disabled]="grading.length < 2"
             [nzTooltipColor]="'blue'"
             [nzTooltipTitle]="'Delete Play'"

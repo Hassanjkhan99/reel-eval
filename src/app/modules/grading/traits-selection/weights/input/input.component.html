@@ -7,6 +7,6 @@
 
   <input (mouseenter)="disableDrag()" (mouseleave)="enableDrag()" [formControl]="control" [max]="remainingLimit + value"
          [nzSpan]="7" autofocus
-         class="ant-input ant-input-focused" min="0" nz-col nz-input nzSize="small"
+         class="ant-input ant-input-focused" min="0" nz-col nz-input nzSize="small" step="1"
          type="number" value="0"/>
 </div>

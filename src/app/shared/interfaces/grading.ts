@@ -26,10 +26,14 @@ export interface Trait2 {
   trait: string;
 }
 
-export interface OverallPositionTrait {
+export interface PositionTrait2 {
+  id: number;
   trait: Trait2;
+}
+
+export interface OverallPositionTrait {
+  position_trait: PositionTrait2;
   percentage_score?: number;
-  weighted_percentage_score?: number;
 }
 
 export interface Grading {
