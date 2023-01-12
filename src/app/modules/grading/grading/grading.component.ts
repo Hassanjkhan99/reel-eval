@@ -113,51 +113,51 @@ export class GradingComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  calculateColumn(columnName: string) {
-    const plus = []
-    let minus = []
-    this.grading.forEach(e => {
-      if (e[columnName] > 0) {
-        plus.push(e[columnName])
-      }
-      if (e[columnName] < 0) {
-        minus.push(e[columnName])
-      }
-    })
+  // calculateColumn(columnName: string) {
+  //   const plus = []
+  //   let minus = []
+  //   this.grading.forEach(e => {
+  //     if (e[columnName] > 0) {
+  //       plus.push(e[columnName])
+  //     }
+  //     if (e[columnName] < 0) {
+  //       minus.push(e[columnName])
+  //     }
+  //   })
+  //
+  //   this.isNeutral[columnName] = !(plus.length + minus.length);
+  //   if (isFinite((plus.length - minus.length) / (plus.length + minus.length))) {
+  //     this.columnValue[columnName] = (plus.length) / (plus.length + minus.length) * 100
+  //     console.log(this.columnValue[columnName] = (plus.length) / (plus.length + minus.length) * 100)
+  //   } else {
+  //     this.columnValue[columnName] = 0
+  //   }
+  //   this.today = Date.now();
+  //   this.cdr.detectChanges();
+  //
+  //   // let value = this.grading.map((e) => {
+  //   //   return e[columnName] * 100  ;
+  //   // }).filter(e => e !== 0)
+  //   // value = value.map(e => e/ value.length)
+  //   // console.log({value})
+  //   // const length = value.length;
+  //   // this.columnValue[columnName] =
+  //   //   value.reduce((prev, curr, i) => {
+  //   //     return prev + curr;
+  //   //   }) ;
+  //   // console.log({value});
+  //   // this.calculateOverAll()
+  // }
 
-    this.isNeutral[columnName] = !(plus.length + minus.length);
-    if (isFinite((plus.length - minus.length) / (plus.length + minus.length))) {
-      this.columnValue[columnName] = (plus.length) / (plus.length + minus.length) * 100
-      console.log(this.columnValue[columnName] = (plus.length) / (plus.length + minus.length) * 100)
-    } else {
-      this.columnValue[columnName] = 0
-    }
-    this.today = Date.now();
-    this.cdr.detectChanges();
-
-    // let value = this.grading.map((e) => {
-    //   return e[columnName] * 100  ;
-    // }).filter(e => e !== 0)
-    // value = value.map(e => e/ value.length)
-    // console.log({value})
-    // const length = value.length;
-    // this.columnValue[columnName] =
-    //   value.reduce((prev, curr, i) => {
-    //     return prev + curr;
-    //   }) ;
-    // console.log({value});
-    this.calculateOverAll()
-  }
-
-  calculateOverAll() {
-    let sum = 0
-
-    for (const key in this.columnValue) {
-      console.log({key})
-      sum += this.columnValue[key]
-    }
-    this.totalValue = sum / this.listOfColumns.length
-  }
+  // calculateOverAll() {
+  //   let sum = 0
+  //
+  //   for (const key in this.columnValue) {
+  //     console.log({key})
+  //     sum += this.columnValue[key]
+  //   }
+  //   this.totalValue = sum / this.listOfColumns.length
+  // }
 
   increment(column: any, i: number) {
     // if (this.grading[i][column.trait] >= 1) {
@@ -247,9 +247,9 @@ export class GradingComponent implements OnInit {
     // this.listOfColumns.forEach((e) => {
     //   this.calculateColumn(e);
     // });
-    this.listOfColumns.forEach(e => {
-      console.log(row)
-      this.gradeService.neutralScore(row.id).subscribe(x => {
+
+    this.listOfColumns.forEach((e, index) => {
+      this.gradeService.neutralScore(row[index].id).subscribe(x => {
         this.listOfColumns = x.overall_position_trait.map(f => f.position_trait.trait)
         this.totalValue = x.overall_grade
         x.overall_position_trait.forEach(f => {
