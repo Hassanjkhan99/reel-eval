@@ -42,9 +42,7 @@ import {Prospect} from "../../../shared/interfaces/prospect.interface";
   styleUrls: ['./pre-grading.component.scss'],
 })
 export class PreGradingComponent implements OnInit {
-  unSelectedTraits: Trait[] = [];
   selectedTraits: Trait[] = [];
-  combinedArray: Trait[] = [];
   selected: number = null;
   unselected: number = null;
   total: number = 0;
@@ -59,21 +57,8 @@ export class PreGradingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('test')
 
-    // this.traitsService
-    //   .getAllTraits(0, 1000, null, null, null)
-    //   .pipe(untilDestroyed(this))
-    //   .subscribe((traits) => {
-    //     this.unSelectedTraits = traits.results;
-    //     this.setCombinedArray()
-    //   });
-    this.selectedTrait.valueChanges.pipe(untilDestroyed(this)).subscribe({
-      next: (value) => {
-        this.selectItem(value)
-        this.selectedTrait.setValue(null, {emitEvent: false})
-        // this.setCombinedArray()
-      },
-    });
     this.selectProspect.valueChanges.pipe(untilDestroyed(this)).subscribe({
       next: (value) => {
         console.log({value})
@@ -86,6 +71,9 @@ export class PreGradingComponent implements OnInit {
     })
     this.selectedPosition.valueChanges.pipe(untilDestroyed(this)).subscribe(
       x => {
+        if (!x) {
+          return
+        }
         this.traitsService.getTraitByPosition(this.selectedPosition.value.id).subscribe((e) => {
           this.traitsByPosList = [];
           this.selectedTraits = [];
@@ -111,9 +99,6 @@ export class PreGradingComponent implements OnInit {
 
   }
 
-  onClose() {
-  }
-
   selectItem(item: Trait, weight?: number, id?: number) {
     if (!this.selectedPosition.value) {
       const isProspectSelected = !!this.selectProspect.value
@@ -123,11 +108,6 @@ export class PreGradingComponent implements OnInit {
     if (!this.selectedTraits.find((trait) => trait.id === item.id)) {
       this.selectedTraits.push(item);
     }
-    // this.unSelectedTraits.splice(
-    //   this.unSelectedTraits.findIndex((trait) => trait.id === item.id),
-    //   1
-    // );
-    // this.setCombinedArray();
 
     this.traits.setControl(
       item.id.toString(),
@@ -137,10 +117,4 @@ export class PreGradingComponent implements OnInit {
     this.selected = item.id;
     this.cdr.detectChanges();
   }
-
-  // setCombinedArray() {
-  //   this.combinedArray = [...this.selectedTraits, ...this.unSelectedTraits]
-  // }
-
-
 }

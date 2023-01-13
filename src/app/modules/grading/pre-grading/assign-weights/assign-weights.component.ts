@@ -17,10 +17,10 @@ import {CdkDragDrop, DragDropModule, moveItemInArray,} from '@angular/cdk/drag-d
 import {UntilDestroy} from '@ngneat/until-destroy';
 import {SharedModule} from "../../../../shared/shared.module";
 import {NzButtonModule} from "ng-zorro-antd/button";
-import {NavigationExtras, Router, RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {Position} from "../../../../shared/interfaces/positions.interface";
 import {Prospect} from "../../../../shared/interfaces/prospect.interface";
-import {NotificationService} from "../../../../shared/services/notification.service";
+import {GradingService} from "../../../../shared/services/grading.service";
 
 @UntilDestroy()
 @Component({
@@ -52,7 +52,7 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
   @Input() remainingValue: number;
 
 
-  constructor(private cdr: ChangeDetectorRef, private fb: FormBuilder, private router: Router, private notificationService: NotificationService) {
+  constructor(private cdr: ChangeDetectorRef, private fb: FormBuilder, private router: Router, private gradingService: GradingService) {
 
   }
 
@@ -66,43 +66,12 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
 
   ngAfterViewInit(): void {
 
-    // this.traits.valueChanges.pipe(untilDestroyed(this), debounceTime(10)).subscribe((value) => {
-    //   console.log({value})
-    //   const currValue: number = Object.values(value).reduce(
-    //     (prev, curr) => +prev + +curr,
-    //     0
-    //   ) as number;
-    //   this.remainingValue = 100 - currValue;
-    //   this.total = currValue;
-    //   this.cdr.detectChanges()
-    //   if (this.total != 100) {
-    //     this.notificationService.error('Weights of assigned trait(s) does not equal 100');
-    //   }
-    // });
-
   }
 
 
   startGrading() {
-    const queryParams: any = {};
-    console.log(this.traits.value)
-    console.log(this.list)
-    const list = this.list
-    const weights = this.traits.value
-    console.log(weights)
-    const position = this.position
-    const prospect = this.prospect
-    console.log(prospect)
-    console.log({list})
-    queryParams.traits = JSON.stringify(list);
-    queryParams.positionSelected = JSON.stringify(position);
-    queryParams.prospectSelected = JSON.stringify(prospect);
-    queryParams.weightsSelected = JSON.stringify(weights);
-
-    const navigationExtras: NavigationExtras = {
-      queryParams
-    };
-
-    this.router.navigate(['/app/grading'], navigationExtras)
+    this.gradingService.selectedPosition = this.position
+    this.gradingService.selectedProspect = this.prospect
+    this.router.navigate(['/app/grading'])
   }
 }

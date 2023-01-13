@@ -28,7 +28,6 @@ export class GradingComponent implements OnInit {
   prospect = {
     first_name: '', last_name: '', classification: '', school: '', state: ''
   }
-  isNeutral = {}
   today: number = Date.now();
   isVisible = false;
   isOkLoading = false;
@@ -40,22 +39,22 @@ export class GradingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let traits = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('traits'))
-    this.selectedPosition = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('positionSelected'))
-    this.selectedProspect = JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('prospectSelected'))
-    this.position = this.selectedPosition.position_name;
+    this.selectedPosition = this.gradeService.selectedPosition
+    this.selectedProspect = this.gradeService.selectedProspect
+    if (!this.selectedProspect || !this.selectedPosition) {
+      setTimeout(t => {
+        this.router.navigate(['app/grade'])
+      }, 1000)
+    } else {
+      this.position = this.selectedPosition.position_name;
+      this.prospect = this.selectedProspect;
+      this.gradeService.getPlays(this.selectedPosition.id, this.selectedProspect.id).subscribe(response => {
+        this.assignData(response)
+      }, err => {
+        this.addRow()
+      })
 
-    this.prospect = this.selectedProspect;
-
-    traits.forEach(e => {
-      this.isNeutral[e.trait] = true
-    });
-
-    this.gradeService.getPlays(this.selectedPosition.id, this.selectedProspect.id).subscribe(response => {
-      this.assignData(response)
-    }, err => {
-      this.addRow()
-    })
+    }
 
   }
 
@@ -90,8 +89,6 @@ export class GradingComponent implements OnInit {
     }
     this.cdr.detectChanges();
 
-    console.log(column)
-    console.log(i)
   }
 
   decrement(column: any, i: number) {
@@ -127,7 +124,9 @@ export class GradingComponent implements OnInit {
     setTimeout(() => {
       this.isVisible = false;
       this.isOkLoading = false;
-    }, 3000);
+      this.router.navigate(['app/grade'])
+    }, 2000);
+
   }
 
 
@@ -137,7 +136,6 @@ export class GradingComponent implements OnInit {
 
   private assignData(response) {
     this.listOfColumns = response.overall_position_trait.map(f => f.position_trait.trait)
-    console.log(response)
     this.totalValue = response.overall_grade
     response.overall_position_trait.forEach(f => {
       this.columnValue[f.position_trait.trait.id] = f.percentage_score

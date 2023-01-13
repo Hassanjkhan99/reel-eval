@@ -16,51 +16,6 @@
         <app-positions-select [formControl]="selectedPosition"></app-positions-select>
       </app-card>
     </div>
-
-    <!--    <div nz-col nzLg="9" nzMd="9" nzSm="24" nzXXl="9" nzXl="9" nzXs="24">-->
-    <!--      <app-card class="w-100 text-align-center " headerText="Selected Traits">-->
-    <!--        <div>-->
-    <!--          <div-->
-    <!--            [class.container-list]="selectedTraits.length > 0"-->
-    <!--            [class.container-noList]="selectedTraits.length < 1"-->
-    <!--            nz-col-->
-    <!--            nzSpan="24"-->
-    <!--          >-->
-    <!--            <p *ngIf="selectedTraits.length < 1">There are no selected Traits</p>-->
-    <!--            <nz-list nzGrid>-->
-    <!--              <div [nzGutter]="8" nz-row>-->
-    <!--                <div *ngFor="let item of selectedTraits" nz-col nzLg="8" nzMd="24" nzSm="24" nzXXl="8" nzXl="8"-->
-    <!--                     nzXs="24">-->
-    <!--                  <nz-list-item>-->
-    <!--                    <app-pill [disabled]="!selectedPosition.value" [item]="item" [selectedList]="true"></app-pill>-->
-    <!--                  </nz-list-item>-->
-    <!--                </div>-->
-    <!--              </div>-->
-    <!--            </nz-list>-->
-    <!--          </div>-->
-    <!--        </div>-->
-    <!--      </app-card>-->
-    <!--      &lt;!&ndash;      <app-card class="w-100 text-align-center " headerText="List Of Traits">&ndash;&gt;-->
-    <!--      &lt;!&ndash;        <div&ndash;&gt;-->
-    <!--      &lt;!&ndash;          [class.container-list]="unSelectedTraits.length > 0"&ndash;&gt;-->
-    <!--      &lt;!&ndash;          [class.container-noList]="unSelectedTraits.length < 1"&ndash;&gt;-->
-    <!--      &lt;!&ndash;          nz-col&ndash;&gt;-->
-    <!--      &lt;!&ndash;          nzSpan="24"&ndash;&gt;-->
-    <!--      &lt;!&ndash;        >&ndash;&gt;-->
-    <!--      &lt;!&ndash;          <p *ngIf="unSelectedTraits.length < 1">There are no unselected Traits</p>&ndash;&gt;-->
-    <!--      &lt;!&ndash;          <nz-list nzGrid>&ndash;&gt;-->
-    <!--      &lt;!&ndash;            <div [nzGutter]="8" nz-row>&ndash;&gt;-->
-    <!--      &lt;!&ndash;              <div *ngFor="let item of unSelectedTraits" nz-col nzLg="8" nzMd="24" nzSm="24" nzXXl="8" nzXl="8"&ndash;&gt;-->
-    <!--      &lt;!&ndash;                   nzXs="24">&ndash;&gt;-->
-    <!--      &lt;!&ndash;                <nz-list-item (click)="selectItem(item)">&ndash;&gt;-->
-    <!--      &lt;!&ndash;                  <app-pill [disabled]="!selectedPosition.value" [item]="item" [selectedList]="false"></app-pill>&ndash;&gt;-->
-    <!--      &lt;!&ndash;                </nz-list-item>&ndash;&gt;-->
-    <!--      &lt;!&ndash;              </div>&ndash;&gt;-->
-    <!--      &lt;!&ndash;            </div>&ndash;&gt;-->
-    <!--      &lt;!&ndash;          </nz-list>&ndash;&gt;-->
-    <!--      &lt;!&ndash;        </div>&ndash;&gt;-->
-    <!--      &lt;!&ndash;      </app-card>&ndash;&gt;-->
-    <!--    </div>-->
     <div
       class="text-center"
       nz-col

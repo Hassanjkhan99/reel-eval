@@ -3,11 +3,14 @@ import {HttpClient} from "@angular/common/http";
 import {main_url} from "../../../environments/environment";
 import {Grading} from "../interfaces/grading";
 import {Observable} from "rxjs";
+import {Position, Prospect} from "../interfaces/prospect.interface";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GradingService {
+  selectedPosition: Position = null;
+  selectedProspect: Prospect = null;
 
   constructor(private http: HttpClient) {
   }

@@ -47,11 +47,9 @@ export class WeightsComponent implements OnChanges, AfterViewInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes?.selectedChanged?.currentValue) {
-      console.log('test', changes?.selectedChanged?.currentValue)
       const fbName = changes.selectedChanged.currentValue.toString()
       this.subArr[fbName] = this.traits.get(fbName).valueChanges.pipe(distinctUntilChanged(), debounceTime(3000)).subscribe(e => {
         if (!(this.traitsService.traitsArr.includes(parseInt(fbName))) && e > 0) {
-          console.log('post')
           this.traitsService.postTraitByPosition({
             trait: parseInt(fbName),
             position: this.position.id,
@@ -60,7 +58,6 @@ export class WeightsComponent implements OnChanges, AfterViewInit {
             this.traitsService.traitsArr.push(parseInt(fbName));
           });
         } else {
-          console.log('put')
           this.traitsService.editTraitByPosition({
             trait: parseInt(fbName),
             position: this.position.id,

@@ -49,8 +49,10 @@ export class PositionsSelectComponent implements OnInit, ControlValueAccessor {
 
   registerOnChange(fn: (val: Position) => unknown): void {
     this.position.valueChanges.pipe(untilDestroyed(this)).subscribe(value => {
-      console.log({value})
       const position = this.positions.find(({id}) => id === value)
+      if (!position) {
+        return
+      }
       fn(position)
     })
   }
