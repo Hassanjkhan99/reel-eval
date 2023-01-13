@@ -42,5 +42,9 @@ export class GradingService {
     })
   }
 
+  clearPlay(playId: number): Observable<Grading> {
+    return this.http.get<Grading>(main_url + 'play/clear_play/' + playId + '/')
+  }
+
 
 }

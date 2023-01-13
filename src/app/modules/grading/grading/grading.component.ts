@@ -63,7 +63,6 @@ export class GradingComponent implements OnInit {
     this.gradeService.createNewPlay(this.selectedPosition.id, this.selectedProspect.id).subscribe(response => {
       this.assignData(response)
     })
-    this.today = Date.now();
     this.cdr.detectChanges();
   }
 
@@ -112,13 +111,10 @@ export class GradingComponent implements OnInit {
   }
 
 
-  clear(row: any) {
-    this.listOfColumns.forEach((e, index) => {
-      this.gradeService.neutralScore(row[index].id).subscribe(x => {
-        this.assignData(e);
-      })
+  clear(playId: number) {
+    this.gradeService.clearPlay(playId).subscribe(e => {
+      this.assignData(e)
     })
-    this.today = Date.now();
     this.cdr.detectChanges();
   }
 
@@ -147,7 +143,7 @@ export class GradingComponent implements OnInit {
       this.columnValue[f.position_trait.trait.id] = f.percentage_score
     })
     this.grading = response.grade
-
+    this.today = Date.now();
     this.cdr.detectChanges();
   }
 }
