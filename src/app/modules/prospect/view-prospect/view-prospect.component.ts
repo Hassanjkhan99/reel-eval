@@ -39,6 +39,7 @@ import {NzSelectModule} from "ng-zorro-antd/select";
 import {NzResizableModule} from "ng-zorro-antd/resizable";
 import {AuthenticationService} from "../../../shared/services/authentication.service";
 import {Permissions} from '../../../shared/enums/permissions';
+import {LoadingService} from "../../../shared/services/loading.service";
 
 @UntilDestroy()
 @Component({
@@ -200,7 +201,8 @@ export class ViewProspectComponent {
     private nzMessageService: NzMessageService,
     private notificationService: NotificationService,
     private prospectService: ProspectService,
-    protected authService: AuthenticationService
+    protected authService: AuthenticationService,
+    public loadingService: LoadingService
   ) {
   }
 

@@ -93,7 +93,9 @@
                                       <div>
                                         <button (click)="submitForm()" [disabled]="signUpForm.invalid"
                                                 [nzType]="'primary'" class="login-form-button"
-                                                nz-button>Sign Up
+                                                [nzLoading]="loadingService.loading | async"
+                                                nz-button
+                                        >Sign Up
                                         </button>
                                       </div>
                                     </nz-form-control>

@@ -26,6 +26,7 @@ import {Permissions} from '../../shared/enums/permissions';
 import {ProspectService} from "../../shared/services/prospect.service";
 import {SobPositionApi} from "../../shared/interfaces/positions.interface";
 import {NavigationExtras, Router} from "@angular/router";
+import {LoadingService} from "../../shared/services/loading.service";
 
 @Component({
   selector: 'app-traits',
@@ -90,7 +91,8 @@ export class TraitsComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     protected authService: AuthenticationService,
     private prospectService: ProspectService,
-    private router: Router
+    private router: Router,
+    public loadingService: LoadingService
   ) {
   }
 

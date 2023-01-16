@@ -15,12 +15,13 @@ import {NzListModule} from 'ng-zorro-antd/list';
 import {PillWithInputComponent} from './pill-with-input/pill-with-input.component';
 import {CdkDragDrop, DragDropModule, moveItemInArray,} from '@angular/cdk/drag-drop';
 import {UntilDestroy} from '@ngneat/until-destroy';
-import {SharedModule} from "../../../../shared/shared.module";
-import {NzButtonModule} from "ng-zorro-antd/button";
-import {Router, RouterLink} from "@angular/router";
-import {Position} from "../../../../shared/interfaces/positions.interface";
-import {Prospect} from "../../../../shared/interfaces/prospect.interface";
-import {GradingService} from "../../../../shared/services/grading.service";
+import {SharedModule} from '../../../../shared/shared.module';
+import {NzButtonModule} from 'ng-zorro-antd/button';
+import {Router, RouterLink} from '@angular/router';
+import {Position} from '../../../../shared/interfaces/positions.interface';
+import {Prospect} from '../../../../shared/interfaces/prospect.interface';
+import {GradingService} from '../../../../shared/services/grading.service';
+import {LoadingService} from "../../../../shared/services/loading.service";
 
 @UntilDestroy()
 @Component({
@@ -39,25 +40,28 @@ import {GradingService} from "../../../../shared/services/grading.service";
   ],
   templateUrl: './assign-weights.component.html',
   styleUrls: ['./assign-weights.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AssignWeightsComponent implements OnChanges, AfterViewInit {
   @Input() list: Trait[] = [];
   @Input() position: Position;
   @Input() prospect: Prospect;
   @Input() traits: FormGroup = new FormGroup({});
-  @Input() selectedChanged: number = null
-  @Input() unSelectedChanged: number = null
+  @Input() selectedChanged: number = null;
+  @Input() unSelectedChanged: number = null;
   @Input() total: number;
   @Input() remainingValue: number;
 
-
-  constructor(private cdr: ChangeDetectorRef, private fb: FormBuilder, private router: Router, private gradingService: GradingService) {
-
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private fb: FormBuilder,
+    private router: Router,
+    private gradingService: GradingService,
+    public loadingService: LoadingService
+  ) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-
   }
 
   drop(event: CdkDragDrop<string[]>): void {
@@ -65,13 +69,11 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-
   }
 
-
   startGrading() {
-    this.gradingService.selectedPosition = this.position
-    this.gradingService.selectedProspect = this.prospect
-    this.router.navigate(['/app/grading'])
+    this.gradingService.selectedPosition = this.position;
+    this.gradingService.selectedProspect = this.prospect;
+    this.router.navigate(['/app/grading']);
   }
 }

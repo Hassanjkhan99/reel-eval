@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from "../../shared/services/authentication.service";
 import {Router} from "@angular/router";
 import {NotificationService} from "../../shared/services/notification.service";
+import {LoadingService} from "../../shared/services/loading.service";
 
 
 @Component({
@@ -16,7 +17,8 @@ export class Login2Component {
   password: string;
 
   constructor(private fb: FormBuilder, private authService: AuthenticationService, private router: Router,
-              private notification: NotificationService) {
+              private notification: NotificationService, public loadingService: LoadingService
+  ) {
   }
 
   submitForm(): void {

@@ -10,6 +10,7 @@ import {GradingService} from "../../../shared/services/grading.service";
 import {Position} from "../../../shared/interfaces/positions.interface";
 import {Prospect} from "../../../shared/interfaces/prospect.interface";
 import {Grade, Trait} from "../../../shared/interfaces/grading";
+import {LoadingService} from "../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-grading',
@@ -34,7 +35,7 @@ export class GradingComponent implements OnInit {
   private selectedPosition: Position;
   private selectedProspect: Prospect;
 
-  constructor(private cdr: ChangeDetectorRef, private router: Router, private activatedRoute: ActivatedRoute, private gradeService: GradingService) {
+  constructor(private cdr: ChangeDetectorRef, private router: Router, private activatedRoute: ActivatedRoute, private gradeService: GradingService, public loadingService: LoadingService) {
 
   }
 

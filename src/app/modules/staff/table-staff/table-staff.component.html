@@ -9,6 +9,7 @@
           nzShowSizeChanger
           nzTableLayout="fixed"
           class="box-shadow"
+          [nzLoading]="loadingService.loading | async"
 >
   <thead>
   <tr>

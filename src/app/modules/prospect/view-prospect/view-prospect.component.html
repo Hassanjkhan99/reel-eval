@@ -44,12 +44,12 @@
     (nzQueryParams)="onQueryParamsChange($event)"
     [nzData]="dataSet"
     [nzFrontPagination]="false"
-    [nzLoading]="isLoading"
     [nzPageIndex]="pageIndex"
     [nzPageSizeOptions]="[10, 20, 30, 40, 50]"
     [nzPageSize]="pageSize"
     [nzScroll]="{ x: '1100px', y: '400px' }"
     [nzTotal]="total"
+    [nzLoading]="loadingService.loading | async"
     class="w-100"
     nzBordered
     nzShowSizeChanger

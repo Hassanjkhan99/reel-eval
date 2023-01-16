@@ -43,7 +43,9 @@
                                         > Signup</a></span>
                                     <button (click)="submitForm()" [disabled]="loginForm.invalid" [nzType]="'primary'"
                                             class="login-form-button"
-                                            nz-button>Sign In
+                                            [nzLoading]="loadingService.loading | async"
+                                            nz-button
+                                    >Sign In
                                     </button>
                                   </div>
                                 </nz-form-control>

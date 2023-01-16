@@ -3,7 +3,9 @@
   [class.weights_list]="list.length > 0"
 >
   <p *ngIf="position == null">There are no selected Traits</p>
-  <p *ngIf="position != null && list.length == 0">There are no assigned traits for this position</p>
+  <p *ngIf="position != null && list.length == 0">
+    There are no assigned traits for this position
+  </p>
   <nz-list nzGrid>
     <div
       (cdkDropListDropped)="drop($event)"
@@ -29,6 +31,13 @@
   <h4>Remaining: {{ remainingValue }}</h4>
 </div>
 
-<button (click)="startGrading()" [disabled]="remainingValue != 0" nz-button nzBlock nzType="primary">
+<button
+  (click)="startGrading()"
+  [disabled]="remainingValue != 0"
+  [nzLoading]="loadingService.loading | async"
+  nz-button
+  nzBlock
+  nzType="primary"
+>
   Start Grading
 </button>

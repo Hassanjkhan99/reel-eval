@@ -14,6 +14,7 @@ import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import {NzSelectModule} from 'ng-zorro-antd/select';
 import {Permissions} from '../../../shared/enums/permissions';
 import {AuthenticationService} from '../../../shared/services/authentication.service';
+import {LoadingService} from "../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-table-staff',
@@ -75,7 +76,8 @@ export class TableStaffComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private staffSer: StaffService,
     private notificationService: NotificationService,
-    protected authService: AuthenticationService
+    protected authService: AuthenticationService,
+    public loadingService: LoadingService
   ) {
   }
 
