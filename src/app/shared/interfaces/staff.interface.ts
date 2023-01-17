@@ -40,3 +40,9 @@ export interface GroupList {
   id: number;
   name: string;
 }
+
+export interface ChangePass {
+  password1: string;
+  password2: string;
+}
+

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable, tap} from "rxjs";
 import {main_url} from "../../../environments/environment";
-import {Group, GroupList, Staff, StaffApi, StaffList} from "../interfaces/staff.interface";
+import {ChangePass, Group, GroupList, Staff, StaffApi, StaffList} from "../interfaces/staff.interface";
 import {map} from "rxjs/operators";
 import {LoadingService} from "./loading.service";
 
@@ -67,6 +67,12 @@ export class StaffService {
 
   deleteStaff(id: number): Observable<Staff> {
     return this.http.delete<Staff>(`${main_url}accounts/${id}/`).pipe(tap((val) => {
+      this.loadingService.loading.next(false)
+    }));
+  }
+
+  changePassword(id: number, payload: ChangePass): Observable<ChangePass> {
+    return this.http.post<ChangePass>(`${main_url}accounts/${id}/change_password/`, payload).pipe(tap((val) => {
       this.loadingService.loading.next(false)
     }));
   }

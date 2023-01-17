@@ -4,10 +4,10 @@ import {NzTableFilterValue, NzTableModule, NzTableQueryParams,} from 'ng-zorro-a
 import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {NzButtonModule} from 'ng-zorro-antd/button';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule,} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators,} from '@angular/forms';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {StaffService} from '../../../shared/services/staff.service';
-import {GroupList, StaffList,} from '../../../shared/interfaces/staff.interface';
+import {ChangePass, GroupList, StaffList,} from '../../../shared/interfaces/staff.interface';
 import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
 import {NotificationService} from '../../../shared/services/notification.service';
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
@@ -15,6 +15,8 @@ import {NzSelectModule} from 'ng-zorro-antd/select';
 import {Permissions} from '../../../shared/enums/permissions';
 import {AuthenticationService} from '../../../shared/services/authentication.service';
 import {LoadingService} from "../../../shared/services/loading.service";
+import {NzModalModule} from "ng-zorro-antd/modal";
+import {NzFormModule} from "ng-zorro-antd/form";
 
 @Component({
   selector: 'app-table-staff',
@@ -31,6 +33,8 @@ import {LoadingService} from "../../../shared/services/loading.service";
     ReactiveFormsModule,
     NzToolTipModule,
     NzSelectModule,
+    NzModalModule,
+    NzFormModule,
   ],
   templateUrl: './table-staff.component.html',
   styleUrls: ['./table-staff.component.scss'],
@@ -38,11 +42,13 @@ import {LoadingService} from "../../../shared/services/loading.service";
 export class TableStaffComponent implements OnInit {
   staffCount: number = 0;
   currentEditIndex: number = -1;
+  isVisible = false;
   listOfColumns = ['First Name', 'Last Name', 'Username', 'Email'];
   listOfFilter = ['first_name', 'last_name', 'username', 'email'];
   listOfData: StaffList[] = [];
   originalListOfData: StaffList[] = [];
   total = 0;
+  staffIndex: number;
   pageSize: number = 10;
   pageIndex: number = 1;
   options: GroupList[];
@@ -71,14 +77,25 @@ export class TableStaffComponent implements OnInit {
   });
   private filterField: string = '';
   private currentFilterValue: Array<{ key: string; value: NzTableFilterValue }>;
+  passwordVisible = false;
+  passwordVisible2 = false;
+  changePass: FormGroup
 
   constructor(
     private cdr: ChangeDetectorRef,
     private staffSer: StaffService,
     private notificationService: NotificationService,
     protected authService: AuthenticationService,
-    public loadingService: LoadingService
+    public loadingService: LoadingService,
   ) {
+  }
+
+  get password1() {
+    return this.changePass.controls.password1
+  }
+
+  get password2() {
+    return this.changePass.controls.password2
   }
 
   getStaff() {
@@ -103,6 +120,10 @@ export class TableStaffComponent implements OnInit {
       this.options = e;
     });
     this.cdr.detectChanges();
+    this.changePass = new FormGroup({
+      password1: new FormControl(null, [Validators.required, Validators.minLength(8)]),
+      password2: new FormControl(null, [Validators.required, this.confirmationValidator])
+    })
   }
 
   reset(key) {
@@ -172,7 +193,6 @@ export class TableStaffComponent implements OnInit {
         'Success',
         'Selected Staff has been deleted!'
       );
-      // this.listOfData.splice(i,1)
       this.listOfData = this.listOfData
         .map((item) => {
           if (item.id == this.listOfData[i].id) {
@@ -221,4 +241,29 @@ export class TableStaffComponent implements OnInit {
         this.total = e.count;
       });
   }
+
+  showModal(i: number): void {
+    this.isVisible = true;
+    this.staffIndex = i;
+
+  }
+
+  handleOk(): void {
+    this.staffSer.changePassword(this.listOfData[this.staffIndex].id, this.changePass.value as ChangePass).subscribe(x => {
+      console.log(this.changePass.value)
+    })
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+
+  private confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
+    if (!control.value) {
+      return {required: true};
+    } else if (control.value !== this.changePass.controls.password1.value) {
+      return {confirm: true, error: true};
+    }
+  };
 }

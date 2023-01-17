@@ -50,6 +50,7 @@ export class JwtInterceptor implements HttpInterceptor {
       } else if (status == 204) {
         this.notification.warning('Warning', 'No Data Found');
       }
+      this.loadingService.loading.next(false)
 
       return throwError(error);
     },))

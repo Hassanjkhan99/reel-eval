@@ -1,29 +1,36 @@
-<nz-table #borderedTable (nzQueryParams)="onQueryParamsChange($event)"
-          [nzData]="listOfData"
-          [nzFrontPagination]="false"
-          [nzPageIndex]="pageIndex"
-          [nzPageSize]="pageSize" [nzTotal]="total"
-          [nzPageSizeOptions]="[8,10,20,30,40,50]"
-          [nzScroll]="{ y: '400px' , x: '900px'}"
-          nzBordered
-          nzShowSizeChanger
-          nzTableLayout="fixed"
-          class="box-shadow"
-          [nzLoading]="loadingService.loading | async"
+<nz-table
+  #borderedTable
+  (nzQueryParams)="onQueryParamsChange($event)"
+  [nzData]="listOfData"
+  [nzFrontPagination]="false"
+  [nzLoading]="loadingService.loading | async"
+  [nzPageIndex]="pageIndex"
+  [nzPageSizeOptions]="[8, 10, 20, 30, 40, 50]"
+  [nzPageSize]="pageSize"
+  [nzScroll]="{ y: '400px', x: '900px' }"
+  [nzTotal]="total"
+  class="box-shadow"
+  nzBordered
+  nzShowSizeChanger
+  nzTableLayout="fixed"
 >
   <thead>
   <tr>
-    <th *ngFor="let column of listOfColumns; let i = index"
-        [nzColumnKey]="listOfFilter[i]"
-        [nzSortFn]="true"
-        [class]="'text-align-left ' + listOfFilter[i]" [nzWidth]="column == 'Email'? '300px' : '220px'"
-        nzCustomFilter
+    <th
+      *ngFor="let column of listOfColumns; let i = index"
+      [nzColumnKey]="listOfFilter[i]"
+      [nzSortFn]="true"
+      [class]="'text-align-left ' + listOfFilter[i]"
+      [nzWidth]="column == 'Email' ? '300px' : '220px'"
+      nzCustomFilter
     >
-      {{column}}
-      <nz-filter-trigger *ngIf="column !== 'Actions' && column !== 'Permissions'"
-                         [(nzVisible)]="visible[listOfFilter[i]]"
-                         [nzActive]="searchValue[listOfFilter[i]].length > 0"
-                         [nzDropdownMenu]="menu">
+      {{ column }}
+      <nz-filter-trigger
+        *ngIf="column !== 'Actions' && column !== 'Permissions'"
+        [(nzVisible)]="visible[listOfFilter[i]]"
+        [nzActive]="searchValue[listOfFilter[i]].length > 0"
+        [nzDropdownMenu]="menu"
+      >
         <span nz-icon nzType="search"></span>
       </nz-filter-trigger>
       <nz-dropdown-menu #menu="nzDropdownMenu">
@@ -45,68 +52,91 @@
               >
                 Search
               </button>
-              <button (click)="reset(listOfFilter[i])" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Clear Search'"
-                      nz-button
-                      nz-tooltip
-                      nzSize="small">
+              <button
+                (click)="reset(listOfFilter[i])"
+                [nzTooltipColor]="'blue'"
+                [nzTooltipTitle]="'Clear Search'"
+                nz-button
+                nz-tooltip
+                nzSize="small"
+              >
                 Reset
               </button>
             </div>
           </div>
         </div>
       </nz-dropdown-menu>
-
     </th>
     <th class="text-align-left" nzWidth="250px" style="color: white">
       Permissions
     </th>
-    <th *ngIf="(authService.currentUser$ | async).groups[0] === permissions.clubAdmin" class="text-align-center" nzRight
-        nzWidth="120px" style="color: white">
+    <th
+      *ngIf="
+          (authService.currentUser$ | async).groups[0] === permissions.clubAdmin
+        "
+      class="text-align-center"
+      nzRight
+      nzWidth="120px"
+      style="color: white"
+    >
       Actions
     </th>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let data of borderedTable.data; let i = index" [formGroup]="staffForm"
-      class="text-align-left"
-      [class.background-primary]="currentEditIndex == i"
+  <tr
+    *ngFor="let data of borderedTable.data; let i = index"
+    [formGroup]="staffForm"
+    class="text-align-left"
+    [class.background-primary]="currentEditIndex == i"
   >
-
     <td>
-      <span *ngIf="currentEditIndex != i">
-         {{ data.first_name }}
+        <span *ngIf="currentEditIndex != i">
+          {{ data.first_name }}
         </span>
       <span *ngIf="currentEditIndex == i">
-          <input class="text-align-center" formControlName="first_name" nz-input/>
+          <input
+            class="text-align-center"
+            formControlName="first_name"
+            nz-input
+          />
         </span>
     </td>
     <td>
-      <span *ngIf="currentEditIndex != i">
-      {{ data.last_name }}
+        <span *ngIf="currentEditIndex != i">
+          {{ data.last_name }}
         </span>
       <span *ngIf="currentEditIndex == i">
-          <input class="text-align-center" formControlName="last_name" nz-input/>
+          <input
+            class="text-align-center"
+            formControlName="last_name"
+            nz-input
+          />
         </span>
     </td>
     <td>
-      <span *ngIf="currentEditIndex != i">
-       {{ data.username }}
+        <span *ngIf="currentEditIndex != i">
+          {{ data.username }}
         </span>
       <span *ngIf="currentEditIndex == i">
-          <input class="text-align-center" formControlName="username" nz-input/>
+          <input
+            class="text-align-center"
+            formControlName="username"
+            nz-input
+          />
         </span>
     </td>
     <td>
-      <span *ngIf="currentEditIndex != i">
-         {{ data.email }}
+        <span *ngIf="currentEditIndex != i">
+          {{ data.email }}
         </span>
       <span *ngIf="currentEditIndex == i">
           <input class="text-align-center" formControlName="email" nz-input/>
         </span>
     </td>
     <td>
-      <span *ngIf="currentEditIndex != i">
-         {{ data.group }}
+        <span *ngIf="currentEditIndex != i">
+          {{ data.group }}
         </span>
       <span *ngIf="currentEditIndex == i">
           <nz-select
@@ -114,20 +144,55 @@
             nzPlaceHolder="Select Permissions"
             class="w-100"
           >
-                  <nz-option *ngFor="let permissions of options" [nzLabel]="permissions.name"
-                             [nzValue]="permissions.id">
-                  </nz-option>
-                </nz-select>
+            <nz-option
+              *ngFor="let permissions of options"
+              [nzLabel]="permissions.name"
+              [nzValue]="permissions.id"
+            >
+            </nz-option>
+          </nz-select>
         </span>
     </td>
-    <td *ngIf="(authService.currentUser$ | async).groups[0] === permissions.clubAdmin" nzRight>
+    <td
+      *ngIf="
+          (authService.currentUser$ | async).groups[0] === permissions.clubAdmin
+        "
+      nzRight
+    >
       <div class="d-flex justify-content-center">
-        <a (click)="isEdit(i)" *ngIf="currentEditIndex != i" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Edit Staff'"
-           class="p-2" nz-tooltip>
+        <a
+          (click)="isEdit(i)"
+          *ngIf="currentEditIndex != i"
+          [nzTooltipColor]="'blue'"
+          [nzTooltipTitle]="'Edit Staff'"
+          class="p-2"
+          nz-tooltip
+        >
           <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
         </a>
-        <a (click)="isSave(i)" *ngIf="currentEditIndex == i" [nzTooltipColor]="'blue'" [nzTooltipTitle]="'Save changes'"
-           class="p-2" nz-tooltip>
+        <a
+          (click)="showModal(i)"
+          *ngIf="currentEditIndex == i"
+          [nzTooltipColor]="'blue'"
+          [nzTooltipTitle]="'Change Password'"
+          class="p-2"
+          nz-tooltip
+        >
+          <i
+            [nzTwotoneColor]="'#f5d50a'"
+            nz-icon
+            nzTheme="twotone"
+            nzType="lock"
+          ></i>
+        </a>
+        <a
+          (click)="isSave(i)"
+          *ngIf="currentEditIndex == i"
+          [nzTooltipColor]="'blue'"
+          [nzTooltipTitle]="'Save changes'"
+          class="p-2"
+          nz-tooltip
+        >
           <i
             [nzTheme]="'twotone'"
             [nzTwotoneColor]="'#46c40a'"
@@ -143,7 +208,9 @@
           [nzTooltipTitle]="'Discard changes'"
           class="p-2"
           nz-popconfirm
-          nz-tooltip nzPopconfirmPlacement="top" nzPopconfirmTitle="Are you sure you want to discard changes?"
+          nz-tooltip
+          nzPopconfirmPlacement="top"
+          nzPopconfirmTitle="Are you sure you want to discard changes?"
         >
           <i
             [nzTheme]="'twotone'"
@@ -152,21 +219,19 @@
             nzType="close-circle"
           ></i>
         </a>
-        <div
-          *ngIf="staffCount != 1" class="p-2"
-        >
+        <div *ngIf="staffCount != 1" class="p-2">
           <a
             (nzOnCancel)="cancel()"
             (nzOnConfirm)="isDelete(i)"
             *ngIf="currentEditIndex != i"
-
             [nzTooltipColor]="'blue'"
             [nzTooltipTitle]="'Delete Staff'"
             nz-popconfirm
-            nz-tooltip nzPopconfirmPlacement="top" nzPopconfirmTitle="Are you sure you want to delete prospect?"
+            nz-tooltip
+            nzPopconfirmPlacement="top"
+            nzPopconfirmTitle="Are you sure you want to delete prospect?"
           >
             <i
-
               [nzTheme]="'twotone'"
               [nzTwotoneColor]="'#c00206'"
               nz-icon
@@ -175,14 +240,71 @@
           </a>
         </div>
       </div>
-
-
     </td>
   </tr>
   </tbody>
 </nz-table>
+<nz-modal
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [(nzVisible)]="isVisible"
+  nzTitle="Change Password"
+>
+  <ng-container *nzModalContent>
+    <form [formGroup]="changePass">
+      <span>
+              <nz-form-item nz-row>
+          <nz-form-label nz-col nzFor="password1" nzRequired nzSpan="24"
+          >New Password</nz-form-label
+          >
+          <nz-form-control
+            [nzErrorTip]="password1.errors?.['required'] ?  'Please input your Password!' : password1.errors?.['minlength'] ? 'Password length should be 8!' : null">
+            <nz-input-group [nzSuffix]="suffixTemplate1" nz-col nzSpan="24">
+              <input
+                [type]="passwordVisible ? 'text' : 'password'"
+                formControlName="password1"
+                id="password1"
+                nz-input
+                placeholder="New Password"
+              />
+            </nz-input-group>
+          </nz-form-control>
+          <ng-template #suffixTemplate1>
+            <i
+              (click)="passwordVisible = !passwordVisible"
+              [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+              nz-icon
+            ></i>
+          </ng-template>
+        </nz-form-item>
 
+      </span>
+      <span class="p-1">
+        <nz-form-item nz-row>
+          <nz-form-label nz-col nzFor="password2" nzRequired nzSpan="24"
+          >Confirm Password</nz-form-label
+          >
+          <nz-form-control nzErrorTip="Please confirm your password!">
+            <nz-input-group [nzSuffix]="suffixTemplate2" nz-col nzSpan="24">
+              <input
+                [type]="passwordVisible2 ? 'text' : 'password'"
+                formControlName="password2"
+                id="password2"
+                nz-input
+                placeholder="Confirm Password"
+              />
+            </nz-input-group>
+          </nz-form-control>
+          <ng-template #suffixTemplate2>
+            <i
+              (click)="passwordVisible2 = !passwordVisible2"
+              [nzType]="passwordVisible2 ? 'eye-invisible' : 'eye'"
+              nz-icon
+            ></i>
+          </ng-template>
+        </nz-form-item>
+      </span>
+    </form>
 
-
-
-
+  </ng-container>
+</nz-modal>
