@@ -1,6 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Chart} from "chart.js";
+import {ReportService} from "../../../shared/services/report.service";
+import {Result} from "../../../shared/interfaces/report";
 
 @Component({
   selector: 'app-plot-report',
@@ -11,22 +13,27 @@ import {Chart} from "chart.js";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlotReportComponent implements OnInit {
+  reportData: Result[] = [];
 
-  constructor() {
+  constructor(private reportService: ReportService) {
   }
 
   ngOnInit(): void {
-    this.RenderScatterchart()
+    this.reportService.getReportData().subscribe(e => {
+      this.reportData = e
+      console.log(this.reportData)
+    })
+    this.RenderScatterChart()
   }
 
-  RenderScatterchart() {
+  RenderScatterChart() {
     const data = {
       datasets: [{
-        label: '',
+        label: 'Report',
         data: [
           {
             x: 100,
-            y: 0
+            y: 0,
           }, {
             x: 90.5,
             y: 0
@@ -127,7 +134,10 @@ export class PlotReportComponent implements OnInit {
             bottomLeft: 'white',
           },
           legend: {
-            display: false
+            display: false,
+            labels: {
+              usePointStyle: true,
+            },
           }
 
         }
