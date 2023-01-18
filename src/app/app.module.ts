@@ -13,7 +13,6 @@ import {SharedModule} from './shared/shared.module';
 
 import {AppComponent} from './app.component';
 
-import {NgChartjsModule} from 'ng-chartjs';
 import {ThemeConstantService} from './shared/services/theme-constant.service';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
@@ -22,6 +21,7 @@ import {NzNotificationModule} from "ng-zorro-antd/notification";
 import {NzMessageModule} from "ng-zorro-antd/message";
 import {NzCardModule} from "ng-zorro-antd/card";
 import {NzTabsModule} from "ng-zorro-antd/tabs";
+import {NgChartsModule} from "ng2-charts";
 
 registerLocaleData(en);
 
@@ -37,13 +37,12 @@ registerLocaleData(en);
     NzBreadCrumbModule,
     TemplateModule,
     SharedModule,
-    NgChartjsModule,
     NgbModule,
     NzNotificationModule,
     NzMessageModule,
     NzCardModule,
     NzTabsModule,
-
+    NgChartsModule
   ],
   providers: [
     {

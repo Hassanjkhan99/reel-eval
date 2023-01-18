@@ -1,85 +1,90 @@
-import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
+import {Component,} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ApexAxisChartSeries, ApexChart, ApexXAxis, ApexYAxis, ChartComponent, NgApexchartsModule,} from 'ng-apexcharts';
+import {NgChartsModule} from "ng2-charts";
+import {ChartConfiguration, ChartData, ChartEvent, ChartType} from "chart.js";
+import {ReportService} from "../../../shared/services/report.service";
 
-export type ChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  xaxis: ApexXAxis;
-  yaxis: ApexYAxis;
-};
 
 @Component({
   selector: 'app-trajectory-report',
   standalone: true,
-  imports: [CommonModule, NgApexchartsModule],
+  imports: [CommonModule, NgChartsModule],
   templateUrl: './trajectory-report.component.html',
   styleUrls: ['./trajectory-report.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrajectoryReportComponent {
-  @ViewChild('chart') chart: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
 
-  constructor() {
-    this.chartOptions = {
-      series: [
-        {
-          name: 'SAMPLE A',
-          data: [
-            [16.4, 5.4],
-            [21.7, 2],
-            [25.4, 3],
-            [19, 2],
-            [10.9, 1],
-            [13.6, 3.2],
-            [10.9, 7.4],
-            [10.9, 0],
-            [10.9, 8.2],
-            [16.4, 0],
-            [16.4, 1.8],
-            [13.6, 0.3],
-            [13.6, 0],
-            [29.9, 0],
-            [27.1, 2.3],
-            [16.4, 0],
-            [13.6, 3.7],
-            [10.9, 5.2],
-            [16.4, 6.5],
-            [10.9, 0],
-            [24.5, 7.1],
-            [10.9, 0],
-            [8.1, 4.7],
-            [19, 0],
-            [21.7, 1.8],
-            [27.1, 0],
-            [24.5, 0],
-            [27.1, 0],
-            [29.9, 1.5],
-            [27.1, 0.8],
-            [22.1, 2],
-          ],
-        }
-      ],
-      chart: {
-        height: 350,
-        type: 'scatter',
-        zoom: {
-          enabled: true,
-          type: 'xy',
-        },
-      },
-      xaxis: {
-        tickAmount: 10,
-        labels: {
-          formatter: function (val) {
-            return parseFloat(val).toFixed(1);
+
+  // scatter
+  public scatterChartOptions: ChartConfiguration['options'];
+  public scatterChartLabels: string[] = [];
+  public scatterChartData: ChartData<'scatter'>;
+  public scatterChartType: ChartType = 'scatter';
+
+
+  private reportData: { x: number; y: number }[] = [];
+
+  constructor(private reportService: ReportService) {
+  }
+
+  ngOnInit(): void {
+    this.reportService.getReportData().subscribe(e => {
+      this.reportData = e.map(player => {
+        return {x: player.score, y: player.iga_score ? player.iga_score : 0}
+      })
+      this.scatterChartLabels = e.map(e => e.prospect.first_name + ' ' + e.prospect.last_name)
+      this.RenderScatterChart(this.reportData, this.scatterChartLabels);
+    })
+  }
+
+  // events
+  public chartClicked({event, active}: { event: ChartEvent, active: {}[] }): void {
+    console.log(event, active);
+  }
+
+  public chartHovered({event, active}: { event: ChartEvent, active: {}[] }): void {
+    console.log(event, active);
+  }
+
+  private RenderScatterChart(reportData: { x: number; y: number }[], labelsData: string[]) {
+    this.scatterChartOptions = {
+      responsive: true,
+      scales: {
+        x: {
+          type: 'linear',
+          position: 'center',
+          max: 100,
+          min: 0,
+          grid: {
+            display: false
           },
         },
+        y: {
+          type: 'linear',
+          position: 'center',
+          max: 100,
+          min: 0,
+          grid: {
+            display: false
+          }
+        },
+
       },
-      yaxis: {
-        tickAmount: 7,
-      },
+      plugins: {
+        legend: {
+          display: false,
+        }
+
+      }
+    };
+    this.scatterChartData = {
+      labels: labelsData,
+      datasets: [
+        {
+          data: reportData,
+          pointRadius: 10,
+        },
+      ]
     };
   }
 }

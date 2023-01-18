@@ -4,11 +4,11 @@
 
 <div class="d-flex justify-content-center p-2">
   <div class="w-70 box-shadow">
-    <apx-chart
-      [chart]="chartOptions.chart"
-      [series]="chartOptions.series"
-      [xaxis]="chartOptions.xaxis"
-      [yaxis]="chartOptions.yaxis"
-    ></apx-chart>
+    <canvas [data]="scatterChartData" [options]="scatterChartOptions"
+            [type]="scatterChartType"
+            baseChart
+            class="chart"
+    >
+    </canvas>
   </div>
 </div>
