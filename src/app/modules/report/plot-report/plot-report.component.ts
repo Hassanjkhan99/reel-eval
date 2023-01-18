@@ -2,7 +2,6 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Chart} from "chart.js";
 import {ReportService} from "../../../shared/services/report.service";
-import {Result} from "../../../shared/interfaces/report";
 
 @Component({
   selector: 'app-plot-report',
@@ -13,69 +12,44 @@ import {Result} from "../../../shared/interfaces/report";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlotReportComponent implements OnInit {
-  reportData: Result[] = [];
+  reportData: { x: number; y: number }[] = [];
+  labelsData: string[] = [];
 
   constructor(private reportService: ReportService) {
   }
 
   ngOnInit(): void {
     this.reportService.getReportData().subscribe(e => {
-      this.reportData = e
-      console.log(this.reportData)
+      this.reportData = e.map(player => {
+        return {x: player.score, y: player.iga_score ? player.iga_score : 0}
+      })
+      this.labelsData = e.map(e => e.prospect.first_name + ' ' + e.prospect.last_name)
+      this.RenderScatterChart(this.reportData, this.labelsData);
     })
-    this.RenderScatterChart()
   }
 
-  RenderScatterChart() {
+  RenderScatterChart(dataset: { x: number; y: number }[], labels: string[]) {
     const data = {
-      datasets: [{
-        label: 'Report',
-        data: [
-          {
-            x: 100,
-            y: 0,
-          }, {
-            x: 90.5,
-            y: 0
-          }, {
-            x: 100,
-            y: 0
-          }, {
-            x: 25,
-            y: 55
-          }, {
-          x: 10.5,
-            y: 50.5
-        }, {
-          x: 20.5,
-            y: 30
-        }, {
-            x: 18.5,
-            y: 79.5
-          }, {
-            x: 90.5,
-            y: 0
-          }, {
-          x: 3.5,
-            y: 0
+      datasets: [
+        {
+          label: 'Dataset 1',
+          data: dataset,
+          borderColor: 'red',
+          backgroundColor: 'black',
         },
-          {
-            x: 4.5,
-            y: 6.5
-          }, {
-            x: 7.5,
-            y: 0
-          }, {
-            x: 0.5,
-            y: 0
-          }, {
-            x: 24.5,
-            y: 14.5
-          }],
-        backgroundColor: 'black',
-        fontSize: '24'
-      }],
+      ]
     };
+    const config = {};
+
+
+    // const data = {
+    //   datasets: [{
+    //     labels: 'labels',
+    //     data: dataset,
+    //     backgroundColor: 'black',
+    //     fontSize: '24',
+    //   }],
+    // };
     const quadrants = {
       id: 'quadrants',
       beforeDraw(chart, args, options) {
@@ -98,53 +72,66 @@ export class PlotReportComponent implements OnInit {
       type: 'scatter',
       data: data,
       options: {
-        scales: {
-          x: {
-            type: 'linear',
-            position: 'center',
-            max: 100,
-            min: 0,
-            grid: {
-              display: false
-            },
-          },
-          y: {
-            type: 'linear',
-            position: 'center',
-            max: 100,
-            min: 0,
-            grid: {
-              display: false
-            }
-          },
-
-        },
-        elements: {
-          point: {
-            radius: 5,
-          }
-        },
+        responsive: true,
         plugins: {
-          // @ts-ignore
-          quadrants: {
-
-            topLeft: 'black',
-            topRight: 'white',
-            bottomRight: 'white',
-            bottomLeft: 'white',
-          },
           legend: {
-            display: false,
-            labels: {
-              usePointStyle: true,
-            },
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Chart.js Scatter Chart'
           }
-
         }
-      },
-      plugins: [quadrants]
+      }
+      // type: 'scatter',
+      // data: data,
+      // options: {
+      //   scales: {
+      //     x: {
+      //       type: 'linear',
+      //       position: 'center',
+      //       max: 100,
+      //       min: 0,
+      //       grid: {
+      //         display: false
+      //       },
+      //     },
+      //     y: {
+      //       type: 'linear',
+      //       position: 'center',
+      //       max: 100,
+      //       min: 0,
+      //       grid: {
+      //         display: false
+      //       }
+      //     },
+      //
+      //   },
+      //   elements: {
+      //     point: {
+      //       radius: 5,
+      //       drawActiveElementsOnTop: true
+      //     }
+      //   },
+      //   plugins: {
+      //     // @ts-ignore
+      //     quadrants: {
+      //       topLeft: 'black',
+      //       topRight: 'white',
+      //       bottomRight: 'white',
+      //       bottomLeft: 'white',
+      //     },
+      //     legend: {
+      //       display: false,
+      //     }
+      //
+      //   },
+      //
+      // },
+      // plugins: [quadrants]
     });
 
   }
+
 
 }
