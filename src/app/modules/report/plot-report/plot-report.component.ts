@@ -30,26 +30,28 @@ export class PlotReportComponent implements OnInit {
 
   RenderScatterChart(dataset: { x: number; y: number }[], labels: string[]) {
     const data = {
-      datasets: [
-        {
-          label: 'Dataset 1',
-          data: dataset,
-          borderColor: 'red',
-          backgroundColor: 'black',
-        },
-      ]
+      datasets: [{
+        label: 'Report',
+        title: 'labels',
+        data: [{
+          x: 4.5,
+          y: 6.5,
+          data: 'hii'
+        }, {
+          x: 7.5,
+          y: 0,
+          data: 'hii'
+
+        }, {
+          x: 0.5,
+          y: 0,
+          data: 'hii'
+
+        }],
+        backgroundColor: 'black',
+        fontSize: '24'
+      }],
     };
-    const config = {};
-
-
-    // const data = {
-    //   datasets: [{
-    //     labels: 'labels',
-    //     data: dataset,
-    //     backgroundColor: 'black',
-    //     fontSize: '24',
-    //   }],
-    // };
     const quadrants = {
       id: 'quadrants',
       beforeDraw(chart, args, options) {
@@ -72,66 +74,50 @@ export class PlotReportComponent implements OnInit {
       type: 'scatter',
       data: data,
       options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top',
+        scales: {
+          x: {
+            type: 'linear',
+            position: 'center',
+            max: 100,
+            min: 0,
+            grid: {
+              display: false
+            },
           },
-          title: {
-            display: true,
-            text: 'Chart.js Scatter Chart'
+          y: {
+            type: 'linear',
+            position: 'center',
+            max: 100,
+            min: 0,
+            grid: {
+              display: false
+            }
+          },
+
+        },
+        elements: {
+          point: {
+            radius: 5,
           }
+        },
+        plugins: {
+          // @ts-ignore
+          quadrants: {
+
+            topLeft: 'black',
+            topRight: 'white',
+            bottomRight: 'white',
+            bottomLeft: 'white',
+          },
+          legend: {
+            display: false,
+          }
+
         }
-      }
-      // type: 'scatter',
-      // data: data,
-      // options: {
-      //   scales: {
-      //     x: {
-      //       type: 'linear',
-      //       position: 'center',
-      //       max: 100,
-      //       min: 0,
-      //       grid: {
-      //         display: false
-      //       },
-      //     },
-      //     y: {
-      //       type: 'linear',
-      //       position: 'center',
-      //       max: 100,
-      //       min: 0,
-      //       grid: {
-      //         display: false
-      //       }
-      //     },
-      //
-      //   },
-      //   elements: {
-      //     point: {
-      //       radius: 5,
-      //       drawActiveElementsOnTop: true
-      //     }
-      //   },
-      //   plugins: {
-      //     // @ts-ignore
-      //     quadrants: {
-      //       topLeft: 'black',
-      //       topRight: 'white',
-      //       bottomRight: 'white',
-      //       bottomLeft: 'white',
-      //     },
-      //     legend: {
-      //       display: false,
-      //     }
-      //
-      //   },
-      //
-      // },
-      // plugins: [quadrants]
+      },
+      plugins: [quadrants]
     });
 
   }
-
 
 }

@@ -86,7 +86,7 @@ export const CommonLayout_ROUTES: Routes = [
   },
   {
     path: 'report',
-    loadComponent: () => import('../../modules/report/plot-report/plot-report.component').then(c => c.PlotReportComponent),
+    loadComponent: () => import('../../modules/report/trajectory-report/trajectory-report.component').then(c => c.TrajectoryReportComponent),
     data: {
       label: 'report',
       path: 'report'
