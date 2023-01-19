@@ -1,15 +1,54 @@
-<div class="d-flex justify-content-center p-b-15">
-  <h1 style="font-weight: bold; font-size: 40px">Trajectory Report</h1>
-</div>
+<!--<div class="d-flex justify-content-center p-b-15">-->
+<!--  <h1 style="font-weight: bold; font-size: 40px">Trajectory Report</h1>-->
+<!--</div>-->
 
-<div class="d-flex justify-content-center p-2">
-  <div class="w-70 box-shadow">
-    <canvas [data]="scatterChartData" [options]="scatterChartOptions"
-            [type]="scatterChartType"
-            baseChart
-            class="chart"
-            (chartClick)="chartClicked($event)"
+<div class="d-flex justify-content-between p-1" nz-row>
+  <div class="w-100" nz-col nzSpan="16">
+    <div
+      class="d-flex justify-content-center"
+      nz-row
+      style="margin-bottom: 10px"
     >
-    </canvas>
+      <div nz-col nzSpan="5" style="margin: 5px">
+        <h5 class="d-flex justify-content-center">Staff Member</h5>
+        <app-staff-select></app-staff-select>
+      </div>
+      <div nz-col nzSpan="5" style="margin: 5px">
+        <h5 class="d-flex justify-content-center">Position</h5>
+        <app-position-multi-select></app-position-multi-select>
+      </div>
+      <div nz-col nzSpan="5" style="margin: 5px">
+        <h5 class="d-flex justify-content-center">Classification</h5>
+        <app-classification-select></app-classification-select>
+      </div>
+      <div nz-col nzSpan="5" style="margin: 5px">
+        <h5 class="d-flex justify-content-center">State/Province</h5>
+        <app-states-select-search></app-states-select-search>
+      </div>
+    </div>
+    <div class="box-shadow w-100 m-1" nz-row>
+      <canvas
+        (chartClick)="chartClicked($event)"
+        [data]="scatterChartData"
+        [options]="scatterChartOptions"
+        [type]="scatterChartType"
+        baseChart
+        class="chart"
+      >
+      </canvas>
+    </div>
+  </div>
+
+  <div class="w-90 m-1" nz-col nzSpan="6">
+    <div>
+      <div class="d-flex justify-content-center">
+        <h4 class="prospect-box">Prospect List</h4>
+      </div>
+      <div class="container-list w-100">
+        <span *ngFor="let prospect of prospectList; let i = index">
+          <app-prospect-list [prospectList]="prospect" [prospectScore]="scoreProspect[i]"></app-prospect-list>
+        </span>
+      </div>
+    </div>
   </div>
 </div>

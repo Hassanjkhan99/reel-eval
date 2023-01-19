@@ -13,7 +13,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {NzGridModule} from 'ng-zorro-antd/grid';
 import {NzListModule} from 'ng-zorro-antd/list';
 import {PillWithInputComponent} from './pill-with-input/pill-with-input.component';
-import {CdkDragDrop, DragDropModule, moveItemInArray,} from '@angular/cdk/drag-drop';
+import {DragDropModule,} from '@angular/cdk/drag-drop';
 import {UntilDestroy} from '@ngneat/until-destroy';
 import {SharedModule} from '../../../../shared/shared.module';
 import {NzButtonModule} from 'ng-zorro-antd/button';
@@ -64,9 +64,6 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
   ngOnChanges(changes: SimpleChanges): void {
   }
 
-  drop(event: CdkDragDrop<string[]>): void {
-    moveItemInArray(this.list, event.previousIndex, event.currentIndex);
-  }
 
   ngAfterViewInit(): void {
   }

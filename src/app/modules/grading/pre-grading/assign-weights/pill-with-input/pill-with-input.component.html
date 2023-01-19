@@ -1,15 +1,17 @@
-<div [cdkDragDisabled]="isDragDisabled" cdkDrag class="pill background-white" nz-row>
+<div class="pill background-white" nz-row>
   <div [nzSpan]="2" class="d-flex justify-content-end px-1" nz-col>
     <i nz-icon nzTheme="outline" nzType="menu"></i>
   </div>
-  <div [nzSpan]="15" class="d-flex justify-content-start" nz-col> {{item.trait}}
+  <div [nzSpan]="15" class="d-flex justify-content-start" nz-col>
+    {{ item.trait }}
   </div>
 
-  <!--  <input (mouseenter)="disableDrag()" (mouseleave)="enableDrag()" [formControl]="control" [max]="remainingLimit + value"-->
-  <!--         [nzSpan]="7" autofocus-->
-  <!--         class="ant-input ant-input-focused" min="0" nz-col nz-input value="0"-->
-  <!--         nzSize="small" type="number"/>-->
-  <span (mouseenter)="disableDrag()" (mouseleave)="enableDrag()" [nzSpan]="7" autofocus
-        class="ant-input ant-input-focused" nz-col style="cursor: default">{{control.value}}</span>
-
+  <span
+    [nzSpan]="7"
+    autofocus
+    class="ant-input ant-input-focused"
+    nz-col
+    style="cursor: default"
+  >{{ control.value }}</span
+  >
 </div>
