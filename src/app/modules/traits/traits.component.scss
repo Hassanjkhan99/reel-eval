@@ -65,3 +65,12 @@ h6 {
   font-weight: bold;
 }
 
+.grid-column-5 {
+  display: grid;
+  grid-template-columns: min-content min-content min-content min-content min-content;
+}
+
+.grid-column-4 {
+  display: grid;
+  grid-template-columns: min-content min-content min-content min-content;
+}

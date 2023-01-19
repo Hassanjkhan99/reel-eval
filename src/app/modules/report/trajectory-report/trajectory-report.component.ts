@@ -32,7 +32,7 @@ export class TrajectoryReportComponent {
       this.reportData = e.map(player => {
         return {x: player.score, y: player.iga_score ? player.iga_score : 0}
       })
-      this.scatterChartLabels = e.map(e => e.prospect.first_name + ' ' + e.prospect.last_name)
+      this.scatterChartLabels = e.map(e => e.prospect.first_name + ' ' + e.prospect.last_name + ' (' + e.position.abbreviation + ') ' + '\n' + e.prospect.classification + ' ' + e.prospect.state + '\n' + e.prospect.school)
       this.RenderScatterChart(this.reportData, this.scatterChartLabels);
     })
   }
@@ -82,7 +82,10 @@ export class TrajectoryReportComponent {
       datasets: [
         {
           data: reportData,
-          pointRadius: 10,
+          pointRadius: 5,
+          backgroundColor: (ctx) => {
+            return '#28579d'
+          }
         },
       ]
     };
