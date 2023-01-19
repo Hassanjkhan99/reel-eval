@@ -38,8 +38,8 @@ export class TrajectoryReportComponent {
   }
 
   // events
-  public chartClicked({event, active}: { event: ChartEvent, active: {}[] }): void {
-    console.log(event, active);
+  public chartClicked(event): void {
+    console.log(event);
   }
 
   public chartHovered({event, active}: { event: ChartEvent, active: {}[] }): void {
