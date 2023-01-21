@@ -16,6 +16,7 @@ import {NzSelectModule} from "ng-zorro-antd/select";
 import {NotificationService} from "../../../shared/services/notification.service";
 import {CardComponent} from "../../../shared/components/card/card.component";
 import {LoadingService} from "../../../shared/services/loading.service";
+import {AuthenticationService} from "../../../shared/services/authentication.service";
 
 @Component({
   selector: 'app-add-staff',
@@ -33,7 +34,7 @@ export class AddStaffComponent implements OnInit {
   passwordVisible2 = false;
 
   constructor(private fb: FormBuilder, private staffService: StaffService, private router: Router,
-              private notification: NotificationService, public loadingService: LoadingService
+              private notification: NotificationService, public loadingService: LoadingService, public authService: AuthenticationService
   ) {
     this.coachForm = this.fb.group({
       first_name: ['', [Validators.required]],
@@ -44,6 +45,11 @@ export class AddStaffComponent implements OnInit {
       password2: ['', [this.confirmValidator]],
       groups: [[], [Validators.required]]
     });
+    authService.currentUser$.subscribe(e => {
+      if (e.reel_eval_admin) {
+        this.coachForm.controls.groups.setValue(2)
+      }
+    })
   }
 
   get groupsFC(): FormControl {

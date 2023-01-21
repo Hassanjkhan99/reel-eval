@@ -102,7 +102,7 @@ export class AuthenticationService {
       club_name: 'Reel Analytics',
       club_is_active: true,
       reel_eval_customer: false,
-      reel_eval_admin: true,
+      reel_eval_admin: false,
       group: 'Club Admin',
       groups: [2],
     });

@@ -40,6 +40,8 @@ import {NzResizableModule} from "ng-zorro-antd/resizable";
 import {AuthenticationService} from "../../../shared/services/authentication.service";
 import {Permissions} from '../../../shared/enums/permissions';
 import {LoadingService} from "../../../shared/services/loading.service";
+import {NzBadgeModule} from "ng-zorro-antd/badge";
+import {BadgeComponent} from "../../../shared/components/badge/badge.component";
 
 @UntilDestroy()
 @Component({
@@ -65,6 +67,8 @@ import {LoadingService} from "../../../shared/services/loading.service";
     NzGridModule,
     NzSelectModule,
     NzResizableModule,
+    NzBadgeModule,
+    BadgeComponent,
   ],
   templateUrl: './view-prospect.component.html',
   styleUrls: ['./view-prospect.component.scss'],
@@ -127,14 +131,14 @@ export class ViewProspectComponent {
       name: 'Video url',
       width: '130px'
     },
-    // {
-    //   name: 'Score',
-    //   width: '150px'
-    // },
-    // {
-    //   name: 'IGA Score',
-    //   width: '130px'
-    // },
+    {
+      name: 'Score',
+      width: '200px'
+    },
+    {
+      name: 'IGA Score',
+      width: '200px'
+    },
   ];
 
   listOfFilter = [
@@ -145,8 +149,8 @@ export class ViewProspectComponent {
     'state',
     'school',
     'video_link',
-    // 'score',
-    // 'ig'
+    'prospect_score',
+    'iga_score'
   ];
   listOfSort = [
     'first_name',
@@ -156,6 +160,8 @@ export class ViewProspectComponent {
     'state',
     'school',
     'video_link',
+    'prospect_score',
+    'iga_score'
   ];
 
   visible = {
@@ -166,6 +172,8 @@ export class ViewProspectComponent {
     state: false,
     school: false,
     video_link: false,
+    prospect_score: false,
+    iga_score: false
   };
   searchValue = {
     first_name: '',
@@ -175,6 +183,9 @@ export class ViewProspectComponent {
     state: '',
     school: '',
     video_link: '',
+    prospect_score: '',
+    iga_score: ''
+
   };
   showRow: Boolean = false;
   prospectForm = new FormGroup({
@@ -211,7 +222,7 @@ export class ViewProspectComponent {
     private nzMessageService: NzMessageService,
     private notificationService: NotificationService,
     private prospectService: ProspectService,
-    protected authService: AuthenticationService,
+    public authService: AuthenticationService,
     public loadingService: LoadingService
   ) {
   }

@@ -291,9 +291,9 @@
               >
                 <nz-form-control>
                   <nz-select
-                    [nzMaxTagPlaceholder]="tagPlaceHolder"
                     formControlName="groups"
                     nzPlaceHolder="Select Permissions"
+                    [nzDisabled]="((authService.currentUser$) | async).reel_eval_admin"
                   >
                     <nz-option
                       *ngFor="let permissions of options"
@@ -302,9 +302,6 @@
                     >
                     </nz-option>
                   </nz-select>
-                  <ng-template #tagPlaceHolder let-selectedList
-                  >and {{ selectedList.length }} more selected
-                  </ng-template>
                 </nz-form-control>
               </div>
             </nz-form-item>

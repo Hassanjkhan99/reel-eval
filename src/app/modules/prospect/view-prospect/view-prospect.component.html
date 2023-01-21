@@ -49,7 +49,6 @@
     [nzPageSize]="pageSize"
     [nzScroll]="{ x: '1100px', y: '400px' }"
     [nzTotal]="total"
-    [nzLoading]="loadingService.loading | async"
     class="w-100"
     nzBordered
     nzShowSizeChanger
@@ -357,6 +356,18 @@
         <span *ngIf="currentEditIndex == i">
             <input formControlName="video_link" nz-input/>
           </span>
+      </td>
+      <td nzRight>
+        <span>
+        <app-badge *ngFor="let score of data.prospect_score"
+                   [text]="score.position_name + ' : ' + score.score"> </app-badge>
+        </span>
+      </td>
+      <td nzRight>
+        <span>
+        <app-badge *ngFor="let score of data.prospect_score"
+                   [text]="score.position_name + ' : ' + score.score"> </app-badge>
+        </span>
       </td>
       <td *ngIf="(authService.currentUser$ | async).groups[0] !== permissions.ViewOnly &&
               (authService.currentUser$ | async).groups[0] !==
