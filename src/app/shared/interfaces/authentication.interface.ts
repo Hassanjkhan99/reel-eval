@@ -16,14 +16,16 @@ export interface Login {
 
 
 export interface UserMe {
-  id: number;
-  username: string;
-  email: string;
-  first_name: string;
-  last_name: string;
+  reel_eval_admin: boolean;
+  club_is_active: boolean;
   club_id: number;
-  club_name: string;
-  club_is_active: string;
-  group: string;
+  reel_eval_customer: boolean;
+  last_name: string;
   groups: number[];
+  id: number;
+  club_name: string;
+  first_name: string;
+  email: string;
+  username: string;
+  group: string;
 }

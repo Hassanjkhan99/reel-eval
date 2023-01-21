@@ -14,25 +14,24 @@ export class TableService {
      * @param inputData
      */
     sort(sortAttribute: { key: string, value: string }, inputData: any[]) {
-        const dataArr = this.deepCopy(inputData);
-        if (sortAttribute.key === '' || sortAttribute.value === null) {
-            return dataArr;
-        }
-
-        let outputDataList = dataArr.sort((a, b) => {
-            const isAsc = sortAttribute.value === 'ascend';
-            switch (sortAttribute.key) {
-                case sortAttribute.key:
-                    return this.compare(
-                        typeof a[sortAttribute.key] !== "string" ? a[sortAttribute.key] : a[sortAttribute.key].toUpperCase(),
-                        typeof b[sortAttribute.key] !== "string" ? b[sortAttribute.key] : b[sortAttribute.key].toUpperCase(),isAsc
-                    );
-                default:
-                    return 0;
-            }
-        });
-        return outputDataList;
+    const dataArr = this.deepCopy(inputData);
+    if (sortAttribute.key === '' || sortAttribute.value === null) {
+      return dataArr;
     }
+
+    return dataArr.sort((a, b) => {
+      const isAsc = sortAttribute.value === 'ascend';
+      switch (sortAttribute.key) {
+        case sortAttribute.key:
+          return this.compare(
+            typeof a[sortAttribute.key] !== "string" ? a[sortAttribute.key] : a[sortAttribute.key].toUpperCase(),
+            typeof b[sortAttribute.key] !== "string" ? b[sortAttribute.key] : b[sortAttribute.key].toUpperCase(), isAsc
+          );
+        default:
+          return 0;
+      }
+    });
+  }
 
     /**
      * Wild card search on all property of the object

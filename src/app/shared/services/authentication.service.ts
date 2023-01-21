@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable, of, tap} from 'rxjs';
-import {Login, SignUp} from '../interfaces/authentication.interface';
+import {BehaviorSubject, Observable, tap} from 'rxjs';
+import {Login, SignUp, UserMe} from '../interfaces/authentication.interface';
 import {main_url} from '../../../environments/environment';
 import {LoadingService} from './loading.service';
 
@@ -9,34 +9,7 @@ import {LoadingService} from './loading.service';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  // currentUser$: BehaviorSubject<UserMe> = new BehaviorSubject<UserMe>(null)
-  currentUser$: BehaviorSubject<{
-    reel_eval_admin: boolean;
-    club_is_active: boolean;
-    club_id: number;
-    reel_eval_customer: boolean;
-    last_name: string;
-    groups: number[];
-    id: number;
-    club_name: string;
-    first_name: string;
-    email: string;
-    username: string;
-    group: string;
-  }> = new BehaviorSubject<{
-    reel_eval_admin: boolean;
-    club_is_active: boolean;
-    club_id: number;
-    reel_eval_customer: boolean;
-    last_name: string;
-    groups: number[];
-    id: number;
-    club_name: string;
-    first_name: string;
-    email: string;
-    username: string;
-    group: string;
-  }>(null);
+  currentUser$: BehaviorSubject<UserMe> = new BehaviorSubject<UserMe>(null)
 
   constructor(
     private http: HttpClient,
@@ -72,41 +45,12 @@ export class AuthenticationService {
       );
   }
 
-  // checkLogin(): Observable<UserMe> {
-  //   return this.http.get<UserMe>(`${main_url}accounts/me/`).pipe(tap((val) => {
-  //     this.loadingService.loading.next(false)
-  //   }));
-  // }
-
-  checkLogin(): Observable<{
-    reel_eval_admin: boolean;
-    club_is_active: boolean;
-    club_id: number;
-    reel_eval_customer: boolean;
-    last_name: string;
-    groups: number[];
-    id: number;
-    club_name: string;
-    first_name: string;
-    email: string;
-    username: string;
-    group: string;
-  }> {
-    return of({
-      id: 85,
-      username: 'reeleval',
-      email: 'reeleval@yahoo.com',
-      first_name: 'Reel',
-      last_name: 'Eval',
-      club_id: 59,
-      club_name: 'Reel Analytics',
-      club_is_active: true,
-      reel_eval_customer: false,
-      reel_eval_admin: false,
-      group: 'Club Admin',
-      groups: [2],
-    });
+  checkLogin(): Observable<UserMe> {
+    return this.http.get<UserMe>(`${main_url}accounts/me/`).pipe(tap((val) => {
+      this.loadingService.loading.next(false)
+    }));
   }
+
 
   forget(email): Observable<string> {
     return this.http
