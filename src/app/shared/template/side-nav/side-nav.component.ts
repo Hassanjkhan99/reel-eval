@@ -27,17 +27,24 @@ export class SideNavComponent {
     this.authService.currentUser$
       .pipe(untilDestroyed(this))
       .subscribe((user) => {
-        const permission = user.groups[0];
-        this.menuItems = ROUTES.filter((menuItem) =>
-          menuItem.permission.includes(permission),
-        );
-        this.menuItems.forEach(
-          (menuItem, index) =>
-            (this.menuItems[index].submenu = menuItem.submenu.filter((item) =>
-              item.permission.includes(permission),
-            ))
-        );
-        console.log(this.menuItems);
+        if (user.reel_eval_admin) {
+          this.menuItems = ROUTES.filter((menuItem) => {
+            return menuItem.title === 'Staff' || menuItem.title === 'Prospects'
+          })
+        } else {
+          const permission = user.groups[0];
+          this.menuItems = ROUTES.filter((menuItem) =>
+            menuItem.permission.includes(permission),
+          );
+          this.menuItems.forEach(
+            (menuItem, index) =>
+              (this.menuItems[index].submenu = menuItem.submenu.filter((item) =>
+                item.permission.includes(permission),
+              ))
+          );
+          console.log(this.menuItems);
+        }
+
       });
 
     this.themeService.isMenuFoldedChanges.subscribe(

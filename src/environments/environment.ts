@@ -6,7 +6,8 @@ export const environment = {
   production: false
 };
 
-export const main_url = 'https://api.reeleval.com/';
+// export const main_url = 'https://api.reeleval.com/';
+export const main_url = 'http://157.230.231.221:8089/';
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

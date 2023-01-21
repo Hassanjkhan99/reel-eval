@@ -5,6 +5,19 @@ export interface ProspectApi {
   results: Prospect[];
 }
 
+
+export interface Pos {
+  id: number;
+  position_name: string;
+  abbreviation: string;
+}
+
+export interface ProspectScore {
+  id: number;
+  position_name: string;
+  score: number;
+}
+
 export interface Prospect {
   id: number;
   first_name: string;
@@ -20,9 +33,12 @@ export interface Prospect {
   archived: boolean;
   unique_id: string;
   unique_id_without_club: string;
+  prospect_score: ProspectScore[];
+  iga_score?: any;
   created: string;
   modified: string;
 }
+
 
 export interface Pos {
   id: number;

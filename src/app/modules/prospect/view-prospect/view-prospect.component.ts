@@ -127,6 +127,14 @@ export class ViewProspectComponent {
       name: 'Video url',
       width: '130px'
     },
+    // {
+    //   name: 'Score',
+    //   width: '150px'
+    // },
+    // {
+    //   name: 'IGA Score',
+    //   width: '130px'
+    // },
   ];
 
   listOfFilter = [
@@ -137,6 +145,8 @@ export class ViewProspectComponent {
     'state',
     'school',
     'video_link',
+    // 'score',
+    // 'ig'
   ];
   listOfSort = [
     'first_name',

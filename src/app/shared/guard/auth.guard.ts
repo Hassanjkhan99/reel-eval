@@ -25,6 +25,7 @@ export class AuthGuard implements CanActivate {
 
   checkUser() {
     return this.authService.checkLogin().pipe(tap(e => {
+      // @ts-ignore
       this.authService.currentUser$.next(e)
       return !!e;
     }, error => !error))
