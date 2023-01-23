@@ -141,6 +141,12 @@
           </div>
         </nz-dropdown-menu>
       </th>
+      <th nzRight nzWidth="200px">
+        Score
+      </th>
+      <th nzRight nzWidth="200px">
+        IGA Score
+      </th>
       <th
         *ngIf="(authService.currentUser$ | async).groups[0] !== permissions.ViewOnly  &&
               (authService.currentUser$ | async).groups[0] !==

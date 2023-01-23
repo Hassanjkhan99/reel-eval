@@ -131,14 +131,6 @@ export class ViewProspectComponent {
       name: 'Video url',
       width: '130px'
     },
-    {
-      name: 'Score',
-      width: '200px'
-    },
-    {
-      name: 'IGA Score',
-      width: '200px'
-    },
   ];
 
   listOfFilter = [

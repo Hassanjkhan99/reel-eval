@@ -12,9 +12,6 @@ import {
 } from "../../../shared/components/position-multi-select/position-multi-select.component";
 import {NzSelectModule} from "ng-zorro-antd/select";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {
-  ClassificationSelectComponent
-} from "../../../shared/components/classification-select/classification-select.component";
 import {StaffSelectComponent} from "../../../shared/components/staff-select/staff-select.component";
 import {Position, Prospect, Result} from "../../../shared/interfaces/report";
 import {ProspectListComponent} from "./prospect-list/prospect-list.component";
@@ -23,7 +20,7 @@ import {ProspectListComponent} from "./prospect-list/prospect-list.component";
 @Component({
   selector: 'app-trajectory-report',
   standalone: true,
-  imports: [CommonModule, NgChartsModule, NzGridModule, StatesSelectSearchComponent, PositionMultiSelectComponent, NzSelectModule, FormsModule, ClassificationSelectComponent, StaffSelectComponent, ProspectListComponent, ReactiveFormsModule],
+  imports: [CommonModule, NgChartsModule, NzGridModule, StatesSelectSearchComponent, PositionMultiSelectComponent, NzSelectModule, FormsModule, StaffSelectComponent, ProspectListComponent, ReactiveFormsModule],
   templateUrl: './trajectory-report.component.html',
   styleUrls: ['./trajectory-report.component.scss'],
 })
@@ -36,10 +33,14 @@ export class TrajectoryReportComponent {
   public scatterChartType: ChartType = 'scatter';
 
   selectedPositions: FormControl = new FormControl<number[]>([])
+  selectedClassification: FormControl = new FormControl<string[]>([])
+  selectedState: FormControl = new FormControl<string[]>([])
 
   scoreProspect: number[];
   private reportData: { x: number; y: number }[] = [];
   positions: Position[] = []
+  classification: string[] = []
+  states: string[] = []
   private mainData: Result[] = []
 
 
@@ -49,10 +50,15 @@ export class TrajectoryReportComponent {
   ngOnInit(): void {
     this.reportService.getReportData().subscribe(e => {
       this.mainData = e
-      this.positions = e.map(e => e.position);
-
+      console.log(e)
+      this.positions = e.map(x => x.position);
+      this.classification = e.map(x => x.prospect.classification)
+      this.states = e.map(x => x.prospect.state)
+      const classArr = [...new Set(this.classification)]
+      const stateArr = [...new Set(this.states)]
       const idArr = [...new Set(this.positions.map(e => e.id))]
-
+      this.classification = classArr
+      this.states = stateArr
       this.positions = idArr.map(id => {
         return this.positions.find(pos => pos.id === id)
       })
@@ -63,6 +69,12 @@ export class TrajectoryReportComponent {
     })
     this.selectedPositions.valueChanges.subscribe(ids => {
       this.filterPosition(ids)
+    })
+    this.selectedClassification.valueChanges.subscribe(year => {
+      this.filterClassification(year)
+    })
+    this.selectedState.valueChanges.subscribe(state => {
+      this.filterState(state)
     })
   }
 
@@ -85,7 +97,37 @@ export class TrajectoryReportComponent {
       return
     }
     const data = this.mainData.filter(item => {
+      this.selectedState.setValue([])
+      this.selectedClassification.setValue([])
       return ids.includes(item.position.id)
+    })
+    this.assignDataToPlot(data)
+  }
+
+
+  filterClassification(year: string[]) {
+    if (year.length < 1) {
+      this.assignDataToPlot(this.mainData)
+      return
+    }
+    const data = this.mainData.filter(item => {
+      this.selectedState.setValue([])
+      this.selectedPositions.setValue([])
+      return year.includes(item.prospect.classification)
+    })
+    this.assignDataToPlot(data)
+  }
+
+
+  filterState(state: string[]) {
+    if (state.length < 1) {
+      this.assignDataToPlot(this.mainData)
+      return
+    }
+    const data = this.mainData.filter(item => {
+      this.selectedClassification.setValue([])
+      this.selectedPositions.setValue([])
+      return state.includes(item.prospect.state)
     })
     this.assignDataToPlot(data)
   }

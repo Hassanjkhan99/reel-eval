@@ -15,18 +15,28 @@
       </div>
       <div nz-col nzSpan="5" style="margin: 5px">
         <h5 class="d-flex justify-content-center">Position</h5>
-        <nz-select [formControl]="selectedPositions" class="w-100" nzMode="multiple">
+        <nz-select [formControl]="selectedPositions" class="w-100" nzMode="multiple" nzPlaceHolder="select position">
           <nz-option *ngFor="let position of positions" [nzLabel]="position.position_name"
                      [nzValue]="position.id"></nz-option>
         </nz-select>
       </div>
       <div nz-col nzSpan="5" style="margin: 5px">
         <h5 class="d-flex justify-content-center">Classification</h5>
-        <app-classification-select></app-classification-select>
+        <nz-select
+          [formControl]="selectedClassification"
+          class="w-100"
+          nzMode="multiple"
+          nzPlaceHolder="Select Classification"
+        >
+          <nz-option *ngFor="let item of classification" [nzLabel]="item" [nzValue]="item"></nz-option>
+        </nz-select>
       </div>
       <div nz-col nzSpan="5" style="margin: 5px">
         <h5 class="d-flex justify-content-center">State/Province</h5>
-        <app-states-select-search></app-states-select-search>
+        <nz-select [formControl]="selectedState" class="w-100" nzMode="multiple" nzPlaceHolder="select state/province">
+          <nz-option *ngFor="let state of states" [nzLabel]="state"
+                     [nzValue]="state"></nz-option>
+        </nz-select>
       </div>
     </div>
     <div class="box-shadow w-100 m-1" nz-row>
