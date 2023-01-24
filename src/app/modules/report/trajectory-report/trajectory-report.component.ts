@@ -15,17 +15,18 @@ import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {StaffSelectComponent} from "../../../shared/components/staff-select/staff-select.component";
 import {Position, Prospect, Result} from "../../../shared/interfaces/report";
 import {ProspectListComponent} from "./prospect-list/prospect-list.component";
+import {NzButtonModule} from "ng-zorro-antd/button";
 
 
 @Component({
   selector: 'app-trajectory-report',
   standalone: true,
-  imports: [CommonModule, NgChartsModule, NzGridModule, StatesSelectSearchComponent, PositionMultiSelectComponent, NzSelectModule, FormsModule, StaffSelectComponent, ProspectListComponent, ReactiveFormsModule],
+  imports: [CommonModule, NgChartsModule, NzGridModule, StatesSelectSearchComponent, PositionMultiSelectComponent, NzSelectModule, FormsModule, StaffSelectComponent, ProspectListComponent, ReactiveFormsModule, NzButtonModule],
   templateUrl: './trajectory-report.component.html',
   styleUrls: ['./trajectory-report.component.scss'],
 })
 export class TrajectoryReportComponent {
-  prospectList: Prospect[];
+  prospectList: Prospect[] = [];
   // scatter
   public scatterChartOptions: ChartConfiguration['options'];
   public scatterChartLabels: string[] = [];
@@ -50,8 +51,11 @@ export class TrajectoryReportComponent {
   ngOnInit(): void {
     this.reportService.getReportData().subscribe(e => {
       this.mainData = e
-      console.log(e)
       this.positions = e.map(x => x.position);
+      this.prospectList = e.map(x => {
+        return {...x.prospect, score: x.score, iga_score: x.iga_score}
+      })
+      console.log(this.prospectList)
       this.classification = e.map(x => x.prospect.classification)
       this.states = e.map(x => x.prospect.state)
       const classArr = [...new Set(this.classification)]
@@ -85,8 +89,7 @@ export class TrajectoryReportComponent {
     this.scoreProspect = report.map(player => {
       return player.score
     })
-    this.scatterChartLabels = report.map(e => e.prospect.first_name + ' ' + e.prospect.last_name)
-    this.prospectList = report.map(prospect => prospect.prospect)
+    this.scatterChartLabels = report.map(e => e.prospect.first_name + ' ' + e.prospect.last_name + '\n' + e.prospect.school + '\n' + e.prospect.classification + '\n' + e.prospect.state)
     this.RenderScatterChart(this.reportData, this.scatterChartLabels);
     this.cdr.detectChanges()
   }
@@ -128,6 +131,14 @@ export class TrajectoryReportComponent {
       this.selectedClassification.setValue([])
       this.selectedPositions.setValue([])
       return state.includes(item.prospect.state)
+    })
+    this.assignDataToPlot(data)
+  }
+
+
+  filterProspect(prospect: Prospect) {
+    const data = this.mainData.filter(item => {
+      return item.prospect.id === prospect.id
     })
     this.assignDataToPlot(data)
   }
@@ -184,5 +195,9 @@ export class TrajectoryReportComponent {
         },
       ]
     };
+  }
+
+  reset() {
+    this.assignDataToPlot(this.mainData)
   }
 }

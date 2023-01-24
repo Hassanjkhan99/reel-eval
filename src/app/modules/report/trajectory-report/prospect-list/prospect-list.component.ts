@@ -13,8 +13,7 @@ import {Prospect} from "../../../../shared/interfaces/report";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProspectListComponent implements OnInit {
-  @Input() prospectList: Prospect;
-  @Input() prospectScore: number;
+  @Input() prospect: ProspectWithScore;
 
   constructor() {
   }
@@ -22,4 +21,9 @@ export class ProspectListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+}
+
+interface ProspectWithScore extends Prospect {
+  iga_score: number;
+  score: number
 }

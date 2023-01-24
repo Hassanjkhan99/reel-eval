@@ -59,9 +59,10 @@
       </div>
       <div class="container-list w-100">
         <span *ngFor="let prospect of prospectList; let i = index">
-          <app-prospect-list [prospectList]="prospect" [prospectScore]="scoreProspect[i]"></app-prospect-list>
+          <app-prospect-list (click)="filterProspect(prospect)" [prospect]="prospect"></app-prospect-list>
         </span>
       </div>
+      <button (click)="reset()" class="w-100 m-t-5" nz-button nzType="primary">Reset Players Filter</button>
     </div>
   </div>
 </div>
