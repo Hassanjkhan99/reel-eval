@@ -141,7 +141,7 @@ export class ViewProspectComponent {
     'state',
     'school',
     'video_link',
-    'prospect_score',
+    'score_prospect',
     'iga_score'
   ];
   listOfSort = [
@@ -152,7 +152,7 @@ export class ViewProspectComponent {
     'state',
     'school',
     'video_link',
-    'prospect_score',
+    'score_prospect',
     'iga_score'
   ];
 
@@ -164,7 +164,7 @@ export class ViewProspectComponent {
     state: false,
     school: false,
     video_link: false,
-    prospect_score: false,
+    score_prospect: false,
     iga_score: false
   };
   searchValue = {
@@ -175,7 +175,7 @@ export class ViewProspectComponent {
     state: '',
     school: '',
     video_link: '',
-    prospect_score: '',
+    score_prospect: '',
     iga_score: ''
 
   };

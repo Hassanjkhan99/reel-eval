@@ -278,6 +278,8 @@
                 [nzXs]="24"
                 class="t-right"
                 nz-col
+                *ngIf="!(authService.currentUser$ | async).reel_eval_admin"
+
               >
                 <nz-form-label>Permissions</nz-form-label>
               </div>
@@ -288,12 +290,12 @@
                 [nzXl]="14"
                 [nzXs]="24"
                 nz-col
+                *ngIf="!(authService.currentUser$ | async).reel_eval_admin"
               >
                 <nz-form-control>
                   <nz-select
                     formControlName="groups"
                     nzPlaceHolder="Select Permissions"
-                    [nzDisabled]="((authService.currentUser$) | async).reel_eval_admin"
                   >
                     <nz-option
                       *ngFor="let permissions of options"

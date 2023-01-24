@@ -3,6 +3,7 @@
 <!--</div>-->
 
 <div class="d-flex justify-content-between p-1" nz-row>
+  <div></div>
   <div class="w-100" nz-col nzSpan="16">
     <div
       class="d-flex justify-content-center"
@@ -11,7 +12,10 @@
     >
       <div nz-col nzSpan="5" style="margin: 5px">
         <h5 class="d-flex justify-content-center">Staff Member</h5>
-        <app-staff-select></app-staff-select>
+        <nz-select [formControl]="selectedStaff" class="w-100" nzMode="multiple" nzPlaceHolder="select staff">
+          <nz-option *ngFor="let staff of staffs" [nzLabel]="staff"
+                     [nzValue]="staff"></nz-option>
+        </nz-select>
       </div>
       <div nz-col nzSpan="5" style="margin: 5px">
         <h5 class="d-flex justify-content-center">Position</h5>
@@ -52,7 +56,7 @@
     </div>
   </div>
 
-  <div class="w-90 m-1" nz-col nzSpan="6">
+  <div class="w-90 m-1" nz-col nzSpan="4">
     <div>
       <div class="d-flex justify-content-center">
         <h4 class="prospect-box">Prospect List</h4>
@@ -65,4 +69,5 @@
       <button (click)="reset()" class="w-100 m-t-5" nz-button nzType="primary">Reset Players Filter</button>
     </div>
   </div>
+  <div></div>
 </div>

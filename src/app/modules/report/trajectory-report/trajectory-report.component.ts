@@ -36,12 +36,13 @@ export class TrajectoryReportComponent {
   selectedPositions: FormControl = new FormControl<number[]>([])
   selectedClassification: FormControl = new FormControl<string[]>([])
   selectedState: FormControl = new FormControl<string[]>([])
-
+  selectedStaff: FormControl = new FormControl<string[]>([])
   scoreProspect: number[];
   private reportData: { x: number; y: number }[] = [];
   positions: Position[] = []
   classification: string[] = []
   states: string[] = []
+  staffs: string[] = []
   private mainData: Result[] = []
 
 
@@ -58,11 +59,14 @@ export class TrajectoryReportComponent {
       console.log(this.prospectList)
       this.classification = e.map(x => x.prospect.classification)
       this.states = e.map(x => x.prospect.state)
+      this.staffs = e.map(x => x.user_full_name)
       const classArr = [...new Set(this.classification)]
       const stateArr = [...new Set(this.states)]
       const idArr = [...new Set(this.positions.map(e => e.id))]
+      const staffArr = [...new Set(this.staffs)]
       this.classification = classArr
       this.states = stateArr
+      this.staffs = staffArr
       this.positions = idArr.map(id => {
         return this.positions.find(pos => pos.id === id)
       })
@@ -79,6 +83,9 @@ export class TrajectoryReportComponent {
     })
     this.selectedState.valueChanges.subscribe(state => {
       this.filterState(state)
+    })
+    this.selectedStaff.valueChanges.subscribe(staff => {
+      this.filterStaff(staff)
     })
   }
 
@@ -102,6 +109,7 @@ export class TrajectoryReportComponent {
     const data = this.mainData.filter(item => {
       this.selectedState.setValue([])
       this.selectedClassification.setValue([])
+      this.selectedStaff.setValue([])
       return ids.includes(item.position.id)
     })
     this.assignDataToPlot(data)
@@ -116,6 +124,7 @@ export class TrajectoryReportComponent {
     const data = this.mainData.filter(item => {
       this.selectedState.setValue([])
       this.selectedPositions.setValue([])
+      this.selectedStaff.setValue([])
       return year.includes(item.prospect.classification)
     })
     this.assignDataToPlot(data)
@@ -130,13 +139,32 @@ export class TrajectoryReportComponent {
     const data = this.mainData.filter(item => {
       this.selectedClassification.setValue([])
       this.selectedPositions.setValue([])
+      this.selectedStaff.setValue([])
       return state.includes(item.prospect.state)
+    })
+    this.assignDataToPlot(data)
+  }
+
+  filterStaff(staff: string[]) {
+    if (staff.length < 1) {
+      this.assignDataToPlot(this.mainData)
+      return
+    }
+    const data = this.mainData.filter(item => {
+      this.selectedClassification.setValue([])
+      this.selectedPositions.setValue([])
+      this.selectedState.setValue([])
+      return staff.includes(item.user_full_name)
     })
     this.assignDataToPlot(data)
   }
 
 
   filterProspect(prospect: Prospect) {
+    this.selectedClassification.setValue([])
+    this.selectedPositions.setValue([])
+    this.selectedState.setValue([])
+    this.selectedStaff.setValue([])
     const data = this.mainData.filter(item => {
       return item.prospect.id === prospect.id
     })

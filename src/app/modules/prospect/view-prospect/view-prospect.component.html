@@ -1,6 +1,10 @@
 <div class="w-100 d-flex justify-content-between">
-  <div *ngIf="(authService.currentUser$ | async).groups[0] !== permissions.ViewOnly"
-       class="p-2 d-flex justify-content-end">
+  <div
+    *ngIf="
+      (authService.currentUser$ | async).groups[0] !== permissions.ViewOnly
+    "
+    class="p-2 d-flex justify-content-end"
+  >
     <button
       (click)="exportListToExcel()"
       [disabled]="checkedIds.length < 1"
@@ -10,7 +14,12 @@
       Export Selected
     </button>
   </div>
-  <div *ngIf="(authService.currentUser$ | async).groups[0] !== permissions.ViewOnly" nz-row>
+  <div
+    *ngIf="
+      (authService.currentUser$ | async).groups[0] !== permissions.ViewOnly
+    "
+    nz-row
+  >
     <div class="p-2 d-flex justify-content-end">
       <button
         (click)="exportCompleteListToExcel()"
@@ -59,7 +68,10 @@
     <tr class="align-content-center">
       <th
         (nzCheckedChange)="onAllChecked($event)"
-        *ngIf="(authService.currentUser$ | async).groups[0] !== permissions.ViewOnly"
+        *ngIf="
+            (authService.currentUser$ | async).groups[0] !==
+            permissions.ViewOnly
+          "
         [(nzChecked)]="checked"
         [nzIndeterminate]="indeterminate"
         nzEllipsis
@@ -141,16 +153,23 @@
           </div>
         </nz-dropdown-menu>
       </th>
-      <th nzRight nzWidth="200px">
+      <th
+        *ngIf="!(authService.currentUser$ | async).reel_eval_admin"
+        [nzColumnKey]="listOfSort[7]"
+        [nzSortFn]="true"
+        nzRight
+        nzWidth="130px"
+      >
         Score
       </th>
-      <th nzRight nzWidth="200px">
-        IGA Score
-      </th>
+      <th nzRight nzWidth="100px">IGA Score</th>
       <th
-        *ngIf="(authService.currentUser$ | async).groups[0] !== permissions.ViewOnly  &&
-              (authService.currentUser$ | async).groups[0] !==
-              permissions.GradeProspects"
+        *ngIf="
+            (authService.currentUser$ | async).groups[0] !==
+              permissions.ViewOnly &&
+            (authService.currentUser$ | async).groups[0] !==
+              permissions.GradeProspects
+          "
         class="text-align-center ant-table-column-title"
         nzRight
         nzWidth="150px"
@@ -217,50 +236,57 @@
             <input formControlName="video_link" nz-input/>
           </span>
       </td>
+      <td
+        *ngIf="!(authService.currentUser$ | async).reel_eval_admin"
+        nzRight
+      ></td>
+      <td></td>
       <td nzRight>
-          <span (click)="isSaveNew(false)" class="p-2">
-            <i
-              [nzTheme]="'twotone'"
-              [nzTooltipColor]="'blue'"
-              [nzTooltipTitle]="'Save Prospect'"
-              [nzTwotoneColor]="'#46c40a'"
-              nz-icon
-              nz-tooltip
-              nzType="save"
-            ></i>
-          </span>
-        <span
-          (nzOnCancel)="cancel()"
-          (nzOnConfirm)="confirm()"
-          [nzTooltipColor]="'blue'"
-          [nzTooltipTitle]="'Discard changes'"
-          class="p-2"
-          nz-popconfirm
-          nz-tooltip
-          nzPopconfirmPlacement="top"
-          nzPopconfirmTitle="Are you sure you want to discard changes?"
-        >
-            <i
-              [nzTheme]="'twotone'"
-              [nzTwotoneColor]="'#c00206'"
-              nz-icon
-              nzType="close-circle"
-            ></i>
-          </span>
-        <span
-          (click)="isSaveNew(true)"
-          [nzTooltipColor]="'blue'"
-          [nzTooltipTitle]="'Add New Prospect'"
-          class="p-2"
-          nz-tooltip
-        >
-            <i
-              [nzTheme]="'twotone'"
-              [nzTwotoneColor]="'#f5d50a'"
-              nz-icon
-              nzType="plus-circle"
-            ></i>
-          </span>
+        <div class="d-flex justify-content-center">
+            <span (click)="isSaveNew(false)" class="p-2">
+              <i
+                [nzTheme]="'twotone'"
+                [nzTooltipColor]="'blue'"
+                [nzTooltipTitle]="'Save Prospect'"
+                [nzTwotoneColor]="'#46c40a'"
+                nz-icon
+                nz-tooltip
+                nzType="save"
+              ></i>
+            </span>
+          <span
+            (nzOnCancel)="cancel()"
+            (nzOnConfirm)="confirm()"
+            [nzTooltipColor]="'blue'"
+            [nzTooltipTitle]="'Discard changes'"
+            class="p-2"
+            nz-popconfirm
+            nz-tooltip
+            nzPopconfirmPlacement="top"
+            nzPopconfirmTitle="Are you sure you want to discard changes?"
+          >
+              <i
+                [nzTheme]="'twotone'"
+                [nzTwotoneColor]="'#c00206'"
+                nz-icon
+                nzType="close-circle"
+              ></i>
+            </span>
+          <span
+            (click)="isSaveNew(true)"
+            [nzTooltipColor]="'blue'"
+            [nzTooltipTitle]="'Add New Prospect'"
+            class="p-2"
+            nz-tooltip
+          >
+              <i
+                [nzTheme]="'twotone'"
+                [nzTwotoneColor]="'#f5d50a'"
+                nz-icon
+                nzType="plus-circle"
+              ></i>
+            </span>
+        </div>
       </td>
     </tr>
     <tr
@@ -271,7 +297,10 @@
     >
       <td
         (nzCheckedChange)="onItemChecked(data.id, $event)"
-        *ngIf="(authService.currentUser$ | async).groups[0] !== permissions.ViewOnly"
+        *ngIf="
+            (authService.currentUser$ | async).groups[0] !==
+            permissions.ViewOnly
+          "
         [nzChecked]="setOfCheckedId.has(data.id)"
         [nzShowCheckbox]="!(currentEditIndex === i)"
       ></td>
@@ -363,22 +392,27 @@
             <input formControlName="video_link" nz-input/>
           </span>
       </td>
-      <td nzRight>
-        <span>
-        <app-badge *ngFor="let score of data.prospect_score"
-                   [text]="score.position_name + ' : ' + score.score"> </app-badge>
-        </span>
+      <td *ngIf="!(authService.currentUser$ | async).reel_eval_admin" nzRight>
+          <span>
+            <ng-container *ngFor="let score of data.prospect_score">
+              <app-badge *ngIf="score.score" [text]="score.abbreviation + ' : ' + score.score">
+              </app-badge>
+            </ng-container>
+          </span>
       </td>
       <td nzRight>
-        <span>
-        <app-badge *ngFor="let score of data.prospect_score"
-                   [text]="score.position_name + ' : ' + score.score"> </app-badge>
-        </span>
+          <span>
+            {{ data.iga_score ? data.iga_score : null }}
+          </span>
       </td>
-      <td *ngIf="(authService.currentUser$ | async).groups[0] !== permissions.ViewOnly &&
-              (authService.currentUser$ | async).groups[0] !==
-              permissions.GradeProspects"
-          nzRight
+      <td
+        *ngIf="
+            (authService.currentUser$ | async).groups[0] !==
+              permissions.ViewOnly &&
+            (authService.currentUser$ | async).groups[0] !==
+              permissions.GradeProspects
+          "
+        nzRight
       >
         <div class="d-flex justify-content-center">
             <span

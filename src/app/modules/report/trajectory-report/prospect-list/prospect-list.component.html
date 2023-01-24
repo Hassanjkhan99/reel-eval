@@ -1,8 +1,5 @@
 <div class="prospectCard">
-  <div>Name: {{prospect.first_name + ' ' + prospect.last_name}}</div>
-  <div>Classification: {{prospect.classification}}</div>
-  <div>School: {{prospect.school}}</div>
-  <div>State/Province: {{prospect.state}}</div>
+  <div><strong>{{prospect.first_name + ' ' + prospect.last_name}}</strong></div>
   <div>Score: {{prospect.score ? prospect.score : 0}}</div>
-  <div>IGA Score: {{prospect.iga_score ? prospect.iga_score : 0}}</div>
+  <div>IGA Score: {{prospect.iga_score ? prospect.iga_score : null}}</div>
 </div>

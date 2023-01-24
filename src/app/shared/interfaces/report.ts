@@ -19,6 +19,8 @@ export interface Result {
   position: Position;
   score: number;
   iga_score?: number;
+  user: number;
+  user_full_name: string;
 }
 
 export interface Report {
