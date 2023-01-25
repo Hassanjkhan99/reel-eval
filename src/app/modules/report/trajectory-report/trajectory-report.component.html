@@ -12,7 +12,7 @@
     >
       <div nz-col nzSpan="5" style="margin: 5px">
         <h5 class="d-flex justify-content-center">Staff Member</h5>
-        <nz-select [formControl]="selectedStaff" class="w-100" nzMode="multiple" nzPlaceHolder="select staff">
+        <nz-select [formControl]="selectedStaffs" class="w-100" nzMode="multiple" nzPlaceHolder="select staff">
           <nz-option *ngFor="let staff of staffs" [nzLabel]="staff"
                      [nzValue]="staff"></nz-option>
         </nz-select>
@@ -27,7 +27,7 @@
       <div nz-col nzSpan="5" style="margin: 5px">
         <h5 class="d-flex justify-content-center">Classification</h5>
         <nz-select
-          [formControl]="selectedClassification"
+          [formControl]="selectedClassifications"
           class="w-100"
           nzMode="multiple"
           nzPlaceHolder="Select Classification"
@@ -37,7 +37,7 @@
       </div>
       <div nz-col nzSpan="5" style="margin: 5px">
         <h5 class="d-flex justify-content-center">State/Province</h5>
-        <nz-select [formControl]="selectedState" class="w-100" nzMode="multiple" nzPlaceHolder="select state/province">
+        <nz-select [formControl]="selectedStates" class="w-100" nzMode="multiple" nzPlaceHolder="select state/province">
           <nz-option *ngFor="let state of states" [nzLabel]="state"
                      [nzValue]="state"></nz-option>
         </nz-select>
@@ -63,7 +63,8 @@
       </div>
       <div class="container-list w-100">
         <span *ngFor="let prospect of prospectList; let i = index">
-          <app-prospect-list (click)="filterProspect(prospect)" [prospect]="prospect"></app-prospect-list>
+          <app-prospect-list (click)="filterProspect(prospect)" [prospect]="prospect"
+                             [selectedProspect]="selectedProspect"></app-prospect-list>
         </span>
       </div>
       <button (click)="reset()" class="w-100 m-t-5" nz-button nzType="primary">Reset Players Filter</button>

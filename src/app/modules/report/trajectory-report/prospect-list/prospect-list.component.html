@@ -1,4 +1,4 @@
-<div class="prospectCard">
+<div [class.active]="selectedProspect === prospect.id" class="prospectCard">
   <div><strong>{{prospect.first_name + ' ' + prospect.last_name}}</strong></div>
   <div>Score: {{prospect.score ? prospect.score : 0}} | IGA
     Score: {{prospect.iga_score ? prospect.iga_score : null}}</div>

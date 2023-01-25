@@ -14,6 +14,7 @@ import {Prospect} from "../../../../shared/interfaces/report";
 })
 export class ProspectListComponent implements OnInit {
   @Input() prospect: ProspectWithScore;
+  @Input() selectedProspect: number
 
   constructor() {
   }

@@ -1,5 +1,5 @@
 .prospectCard {
-  background: rgb(91, 156, 255);
+  background: grey;
   color: white;
   padding: 10px;
   margin: 5px;
@@ -7,4 +7,8 @@
   text-align: center;
   box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
   cursor: pointer;
+}
+
+.active {
+  background: rgb(91, 156, 255);
 }

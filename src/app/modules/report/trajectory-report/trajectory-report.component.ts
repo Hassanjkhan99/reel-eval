@@ -34,16 +34,23 @@ export class TrajectoryReportComponent {
   public scatterChartType: ChartType = 'scatter';
 
   selectedPositions: FormControl = new FormControl<number[]>([])
-  selectedClassification: FormControl = new FormControl<string[]>([])
-  selectedState: FormControl = new FormControl<string[]>([])
-  selectedStaff: FormControl = new FormControl<string[]>([])
+  selectedClassifications: FormControl = new FormControl<string[]>([])
+  selectedStates: FormControl = new FormControl<string[]>([])
+  selectedStaffs: FormControl = new FormControl<string[]>([])
   scoreProspect: number[];
   private reportData: { x: number; y: number }[] = [];
   positions: Position[] = []
   classification: string[] = []
   states: string[] = []
   staffs: string[] = []
-  private mainData: Result[] = []
+  activeFilter = {
+    selectedPositions: [],
+    selectedClassifications: [],
+    selectedStates: [],
+    selectedStaffs: []
+  }
+  selectedProspect: number = -1;
+  private mainData: Result[] = [];
 
 
   constructor(private reportService: ReportService, private cdr: ChangeDetectorRef) {
@@ -76,17 +83,47 @@ export class TrajectoryReportComponent {
       this.assignDataToPlot(e)
     })
     this.selectedPositions.valueChanges.subscribe(ids => {
-      this.filterPosition(ids)
+      this.activeFilter.selectedPositions = ids || []
+      this.applyFilters()
     })
-    this.selectedClassification.valueChanges.subscribe(year => {
-      this.filterClassification(year)
+    this.selectedClassifications.valueChanges.subscribe(years => {
+      this.activeFilter.selectedClassifications = years || []
+      this.applyFilters()
     })
-    this.selectedState.valueChanges.subscribe(state => {
-      this.filterState(state)
+    this.selectedStates.valueChanges.subscribe(states => {
+      this.activeFilter.selectedStates = states || []
+      this.applyFilters()
     })
-    this.selectedStaff.valueChanges.subscribe(staff => {
-      this.filterStaff(staff)
+    this.selectedStaffs.valueChanges.subscribe(staffs => {
+      this.activeFilter.selectedStaffs = staffs || []
+      this.applyFilters()
     })
+  }
+
+  applyFilters() {
+    let data = this.mainData
+    for (const activeFilterKey in this.activeFilter) {
+      if (activeFilterKey === 'selectedStates') {
+        data = this.filterState(this.activeFilter.selectedStates, data)
+      }
+      if (activeFilterKey === 'selectedStaffs') {
+        data = this.filterStaff(this.activeFilter.selectedStaffs, data)
+      }
+      if (activeFilterKey === 'selectedClassifications') {
+        data = this.filterClassification(this.activeFilter.selectedClassifications, data)
+      }
+      if (activeFilterKey === 'selectedPositions') {
+        data = this.filterPosition(this.activeFilter.selectedPositions, data)
+      }
+    }
+    this.assignDataToPlot(data)
+  }
+
+  resetFilters() {
+    this.selectedStates.reset()
+    this.selectedStaffs.reset()
+    this.selectedClassifications.reset()
+    this.selectedPositions.reset()
   }
 
   assignDataToPlot(report: Result[]) {
@@ -101,70 +138,47 @@ export class TrajectoryReportComponent {
     this.cdr.detectChanges()
   }
 
-  filterPosition(ids: number[]) {
+  filterPosition(ids: number[], data: Result[]): Result[] {
     if (ids.length < 1) {
-      this.assignDataToPlot(this.mainData)
-      return
+      return data;
     }
-    const data = this.mainData.filter(item => {
-      this.selectedState.setValue([])
-      this.selectedClassification.setValue([])
-      this.selectedStaff.setValue([])
+    return data.filter(item => {
       return ids.includes(item.position.id)
     })
-    this.assignDataToPlot(data)
   }
 
 
-  filterClassification(year: string[]) {
+  filterClassification(year: string[], data: Result[]): Result[] {
     if (year.length < 1) {
-      this.assignDataToPlot(this.mainData)
-      return
+      return data;
     }
-    const data = this.mainData.filter(item => {
-      this.selectedState.setValue([])
-      this.selectedPositions.setValue([])
-      this.selectedStaff.setValue([])
+    return data.filter(item => {
       return year.includes(item.prospect.classification)
     })
-    this.assignDataToPlot(data)
   }
 
 
-  filterState(state: string[]) {
+  filterState(state: string[], data: Result[]): Result[] {
     if (state.length < 1) {
-      this.assignDataToPlot(this.mainData)
-      return
+      return data;
     }
-    const data = this.mainData.filter(item => {
-      this.selectedClassification.setValue([])
-      this.selectedPositions.setValue([])
-      this.selectedStaff.setValue([])
+    return data.filter(item => {
       return state.includes(item.prospect.state)
     })
-    this.assignDataToPlot(data)
   }
 
-  filterStaff(staff: string[]) {
+  filterStaff(staff: string[], data: Result[]): Result[] {
     if (staff.length < 1) {
-      this.assignDataToPlot(this.mainData)
-      return
+      return data;
     }
-    const data = this.mainData.filter(item => {
-      this.selectedClassification.setValue([])
-      this.selectedPositions.setValue([])
-      this.selectedState.setValue([])
+    return data.filter(item => {
       return staff.includes(item.user_full_name)
     })
-    this.assignDataToPlot(data)
   }
 
 
   filterProspect(prospect: Prospect) {
-    this.selectedClassification.setValue([])
-    this.selectedPositions.setValue([])
-    this.selectedState.setValue([])
-    this.selectedStaff.setValue([])
+    this.selectedProspect = prospect.id
     const data = this.mainData.filter(item => {
       return item.prospect.id === prospect.id
     })
@@ -226,6 +240,7 @@ export class TrajectoryReportComponent {
   }
 
   reset() {
+    this.selectedProspect = -1
     this.assignDataToPlot(this.mainData)
   }
 }

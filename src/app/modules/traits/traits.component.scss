@@ -9,6 +9,7 @@ i {
   background: white;
   width: 100%;
   display: flex;
+  padding: 0 10px 0 10px;
 
   .offense {
     display: flex;
@@ -21,9 +22,7 @@ i {
     border: 2px solid #025496;
     color: white;
     cursor: pointer;
-    margin-left: 4px;
-    margin-bottom: 4px;
-    margin-top: 4px;
+    margin: 2px;
   }
 
   .defense {
@@ -38,9 +37,7 @@ i {
 
     color: white;
     cursor: pointer;
-    margin-left: 4px;
-    margin-bottom: 4px;
-    margin-top: 4px;
+    margin: 2px;
   }
 
   .special-team {
@@ -54,9 +51,7 @@ i {
     border: 2px solid #025496;
     color: white;
     cursor: pointer;
-    margin-left: 4px;
-    margin-bottom: 4px;
-    margin-top: 4px;
+    margin: 2px;
   }
 }
 
