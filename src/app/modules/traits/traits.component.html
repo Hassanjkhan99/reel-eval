@@ -1,6 +1,6 @@
 <div
   *ngIf="(authService.currentUser$ | async).groups[0] === permissions.clubAdmin"
-  class="p-1 w-100 d-flex justify-content-center "
+  class="p-1 w-100 d-flex justify-content-center"
   nz-row
   nzGutter="6"
 >
@@ -49,11 +49,11 @@
         </div>
       </div>
     </div>
-    <div class="d-flex align-items-end mt-1" nz-col nzSpan="1">
-      <button (click)="addNewTraitRow()" nz-button nzType="primary">
-        Add Trait
-      </button>
-    </div>
+  </div>
+  <div class="d-flex align-items-end mt-1" nz-col nzSpan="2">
+    <button (click)="addNewTraitRow()" nz-button nzType="primary">
+      Add Trait
+    </button>
   </div>
 
 </div>

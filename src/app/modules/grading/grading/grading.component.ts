@@ -50,6 +50,7 @@ export class GradingComponent implements OnInit {
       this.position = this.selectedPosition.position_name;
       this.prospect = this.selectedProspect;
       this.gradeService.getPlays(this.selectedPosition.id, this.selectedProspect.id).subscribe(response => {
+        console.log(response)
         this.assignData(response)
       }, err => {
         this.addRow()
