@@ -49,8 +49,12 @@ export class WeightsComponent implements OnChanges, AfterViewInit {
     if (changes?.selectedChanged?.currentValue) {
       const fbName = changes.selectedChanged.currentValue.toString()
       this.subArr[fbName] = this.traits.get(fbName).valueChanges.pipe(distinctUntilChanged(), debounceTime(3000)).subscribe(e => {
+        const index = this.list.findIndex(trait => {
+          return trait.id === parseInt(fbName)
+        })
         if (!(this.traitsService.traitsArr.includes(parseInt(fbName))) && e > 0) {
           this.traitsService.postTraitByPosition({
+            order: index,
             trait: parseInt(fbName),
             position: this.position.id,
             weight: e / 100
@@ -59,6 +63,7 @@ export class WeightsComponent implements OnChanges, AfterViewInit {
           });
         } else {
           this.traitsService.editTraitByPosition({
+            order: index,
             trait: parseInt(fbName),
             position: this.position.id,
             weight: e / 100
@@ -71,7 +76,6 @@ export class WeightsComponent implements OnChanges, AfterViewInit {
     }
     if (changes?.unSelectedChanged?.currentValue) {
       const fbName = changes.unSelectedChanged.currentValue
-      console.log({fbName})
       const sub = this.subArr[fbName]
       sub.unsubscribe()
     }
@@ -79,6 +83,17 @@ export class WeightsComponent implements OnChanges, AfterViewInit {
 
   drop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.list, event.previousIndex, event.currentIndex);
+    this.list.forEach((trait, index) => {
+      const weight = this.traits.get(trait.id.toString()).value
+      this.traitsService.editTraitByPosition({
+        order: index,
+        trait: trait.id,
+        position: this.position.id,
+        weight: weight / 100
+      }).subscribe(e => {
+      });
+    })
+
   }
 
   ngAfterViewInit(): void {

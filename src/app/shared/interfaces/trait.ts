@@ -12,6 +12,7 @@ export interface TraitsApiResponse {
 }
 
 export interface PostTraitsByPosition {
+  order: number;
   trait: number;
   position: number;
   weight: number;

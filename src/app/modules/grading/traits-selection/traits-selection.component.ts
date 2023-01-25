@@ -102,8 +102,6 @@ export class TraitsSelectionComponent implements OnInit {
   }
 
   unSelectItem(item: Trait) {
-
-
     this.unSelectedTraits.unshift(item);
     this.setCombinedArray();
     this.traits.removeControl(item.id.toString());
