@@ -42,6 +42,11 @@
                      [nzValue]="state"></nz-option>
         </nz-select>
       </div>
+      <div class="d-flex justify-content-end align-items-end p-1" nz-col nzSpan="3">
+        <button (click)="resetFilters()" nz-button nzType="primary">
+          Reset Filter
+        </button>
+      </div>
     </div>
     <div class="box-shadow w-100 m-1" nz-row>
       <canvas

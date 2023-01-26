@@ -178,6 +178,7 @@ export class TrajectoryReportComponent {
 
 
   filterProspect(prospect: Prospect) {
+    this.resetFilters()
     this.selectedProspect = prospect.id
     const data = this.mainData.filter(item => {
       return item.prospect.id === prospect.id
