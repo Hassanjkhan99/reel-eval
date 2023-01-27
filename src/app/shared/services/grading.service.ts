@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {main_url} from "../../../environments/environment";
-import {Grading} from "../interfaces/grading";
+import {GradeSummary, Grading} from "../interfaces/grading";
 import {Observable, tap} from "rxjs";
 import {Position, Prospect} from "../interfaces/prospect.interface";
 import {LoadingService} from "./loading.service";
@@ -64,5 +64,16 @@ export class GradingService {
     }))
   }
 
+  getGradeSummary(positionId: number, prospectId: number): Observable<GradeSummary> {
+    return this.http.get<GradeSummary>(main_url + 'grade/overall_summary/' + positionId + '/' + prospectId + '/').pipe(tap((val) => {
+      this.loadingService.loading.next(false)
+    }))
+  }
+
+  editGradeSummary(positionId: number, prospectId: number, payload: string): Observable<GradeSummary> {
+    return this.http.patch<GradeSummary>(main_url + 'grade/overall_summary/' + positionId + '/' + prospectId + '/', {summary: payload}).pipe(tap((val) => {
+      this.loadingService.loading.next(false)
+    }))
+  }
 
 }

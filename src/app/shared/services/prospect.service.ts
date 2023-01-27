@@ -92,6 +92,12 @@ export class ProspectService {
     }));
   }
 
+  editArchivedProspect(id: number, payload: Prospect): Observable<Prospect> {
+    return this.http.patch<Prospect>(`${main_url}archived_prospects/${id}/`, payload).pipe(tap((val) => {
+      this.loadingService.loading.next(false)
+    }));
+  }
+
   unArchiveProspect(id: number): Observable<Prospect> {
     return this.http.patch<Prospect>(
       `${main_url}archived_prospects/${id}/`,

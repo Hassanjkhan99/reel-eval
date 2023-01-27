@@ -24,7 +24,7 @@ export class ProspectListComponent implements OnInit {
 
 }
 
-interface ProspectWithScore extends Prospect {
+export interface ProspectWithScore extends Prospect {
   iga_score: number;
   score: number
 }

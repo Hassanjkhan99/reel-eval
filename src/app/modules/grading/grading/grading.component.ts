@@ -11,11 +11,12 @@ import {Position} from "../../../shared/interfaces/positions.interface";
 import {Prospect} from "../../../shared/interfaces/prospect.interface";
 import {Grade, Trait} from "../../../shared/interfaces/grading";
 import {LoadingService} from "../../../shared/services/loading.service";
+import {FormControl, ReactiveFormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-grading',
   standalone: true,
-  imports: [CommonModule, NzTableModule, NzIconModule, NzButtonModule, NzToolTipModule, NzModalModule],
+  imports: [CommonModule, NzTableModule, NzIconModule, NzButtonModule, NzToolTipModule, NzModalModule, ReactiveFormsModule],
   templateUrl: './grading.component.html',
   styleUrls: ['./grading.component.scss'],
 })
@@ -32,6 +33,8 @@ export class GradingComponent implements OnInit {
   today: number = Date.now();
   isVisible = false;
   isOkLoading = false;
+  gradeSummary: string
+  summary = new FormControl('')
   private selectedPosition: Position;
   private selectedProspect: Prospect;
 
@@ -57,6 +60,10 @@ export class GradingComponent implements OnInit {
       })
 
     }
+    this.gradeService.getGradeSummary(this.selectedPosition.id, this.selectedProspect.id).subscribe(summary => {
+      this.gradeSummary = summary.summary
+      this.summary.setValue(summary.summary)
+    })
 
   }
 
@@ -122,6 +129,9 @@ export class GradingComponent implements OnInit {
   }
 
   handleOk(): void {
+    this.gradeService.editGradeSummary(this.selectedPosition.id, this.selectedProspect.id, this.summary.value).subscribe(response => {
+      this.gradeSummary = response.summary
+    })
     this.isOkLoading = true;
     setTimeout(() => {
       this.isVisible = false;

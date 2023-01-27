@@ -41,3 +41,11 @@ export interface Grading {
   overall_position_trait: OverallPositionTrait[];
   overall_grade: number;
 }
+
+
+export interface GradeSummary {
+  user: string;
+  summary: string;
+  modified: string;
+}
+

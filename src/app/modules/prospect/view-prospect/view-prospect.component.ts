@@ -141,7 +141,7 @@ export class ViewProspectComponent {
     'state',
     'school',
     'video_link',
-    'score_prospect',
+    'score_prospect__score',
     'iga_score'
   ];
   listOfSort = [
@@ -152,7 +152,7 @@ export class ViewProspectComponent {
     'state',
     'school',
     'video_link',
-    'score_prospect',
+    'score_prospect__score',
     'iga_score'
   ];
 
@@ -164,7 +164,7 @@ export class ViewProspectComponent {
     state: false,
     school: false,
     video_link: false,
-    score_prospect: false,
+    score_prospect__score: false,
     iga_score: false
   };
   searchValue = {
@@ -175,7 +175,7 @@ export class ViewProspectComponent {
     state: '',
     school: '',
     video_link: '',
-    score_prospect: '',
+    score_prospect__score: '',
     iga_score: ''
 
   };
@@ -189,6 +189,7 @@ export class ViewProspectComponent {
     school: new FormControl(''),
     video_link: new FormControl(''),
     archived: new FormControl(false),
+    score: new FormControl(null)
   });
 
   currentEditIndex: number;
@@ -264,7 +265,6 @@ export class ViewProspectComponent {
       );
       return;
     }
-    // this.listOfColumns[2].width = '600px';
     this.currentEditIndex = i;
     this.positionFormControl.setValue(this.dataSet[i].position)
     this.prospectForm.setValue({
@@ -276,31 +276,57 @@ export class ViewProspectComponent {
       school: this.dataSet[i].school,
       video_link: this.dataSet[i].video_link,
       archived: false,
+      score: this.dataSet[i].iga_score
     });
   }
 
   isSave(i: number) {
-    // this.listOfColumns[2].width = '250px';
-    this.prospectSer
-      .editProspect(this.dataSet[i].id, {
-        ...this.dataSet[i],
-        ...this.prospectForm.value,
-      })
-      .subscribe((x) => {
-        this.notificationService.success(
-          'Success',
-          'Your changes has been saved!'
-        );
-        this.dataSet = this.dataSet.map((item) => {
-          if (item.id === x.id) {
-            return x;
-          } else {
-            return item;
-          }
+    if (!this.achievedTable) {
+      this.prospectSer
+        .editProspect(this.dataSet[i].id, {
+          ...this.dataSet[i],
+          ...this.prospectForm.value,
+        })
+        .subscribe((x) => {
+          this.notificationService.success(
+            'Success',
+            'Your changes has been saved!'
+          );
+          this.dataSet = this.dataSet.map((item) => {
+            if (item.id === x.id) {
+              return x;
+            } else {
+              return item;
+            }
+          });
+          this.currentEditIndex = -1;
+          this.cdr.detectChanges();
         });
-        this.currentEditIndex = -1;
-        this.cdr.detectChanges();
-      });
+    }
+
+    if (this.achievedTable) {
+      this.prospectSer
+        .editArchivedProspect(this.dataSet[i].id, {
+          ...this.dataSet[i],
+          ...this.prospectForm.value,
+        })
+        .subscribe((x) => {
+          this.notificationService.success(
+            'Success',
+            'Your changes has been saved!'
+          );
+          this.dataSet = this.dataSet.map((item) => {
+            if (item.id === x.id) {
+              return x;
+            } else {
+              return item;
+            }
+          });
+          this.currentEditIndex = -1;
+          this.cdr.detectChanges();
+        });
+    }
+
   }
 
   isDelete(i: number) {
@@ -309,7 +335,6 @@ export class ViewProspectComponent {
         'Success',
         'Selected Prospect has been deleted!'
       );
-      // this.dataSet.splice(i,1)
       this.dataSet = this.dataSet
         .map((item) => {
           if (item.id == this.dataSet[i].id) {

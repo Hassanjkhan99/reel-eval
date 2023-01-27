@@ -67,7 +67,6 @@ export class TabsComponent implements OnInit {
         this.unArchivedClassificationList = x.results.map(e => {
           return {name: e.classification}
         })
-        console.log(this.unArchivedClassificationList)
         this.totalUnArchived = x.count
       }
     )

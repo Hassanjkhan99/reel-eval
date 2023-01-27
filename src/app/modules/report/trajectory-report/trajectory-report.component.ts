@@ -14,7 +14,7 @@ import {NzSelectModule} from "ng-zorro-antd/select";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {StaffSelectComponent} from "../../../shared/components/staff-select/staff-select.component";
 import {Position, Prospect, Result} from "../../../shared/interfaces/report";
-import {ProspectListComponent} from "./prospect-list/prospect-list.component";
+import {ProspectListComponent, ProspectWithScore} from "./prospect-list/prospect-list.component";
 import {NzButtonModule} from "ng-zorro-antd/button";
 
 
@@ -26,7 +26,7 @@ import {NzButtonModule} from "ng-zorro-antd/button";
   styleUrls: ['./trajectory-report.component.scss'],
 })
 export class TrajectoryReportComponent {
-  prospectList: Prospect[] = [];
+  prospectList: ProspectWithScore[] = [];
   // scatter
   public scatterChartOptions: ChartConfiguration['options'];
   public scatterChartLabels: string[] = [];

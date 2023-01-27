@@ -240,7 +240,13 @@
         *ngIf="!(authService.currentUser$ | async).reel_eval_admin"
         nzRight
       ></td>
-      <td></td>
+      <td nzRight>
+        <span *ngIf="(authService.currentUser$ | async).reel_eval_admin">
+        <input class="ant-input ant-input-focused" formControlName="score" min="0" nz-col nz-input nzSize="small"
+               step="1"
+               type="number">
+        </span>
+      </td>
       <td nzRight>
         <div class="d-flex justify-content-center">
             <span (click)="isSaveNew(false)" class="p-2">
@@ -401,9 +407,17 @@
           </span>
       </td>
       <td nzRight>
-          <span>
+         <span *ngIf="currentEditIndex != i">
             {{ data.iga_score ? data.iga_score : null }}
           </span>
+        <span *ngIf="!(authService.currentUser$ | async).reel_eval_admin && currentEditIndex == i">
+            {{ data.iga_score ? data.iga_score : null }}
+          </span>
+        <span *ngIf="(authService.currentUser$ | async).reel_eval_admin && currentEditIndex == i">
+        <input class="ant-input ant-input-focused" formControlName="score" min="0" nz-col nz-input nzSize="small"
+               step="1"
+               type="number">
+        </span>
       </td>
       <td
         *ngIf="

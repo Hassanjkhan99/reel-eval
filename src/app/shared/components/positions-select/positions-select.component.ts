@@ -59,7 +59,6 @@ export class PositionsSelectComponent implements OnInit, ControlValueAccessor {
 
   registerOnTouched(fn: (val: FormControlStatus) => unknown): void {
     this.position.statusChanges.pipe(untilDestroyed(this)).subscribe(value => {
-      console.log(this.position.value)
       fn(value)
     })
   }
@@ -75,11 +74,8 @@ export class PositionsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   async writeValue(val: Position): Promise<void> {
-    console.log(this.position?.value)
     if (val) {
       this.position.setValue(val.id);
-      console.log(this.position.value)
-      console.log(this.positions)
       this.cdr.detectChanges()
     }
   }
