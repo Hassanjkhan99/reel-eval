@@ -4,6 +4,7 @@ import {AuthenticationService} from '../../shared/services/authentication.servic
 import {Router} from '@angular/router';
 import {NotificationService} from '../../shared/services/notification.service';
 import {LoadingService} from "../../shared/services/loading.service";
+import {UserMe} from "../../shared/interfaces/authentication.interface";
 
 @Component({
   templateUrl: './sign-up-2.component.html',
@@ -86,6 +87,14 @@ export class SignUp2Component {
     );
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    const isAuth = await this.checkUser()
+    if (isAuth) {
+      this.router.navigate(['app/dashboard']);
+    }
+  }
+
+  async checkUser(): Promise<UserMe | undefined> {
+    return await this.authService.checkLogin().toPromise()
   }
 }

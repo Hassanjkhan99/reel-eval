@@ -37,11 +37,6 @@ export class JwtInterceptor implements HttpInterceptor {
         this.router.navigateByUrl('app/authentication/login')
       } else if (status == 500) {
         this.notification.warning('warning', 'An unexpected error occurred.');
-      } else if (status == 403) {
-        this.notification.error(
-          'Error', error.error['details']
-        );
-        this.router.navigateByUrl('app/authentication/login')
       } else if (status == 400 && 'non_field_errors' in error.error) {
         this.notification.error(
           'Error',

@@ -8,7 +8,7 @@
   </p>
   <nz-list nzGrid>
     <div
-      [formGroup]="traits"
+      (cdkDropListDropped)="drop($event)"
       [nzGutter]="8"
       cdkDropList
       nz-row
@@ -16,9 +16,7 @@
       <div *ngFor="let item of list" [nzSpan]="24" nz-col>
         <nz-list-item>
           <app-pill-with-input
-            [formControlName]="item.id"
             [item]="item"
-            [remainingLimit]="remainingValue"
           ></app-pill-with-input>
         </nz-list-item>
       </div>
@@ -27,12 +25,12 @@
 </div>
 <div class="p-2 my-2 bordered">
   <h4>Total: {{ total }}</h4>
-  <h4>Remaining: {{ remainingValue }}</h4>
+  <h4>Remaining: {{  100 - total }}</h4>
 </div>
 
 <button
   (click)="startGrading()"
-  [disabled]="remainingValue != 0"
+  [disabled]="(100 - total) != 0"
   [nzLoading]="loadingService.loading | async"
   nz-button
   nzBlock

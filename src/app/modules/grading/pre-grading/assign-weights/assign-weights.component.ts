@@ -8,20 +8,19 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {Trait} from '../../../../shared/interfaces/trait';
-import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {TraitByPos} from '../../../../shared/interfaces/trait';
+import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {NzGridModule} from 'ng-zorro-antd/grid';
 import {NzListModule} from 'ng-zorro-antd/list';
 import {PillWithInputComponent} from './pill-with-input/pill-with-input.component';
-import {DragDropModule,} from '@angular/cdk/drag-drop';
+import {CdkDragDrop, DragDropModule, moveItemInArray,} from '@angular/cdk/drag-drop';
 import {UntilDestroy} from '@ngneat/until-destroy';
 import {SharedModule} from '../../../../shared/shared.module';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import {Router, RouterLink} from '@angular/router';
 import {Position} from '../../../../shared/interfaces/positions.interface';
-import {Prospect} from '../../../../shared/interfaces/prospect.interface';
-import {GradingService} from '../../../../shared/services/grading.service';
 import {LoadingService} from "../../../../shared/services/loading.service";
+import {TraitsService} from "../../../../shared/services/traits.service";
 
 @UntilDestroy()
 @Component({
@@ -43,21 +42,16 @@ import {LoadingService} from "../../../../shared/services/loading.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AssignWeightsComponent implements OnChanges, AfterViewInit {
-  @Input() list: Trait[] = [];
+  @Input() list: TraitByPos[] = [];
   @Input() position: Position;
-  @Input() prospect: Prospect;
-  @Input() traits: FormGroup = new FormGroup({});
-  @Input() selectedChanged: number = null;
-  @Input() unSelectedChanged: number = null;
   @Input() total: number;
-  @Input() remainingValue: number;
 
   constructor(
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
     private router: Router,
-    private gradingService: GradingService,
-    public loadingService: LoadingService
+    public loadingService: LoadingService,
+    private traitsService: TraitsService
   ) {
   }
 
@@ -69,8 +63,20 @@ export class AssignWeightsComponent implements OnChanges, AfterViewInit {
   }
 
   startGrading() {
-    this.gradingService.selectedPosition = this.position;
-    this.gradingService.selectedProspect = this.prospect;
     this.router.navigate(['/app/grading']);
+  }
+
+  drop(event: CdkDragDrop<string[]>): void {
+    moveItemInArray(this.list, event.previousIndex, event.currentIndex);
+    this.list.forEach((trait, index) => {
+      this.traitsService.editTraitByPosition({
+        order: index,
+        trait: trait.trait,
+        position: this.position.id,
+        weight: trait.weight
+      }).subscribe(e => {
+      });
+    })
+
   }
 }

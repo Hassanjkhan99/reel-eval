@@ -22,6 +22,7 @@ export class AuthenticationService {
       .post<{ detail: string }>(`${main_url}dj-rest-auth/logout/`, {})
       .pipe(
         tap((val) => {
+          this.currentUser$.next(null)
           this.loadingService.loading.next(false);
         })
       );

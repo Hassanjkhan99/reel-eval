@@ -184,9 +184,12 @@ td {
 }
 
 td {
-  padding: 0px !important;
+  padding: 0 !important;
   padding-left: 5px !important;
+  min-height: 44px;
+  height: 44px;
 }
+
 
 .ant-table.ant-table-bordered .ant-table-title {
   background: #28579d;
