@@ -119,6 +119,12 @@ export class ProspectService {
     }));
   }
 
+  deleteArchiveProspect(id: number): Observable<Prospect> {
+    return this.http.delete<Prospect>(`${main_url}archived_prospects/${id}/`).pipe(tap((val) => {
+      this.loadingService.loading.next(false)
+    }));
+  }
+
   getPositions(): Observable<Position[]> {
     return this.http
       .get<Result>(`${main_url}positions/`)

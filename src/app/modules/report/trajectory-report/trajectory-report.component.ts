@@ -38,6 +38,7 @@ export class TrajectoryReportComponent {
   selectedStates: FormControl = new FormControl<string[]>([])
   selectedStaffs: FormControl = new FormControl<string[]>([])
   scoreProspect: number[];
+  selectedProspects: number[] = [];
   private reportData: { x: number; y: number }[] = [];
   positions: Position[] = []
   classification: string[] = []
@@ -49,7 +50,6 @@ export class TrajectoryReportComponent {
     selectedStates: [],
     selectedStaffs: []
   }
-  selectedProspect: number = -1;
   private mainData: Result[] = [];
 
 
@@ -179,11 +179,19 @@ export class TrajectoryReportComponent {
 
   filterProspect(prospect: Prospect) {
     this.resetFilters()
-    this.selectedProspect = prospect.id
-    const data = this.mainData.filter(item => {
-      return item.prospect.id === prospect.id
+    const isExist = this.selectedProspects.find(selectedProspect => {
+      return selectedProspect === prospect.id
     })
-    this.assignDataToPlot(data)
+    if (isExist) {
+      this.selectedProspects = this.selectedProspects.filter(item => item != prospect.id)
+    } else {
+      this.selectedProspects.push(prospect.id)
+    }
+    let data = []
+    this.selectedProspects.forEach(prospectId => {
+      data.push(...this.mainData.filter(item => item.prospect.id === prospectId))
+    })
+    this.assignDataToPlot(data.length < 1 ? this.mainData : data)
   }
 
   // events
@@ -195,37 +203,44 @@ export class TrajectoryReportComponent {
     console.log(event, active);
   }
 
+  reset() {
+    this.selectedProspects = []
+    this.assignDataToPlot(this.mainData)
+  }
+
   private RenderScatterChart(reportData: { x: number; y: number }[], labelsData: string[]) {
-    this.scatterChartOptions = {
-      responsive: true,
-      scales: {
-        x: {
-          type: 'linear',
-          position: 'center',
-          max: 100,
-          min: 0,
-          grid: {
-            display: false
+    // @ts-ignore
+    const quadrants =
+      this.scatterChartOptions = {
+        responsive: true,
+        scales: {
+          x: {
+            type: 'linear',
+            position: 'center',
+            max: 100,
+            min: 0,
+            grid: {
+              display: false
+            },
+          },
+          y: {
+            type: 'linear',
+            position: 'center',
+            max: 100,
+            min: 0,
+            grid: {
+              display: false
+            }
+          },
+
+        },
+        plugins: {
+          legend: {
+            display: false,
           },
         },
-        y: {
-          type: 'linear',
-          position: 'center',
-          max: 100,
-          min: 0,
-          grid: {
-            display: false
-          }
-        },
 
-      },
-      plugins: {
-        legend: {
-          display: false,
-        }
-
-      }
-    };
+      };
     this.scatterChartData = {
       labels: labelsData,
       datasets: [
@@ -240,8 +255,30 @@ export class TrajectoryReportComponent {
     };
   }
 
-  reset() {
-    this.selectedProspect = -1
-    this.assignDataToPlot(this.mainData)
-  }
+
 }
+
+export const quadrants = {
+  id: 'quadrants',
+  beforeDraw(chart, args, options) {
+    const {
+      ctx,
+      chartArea: {left, top, right, bottom},
+      scales,
+    } = chart;
+
+    const midX = scales['x-axis-1'].getPixelForValue(5);
+    const midY = scales['y-axis-1'].getPixelForValue(5);
+
+    ctx.save();
+    ctx.fillStyle = options.topLeft;
+    ctx.fillRect(left, top, midX - left, midY - top);
+    ctx.fillStyle = options.topRight;
+    ctx.fillRect(midX, top, right - midX, midY - top);
+    ctx.fillStyle = options.bottomRight;
+    ctx.fillRect(midX, midY, right - midX, bottom - midY);
+    ctx.fillStyle = options.bottomLeft;
+    ctx.fillRect(left, midY, midX - left, bottom - midY);
+    ctx.restore();
+  },
+};

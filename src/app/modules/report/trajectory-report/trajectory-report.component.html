@@ -10,21 +10,37 @@
       nz-row
       style="margin-bottom: 10px"
     >
-      <div nz-col nzSpan="5" style="margin: 5px">
+      <div nz-col nzSpan="4" style="margin: 5px">
         <h5 class="d-flex justify-content-center">Staff Member</h5>
-        <nz-select [formControl]="selectedStaffs" class="w-100" nzMode="multiple" nzPlaceHolder="select staff">
-          <nz-option *ngFor="let staff of staffs" [nzLabel]="staff"
-                     [nzValue]="staff"></nz-option>
+        <nz-select
+          [formControl]="selectedStaffs"
+          class="w-100"
+          nzMode="multiple"
+          nzPlaceHolder="select staff"
+        >
+          <nz-option
+            *ngFor="let staff of staffs"
+            [nzLabel]="staff"
+            [nzValue]="staff"
+          ></nz-option>
         </nz-select>
       </div>
-      <div nz-col nzSpan="5" style="margin: 5px">
+      <div nz-col nzSpan="4" style="margin: 5px">
         <h5 class="d-flex justify-content-center">Position</h5>
-        <nz-select [formControl]="selectedPositions" class="w-100" nzMode="multiple" nzPlaceHolder="select position">
-          <nz-option *ngFor="let position of positions" [nzLabel]="position.position_name"
-                     [nzValue]="position.id"></nz-option>
+        <nz-select
+          [formControl]="selectedPositions"
+          class="w-100"
+          nzMode="multiple"
+          nzPlaceHolder="select position"
+        >
+          <nz-option
+            *ngFor="let position of positions"
+            [nzLabel]="position.position_name"
+            [nzValue]="position.id"
+          ></nz-option>
         </nz-select>
       </div>
-      <div nz-col nzSpan="5" style="margin: 5px">
+      <div nz-col nzSpan="4" style="margin: 5px">
         <h5 class="d-flex justify-content-center">Classification</h5>
         <nz-select
           [formControl]="selectedClassifications"
@@ -32,32 +48,75 @@
           nzMode="multiple"
           nzPlaceHolder="Select Classification"
         >
-          <nz-option *ngFor="let item of classification" [nzLabel]="item" [nzValue]="item"></nz-option>
+          <nz-option
+            *ngFor="let item of classification"
+            [nzLabel]="item"
+            [nzValue]="item"
+          ></nz-option>
         </nz-select>
       </div>
-      <div nz-col nzSpan="5" style="margin: 5px">
+      <div nz-col nzSpan="4" style="margin: 5px">
         <h5 class="d-flex justify-content-center">State/Province</h5>
-        <nz-select [formControl]="selectedStates" class="w-100" nzMode="multiple" nzPlaceHolder="select state/province">
-          <nz-option *ngFor="let state of states" [nzLabel]="state"
-                     [nzValue]="state"></nz-option>
+        <nz-select
+          [formControl]="selectedStates"
+          class="w-100"
+          nzMode="multiple"
+          nzPlaceHolder="select state/province"
+        >
+          <nz-option
+            *ngFor="let state of states"
+            [nzLabel]="state"
+            [nzValue]="state"
+          ></nz-option>
         </nz-select>
       </div>
-      <div class="d-flex justify-content-end align-items-end p-1" nz-col nzSpan="3">
-        <button (click)="resetFilters()" nz-button nzType="primary">
+      <div class="d-flex justify-content-end align-items-end p-1" nz-col>
+        <button
+          (click)="resetFilters()"
+          nz-button
+          nzSize="small"
+          nzType="primary"
+        >
           Reset Filter
         </button>
       </div>
     </div>
-    <div class="box-shadow w-100 m-1" nz-row>
-      <canvas
-        (chartClick)="chartClicked($event)"
-        [data]="scatterChartData"
-        [options]="scatterChartOptions"
-        [type]="scatterChartType"
-        baseChart
-        class="chart"
-      >
-      </canvas>
+    <div class="w-100 m-1" nz-row>
+      <div class="d-flex justify-content-between w-100">
+        <div class="quadrant-label-top">
+          <div style="color: green;font-weight: bold">Quality Starter</div>
+          <div style="color: green">High Ceiling</div>
+          <div style="color: red">Low Floor</div>
+        </div>
+        <div class="quadrant-label-top text-align-right">
+          <div style="color: green;font-weight: bold">Impact Player</div>
+          <div style="color: green">High Ceiling</div>
+          <div style="color: green">High floor</div>
+        </div>
+      </div>
+      <div class="w-100 box-shadow ">
+        <canvas
+          (chartClick)="chartClicked($event)"
+          [data]="scatterChartData"
+          [options]="scatterChartOptions"
+          [type]="scatterChartType"
+          baseChart
+          class="chart"
+        >
+        </canvas>
+      </div>
+      <div class="d-flex justify-content-between w-100">
+        <div class="quadrant-label-bottom">
+          <div style="color: red;font-weight: bold">Backup Caliber</div>
+          <div style="color: red">Low Ceiling</div>
+          <div style="color: red">Low Floor</div>
+        </div>
+        <div class="quadrant-label-bottom text-align-right">
+          <div style="color: green;font-weight: bold">Adequate Starter</div>
+          <div style="color: red">Low Ceiling</div>
+          <div style="color: green">High floor</div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -68,11 +127,16 @@
       </div>
       <div class="container-list w-100">
         <span *ngFor="let prospect of prospectList; let i = index">
-          <app-prospect-list (click)="filterProspect(prospect)" [prospect]="prospect"
-                             [selectedProspect]="selectedProspect"></app-prospect-list>
+          <app-prospect-list
+            (click)="filterProspect(prospect)"
+            [prospect]="prospect"
+            [selectedProspects]="selectedProspects"
+          ></app-prospect-list>
         </span>
       </div>
-      <button (click)="reset()" class="w-100 m-t-5" nz-button nzType="primary">Reset Players Filter</button>
+      <button (click)="reset()" class="w-100 m-t-5" nz-button nzType="primary">
+        Reset Players Filter
+      </button>
     </div>
   </div>
   <div></div>

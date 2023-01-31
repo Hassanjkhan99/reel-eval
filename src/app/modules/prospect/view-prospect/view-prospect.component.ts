@@ -302,9 +302,7 @@ export class ViewProspectComponent {
           this.currentEditIndex = -1;
           this.cdr.detectChanges();
         });
-    }
-
-    if (this.achievedTable) {
+    } else {
       this.prospectSer
         .editArchivedProspect(this.dataSet[i].id, {
           ...this.dataSet[i],
@@ -330,22 +328,41 @@ export class ViewProspectComponent {
   }
 
   isDelete(i: number) {
-    this.prospectSer.deleteProspect(this.dataSet[i].id).subscribe(() => {
-      this.notificationService.success(
-        'Success',
-        'Selected Prospect has been deleted!'
-      );
-      this.dataSet = this.dataSet
-        .map((item) => {
-          if (item.id == this.dataSet[i].id) {
-            return;
-          }
-          return item;
-        })
-        .filter((e) => e);
-      this.currentEditIndex = -1;
-      this.cdr.detectChanges();
-    });
+    if (!this.achievedTable) {
+      this.prospectSer.deleteProspect(this.dataSet[i].id).subscribe(() => {
+        this.notificationService.success(
+          'Success',
+          'Selected Prospect has been deleted!'
+        );
+        this.dataSet = this.dataSet
+          .map((item) => {
+            if (item.id == this.dataSet[i].id) {
+              return;
+            }
+            return item;
+          })
+          .filter((e) => e);
+        this.currentEditIndex = -1;
+        this.cdr.detectChanges();
+      });
+    } else {
+      this.prospectSer.deleteArchiveProspect(this.dataSet[i].id).subscribe(() => {
+        this.notificationService.success(
+          'Success',
+          'Selected Prospect has been deleted!'
+        );
+        this.dataSet = this.dataSet
+          .map((item) => {
+            if (item.id == this.dataSet[i].id) {
+              return;
+            }
+            return item;
+          })
+          .filter((e) => e);
+        this.currentEditIndex = -1;
+        this.cdr.detectChanges();
+      });
+    }
   }
 
   setPosition(position: any[]) {
