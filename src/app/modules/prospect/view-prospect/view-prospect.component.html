@@ -155,14 +155,15 @@
       </th>
       <th
         *ngIf="!(authService.currentUser$ | async).reel_eval_admin"
-        [nzColumnKey]="listOfSort[7]"
-        [nzSortFn]="true"
         nzRight
         nzWidth="130px"
       >
         Score
       </th>
-      <th nzRight nzWidth="100px">IGA Score</th>
+      <th [nzColumnKey]="listOfSort[8]" [nzSortFn]="true"
+          nzRight
+          nzWidth="100px">IGA Score
+      </th>
       <th
         *ngIf="
             (authService.currentUser$ | async).groups[0] !==
@@ -431,7 +432,7 @@
         <div class="d-flex justify-content-center">
             <span
               (click)="isEdit(i)"
-              *ngIf="currentEditIndex != i"
+              *ngIf="currentEditIndex != i && !achievedTable"
               [nzTooltipColor]="'blue'"
               [nzTooltipTitle]="'Edit Prospect'"
               class="p-2"

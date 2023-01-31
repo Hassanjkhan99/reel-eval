@@ -142,7 +142,7 @@ export class ViewProspectComponent {
     'school',
     'video_link',
     'score_prospect__score',
-    'iga_score'
+    'score'
   ];
   listOfSort = [
     'first_name',
@@ -153,7 +153,7 @@ export class ViewProspectComponent {
     'school',
     'video_link',
     'score_prospect__score',
-    'iga_score'
+    'score'
   ];
 
   visible = {
@@ -165,7 +165,7 @@ export class ViewProspectComponent {
     school: false,
     video_link: false,
     score_prospect__score: false,
-    iga_score: false
+    score: false
   };
   searchValue = {
     first_name: '',
@@ -176,7 +176,7 @@ export class ViewProspectComponent {
     school: '',
     video_link: '',
     score_prospect__score: '',
-    iga_score: ''
+    score: ''
 
   };
   showRow: Boolean = false;
