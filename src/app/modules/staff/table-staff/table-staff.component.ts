@@ -85,7 +85,7 @@ export class TableStaffComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private staffSer: StaffService,
     private notificationService: NotificationService,
-    protected authService: AuthenticationService,
+    public authService: AuthenticationService,
     public loadingService: LoadingService,
   ) {
   }

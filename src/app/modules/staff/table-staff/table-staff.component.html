@@ -67,7 +67,8 @@
         </div>
       </nz-dropdown-menu>
     </th>
-    <th class="text-align-left" nzWidth="250px" style="color: white">
+    <th *ngIf="!((authService.currentUser$) | async).reel_eval_admin" class="text-align-left" nzWidth="250px"
+        style="color: white">
       Permissions
     </th>
     <th
@@ -134,7 +135,7 @@
           <input class="text-align-center" formControlName="email" nz-input/>
         </span>
     </td>
-    <td>
+    <td *ngIf="!((authService.currentUser$) | async).reel_eval_admin">
         <span *ngIf="currentEditIndex != i">
           {{ data.group }}
         </span>

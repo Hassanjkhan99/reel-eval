@@ -83,20 +83,22 @@
     </div>
     <div class="w-100 m-1" nz-row>
       <div class="d-flex justify-content-between w-100">
-        <div class="quadrant-label-top">
+        <div [class.moveToOriginalPosition]="isMouseOnCanvas" class="quadrant-label-top">
           <div style="color: green;font-weight: bold">Quality Starter</div>
           <div style="color: green">High Ceiling</div>
           <div style="color: red">Low Floor</div>
         </div>
-        <div class="quadrant-label-top text-align-right">
+        <div [class.moveToOriginalPosition]="isMouseOnCanvas" class="quadrant-label-top text-align-right">
           <div style="color: green;font-weight: bold">Impact Player</div>
           <div style="color: green">High Ceiling</div>
           <div style="color: green">High floor</div>
         </div>
       </div>
-      <div class="w-100 box-shadow ">
+      <div class="w-100 box-shadow  " style="height: 60vh">
         <canvas
           (chartClick)="chartClicked($event)"
+          (mouseenter)="mouseOnCanvas()"
+          (mouseleave)="mouseOffCanvas()"
           [data]="scatterChartData"
           [options]="scatterChartOptions"
           [type]="scatterChartType"
@@ -106,12 +108,12 @@
         </canvas>
       </div>
       <div class="d-flex justify-content-between w-100">
-        <div class="quadrant-label-bottom">
+        <div [class.moveToOriginalPosition]="isMouseOnCanvas" class="quadrant-label-bottom">
           <div style="color: red;font-weight: bold">Backup Caliber</div>
           <div style="color: red">Low Ceiling</div>
           <div style="color: red">Low Floor</div>
         </div>
-        <div class="quadrant-label-bottom text-align-right">
+        <div [class.moveToOriginalPosition]="isMouseOnCanvas" class="quadrant-label-bottom text-align-right">
           <div style="color: green;font-weight: bold">Adequate Starter</div>
           <div style="color: red">Low Ceiling</div>
           <div style="color: green">High floor</div>
@@ -120,7 +122,7 @@
     </div>
   </div>
 
-  <div class="w-90 m-1" nz-col nzSpan="5">
+  <div class="w-90 m-1" nz-col nzSpan="5" style="height: 100%">
     <div>
       <div class="d-flex justify-content-center">
         <h4 class="prospect-box">Prospect List</h4>

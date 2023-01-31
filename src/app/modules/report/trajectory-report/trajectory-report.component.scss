@@ -1,6 +1,6 @@
 
 .container-list {
-  height: 56vh;
+  height: 70vh;
   background: white;
   border: 1px solid Black;
   padding: 10px;
@@ -32,14 +32,16 @@ h5 {
   -moz-transition: 1s ease-in-out;
   -o-transition: 1s ease-in-out;
   transition: 1s ease-in-out;
+}
 
-  &:hover {
-    transform: translateY(0px);
-    -webkit-transform: translateY(0px);
-    -moz-transform: translateY(0px);
-    -o-transform: translateY(0px);
-    -ms-transform: translateY(0px);
-  }
+.moveToOriginalPosition {
+  transform: translateY(0px) !important;
+  -webkit-transform: translateY(0px) !important;
+  -moz-transform: translateY(0px) !important;
+  -o-transform: translateY(0px) !important;
+  -ms-transform: translateY(0px) !important;
+
+
 }
 
 .quadrant-label-bottom {
@@ -50,12 +52,8 @@ h5 {
   -moz-transition: 1s ease-in-out;
   -o-transition: 1s ease-in-out;
   transition: 1s ease-in-out;
+}
 
-  &:hover {
-    transform: translateY(0px);
-    -webkit-transform: translateY(0px);
-    -moz-transform: translateY(0px);
-    -o-transform: translateY(0px);
-    -ms-transform: translateY(0px);
-  }
+.chart {
+  width: 100%;
 }

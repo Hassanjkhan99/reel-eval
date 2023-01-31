@@ -51,6 +51,7 @@ export class TrajectoryReportComponent {
     selectedStaffs: []
   }
   private mainData: Result[] = [];
+  public isMouseOnCanvas: boolean = false;
 
 
   constructor(private reportService: ReportService, private cdr: ChangeDetectorRef) {
@@ -62,7 +63,17 @@ export class TrajectoryReportComponent {
       this.positions = e.map(x => x.position);
       this.prospectList = e.map(x => {
         return {...x.prospect, score: x.score, iga_score: x.iga_score}
+      }).sort((a, b) => {
+        if (a.score < b.score) {
+          return a.score;
+        }
+        if (b.score < a.score) {
+          return b.score;
+        }
+        return 0;
       })
+
+
       console.log(this.prospectList)
       this.classification = e.map(x => x.prospect.classification)
       this.states = e.map(x => x.prospect.state)
@@ -133,7 +144,7 @@ export class TrajectoryReportComponent {
     this.scoreProspect = report.map(player => {
       return player.score
     })
-    this.scatterChartLabels = report.map(e => e.prospect.first_name + ' ' + e.prospect.last_name + '\n' + e.prospect.school + '\n' + e.prospect.classification + '\n' + e.prospect.state)
+    this.scatterChartLabels = report.map(e => e.prospect.first_name + ' ' + e.prospect.last_name + '\n' + e.prospect.school + '\n' + e.prospect.classification + ' ' + e.position.position_name + '\n' + e.prospect.state)
     this.RenderScatterChart(this.reportData, this.scatterChartLabels);
     this.cdr.detectChanges()
   }
@@ -200,12 +211,20 @@ export class TrajectoryReportComponent {
   }
 
   public chartHovered({event, active}: { event: ChartEvent, active: {}[] }): void {
-    console.log(event, active);
+    this
   }
 
   reset() {
     this.selectedProspects = []
     this.assignDataToPlot(this.mainData)
+  }
+
+  mouseOnCanvas() {
+    this.isMouseOnCanvas = true
+  }
+
+  mouseOffCanvas() {
+    this.isMouseOnCanvas = false
   }
 
   private RenderScatterChart(reportData: { x: number; y: number }[], labelsData: string[]) {
@@ -217,8 +236,8 @@ export class TrajectoryReportComponent {
           x: {
             type: 'linear',
             position: 'center',
-            max: 100,
-            min: 0,
+            max: 101,
+            min: -1,
             grid: {
               display: false
             },
@@ -226,8 +245,8 @@ export class TrajectoryReportComponent {
           y: {
             type: 'linear',
             position: 'center',
-            max: 100,
-            min: 0,
+            max: 101,
+            min: -1,
             grid: {
               display: false
             }
@@ -254,8 +273,6 @@ export class TrajectoryReportComponent {
       ]
     };
   }
-
-
 }
 
 export const quadrants = {
