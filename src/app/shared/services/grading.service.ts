@@ -17,7 +17,7 @@ export class GradingService {
   }
 
   getPlays(positionId: number, prospectId: number): Observable<Grading> {
-    return this.http.get<Grading>(main_url + 'grade/grade_by_position_prospect/' + positionId + '/' + prospectId).pipe(tap((val) => {
+    return this.http.get<Grading>(main_url + 'grade/grade_by_position_prospect/' + positionId + '/' + prospectId + '/').pipe(tap((val) => {
       this.loadingService.loading.next(false)
     }))
   }
@@ -29,7 +29,7 @@ export class GradingService {
   }
 
   createNewPlay(positionId: number, prospectId: number): Observable<Grading> {
-    return this.http.get<Grading>(main_url + 'grade/grade_next_play/' + positionId + '/' + prospectId).pipe(tap((val) => {
+    return this.http.get<Grading>(main_url + 'grade/grade_next_play/' + positionId + '/' + prospectId + '/').pipe(tap((val) => {
       this.loadingService.loading.next(false)
     }))
   }
