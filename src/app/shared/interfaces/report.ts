@@ -29,3 +29,4 @@ export interface Report {
   previous?: any;
   results: Result[];
 }
+

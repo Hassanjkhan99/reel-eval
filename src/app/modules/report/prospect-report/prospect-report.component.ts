@@ -1,10 +1,10 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewChild,} from '@angular/core';
+import {Component, OnInit, ViewChild,} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NzGridModule} from 'ng-zorro-antd/grid';
 import {BaseChartDirective, NgChartsModule} from 'ng2-charts';
 import {ChartConfiguration, ChartData, ChartEvent, ChartType} from 'chart.js';
 import {NzInputModule} from 'ng-zorro-antd/input';
-import _default from 'chart.js/dist/plugins/plugin.tooltip';
+import {ReportService} from '../../../shared/services/report.service';
 
 @Component({
   selector: 'app-prospect-report',
@@ -12,9 +12,10 @@ import _default from 'chart.js/dist/plugins/plugin.tooltip';
   imports: [CommonModule, NzGridModule, NgChartsModule, NzInputModule],
   templateUrl: './prospect-report.component.html',
   styleUrls: ['./prospect-report.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProspectReportComponent implements OnInit {
+  prospect: string = '';
+  position: string = '';
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   public barChartOptions: ChartConfiguration['options'] = {
     // We use these empty structures as placeholders for dynamic theming.
@@ -47,10 +48,16 @@ export class ProspectReportComponent implements OnInit {
     ],
   };
 
-  constructor() {
+  constructor(private reportService: ReportService) {
   }
 
   ngOnInit(): void {
+    this.reportService.getBarReportData(1, 76).subscribe((barData) => {
+      console.log(barData);
+      this.prospect = barData.prospect.first_name + ' ' + barData.prospect.last_name;
+      this.position = barData.position
+
+    });
   }
 
   // events
