@@ -93,6 +93,15 @@ export const CommonLayout_ROUTES: Routes = [
     },
     canActivate: [AuthGuard]
   },
+  {
+    path: 'prospect-report',
+    loadComponent: () => import('../../modules/report/prospect-report/prospect-report.component').then(c => c.ProspectReportComponent),
+    data: {
+      label: 'report',
+      path: 'report'
+    },
+    canActivate: [AuthGuard]
+  },
 
   {
     path: '**',
