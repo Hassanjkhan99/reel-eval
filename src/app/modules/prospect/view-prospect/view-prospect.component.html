@@ -1,7 +1,7 @@
 <div class="w-100 d-flex justify-content-between">
   <div
     *ngIf="
-      (authService.currentUser$ | async).groups[0] !== permissions.ViewOnly
+      (authService.currentUser$ | async).group !== permissions.ViewOnly
     "
     class="p-2 d-flex justify-content-end"
   >
@@ -16,7 +16,7 @@
   </div>
   <div
     *ngIf="
-      (authService.currentUser$ | async).groups[0] !== permissions.ViewOnly
+      (authService.currentUser$ | async).group !== permissions.ViewOnly
     "
     nz-row
   >
@@ -33,8 +33,8 @@
     <div
       *ngIf="
         !achievedTable &&
-        (authService.currentUser$ | async).groups[0] !== permissions.ViewOnly &&
-        (authService.currentUser$ | async).groups[0] !==
+        (authService.currentUser$ | async).group !== permissions.ViewOnly &&
+        (authService.currentUser$ | async).group !==
           permissions.GradeProspects
       "
       class="p-2 d-flex justify-content-end"
@@ -69,7 +69,7 @@
       <th
         (nzCheckedChange)="onAllChecked($event)"
         *ngIf="
-            (authService.currentUser$ | async).groups[0] !==
+            (authService.currentUser$ | async).group !==
             permissions.ViewOnly
           "
         [(nzChecked)]="checked"
@@ -166,9 +166,9 @@
       </th>
       <th
         *ngIf="
-            (authService.currentUser$ | async).groups[0] !==
+            (authService.currentUser$ | async).group !==
               permissions.ViewOnly &&
-            (authService.currentUser$ | async).groups[0] !==
+            (authService.currentUser$ | async).group !==
               permissions.GradeProspects
           "
         class="text-align-center ant-table-column-title"
@@ -305,7 +305,7 @@
       <td
         (nzCheckedChange)="onItemChecked(data.id, $event)"
         *ngIf="
-            (authService.currentUser$ | async).groups[0] !==
+            (authService.currentUser$ | async).group !==
             permissions.ViewOnly
           "
         [nzChecked]="setOfCheckedId.has(data.id)"
@@ -422,9 +422,9 @@
       </td>
       <td
         *ngIf="
-            (authService.currentUser$ | async).groups[0] !==
+            (authService.currentUser$ | async).group !==
               permissions.ViewOnly &&
-            (authService.currentUser$ | async).groups[0] !==
+            (authService.currentUser$ | async).group !==
               permissions.GradeProspects
           "
         nzRight

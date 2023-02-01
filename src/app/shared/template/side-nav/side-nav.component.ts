@@ -32,14 +32,16 @@ export class SideNavComponent {
             return menuItem.title === 'Staff' || menuItem.title === 'Prospects'
           })
         } else {
-          const permission = user.groups[0];
-          this.menuItems = ROUTES.filter((menuItem) =>
-            menuItem.permission.includes(permission),
+          const permission = user.group;
+          this.menuItems = ROUTES.filter((menuItem) => {
+              return menuItem.permission.includes(permission)
+            }
           );
           this.menuItems.forEach(
             (menuItem, index) =>
-              (this.menuItems[index].submenu = menuItem.submenu.filter((item) =>
-                item.permission.includes(permission),
+              (this.menuItems[index].submenu = menuItem.submenu.filter((item) => {
+                  return item.permission.includes(permission)
+                }
               ))
           );
           console.log(this.menuItems);

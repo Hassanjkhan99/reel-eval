@@ -1,7 +1,7 @@
 export enum Permissions {
-  clubAdmin = 2,
-  CreateGradeProspects = 6,
-  CreateProspects = 3,
-  GradeProspects = 5,
-  ViewOnly = 4
+  clubAdmin = 'Club Admin',
+  CreateGradeProspects = 'Create & Grade Prospects',
+  CreateProspects = 'Create Prospects',
+  GradeProspects = 'Grade Prospects',
+  ViewOnly = 'View Only'
 }

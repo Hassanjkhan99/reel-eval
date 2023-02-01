@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center align-items-center flex-column">
   <div
-    *ngIf="(authService.currentUser$ | async).groups[0] === permissions.clubAdmin"
+    *ngIf="(authService.currentUser$ | async).group === permissions.clubAdmin"
     class="p-1 w-70 d-flex justify-content-center"
     nz-row
     nzJustify="space-between"
@@ -134,7 +134,7 @@
 
       <th
         *ngIf="
-            (authService.currentUser$ | async).groups[0] ===
+            (authService.currentUser$ | async).group ===
             permissions.clubAdmin
           "
         class="Action text-align-center"
@@ -242,7 +242,7 @@
 
       <td
         *ngIf="
-            (authService.currentUser$ | async).groups[0] ===
+            (authService.currentUser$ | async).group ===
             permissions.clubAdmin
           "
       >
