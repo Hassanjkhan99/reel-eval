@@ -52,7 +52,10 @@ export class WeightsComponent implements OnChanges, AfterViewInit {
         const index = this.list.findIndex(trait => {
           return trait.id === parseInt(fbName)
         })
-        if (!(this.traitsService.traitsArr.includes(parseInt(fbName))) && e > 0) {
+        if (e < 1) {
+          return
+        }
+        if (!(this.traitsService.traitsArr.includes(parseInt(fbName)))) {
           this.traitsService.postTraitByPosition({
             order: index,
             trait: parseInt(fbName),
@@ -68,7 +71,6 @@ export class WeightsComponent implements OnChanges, AfterViewInit {
             position: this.position.id,
             weight: e / 100
           }).subscribe(e => {
-            this.traitsService.traitsArr.push(parseInt(fbName));
           });
         }
 
@@ -85,6 +87,9 @@ export class WeightsComponent implements OnChanges, AfterViewInit {
     moveItemInArray(this.list, event.previousIndex, event.currentIndex);
     this.list.forEach((trait, index) => {
       const weight = this.traits.get(trait.id.toString()).value
+      if (!weight) {
+        return
+      }
       this.traitsService.editTraitByPosition({
         order: index,
         trait: trait.id,

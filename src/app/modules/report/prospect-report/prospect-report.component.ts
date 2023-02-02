@@ -6,7 +6,9 @@ import {ChartConfiguration, ChartData, ChartEvent, ChartType} from 'chart.js';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {ReportService} from '../../../shared/services/report.service';
 import {Position, Prospect} from "../../../shared/interfaces/bar-report";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
+@UntilDestroy()
 @Component({
   selector: 'app-prospect-report',
   standalone: true,
@@ -19,15 +21,13 @@ export class ProspectReportComponent implements OnInit {
   position: Position = null;
   overallGrade: number = 0
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
-  public barChartOptions: ChartConfiguration['options'] = {
+  public barChartOptions: ChartConfiguration["options"] = {
     // We use these empty structures as placeholders for dynamic theming.
     scales: {
       x: {
         grid: {
           display: false,
-
         },
-        display: false
       },
       y: {
         min: 0,
@@ -50,6 +50,7 @@ export class ProspectReportComponent implements OnInit {
         {
           data,
           backgroundColor: 'rgb(113,192,248)',
+          barThickness: 50
         },
       ],
     };
@@ -59,6 +60,11 @@ export class ProspectReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.reportService.getPositionProspects().pipe(untilDestroyed(this)).subscribe(positionProspects => {
+
+    })
+
     this.reportService.getBarReportData(1, 76).subscribe((barData) => {
       this.prospect = barData.prospect;
       this.position = barData.position;

@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Report, Result} from '../interfaces/report';
 import {main_url} from '../../../environments/environment';
 import {map} from 'rxjs/operators';
-import {BarReport, BarReportApi} from '../interfaces/bar-report';
+import {BarReport, BarReportApi, PositionProspect, PositionProspectApi} from '../interfaces/bar-report';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +16,12 @@ export class ReportService {
   getReportData(): Observable<Result[]> {
     return this.http
       .get<Report>(`${main_url}trajectory_report/`)
+      .pipe(map((e) => e.results));
+  }
+
+  getPositionProspects(): Observable<PositionProspect[]> {
+    return this.http
+      .get<PositionProspectApi>(`${main_url}position_prospect/`)
       .pipe(map((e) => e.results));
   }
 

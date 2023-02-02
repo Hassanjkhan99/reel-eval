@@ -63,7 +63,6 @@ export class TraitsSelectionComponent implements OnInit {
     this.traitsService.getTraitByPosition(this.selectedPosition.id).subscribe((e) => {
       this.traitsService.traitsArr = []
       this.traitsByPosList = e
-      console.log(this.traitsByPosList);
       this.traitsByPosList.forEach((trait) => {
         this.traitsService.traitsArr.push(trait.trait_obj.id);
         this.selectItem(trait.trait_obj, trait.weight * 100, trait.id);
@@ -110,9 +109,16 @@ export class TraitsSelectionComponent implements OnInit {
       1
     );
     this.unselected = item.id;
-
     this.cdr.detectChanges();
-    this.traitsService.deleteTraitByPosition(this.selectedPosition.id, item.id).subscribe()
+    const isExist = this.traitsService.traitsArr.includes(item.id)
+    console.log(isExist)
+    if (isExist) {
+      this.traitsService.deleteTraitByPosition(this.selectedPosition.id, item.id).subscribe(e => {
+        const index = this.traitsService.traitsArr.findIndex((traitId) => traitId === item.id)
+        this.traitsService.traitsArr.splice(index, 1);
+        console.log(this.traitsService.traitsArr)
+      })
+    }
   }
 
 

@@ -50,3 +50,26 @@ export interface BarReport {
   position: Position;
   grade: Grade;
 }
+
+
+export interface Position {
+  id: number;
+  position_name: string;
+  abbreviation: string;
+  sob: string;
+}
+
+export interface PositionProspect {
+  id: number;
+  prospect: Prospect;
+  position: Position;
+  created: string;
+  modified: string;
+}
+
+export interface PositionProspectApi {
+  count: number;
+  next?: any;
+  previous?: any;
+  results: PositionProspect[];
+}
