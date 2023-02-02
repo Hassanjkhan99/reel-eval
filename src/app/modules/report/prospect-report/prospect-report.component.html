@@ -26,10 +26,11 @@
                    nzValue="{{prospect.id}}"></nz-option>
       </nz-select>
     </div>
-    <div *ngIf="positions.length > 1" class="m-1" nz-col nzSpan="10">
+    <div *ngIf="prospectWithPosition?.[selectedProspect?.value]?.length > 1" class="m-1" nz-col nzSpan="10">
       <h5 class="d-flex justify-content-center">Select Position</h5>
       <nz-select [formControl]="selectedPosition" class="w-100" nzPlaceHolder="Choose Position">
-        <nz-option *ngFor="let position of positions" nzLabel="{{position.position_name}}"
+        <nz-option *ngFor="let position of prospectWithPosition[selectedProspect.value]"
+                   nzLabel="{{position.position_name}}"
                    nzValue="{{position.id}}"></nz-option>
       </nz-select>
     </div>

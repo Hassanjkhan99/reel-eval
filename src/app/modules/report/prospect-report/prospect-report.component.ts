@@ -28,12 +28,9 @@ import {FormControl, ReactiveFormsModule} from '@angular/forms';
 export class ProspectReportComponent implements OnInit {
   prospect: Prospect = null;
   position: Position = null;
-  positions: Position[] = [];
   prospects: Prospect[] = [];
   selectedProspect = new FormControl(null);
   selectedPosition = new FormControl(null);
-  prospectSelected: number = null
-  positionSelected: number = null
   overallGrade: number = null;
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   public barChartOptions: ChartConfiguration['options'] = {
@@ -57,7 +54,7 @@ export class ProspectReportComponent implements OnInit {
   };
   public barChartType: ChartType = 'bar';
   public barChartData: ChartData<'bar'> = null;
-  private prospectWithPosition: { [id: number]: Position[] };
+  public prospectWithPosition: { [id: number]: Position[] };
 
   constructor(private reportService: ReportService) {
   }
@@ -81,11 +78,9 @@ export class ProspectReportComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe((positionProspects) => {
         let prospects: Prospect[] = [];
-        let positions: Position[] = [];
         prospects = positionProspects.map((prospect) => {
           return prospect.prospect;
         });
-
         const idArr = [...new Set(prospects.map((e) => e.id))];
         this.prospects = [];
         idArr.forEach((id) => {
@@ -98,33 +93,28 @@ export class ProspectReportComponent implements OnInit {
             .filter((e) => e.prospect.id === prospect.id)
             .map((e) => e.position);
         });
-        console.log(this.prospectWithPosition)
       });
 
-    this.selectedProspect.valueChanges.subscribe(id => {
-      this.barChartData = null
+    this.selectedProspect.valueChanges.subscribe((id) => {
+      this.barChartData = null;
       this.prospect = null;
       this.position = null;
-      this.overallGrade = null
-      this.prospectSelected = id
-      this.positions = []
-      this.prospectWithPosition[id].forEach(pos => {
-        this.positions.push(pos)
-      })
-      if (this.positions.length < 2) {
-        this.positionSelected = this.positions[0].id
-        this.getData(this.positionSelected, this.prospectSelected)
+      this.overallGrade = null;
+      if (this.prospectWithPosition[id].length < 2) {
+        this.selectedPosition.setValue(this.prospectWithPosition[id][0].id);
+        this.getData(this.selectedPosition.value, this.selectedProspect.value);
       }
-      console.log(this.positions)
-    })
-    this.selectedPosition.valueChanges.subscribe(id => {
-      this.barChartData = null
-      this.positionSelected = id
-      if (this.prospectSelected && this.positionSelected) {
-        this.getData(this.positionSelected, this.prospectSelected)
+    });
+    this.selectedPosition.valueChanges.subscribe((id) => {
+      this.barChartData = null;
+      if (
+        this.selectedProspect.value &&
+        this.selectedPosition.value &&
+        this.prospectWithPosition[this.selectedProspect.value].length > 1
+      ) {
+        this.getData(this.selectedPosition.value, this.selectedProspect.value);
       }
-    })
-
+    });
   }
 
   // events
@@ -135,7 +125,6 @@ export class ProspectReportComponent implements OnInit {
     event?: ChartEvent;
     active?: {}[];
   }): void {
-    console.log(event, active);
   }
 
   public chartHovered({
@@ -145,7 +134,6 @@ export class ProspectReportComponent implements OnInit {
     event?: ChartEvent;
     active?: {}[];
   }): void {
-    console.log(event, active);
   }
 
   getData(posId: number, prosId: number) {
@@ -161,6 +149,5 @@ export class ProspectReportComponent implements OnInit {
       });
       this.constructBarGraph(labels, data);
     });
-
   }
 }
