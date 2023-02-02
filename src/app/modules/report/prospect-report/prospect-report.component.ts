@@ -19,6 +19,7 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 export class ProspectReportComponent implements OnInit {
   prospect: Prospect = null;
   position: Position = null;
+  prospects: Prospect[] = []
   overallGrade: number = 0
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   public barChartOptions: ChartConfiguration["options"] = {
@@ -42,6 +43,7 @@ export class ProspectReportComponent implements OnInit {
   };
   public barChartType: ChartType = 'bar';
   public barChartData: ChartData<'bar'> = null
+  private prospectWithPosition: { [id: number]: Position[] };
 
   constructBarGraph(labels: string[], data: number[]) {
     this.barChartData = {
@@ -62,6 +64,24 @@ export class ProspectReportComponent implements OnInit {
   ngOnInit(): void {
 
     this.reportService.getPositionProspects().pipe(untilDestroyed(this)).subscribe(positionProspects => {
+      let prospects: Prospect[] = []
+      let positions: Position[] = []
+      prospects = positionProspects.map(prospect => {
+        return prospect.prospect
+      })
+      positions = positionProspects.map(prospect => {
+        return prospect.position
+      })
+      const idArr = [...new Set(prospects.map(e => e.id))]
+      this.prospects = []
+      idArr.forEach(id => {
+        this.prospects.push(prospects.find(pros => pros.id === id))
+      })
+
+      this.prospectWithPosition = {}
+      this.prospects.forEach(prospect => {
+        this.prospectWithPosition[prospect.id] = positionProspects.filter(e => e.prospect.id === prospect.id).map(e => e.position)
+      })
 
     })
 
