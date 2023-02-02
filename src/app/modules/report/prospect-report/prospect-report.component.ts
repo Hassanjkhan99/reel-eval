@@ -5,6 +5,7 @@ import {BaseChartDirective, NgChartsModule} from 'ng2-charts';
 import {ChartConfiguration, ChartData, ChartEvent, ChartType} from 'chart.js';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {ReportService} from '../../../shared/services/report.service';
+import {Position, Prospect} from "../../../shared/interfaces/bar-report";
 
 @Component({
   selector: 'app-prospect-report',
@@ -14,8 +15,9 @@ import {ReportService} from '../../../shared/services/report.service';
   styleUrls: ['./prospect-report.component.scss'],
 })
 export class ProspectReportComponent implements OnInit {
-  prospect: string = '';
-  position: string = '';
+  prospect: Prospect = null;
+  position: Position = null;
+  overallGrade: number = 0
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   public barChartOptions: ChartConfiguration['options'] = {
     // We use these empty structures as placeholders for dynamic theming.
@@ -23,10 +25,12 @@ export class ProspectReportComponent implements OnInit {
       x: {
         grid: {
           display: false,
+
         },
+        display: false
       },
       y: {
-        min: 50,
+        min: 0,
         max: 100,
       },
     },
@@ -37,25 +41,37 @@ export class ProspectReportComponent implements OnInit {
     },
   };
   public barChartType: ChartType = 'bar';
-  public barChartData: ChartData<'bar'> = {
-    labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
-    datasets: [
-      {
-        data: [65, 59, 80, 81, 56, 55, 90],
-        label: 'Series A',
-        backgroundColor: 'rgb(113,192,248)',
-      },
-    ],
-  };
+  public barChartData: ChartData<'bar'> = null
+
+  constructBarGraph(labels: string[], data: number[]) {
+    this.barChartData = {
+      labels,
+      datasets: [
+        {
+          data,
+          backgroundColor: 'rgb(113,192,248)',
+        },
+      ],
+    };
+  }
 
   constructor(private reportService: ReportService) {
   }
 
   ngOnInit(): void {
     this.reportService.getBarReportData(1, 76).subscribe((barData) => {
-      console.log(barData);
-      this.prospect = barData.prospect.first_name + ' ' + barData.prospect.last_name;
-      this.position = barData.position
+      this.prospect = barData.prospect;
+      this.position = barData.position;
+      this.overallGrade = barData.grade.overall_grade
+      console.log(barData.grade.overall_position_trait)
+      const labels = barData.grade.overall_position_trait.map(trait => {
+        return trait.position_trait.trait.trait
+      })
+      const data = barData.grade.overall_position_trait.map(trait => {
+        return trait.percentage_score
+      })
+      console.log({labels, data})
+      this.constructBarGraph(labels, data)
 
     });
   }

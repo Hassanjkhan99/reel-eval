@@ -1,22 +1,38 @@
 <div class="w-100">
   <div class="d-flex justify-content-center" nz-row>
-    <h1 style="font-weight: bold;color: darkblue">{{prospect ? prospect : 'prospect name'}}</h1>
+    <h1 style="font-weight: bold; color: darkblue">
+      {{
+      prospect
+        ? prospect?.first_name + " " + prospect?.last_name
+        : "prospect name"
+      }}
+    </h1>
   </div>
   <div class="d-flex justify-content-center" nz-row>
-    <h5 style="color: darkblue">Position &nbsp; | &nbsp; Class: 2023 &nbsp; | &nbsp; Area: School</h5>
+    <h5 style="color: darkblue">
+      {{ position?.position_name }} &nbsp; | &nbsp; Class:
+      {{ prospect?.classification }} &nbsp; | &nbsp; {{ prospect?.state }}:&nbsp;{{
+      prospect?.school
+      }}
+    </h5>
   </div>
 </div>
 <div class="w-100 d-flex justify-content-center p-2">
-  <div class="box-shadow w-70" nz-row>
+  <div class="box-shadow w-50" nz-row>
     <div class="w-100 d-flex justify-content-center">
-      <h2 class="overall-heading">Overall Grade: </h2>
+      <h2 class="overall-heading">Overall Grade:&nbsp;{{overallGrade}}</h2>
     </div>
-    <canvas (chartClick)="chartClicked($event)" (chartHover)="chartHovered($event)"
-            [data]="barChartData"
-            [options]="barChartOptions"
-            [type]="barChartType"
-            baseChart
-            class="chart">
+    <canvas
+      (chartClick)="chartClicked($event)"
+      (chartHover)="chartHovered($event)"
+      [data]="barChartData"
+      [options]="barChartOptions"
+      [type]="barChartType"
+      baseChart
+      class="chart"
+      height="1"
+      width="2"
+    >
     </canvas>
   </div>
 </div>
@@ -26,7 +42,11 @@
       <h5 class="sum-heading">Summary:</h5>
     </div>
     <div>
-      <textarea nz-input rows="5" style="background: rgba(161,216,250,0.65);"></textarea>
+      <textarea
+        nz-input
+        rows="5"
+        style="background: rgba(161, 216, 250, 0.65)"
+      ></textarea>
     </div>
   </div>
 </div>
