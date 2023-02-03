@@ -50,6 +50,11 @@ export class InputComponent implements OnInit, ControlValueAccessor, OnChanges {
 
   ngOnInit(): void {
     this.control.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
+      if (value.toString().includes('.')) {
+        const split = value.toString().split('.')
+        const val = split[0] + '.' + split[1].slice(0, 1)
+        this.control.setValue(parseFloat(val), {emitEvent: false})
+      }
       if (value > (this.prevValue + this.remainingLimit)) {
         this.control.setValue(parseInt(this.prevValue.toFixed(0)), {emitEvent: false});
       } else {
@@ -98,10 +103,8 @@ export class InputComponent implements OnInit, ControlValueAccessor, OnChanges {
   }
 
   numberOnly(event): boolean {
-    const charCode = (event.which) ? event.which : event.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      return false;
-    }
-    return true;
+
+    const regex = /\d+\.?\d?(?!\d)/
+    return !regex.test(String((this.control.value)))
   }
 }

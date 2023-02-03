@@ -24,8 +24,8 @@
   </nz-list>
 </div>
 <div class="p-2 my-2 bordered">
-  <h3>Total: {{ total }}</h3>
-  <h3>Remaining: {{ remainingValue }}</h3>
+  <h3>Total: {{ total.toFixed(1) }}</h3>
+  <h3>Remaining: {{ remainingValue.toFixed(1) }}</h3>
 </div>
 
 <button (click)="submitWeights()" [disabled]="remainingValue != 0" nz-button nzBlock nzType="primary">
