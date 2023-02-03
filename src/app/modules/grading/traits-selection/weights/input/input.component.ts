@@ -51,7 +51,7 @@ export class InputComponent implements OnInit, ControlValueAccessor, OnChanges {
   ngOnInit(): void {
     this.control.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
       if (value > (this.prevValue + this.remainingLimit)) {
-        this.control.setValue(this.prevValue, {emitEvent: false});
+        this.control.setValue(parseInt(this.prevValue.toFixed(0)), {emitEvent: false});
       } else {
         this.prevValue = value;
       }
@@ -95,5 +95,13 @@ export class InputComponent implements OnInit, ControlValueAccessor, OnChanges {
   enableDrag() {
     this.isDragDisabled = false
 
+  }
+
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
   }
 }

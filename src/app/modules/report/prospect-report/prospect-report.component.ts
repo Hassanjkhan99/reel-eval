@@ -32,7 +32,7 @@ export class ProspectReportComponent implements OnInit {
   selectedProspect = new FormControl(null);
   selectedPosition = new FormControl(null);
   overallGrade: number = null;
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+  @ViewChild(BaseChartDirective) chart!: BaseChartDirective;
   public barChartOptions: ChartConfiguration['options'] = {
     // We use these empty structures as placeholders for dynamic theming.
     scales: {
@@ -67,7 +67,8 @@ export class ProspectReportComponent implements OnInit {
           data,
           backgroundColor: 'rgb(113,192,248)',
           barThickness: 50,
-        },
+        }
+
       ],
     };
   }
@@ -100,6 +101,7 @@ export class ProspectReportComponent implements OnInit {
       this.prospect = null;
       this.position = null;
       this.overallGrade = null;
+      this.selectedPosition.reset()
       if (this.prospectWithPosition[id].length < 2) {
         this.selectedPosition.setValue(this.prospectWithPosition[id][0].id);
         this.getData(this.selectedPosition.value, this.selectedProspect.value);

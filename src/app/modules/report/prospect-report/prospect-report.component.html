@@ -22,7 +22,7 @@
     <div class="m-1" nz-col nzSpan="10">
       <h5 class="d-flex justify-content-center">Select Prospect</h5>
       <nz-select [formControl]="selectedProspect" class="w-100" nzPlaceHolder="Choose Prospect">
-        <nz-option *ngFor="let prospect of prospects" nzLabel="{{prospect.last_name}} {{prospect.last_name}}"
+        <nz-option *ngFor="let prospect of prospects" nzLabel="{{prospect.first_name}} {{prospect.last_name}}"
                    nzValue="{{prospect.id}}"></nz-option>
       </nz-select>
     </div>

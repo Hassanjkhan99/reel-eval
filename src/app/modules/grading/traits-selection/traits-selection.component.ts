@@ -111,7 +111,6 @@ export class TraitsSelectionComponent implements OnInit {
     this.unselected = item.id;
     this.cdr.detectChanges();
     const isExist = this.traitsService.traitsArr.includes(item.id)
-    console.log(isExist)
     if (isExist) {
       this.traitsService.deleteTraitByPosition(this.selectedPosition.id, item.id).subscribe(e => {
         const index = this.traitsService.traitsArr.findIndex((traitId) => traitId === item.id)
