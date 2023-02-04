@@ -1,33 +1,24 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {NzGridModule} from 'ng-zorro-antd/grid';
-import {BaseChartDirective, NgChartsModule} from 'ng2-charts';
-import {ChartConfiguration, ChartData, ChartEvent, ChartType} from 'chart.js';
-import {NzInputModule} from 'ng-zorro-antd/input';
-import {ReportService} from '../../../shared/services/report.service';
-import {Position, Prospect} from '../../../shared/interfaces/bar-report';
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
-import {NzSelectModule} from 'ng-zorro-antd/select';
-import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import DataLabelsPlugin from 'chartjs-plugin-datalabels';
-
+import {Position, Prospect} from "../../../shared/interfaces/bar-report";
+import {FormControl, ReactiveFormsModule} from "@angular/forms";
+import {BaseChartDirective, NgChartsModule} from "ng2-charts";
+import {ChartConfiguration, ChartData, ChartEvent, ChartType} from "chart.js";
+import {ReportService} from "../../../shared/services/report.service";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {NzGridModule} from "ng-zorro-antd/grid";
+import {NzSelectModule} from "ng-zorro-antd/select";
+import DataLabelsPlugin from "chartjs-plugin-datalabels";
 
 @UntilDestroy()
 @Component({
-  selector: 'app-prospect-report',
+  selector: 'app-comparison-report',
   standalone: true,
-  imports: [
-    CommonModule,
-    NzGridModule,
-    NgChartsModule,
-    NzInputModule,
-    NzSelectModule,
-    ReactiveFormsModule,
-  ],
-  templateUrl: './prospect-report.component.html',
-  styleUrls: ['./prospect-report.component.scss'],
+  imports: [CommonModule, NzGridModule, NgChartsModule, NzSelectModule, ReactiveFormsModule],
+  templateUrl: './comparison-report.component.html',
+  styleUrls: ['./comparison-report.component.scss'],
 })
-export class ProspectReportComponent implements OnInit {
+export class ComparisonReportComponent implements OnInit {
   prospect: Prospect = null;
   position: Position = null;
   prospects: Prospect[] = [];
@@ -38,7 +29,6 @@ export class ProspectReportComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart!: BaseChartDirective;
   public barChartOptions: ChartConfiguration['options'] = {
     // We use these empty structures as placeholders for dynamic theming.
-    responsive: true,
     scales: {
       x: {
         grid: {
@@ -61,9 +51,8 @@ export class ProspectReportComponent implements OnInit {
           size: 14,
           weight: 'bold',
         },
-        color: 'rgb(113,192,248)'
       }
-    }
+    },
   };
   public barChartType: ChartType = 'bar';
   public barChartData: ChartData<'bar'> = null;
@@ -71,7 +60,6 @@ export class ProspectReportComponent implements OnInit {
   public barChartPlugins = [
     DataLabelsPlugin
   ];
-
 
   constructor(private reportService: ReportService, private cdr: ChangeDetectorRef) {
   }
@@ -82,7 +70,6 @@ export class ProspectReportComponent implements OnInit {
       datasets: [
         {
           data,
-          backgroundColor: 'rgb(113,192,248)',
           barThickness: 50,
         }
 

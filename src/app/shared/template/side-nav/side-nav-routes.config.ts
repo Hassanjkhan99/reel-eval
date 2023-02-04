@@ -145,6 +145,20 @@ export const ROUTES: SideNavInterface[] = [
           Permissions.ViewOnly,
           Permissions.CreateProspects,
         ]
+      }, {
+        path: 'comparison-report',
+        title: 'Comparison Report',
+        iconType: '',
+        icon: '',
+        submenu: [],
+        iconTheme: 'fill',
+        permission: [
+          Permissions.clubAdmin,
+          Permissions.CreateGradeProspects,
+          Permissions.GradeProspects,
+          Permissions.ViewOnly,
+          Permissions.CreateProspects,
+        ]
       },
     ],
   },

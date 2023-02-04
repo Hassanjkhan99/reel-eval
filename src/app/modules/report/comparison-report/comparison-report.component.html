@@ -1,20 +1,8 @@
 <div class="w-100">
   <div class="d-flex justify-content-center" nz-row>
     <h1 style="font-weight: bold; color: darkblue">
-      {{
-      prospect
-        ? prospect?.first_name + " " + prospect?.last_name
-        : "Prospect Name"
-      }}
+      Comparison Report
     </h1>
-  </div>
-  <div class="d-flex justify-content-center" nz-row>
-    <h5 style="color: darkblue">
-      {{ position?.position_name || 'Position'}} &nbsp; | &nbsp; Class:
-      {{ prospect?.classification || 'Year'}} &nbsp; | &nbsp; {{ prospect?.state || 'State' }}:&nbsp;{{
-      prospect?.school || 'School'
-      }}
-    </h5>
   </div>
 </div>
 <div class="w-100 d-flex justify-content-center p-2">
@@ -45,9 +33,9 @@
     <canvas
       (chartClick)="chartClicked($event)"
       (chartHover)="chartHovered($event)"
-      [plugins]="barChartPlugins"
       [data]="barChartData"
       [options]="barChartOptions"
+      [plugins]="barChartPlugins"
       [type]="barChartType"
       baseChart
       class="chart"
@@ -55,18 +43,4 @@
     </canvas>
   </div>
 </div>
-<div class="w-100 d-flex justify-content-center p-2">
-  <div class="w-70">
-    <div>
-      <h5 class="sum-heading">Summary:</h5>
-    </div>
-    <div>
-      <textarea
-        nz-input
-        rows="5"
-        style="background: rgba(161, 216, 250, 0.65)"
-        readonly
-      >{{summary}}</textarea>
-    </div>
-  </div>
-</div>
+

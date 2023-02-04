@@ -110,6 +110,14 @@ export const CommonLayout_ROUTES: Routes = [
       path: 'report'
     },
     canActivate: [AuthGuard]
+  }, {
+    path: 'comparison-report',
+    loadComponent: () => import('../../modules/report/comparison-report/comparison-report.component').then(c => c.ComparisonReportComponent),
+    data: {
+      label: 'report',
+      path: 'report'
+    },
+    canActivate: [AuthGuard]
   },
 
   {

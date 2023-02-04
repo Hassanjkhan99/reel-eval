@@ -73,3 +73,9 @@ export interface PositionProspectApi {
   previous?: any;
   results: PositionProspect[];
 }
+
+export interface GetSummary {
+  user: string;
+  summary: string;
+  modified: string;
+}
