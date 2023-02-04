@@ -58,6 +58,21 @@ export const ROUTES: SideNavInterface[] = [
       Permissions.ViewOnly,
       Permissions.CreateProspects,
     ]
+  }, {
+
+    path: 'customers',
+    title: 'Customers',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'user',
+    submenu: [],
+    permission: [
+      Permissions.clubAdmin,
+      Permissions.CreateGradeProspects,
+      Permissions.GradeProspects,
+      Permissions.ViewOnly,
+      Permissions.CreateProspects,
+    ]
   },
   {
     path: 'traits',

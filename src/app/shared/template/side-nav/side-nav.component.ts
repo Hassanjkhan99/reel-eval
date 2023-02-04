@@ -29,12 +29,12 @@ export class SideNavComponent {
       .subscribe((user) => {
         if (user.reel_eval_admin) {
           this.menuItems = ROUTES.filter((menuItem) => {
-            return menuItem.title === 'Staff' || menuItem.title === 'Prospects'
+            return menuItem.title === 'Staff' || menuItem.title === 'Prospects' || menuItem.title === 'Customers'
           })
         } else {
           const permission = user.group;
           this.menuItems = ROUTES.filter((menuItem) => {
-              return menuItem.permission.includes(permission)
+            return menuItem.permission.includes(permission) && menuItem.title !== 'Customers'
             }
           );
           this.menuItems.forEach(
