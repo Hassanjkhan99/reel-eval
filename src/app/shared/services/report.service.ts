@@ -19,9 +19,10 @@ export class ReportService {
       .pipe(map((e) => e.results));
   }
 
-  getPositionProspects(): Observable<PositionProspect[]> {
+  getPositionProspects(positionId?: number): Observable<PositionProspect[]> {
+    const url = positionId ? `${main_url}position_prospect/?position__id=${positionId}/` : `${main_url}position_prospect/`
     return this.http
-      .get<PositionProspectApi>(`${main_url}position_prospect/`)
+      .get<PositionProspectApi>(url)
       .pipe(map((e) => e.results));
   }
 
@@ -44,4 +45,6 @@ export class ReportService {
       `${main_url}grade/overall_summary/${positionId}/${prospectId}/`
     );
   }
+
+
 }

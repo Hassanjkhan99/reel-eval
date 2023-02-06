@@ -1,46 +1,59 @@
-<div class="w-100">
-  <div class="d-flex justify-content-center" nz-row>
-    <h1 style="font-weight: bold; color: darkblue">
-      Comparison Report
-    </h1>
-  </div>
-</div>
-<div class="w-100 d-flex justify-content-center p-2">
-  <div class="w-50 d-flex justify-content-center" nz-row>
-    <div class="m-1" nz-col nzSpan="10">
-      <h5 class="d-flex justify-content-center">Select Prospect</h5>
-      <nz-select [formControl]="selectedProspect" class="w-100" nzPlaceHolder="Choose Prospect">
-        <nz-option *ngFor="let prospect of prospects" nzLabel="{{prospect.first_name}} {{prospect.last_name}}"
-                   nzValue="{{prospect.id}}"></nz-option>
-      </nz-select>
-    </div>
-    <div *ngIf="prospectWithPosition?.[selectedProspect?.value]?.length > 1" class="m-1" nz-col nzSpan="10">
-      <h5 class="d-flex justify-content-center">Select Position</h5>
-      <nz-select [formControl]="selectedPosition" class="w-100" nzPlaceHolder="Choose Position">
-        <nz-option *ngFor="let position of prospectWithPosition[selectedProspect.value]"
-                   nzLabel="{{position.position_name}}"
-                   nzValue="{{position.id}}"></nz-option>
-      </nz-select>
-    </div>
+<div class="w-100 d-flex justify-content-center p-2" nz-row>
+  <div class="m-2" nz-col nzSpan="5">
+    <div class="m-2 d-flex justify-content-center" nz-row>
+      <app-card class="w-100 text-align-center" headerText="Select Position">
+        <app-positions-select [formControl]="selectedPosition"
+        >
 
-  </div>
-</div>
-<div class="w-100 d-flex justify-content-center p-2">
-  <div class="box-shadow w-50" nz-row>
-    <div class="w-100 d-flex justify-content-center">
-      <h2 class="overall-heading">Overall Grade:&nbsp;{{overallGrade}}</h2>
+        </app-positions-select>
+      </app-card>
+      <app-card *ngIf="selectedPosition.value" class="w-100 text-align-center" headerText="Select Prospect">
+        <nz-select
+          [formControl]="selectedProspect"
+          class="w-100"
+          nzMode="multiple"
+          nzPlaceHolder="Choose Prospect"
+        >
+          <nz-option
+            *ngFor="let prospect of prospects"
+            nzLabel="{{ prospect.first_name }} {{ prospect.last_name }}"
+            nzValue="{{ prospect.id }}"
+          ></nz-option>
+        </nz-select>
+      </app-card>
     </div>
-    <canvas
-      (chartClick)="chartClicked($event)"
-      (chartHover)="chartHovered($event)"
-      [data]="barChartData"
-      [options]="barChartOptions"
-      [plugins]="barChartPlugins"
-      [type]="barChartType"
-      baseChart
-      class="chart"
-    >
-    </canvas>
+  </div>
+  <div class="m-2" nz-col nzSpan="12">
+
+    <div class="box-shadow">
+      <div class="w-100 d-flex justify-content-center">
+        <h2 class="overall-heading">Comparison Report</h2>
+      </div>
+      <canvas
+        (chartClick)="chartClicked($event)"
+        (chartHover)="chartHovered($event)"
+        [data]="barChartData"
+        [options]="barChartOptions"
+        [plugins]="barChartPlugins"
+        [type]="barChartType"
+        baseChart
+        class="chart"
+      >
+      </canvas>
+    </div>
+    <div class="w-100">
+      <div>
+        <h5 class="sum-heading">Summary:</h5>
+      </div>
+      <div>
+        <textarea
+          nz-input
+          readonly
+          rows="3"
+          style="background: rgba(161, 216, 250, 0.65)"
+        >{{ summary }}</textarea
+        >
+      </div>
+    </div>
   </div>
 </div>
-

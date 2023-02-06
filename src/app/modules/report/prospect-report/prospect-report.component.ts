@@ -63,7 +63,6 @@ export class ProspectReportComponent implements OnInit {
           size: 14,
           weight: 'bold',
         },
-        color: 'rgb(113,192,248)'
       }
     }
   };
