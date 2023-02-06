@@ -40,20 +40,25 @@
 <div class="w-100 d-flex justify-content-center p-2" nz-row>
   <div class="m-2" nz-col nzSpan="5">
     <div class="m-2 d-flex justify-content-center" nz-row>
-      <h5 class="d-flex justify-content-center">Select Prospect</h5>
-      <nz-select [formControl]="selectedProspect" class="w-100" nzPlaceHolder="Choose Prospect">
-        <nz-option *ngFor="let prospect of prospects" nzLabel="{{prospect.first_name}} {{prospect.last_name}}"
-                   nzValue="{{prospect.id}}"></nz-option>
-      </nz-select>
+      <app-card class="w-100 text-align-center" headerText="Select Prospect">
+        <nz-select [formControl]="selectedProspect" class="w-100" nzPlaceHolder="Choose Prospect">
+          <nz-option *ngFor="let prospect of prospects" nzLabel="{{prospect.first_name}} {{prospect.last_name}}"
+                     nzValue="{{prospect.id}}"></nz-option>
+        </nz-select>
+      </app-card>
+      <!--      <h5 class="d-flex justify-content-center">Select Prospect</h5>-->
+
     </div>
     <div *ngIf="prospectWithPosition?.[selectedProspect?.value]?.length > 1" class="m-2 d-flex justify-content-center"
          nz-row>
-      <h5 class="d-flex justify-content-center">Select Position</h5>
-      <nz-select [formControl]="selectedPosition" class="w-100" nzPlaceHolder="Choose Position">
-        <nz-option *ngFor="let position of prospectWithPosition[selectedProspect.value]"
-                   nzLabel="{{position.position_name}}"
-                   nzValue="{{position.id}}"></nz-option>
-      </nz-select>
+      <!--      <h5 class="d-flex justify-content-center">Select Position</h5>-->
+      <app-card class="w-100 text-align-center" headerText="Select Position">
+        <nz-select [formControl]="selectedPosition" class="w-100" nzPlaceHolder="Choose Position">
+          <nz-option *ngFor="let position of prospectWithPosition[selectedProspect.value]"
+                     nzLabel="{{position.position_name}}"
+                     nzValue="{{position.id}}"></nz-option>
+        </nz-select>
+      </app-card>
     </div>
   </div>
   <div class="box-shadow m-2" nz-col nzSpan="12">

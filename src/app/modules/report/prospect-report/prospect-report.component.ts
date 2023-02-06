@@ -10,6 +10,7 @@ import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {NzSelectModule} from 'ng-zorro-antd/select';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
+import {CardComponent} from "../../../shared/components/card/card.component";
 
 
 @UntilDestroy()
@@ -23,6 +24,7 @@ import DataLabelsPlugin from 'chartjs-plugin-datalabels';
     NzInputModule,
     NzSelectModule,
     ReactiveFormsModule,
+    CardComponent,
   ],
   templateUrl: './prospect-report.component.html',
   styleUrls: ['./prospect-report.component.scss'],
