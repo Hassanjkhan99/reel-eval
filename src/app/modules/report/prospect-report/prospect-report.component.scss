@@ -23,3 +23,12 @@ h5 {
 nz-select {
   text-align: center !important;
 }
+
+.ant-select.ant-select-show-arrow.ant-select-single {
+  border: 1px solid #3f87f5;
+  border-radius: 5px;
+}
+
+.ant-select.ant-select-show-arrow.ant-select-single:hover {
+  border: 0px;
+}

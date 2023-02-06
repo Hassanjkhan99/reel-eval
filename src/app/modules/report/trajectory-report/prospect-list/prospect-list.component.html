@@ -1,5 +1,5 @@
 <div [class.active]="selectedProspects.includes(prospect.id)" class="prospectCard">
   <div><strong>{{prospect.first_name + ' ' + prospect.last_name}}</strong></div>
-  <div style="font-size: 12px">Staff Score: {{prospect.score ? prospect.score : 0}} | IGA
-    Score: {{prospect.iga_score ? prospect.iga_score : null}}</div>
+  <div style="font-size: 12px">Staff Score: {{prospect.score ? prospect.score.toFixed(1) : 0}} | IGA
+    Score: {{prospect.iga_score ? prospect.iga_score.toFixed(1) : null}}</div>
 </div>
