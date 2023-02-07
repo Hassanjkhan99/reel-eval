@@ -1,6 +1,5 @@
 .sum-heading {
   border: 1px solid darkblue;
-  background: darkblue;
   color: white;
   width: max-content;
   padding: 6px;;
@@ -16,10 +15,6 @@
   margin: 6px;;
 }
 
-h5 {
-  font-weight: bold;
-  font-size: 16px;
-}
 
 nz-select {
   text-align: center !important;
@@ -33,3 +28,4 @@ nz-select {
 .ant-select.ant-select-show-arrow.ant-select-single:hover {
   border: 0px;
 }
+

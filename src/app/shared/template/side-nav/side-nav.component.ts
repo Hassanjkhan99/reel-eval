@@ -44,7 +44,6 @@ export class SideNavComponent {
                 }
               ))
           );
-          console.log(this.menuItems);
         }
 
       });

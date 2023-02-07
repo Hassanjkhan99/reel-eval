@@ -70,11 +70,10 @@ export class ComparisonReportComponent implements OnInit {
   public prospectWithPosition: { [id: number]: Position[] };
   public barChartPlugins = [DataLabelsPlugin];
   public barChartColors: { backgroundColor: string }[] = [
-    {backgroundColor: 'red'},
-    {backgroundColor: 'green'},
-    {backgroundColor: 'blue'},
-    {backgroundColor: 'yellow'},
-    {backgroundColor: 'orange'},
+    {backgroundColor: 'rgba(248,6,6,0.61)'},
+    {backgroundColor: 'rgba(0, 135, 245, 0.77)'},
+    {backgroundColor: 'rgba(131,208,5,0.66)'},
+    {backgroundColor: 'rgba(255, 165, 0, 0.71)'},
   ]
 
 
@@ -114,7 +113,6 @@ export class ComparisonReportComponent implements OnInit {
         const prospect: Prospect = this.selectedProspects.value.find(prospect => prospect.id === e.prospectId)
         return {
           data: e.data,
-          barThickness: 50,
           label: prospect.first_name + ' ' + prospect.last_name,
           backgroundColor: this.barChartColors[i].backgroundColor
         }
@@ -149,7 +147,6 @@ export class ComparisonReportComponent implements OnInit {
   }
 
   constructBarGraph(labels: string[], datasets: ChartDataset<'bar'>[]) {
-    console.log(this.selectedProspects.value)
     this.barChartData = {
       labels,
       datasets,

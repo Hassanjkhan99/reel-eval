@@ -83,7 +83,7 @@ export class ProspectReportComponent implements OnInit {
       datasets: [
         {
           data,
-          backgroundColor: 'rgb(113,192,248)',
+          backgroundColor: 'rgba(51,111,204,0.79)',
           barThickness: 50,
         }
 

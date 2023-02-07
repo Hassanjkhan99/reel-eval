@@ -43,9 +43,12 @@
     <div *ngIf="selectedProspects.value?.length > 0" class="d-flex justify-content-between">
       <div *ngFor="let prospect of overallGrade;let i = index" [class.w-100]="overallGrade.length === 1"
            [class.w-25]="overallGrade.length === 4" [class.w-30]="overallGrade.length === 3"
-           [class.w-50]="overallGrade.length === 2">
-        <div>
-          <h5 [ngStyle]="{'background': barChartColors[i].backgroundColor}" class="sum-heading">{{prospect.name}}
+           [class.w-50]="overallGrade.length === 2" class="m-1">
+        <div class="d-flex justify-content-center">
+          <h5 [class.font-size-11]="overallGrade.length === 4"
+              [class.font-size-14]="overallGrade.length === 3" [class.font-size-16]="overallGrade.length === 2"
+              [class.font-size-18]="overallGrade.length === 1"
+              [ngStyle]="{'background': barChartColors[i].backgroundColor}" class="sum-heading">{{prospect.name}}
             : {{prospect.grade}}</h5>
         </div>
         <div>
@@ -53,7 +56,7 @@
           nz-input
           readonly
           rows="3"
-          style="background: rgba(161, 216, 250, 0.65)"
+          style="background: rgba(224,221,221,0.61)"
         >{{ (selectedPosition?.value?.id | summary  : selectedProspects?.value?.[i] : prospects || [])| async }}</textarea
         >
         </div>
