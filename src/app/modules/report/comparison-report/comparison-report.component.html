@@ -9,15 +9,16 @@
       </app-card>
       <app-card *ngIf="selectedPosition.value" class="w-100 text-align-center" headerText="Select Prospect">
         <nz-select
-          [formControl]="selectedProspect"
+          [formControl]="selectedProspects"
           class="w-100"
           nzMode="multiple"
           nzPlaceHolder="Choose Prospect"
+          nzMaxMultipleCount="4"
         >
           <nz-option
             *ngFor="let prospect of prospects"
-            nzLabel="{{ prospect.first_name }} {{ prospect.last_name }}"
-            nzValue="{{ prospect.id }}"
+            [nzLabel]="prospect.first_name  + ' ' + prospect.last_name"
+            [nzValue]="prospect"
           ></nz-option>
         </nz-select>
       </app-card>
@@ -30,8 +31,6 @@
         <h2 class="overall-heading">Comparison Report</h2>
       </div>
       <canvas
-        (chartClick)="chartClicked($event)"
-        (chartHover)="chartHovered($event)"
         [data]="barChartData"
         [options]="barChartOptions"
         [plugins]="barChartPlugins"
@@ -41,18 +40,23 @@
       >
       </canvas>
     </div>
-    <div class="w-100">
-      <div>
-        <h5 class="sum-heading">Summary:</h5>
-      </div>
-      <div>
+    <div *ngIf="selectedProspects.value?.length > 0" class="d-flex justify-content-between">
+      <div *ngFor="let prospect of overallGrade;let i = index" [class.w-100]="overallGrade.length === 1"
+           [class.w-25]="overallGrade.length === 4" [class.w-30]="overallGrade.length === 3"
+           [class.w-50]="overallGrade.length === 2">
+        <div>
+          <h5 [ngStyle]="{'background': barChartColors[i].backgroundColor}" class="sum-heading">{{prospect.name}}
+            : {{prospect.grade}}</h5>
+        </div>
+        <div>
         <textarea
           nz-input
           readonly
           rows="3"
           style="background: rgba(161, 216, 250, 0.65)"
-        >{{ summary }}</textarea
+        >{{ (selectedPosition?.value?.id | summary  : selectedProspects?.value?.[i] : prospects || [])| async }}</textarea
         >
+        </div>
       </div>
     </div>
   </div>

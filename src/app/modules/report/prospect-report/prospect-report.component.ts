@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NzGridModule} from 'ng-zorro-antd/grid';
 import {BaseChartDirective, NgChartsModule} from 'ng2-charts';
-import {ChartConfiguration, ChartData, ChartEvent, ChartType} from 'chart.js';
+import {ChartConfiguration, ChartData, ChartType} from 'chart.js';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {ReportService} from '../../../shared/services/report.service';
 import {Position, Prospect} from '../../../shared/interfaces/bar-report';
@@ -135,25 +135,6 @@ export class ProspectReportComponent implements OnInit {
         this.getData(this.selectedPosition.value, this.selectedProspect.value);
       }
     });
-  }
-
-  // events
-  public chartClicked({
-                        event,
-                        active,
-                      }: {
-    event?: ChartEvent;
-    active?: {}[];
-  }): void {
-  }
-
-  public chartHovered({
-                        event,
-                        active,
-                      }: {
-    event?: ChartEvent;
-    active?: {}[];
-  }): void {
   }
 
   getData(posId: number, prosId: number) {

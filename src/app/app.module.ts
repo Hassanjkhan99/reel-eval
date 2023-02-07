@@ -42,7 +42,7 @@ registerLocaleData(en);
     NzMessageModule,
     NzCardModule,
     NzTabsModule,
-    NgChartsModule
+    NgChartsModule,
   ],
   providers: [
     {

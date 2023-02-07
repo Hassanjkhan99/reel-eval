@@ -9,8 +9,8 @@
         >
           <nz-option
             *ngFor="let prospect of prospects"
-            nzLabel="{{ prospect.first_name }} {{ prospect.last_name }}"
-            nzValue="{{ prospect.id }}"
+            [nzLabel]="prospect.first_name + ' ' +prospect.last_name"
+            [nzValue]=" prospect.id "
           ></nz-option>
         </nz-select>
       </app-card>
@@ -64,8 +64,6 @@
         <h2 class="overall-heading">Overall Grade:&nbsp;{{ overallGrade }}</h2>
       </div>
       <canvas
-        (chartClick)="chartClicked($event)"
-        (chartHover)="chartHovered($event)"
         [data]="barChartData"
         [options]="barChartOptions"
         [plugins]="barChartPlugins"

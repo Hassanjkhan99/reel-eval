@@ -3,15 +3,16 @@ import {CommonModule} from '@angular/common';
 import {Position, PositionProspect, Prospect,} from '../../../shared/interfaces/bar-report';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {BaseChartDirective, NgChartsModule} from 'ng2-charts';
-import {ChartConfiguration, ChartData, ChartEvent, ChartType} from 'chart.js';
+import {ChartConfiguration, ChartData, ChartDataset, ChartType} from 'chart.js';
 import {ReportService} from '../../../shared/services/report.service';
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {UntilDestroy} from '@ngneat/until-destroy';
 import {NzGridModule} from 'ng-zorro-antd/grid';
 import {NzSelectModule} from 'ng-zorro-antd/select';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import {CardComponent} from '../../../shared/components/card/card.component';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {PositionsSelectComponent} from '../../../shared/components/positions-select/positions-select.component';
+import {SummaryPipe} from "./summary.pipe";
 
 @UntilDestroy()
 @Component({
@@ -26,18 +27,16 @@ import {PositionsSelectComponent} from '../../../shared/components/positions-sel
     CardComponent,
     NzInputModule,
     PositionsSelectComponent,
+    SummaryPipe,
   ],
   templateUrl: './comparison-report.component.html',
   styleUrls: ['./comparison-report.component.scss'],
 })
 export class ComparisonReportComponent implements OnInit {
-  prospect: Prospect = null;
-  position: Position = null;
   prospects: Prospect[] = [];
-  summary: string[] = [];
-  selectedProspect = new FormControl(null);
+  selectedProspects = new FormControl(null);
   selectedPosition = new FormControl(null);
-  overallGrade: number = null;
+  overallGrade: { id: number, grade: number, name: string }[] = [];
   @ViewChild(BaseChartDirective) chart!: BaseChartDirective;
   public barChartOptions: ChartConfiguration['options'] = {
     // We use these empty structures as placeholders for dynamic theming.
@@ -54,7 +53,7 @@ export class ComparisonReportComponent implements OnInit {
     },
     plugins: {
       legend: {
-        display: false,
+        display: true,
       },
       datalabels: {
         anchor: 'end',
@@ -64,12 +63,20 @@ export class ComparisonReportComponent implements OnInit {
           weight: 'bold',
         },
       },
-    },
+    }
   };
   public barChartType: ChartType = 'bar';
   public barChartData: ChartData<'bar'> = null;
   public prospectWithPosition: { [id: number]: Position[] };
   public barChartPlugins = [DataLabelsPlugin];
+  public barChartColors: { backgroundColor: string }[] = [
+    {backgroundColor: 'red'},
+    {backgroundColor: 'green'},
+    {backgroundColor: 'blue'},
+    {backgroundColor: 'yellow'},
+    {backgroundColor: 'orange'},
+  ]
+
 
   constructor(
     private reportService: ReportService,
@@ -77,80 +84,57 @@ export class ComparisonReportComponent implements OnInit {
   ) {
   }
 
-  constructBarGraph(labels: string[], dataSets: number[][]) {
-    const dataArr = dataSets.map((data) => {
-      return {
-        data,
-        barThickness: 50,
-      };
-    });
-    this.barChartData = {
-      labels,
-      datasets: dataArr,
-    };
-  }
 
   ngOnInit(): void {
-    this.reportService
-      .getPositionProspects()
-      .pipe(untilDestroyed(this))
-      .subscribe((positionProspects) => {
-        this.prospectWithPosition = {};
-        this.prospects.forEach((prospect) => {
-          this.prospectWithPosition[prospect.id] = positionProspects
-            .filter((e) => e.prospect.id === prospect.id)
-            .map((e) => e.position);
-        });
-      });
-
-    this.selectedProspect.valueChanges.subscribe((idArr: number[]) => {
+    this.selectedPosition.valueChanges.subscribe((position: Position) => {
       this.barChartData = null;
-      idArr.forEach((id) => {
-        this.getData(this.selectedPosition.value, id);
-      });
-    });
-    this.selectedPosition.valueChanges.subscribe((id) => {
-      this.barChartData = null;
-      this.reportService.getPositionProspects(id).subscribe((prospects) => {
+      this.selectedProspects.reset(null, {emitEvent: false});
+      this.prospects = []
+      this.reportService.getPositionProspects(position.id).subscribe((prospects) => {
         this.getProspects(prospects);
       });
     });
-  }
 
-  // events
-  public chartClicked({
-                        event,
-                        active,
-                      }: {
-    event?: ChartEvent;
-    active?: {}[];
-  }): void {
-  }
 
-  public chartHovered({
-                        event,
-                        active,
-                      }: {
-    event?: ChartEvent;
-    active?: {}[];
-  }): void {
-  }
+    this.selectedProspects.valueChanges.subscribe(async (prospectArr: Prospect[]) => {
 
-  getData(posId: number, prosId: number) {
-    this.reportService.getBarReportData(posId, prosId).subscribe((barData) => {
-      this.prospect = barData.prospect;
-      this.position = barData.position;
-      this.overallGrade = barData.grade.overall_grade;
-      const labels = barData.grade.overall_position_trait.map((trait) => {
-        return trait.position_trait.trait.trait;
+      this.barChartData = null;
+      const barData: { labels: string [], data: number[], overallGrade: number, prospectId: number }[] = []
+      for (const prospect of prospectArr) {
+        barData.push(await this.getData(this.selectedPosition.value.id, prospect.id))
+      }
+      this.overallGrade = barData.map(e => {
+        const prospect: Prospect = this.selectedProspects.value.find(prospect => e.prospectId === prospect.id)
+        return {
+          id: e.prospectId,
+          name: prospect.first_name + ' ' + prospect.last_name,
+          grade: e.overallGrade
+        }
       });
-      const data = barData.grade.overall_position_trait.map((trait) => {
-        return trait.percentage_score;
-      });
+
+      const dataSets: ChartDataset<'bar'>[] = barData.map((e, i) => {
+        const prospect: Prospect = this.selectedProspects.value.find(prospect => prospect.id === e.prospectId)
+        return {
+          data: e.data,
+          barThickness: 50,
+          label: prospect.first_name + ' ' + prospect.last_name,
+          backgroundColor: this.barChartColors[i].backgroundColor
+        }
+      })
+      this.constructBarGraph(barData[0].labels, dataSets)
     });
-    this.reportService.getSummaryBarReport(posId, prosId).subscribe((sum) => {
-      this.cdr.detectChanges();
+  }
+
+  async getData(posId: number, prosId: number,): Promise<{ data: number[]; overallGrade: number; labels: string[], prospectId: number }> {
+    const barData = await this.reportService.getBarReportData(posId, prosId).toPromise()
+
+    const labels = barData.grade.overall_position_trait.map((trait) => {
+      return trait.position_trait.trait.trait;
     });
+    const data = barData.grade.overall_position_trait.map((trait) => {
+      return trait.percentage_score;
+    });
+    return {labels, data, overallGrade: barData.grade.overall_grade, prospectId: prosId}
   }
 
   getProspects(positionProspects: PositionProspect[]) {
@@ -163,9 +147,16 @@ export class ComparisonReportComponent implements OnInit {
     idArr.forEach((id) => {
       this.prospects.push(prospects.find((pros) => pros.id === id));
     });
+    this.cdr.detectChanges()
   }
 
-  getSummary() {
+  constructBarGraph(labels: string[], datasets: ChartDataset<'bar'>[]) {
 
+    console.log(this.selectedProspects.value)
+    this.barChartData = {
+      labels,
+      datasets,
+    };
+    this.cdr.detectChanges()
   }
 }

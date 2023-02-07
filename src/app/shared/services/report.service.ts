@@ -20,7 +20,7 @@ export class ReportService {
   }
 
   getPositionProspects(positionId?: number): Observable<PositionProspect[]> {
-    const url = positionId ? `${main_url}position_prospect/?position__id=${positionId}/` : `${main_url}position_prospect/`
+    const url = positionId ? `${main_url}position_prospect/?position__id=${positionId}` : `${main_url}position_prospect/`
     return this.http
       .get<PositionProspectApi>(url)
       .pipe(map((e) => e.results));
@@ -30,6 +30,7 @@ export class ReportService {
     positionId: number,
     prospectId: number
   ): Observable<BarReport> {
+    console.log({positionId, prospectId})
     return this.http
       .get<BarReportApi>(
         `${main_url}prospect_report/?position__id=${positionId}&prospect__id=${prospectId}`
