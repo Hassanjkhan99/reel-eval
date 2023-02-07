@@ -74,7 +74,6 @@ export class TrajectoryReportComponent {
       })
 
 
-      console.log(this.prospectList)
       this.classification = e.map(x => x.prospect.classification)
       this.states = e.map(x => x.prospect.state)
       this.staffs = e.map(x => x.user_full_name)
@@ -211,7 +210,6 @@ export class TrajectoryReportComponent {
   }
 
   public chartHovered({event, active}: { event: ChartEvent, active: {}[] }): void {
-    this
   }
 
   reset() {

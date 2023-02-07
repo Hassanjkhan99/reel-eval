@@ -11,6 +11,7 @@ import {NzSelectModule} from 'ng-zorro-antd/select';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import {CardComponent} from "../../../shared/components/card/card.component";
+import {NzButtonModule} from "ng-zorro-antd/button";
 
 
 @UntilDestroy()
@@ -25,6 +26,7 @@ import {CardComponent} from "../../../shared/components/card/card.component";
     NzSelectModule,
     ReactiveFormsModule,
     CardComponent,
+    NzButtonModule,
   ],
   templateUrl: './prospect-report.component.html',
   styleUrls: ['./prospect-report.component.scss'],
@@ -41,6 +43,12 @@ export class ProspectReportComponent implements OnInit {
   public barChartOptions: ChartConfiguration['options'] = {
     // We use these empty structures as placeholders for dynamic theming.
     responsive: true,
+    layout: {
+      padding: {
+        top: 30,
+        bottom: 5
+      }
+    },
     scales: {
       x: {
         grid: {
@@ -63,7 +71,11 @@ export class ProspectReportComponent implements OnInit {
           size: 14,
           weight: 'bold',
         },
-      }
+      },
+      tooltip: {
+        enabled: false
+      },
+
     }
   };
   public barChartType: ChartType = 'bar';
@@ -119,7 +131,7 @@ export class ProspectReportComponent implements OnInit {
       this.prospect = null;
       this.position = null;
       this.overallGrade = null;
-      this.selectedPosition.reset()
+      this.selectedPosition.reset(null, {emitEvent: false});
       if (this.prospectWithPosition[id].length < 2) {
         this.selectedPosition.setValue(this.prospectWithPosition[id][0].id);
         this.getData(this.selectedPosition.value, this.selectedProspect.value);

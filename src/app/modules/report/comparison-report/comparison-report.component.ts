@@ -13,6 +13,7 @@ import {CardComponent} from '../../../shared/components/card/card.component';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {PositionsSelectComponent} from '../../../shared/components/positions-select/positions-select.component';
 import {SummaryPipe} from "./summary.pipe";
+import {NzButtonModule} from "ng-zorro-antd/button";
 
 @UntilDestroy()
 @Component({
@@ -28,6 +29,7 @@ import {SummaryPipe} from "./summary.pipe";
     NzInputModule,
     PositionsSelectComponent,
     SummaryPipe,
+    NzButtonModule,
   ],
   templateUrl: './comparison-report.component.html',
   styleUrls: ['./comparison-report.component.scss'],
@@ -40,6 +42,12 @@ export class ComparisonReportComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart!: BaseChartDirective;
   public barChartOptions: ChartConfiguration['options'] = {
     // We use these empty structures as placeholders for dynamic theming.
+    responsive: true,
+    layout: {
+      padding: {
+        top: 30,
+      },
+    },
     scales: {
       x: {
         grid: {
@@ -54,21 +62,28 @@ export class ComparisonReportComponent implements OnInit {
     plugins: {
       legend: {
         display: true,
+        position: "bottom"
       },
       datalabels: {
         anchor: 'end',
         align: 'end',
         font: {
-          size: 14,
+          size: 13,
           weight: 'bold',
         },
       },
-    }
+      tooltip: {
+        enabled: false
+      }
+
+    },
   };
   public barChartType: ChartType = 'bar';
   public barChartData: ChartData<'bar'> = null;
   public prospectWithPosition: { [id: number]: Position[] };
   public barChartPlugins = [DataLabelsPlugin];
+
+
   public barChartColors: { backgroundColor: string }[] = [
     {backgroundColor: 'rgba(248,6,6,0.61)'},
     {backgroundColor: 'rgba(0, 135, 245, 0.77)'},
@@ -114,7 +129,7 @@ export class ComparisonReportComponent implements OnInit {
         return {
           data: e.data,
           label: prospect.first_name + ' ' + prospect.last_name,
-          backgroundColor: this.barChartColors[i].backgroundColor
+          backgroundColor: this.barChartColors[i].backgroundColor,
         }
       })
       this.constructBarGraph(barData[0].labels, dataSets)
@@ -153,4 +168,5 @@ export class ComparisonReportComponent implements OnInit {
     };
     this.cdr.detectChanges()
   }
+
 }

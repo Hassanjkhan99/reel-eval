@@ -1,6 +1,6 @@
 <div class="w-100 d-flex justify-content-center p-2" nz-row>
   <div class="m-2" nz-col nzSpan="5">
-    <div class="m-2 d-flex justify-content-center" nz-row>
+    <div class="mx-2 d-flex justify-content-center" nz-row>
       <app-card class="w-100 text-align-center" headerText="Select Position">
         <app-positions-select [formControl]="selectedPosition"
         >
@@ -22,6 +22,9 @@
           ></nz-option>
         </nz-select>
       </app-card>
+      <button [disabled]="!(selectedPosition.value && selectedProspects.value)" nz-button nzSize="small"
+              nzType="primary">Export Report
+      </button>
     </div>
   </div>
   <div class="m-2" nz-col nzSpan="12">
@@ -49,7 +52,7 @@
               [class.font-size-14]="overallGrade.length === 3" [class.font-size-16]="overallGrade.length === 2"
               [class.font-size-18]="overallGrade.length === 1"
               [ngStyle]="{'background': barChartColors[i].backgroundColor}" class="sum-heading">{{prospect.name}}
-            : {{prospect.grade}}</h5>
+            : {{prospect.grade}}%</h5>
         </div>
         <div>
         <textarea

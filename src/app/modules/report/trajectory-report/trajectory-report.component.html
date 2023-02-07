@@ -139,6 +139,9 @@
       <button (click)="reset()" class="w-100 m-t-5" nz-button nzType="primary">
         Reset Players Filter
       </button>
+      <button [disabled]="selectedProspects.length < 1" class="w-100 m-t-5" nz-button nzType="primary">Export Report
+      </button>
+
     </div>
   </div>
   <div></div>

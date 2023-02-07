@@ -7,9 +7,10 @@
 }
 
 .overall-heading {
-  border: 1px solid darkblue;
-  background: rgb(113, 192, 248);
-  color: white;
+  //border: 1px solid darkblue;
+  //background: rgb(113, 192, 248);
+  color: #336fcc;
+  font-weight: bold;
   width: max-content;
   padding: 8px;
   margin: 6px;;
@@ -29,3 +30,11 @@ nz-select {
   border: 0px;
 }
 
+.ant-select.ant-select-show-search.ant-select-multiple {
+  border: 1px solid #3f87f5;
+  border-radius: 5px;
+}
+
+.ant-select.ant-select-show-search.ant-select-multiple:hover {
+  border: 0px;
+}

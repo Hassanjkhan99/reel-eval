@@ -36,6 +36,13 @@
         </nz-select>
       </app-card>
     </div>
+    <div class="d-flex justify-content-center"
+    >
+      <button [disabled]="!(selectedProspect.value && selectedPosition.value)" nz-button nzSize="small"
+              nzType="primary">Export Report
+      </button>
+
+    </div>
   </div>
   <div class="m-2" nz-col nzSpan="12">
     <div class="w-100">
@@ -61,7 +68,7 @@
 
     <div class="box-shadow">
       <div class="w-100 d-flex justify-content-center">
-        <h2 class="overall-heading">Overall Grade:&nbsp;{{ overallGrade }}</h2>
+        <h2 class="overall-heading">Overall Grade:&nbsp;{{ overallGrade }}{{overallGrade ? '%' : ''}}</h2>
       </div>
       <canvas
         [data]="barChartData"
