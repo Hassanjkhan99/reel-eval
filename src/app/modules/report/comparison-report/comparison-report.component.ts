@@ -95,9 +95,7 @@ export class ComparisonReportComponent implements OnInit {
       });
     });
 
-
     this.selectedProspects.valueChanges.subscribe(async (prospectArr: Prospect[]) => {
-
       this.barChartData = null;
       const barData: { labels: string [], data: number[], overallGrade: number, prospectId: number }[] = []
       for (const prospect of prospectArr) {
@@ -151,7 +149,6 @@ export class ComparisonReportComponent implements OnInit {
   }
 
   constructBarGraph(labels: string[], datasets: ChartDataset<'bar'>[]) {
-
     console.log(this.selectedProspects.value)
     this.barChartData = {
       labels,
