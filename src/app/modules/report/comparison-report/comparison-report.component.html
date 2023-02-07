@@ -22,9 +22,7 @@
           ></nz-option>
         </nz-select>
       </app-card>
-      <button [disabled]="!(selectedPosition.value && selectedProspects.value)" nz-button nzSize="small"
-              nzType="primary">Export Report
-      </button>
+
     </div>
   </div>
   <div class="m-2" nz-col nzSpan="12">
@@ -43,7 +41,7 @@
       >
       </canvas>
     </div>
-    <div *ngIf="selectedProspects.value?.length > 0" class="d-flex justify-content-between">
+    <div *ngIf="selectedProspects.value?.length > 0" class="d-flex justify-content-between" style="margin-top: 10px">
       <div *ngFor="let prospect of overallGrade;let i = index" [class.w-100]="overallGrade.length === 1"
            [class.w-25]="overallGrade.length === 4" [class.w-30]="overallGrade.length === 3"
            [class.w-50]="overallGrade.length === 2" class="m-1">
@@ -65,5 +63,10 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="m-2" nz-col nzSpan="3">
+    <button [disabled]="!(selectedPosition.value && selectedProspects.value)" class="mx-1" nz-button nzSize="small"
+            nzType="primary">Print Report
+    </button>
   </div>
 </div>

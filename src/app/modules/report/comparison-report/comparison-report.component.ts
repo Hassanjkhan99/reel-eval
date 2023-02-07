@@ -49,11 +49,7 @@ export class ComparisonReportComponent implements OnInit {
       },
     },
     scales: {
-      x: {
-        grid: {
-          display: false,
-        },
-      },
+      x: {},
       y: {
         min: 0,
         max: 100,

@@ -36,13 +36,7 @@
         </nz-select>
       </app-card>
     </div>
-    <div class="d-flex justify-content-center"
-    >
-      <button [disabled]="!(selectedProspect.value && selectedPosition.value)" nz-button nzSize="small"
-              nzType="primary">Export Report
-      </button>
 
-    </div>
   </div>
   <div class="m-2" nz-col nzSpan="12">
     <div class="w-100">
@@ -93,6 +87,15 @@
         >{{ summary }}</textarea
         >
       </div>
+    </div>
+  </div>
+  <div class="m-2" nz-col nzSpan="3" style="transform: translateY(75px)">
+    <div class="mx-1"
+    >
+      <button [disabled]="!(selectedProspect.value && selectedPosition.value)" nz-button nzSize="small"
+              nzType="primary">Print Report
+      </button>
+
     </div>
   </div>
 </div>

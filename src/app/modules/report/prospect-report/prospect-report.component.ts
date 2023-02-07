@@ -51,9 +51,6 @@ export class ProspectReportComponent implements OnInit {
     },
     scales: {
       x: {
-        grid: {
-          display: false,
-        },
       },
       y: {
         min: 0,
