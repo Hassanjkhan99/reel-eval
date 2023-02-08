@@ -62,6 +62,7 @@ export class TrajectoryReportComponent {
     selectedStaffs: [],
   };
   private mainData: Result[] = [];
+  currentData: Result[] = []
   public isMouseOnCanvas: boolean = false;
 
   constructor(
@@ -74,19 +75,7 @@ export class TrajectoryReportComponent {
     this.reportService.getReportData().subscribe((e) => {
       this.mainData = e;
       this.positions = e.map((x) => x.position);
-      this.prospectList = e
-        .map((x) => {
-          return {...x.prospect, score: x.score, iga_score: x.iga_score, position: x.position};
-        })
-        .sort((a, b) => {
-          if (a.score < b.score) {
-            return a.score;
-          }
-          if (b.score < a.score) {
-            return b.score;
-          }
-          return 0;
-        });
+      this.setProspects(e)
 
       this.classification = e.map((x) => x.prospect.classification);
       this.states = e.map((x) => x.prospect.state);
@@ -123,6 +112,22 @@ export class TrajectoryReportComponent {
     });
   }
 
+  setProspects(data) {
+    this.prospectList = data
+      .map((x) => {
+        return {...x.prospect, score: x.score, iga_score: x.iga_score, position: x.position};
+      })
+      .sort((a, b) => {
+        if (a.score < b.score) {
+          return a.score;
+        }
+        if (b.score < a.score) {
+          return b.score;
+        }
+        return 0;
+      });
+  }
+
   applyFilters() {
     let data = this.mainData;
     for (const activeFilterKey in this.activeFilter) {
@@ -156,6 +161,8 @@ export class TrajectoryReportComponent {
     this.reportData = report.map((player) => {
       return {x: player.score, y: player.iga_score ? player.iga_score : 0};
     });
+    this.setProspects(report);
+    this.currentData = report;
     this.scoreProspect = report.map((player) => {
       return player.score;
     });
@@ -181,15 +188,9 @@ export class TrajectoryReportComponent {
     if (ids.length < 1) {
       return data;
     }
-    this.selectedProspects = data
-      .filter((item) => {
-        return ids.includes(item.position.id);
-      })
-      .map((p) => {
-        return {
-          id: p.prospect.id, position: p.position.id
-        }
-      });
+
+
+    console.log(this.selectedProspects)
 
     return data.filter((item) => {
       return ids.includes(item.position.id);
@@ -201,15 +202,6 @@ export class TrajectoryReportComponent {
       return data;
     }
 
-    this.selectedProspects = data
-      .filter((item) => {
-        return year.includes(item.prospect.classification);
-      })
-      .map((p) => {
-        return {
-          id: p.prospect.id, position: p.position.id
-        }
-      });
     this.cdr.detectChanges();
 
 
@@ -223,16 +215,6 @@ export class TrajectoryReportComponent {
       return data;
     }
 
-    this.selectedProspects = data
-      .filter((item) => {
-        return state.includes(item.prospect.state);
-      })
-      .map((p) => {
-        return {
-          id: p.prospect.id, position: p.position.id
-        }
-      });
-
     return data.filter((item) => {
       return state.includes(item.prospect.state);
     });
@@ -244,23 +226,12 @@ export class TrajectoryReportComponent {
     }
 
 
-    this.selectedProspects = data
-      .filter((item) => {
-        return staff.includes(item.user_full_name);
-      })
-      .map((p) => {
-        return {
-          id: p.prospect.id, position: p.position.id
-        }
-      });
-
     return data.filter((item) => {
       return staff.includes(item.user_full_name);
     });
   }
 
   filterProspect(prospect: ProspectWithScore) {
-    this.resetFilters();
     const isExist = this.selectedProspects.find((selectedProspect) => {
       return selectedProspect.id === prospect.id && selectedProspect.position === prospect.position.id;
     });
@@ -297,6 +268,7 @@ export class TrajectoryReportComponent {
   reset() {
     this.selectedProspects = [];
     this.assignDataToPlot(this.mainData);
+    this.applyFilters();
   }
 
   mouseOnCanvas() {

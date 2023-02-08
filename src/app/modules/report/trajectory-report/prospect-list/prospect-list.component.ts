@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NzGridModule} from "ng-zorro-antd/grid";
 import {NzIconModule} from "ng-zorro-antd/icon";
@@ -12,8 +12,20 @@ import {Position, Prospect} from "../../../../shared/interfaces/report";
   styleUrls: ['./prospect-list.component.scss'],
 })
 export class ProspectListComponent implements OnInit {
+  prospectsIdsList: number[] = []
+  positionIdsList: number[] = []
   @Input() prospect: ProspectWithScore;
-  @Input() selectedProspects: { id: number, position: number }[] = [];
+
+  _selectedProspects: { id: number, position: number }[] = [];
+
+  get selectedProspects(): { id: number, position: number }[] {
+    return this._selectedProspects;
+  }
+
+  @Input() set selectedProspects(value: { id: number, position: number }[]) {
+    this.prospectsIdsList = value.map(e => e.id)
+    this.positionIdsList = value.map(e => e.position)
+  }
 
   constructor() {
   }
@@ -21,8 +33,10 @@ export class ProspectListComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.selectedProspects) {
 
+    }
   }
 
 }
