@@ -1,4 +1,5 @@
-<div [class.active]="selectedProspects.includes(prospect.id)" class="prospectCard">
+<div [class.active]="selectedProspects.includes({id:prospect.id , position: prospect.position.id})"
+     class="prospectCard">
   <div><strong>{{prospect.first_name + ' ' + prospect.last_name}}</strong></div>
   <div style="font-size: 10px">Staff Score: {{prospect.score ? prospect.score.toFixed(1) : 0}} | IGA
     Score: {{prospect.iga_score ? prospect.iga_score.toFixed(1) : null}}</div>

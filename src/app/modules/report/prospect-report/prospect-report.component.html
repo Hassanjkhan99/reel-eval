@@ -30,8 +30,8 @@
             *ngFor="
               let position of prospectWithPosition[selectedProspect.value]
             "
-            nzLabel="{{ position.position_name }}"
-            nzValue="{{ position.id }}"
+            [nzLabel]="position.position_name"
+            [nzValue]="position.id"
           ></nz-option>
         </nz-select>
       </app-card>

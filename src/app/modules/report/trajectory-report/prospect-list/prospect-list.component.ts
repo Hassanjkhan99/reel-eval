@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NzGridModule} from "ng-zorro-antd/grid";
 import {NzIconModule} from "ng-zorro-antd/icon";
-import {Prospect} from "../../../../shared/interfaces/report";
+import {Position, Prospect} from "../../../../shared/interfaces/report";
 
 @Component({
   selector: 'app-prospect-list',
@@ -13,7 +13,7 @@ import {Prospect} from "../../../../shared/interfaces/report";
 })
 export class ProspectListComponent implements OnInit {
   @Input() prospect: ProspectWithScore;
-  @Input() selectedProspects: number[] = []
+  @Input() selectedProspects: { id: number, position: number }[] = [];
 
   constructor() {
   }
@@ -29,5 +29,6 @@ export class ProspectListComponent implements OnInit {
 
 export interface ProspectWithScore extends Prospect {
   iga_score: number;
-  score: number
+  score: number;
+  position: Position
 }
