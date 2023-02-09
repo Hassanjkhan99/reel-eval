@@ -121,6 +121,7 @@ export class ProspectReportComponent implements OnInit {
             .filter((e) => e.prospect.id === prospect.id)
             .map((e) => e.position);
         });
+        this.prospects.sort((a, b) => a.first_name.localeCompare(b.first_name))
       });
 
     this.selectedProspect.valueChanges.subscribe((id) => {
