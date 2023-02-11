@@ -154,6 +154,7 @@ export class ComparisonReportComponent implements OnInit {
     idArr.forEach((id) => {
       this.prospects.push(prospects.find((pros) => pros.id === id));
     });
+    this.prospects.sort((a, b) => a.first_name.localeCompare(b.first_name))
     this.cdr.detectChanges()
   }
 

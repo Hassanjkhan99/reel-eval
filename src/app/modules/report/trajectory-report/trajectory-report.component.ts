@@ -126,6 +126,7 @@ export class TrajectoryReportComponent {
         }
         return 0;
       });
+    this.prospectList.sort((a, b) => a.first_name.localeCompare(b.first_name))
   }
 
   applyFilters() {
