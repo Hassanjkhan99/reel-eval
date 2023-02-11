@@ -56,6 +56,10 @@ export class JwtInterceptor implements HttpInterceptor {
               'There might be a problem. Please, try again.'
             );
             this.router.navigateByUrl('app/authentication/login');
+          } else if (status == 500 &&
+            request.url.includes('prospects/import_from_excel/')
+          ) {
+            return
           } else if (status == 500) {
             this.notification.warning(
               'warning',
