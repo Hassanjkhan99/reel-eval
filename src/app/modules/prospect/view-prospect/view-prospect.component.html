@@ -1,9 +1,6 @@
 <div class="w-100 d-flex justify-content-between">
-
   <div
-    *ngIf="
-      (authService.currentUser$ | async).group !== permissions.ViewOnly
-    "
+    *ngIf="(authService.currentUser$ | async).group !== permissions.ViewOnly"
     class="p-2 d-flex justify-content-end"
   >
     <button
@@ -17,20 +14,22 @@
   </div>
 
   <div
-    *ngIf="
-      (authService.currentUser$ | async).group !== permissions.ViewOnly
-    "
+    *ngIf="(authService.currentUser$ | async).group !== permissions.ViewOnly"
     nz-row
   >
+    <div
+      *ngIf="(authService.currentUser$ | async).reel_eval_admin && !achievedTable"
+      class="p-2 d-flex justify-content-end"
+    >
+      <nz-upload [nzAccept]="['.xlsx', '.xls']" [nzBeforeUpload]="beforeUpload">
+        <button class="d-flex" nz-button nzType="primary">
+          <span nz-icon nzType="upload"></span>
+          Upload Prospect List
+        </button>
+      </nz-upload>
+    </div>
+
     <div class="p-2 d-flex justify-content-end">
-      <div>
-        <nz-upload [nzAccept]="['.xlsx','.xls']" [nzBeforeUpload]="beforeUpload">
-          <button nz-button nzType="primary">
-            <span nz-icon nzType="upload"></span>
-            Upload Prospect List
-          </button>
-        </nz-upload>
-      </div>
       <button
         (click)="exportCompleteListToExcel()"
         [disabled]="checkedIds.length >= 1"
@@ -44,8 +43,7 @@
       *ngIf="
         !achievedTable &&
         (authService.currentUser$ | async).group !== permissions.ViewOnly &&
-        (authService.currentUser$ | async).group !==
-          permissions.GradeProspects
+        (authService.currentUser$ | async).group !== permissions.GradeProspects
       "
       class="p-2 d-flex justify-content-end"
     >
@@ -79,8 +77,7 @@
       <th
         (nzCheckedChange)="onAllChecked($event)"
         *ngIf="
-            (authService.currentUser$ | async).group !==
-            permissions.ViewOnly
+            (authService.currentUser$ | async).group !== permissions.ViewOnly
           "
         [(nzChecked)]="checked"
         [nzIndeterminate]="indeterminate"
@@ -165,20 +162,24 @@
       </th>
       <th
         *ngIf="!(authService.currentUser$ | async).reel_eval_admin"
-        [nzColumnKey]="listOfSort[7]" [nzSortFn]="true"
+        [nzColumnKey]="listOfSort[7]"
+        [nzSortFn]="true"
         nzRight
         nzWidth="130px"
       >
         Staff Score
       </th>
-      <th [nzColumnKey]="listOfSort[8]" [nzSortFn]="true"
-          nzRight
-          nzWidth="100px">IGA Score
+      <th
+        [nzColumnKey]="listOfSort[8]"
+        [nzSortFn]="true"
+        nzRight
+        nzWidth="100px"
+      >
+        IGA Score
       </th>
       <th
         *ngIf="
-            (authService.currentUser$ | async).group !==
-              permissions.ViewOnly &&
+            (authService.currentUser$ | async).group !== permissions.ViewOnly &&
             (authService.currentUser$ | async).group !==
               permissions.GradeProspects
           "
@@ -253,11 +254,18 @@
         nzRight
       ></td>
       <td nzRight>
-        <span *ngIf="(authService.currentUser$ | async).reel_eval_admin">
-        <input class="ant-input ant-input-focused" formControlName="score" min="0" nz-col nz-input nzSize="small"
-               step="1"
-               type="number">
-        </span>
+          <span *ngIf="(authService.currentUser$ | async).reel_eval_admin">
+            <input
+              class="ant-input ant-input-focused"
+              formControlName="score"
+              min="0"
+              nz-col
+              nz-input
+              nzSize="small"
+              step="1"
+              type="number"
+            />
+          </span>
       </td>
       <td nzRight>
         <div class="d-flex justify-content-center">
@@ -316,8 +324,7 @@
       <td
         (nzCheckedChange)="onItemChecked(data.id, $event)"
         *ngIf="
-            (authService.currentUser$ | async).group !==
-            permissions.ViewOnly
+            (authService.currentUser$ | async).group !== permissions.ViewOnly
           "
         [nzChecked]="setOfCheckedId.has(data.id)"
         [nzShowCheckbox]="!(currentEditIndex === i)"
@@ -413,28 +420,47 @@
       <td *ngIf="!(authService.currentUser$ | async).reel_eval_admin" nzRight>
           <span>
             <ng-container *ngFor="let score of data.prospect_score">
-              <app-badge *ngIf="score.score" [text]="score.abbreviation + ' : ' + score.score">
+              <app-badge
+                *ngIf="score.score"
+                [text]="score.abbreviation + ' : ' + score.score"
+              >
               </app-badge>
             </ng-container>
           </span>
       </td>
       <td nzRight>
-         <span *ngIf="currentEditIndex != i">
+          <span *ngIf="currentEditIndex != i">
             {{ data.iga_score ? data.iga_score : null }}
           </span>
-        <span *ngIf="!(authService.currentUser$ | async).reel_eval_admin && currentEditIndex == i">
+        <span
+          *ngIf="
+              !(authService.currentUser$ | async).reel_eval_admin &&
+              currentEditIndex == i
+            "
+        >
             {{ data.iga_score ? data.iga_score : null }}
           </span>
-        <span *ngIf="(authService.currentUser$ | async).reel_eval_admin && currentEditIndex == i">
-        <input class="ant-input ant-input-focused" formControlName="score" min="0" nz-col nz-input nzSize="small"
-               step="1"
-               type="number">
-        </span>
+        <span
+          *ngIf="
+              (authService.currentUser$ | async).reel_eval_admin &&
+              currentEditIndex == i
+            "
+        >
+            <input
+              class="ant-input ant-input-focused"
+              formControlName="score"
+              min="0"
+              nz-col
+              nz-input
+              nzSize="small"
+              step="1"
+              type="number"
+            />
+          </span>
       </td>
       <td
         *ngIf="
-            (authService.currentUser$ | async).group !==
-              permissions.ViewOnly &&
+            (authService.currentUser$ | async).group !== permissions.ViewOnly &&
             (authService.currentUser$ | async).group !==
               permissions.GradeProspects
           "

@@ -576,15 +576,19 @@ export class ViewProspectComponent {
 
   beforeUpload = (file: NzUploadFile): boolean => {
 
-    this.prospectService.uploadProspectList(file).subscribe(e => {
-      console.log(e)
-    })
-    const reader = new FileReader();
-    reader.readAsBinaryString(file as any);
-    reader.onload = () => {
-      console.log(reader.result)
+    this.prospectService.uploadProspectList(file).subscribe(success => {
+        this.notificationService.success(
+          'Success',
+          success.message
+        );
+      },
+      error => {
+        this.notificationService.error(
+          'Error',
+          'File upload failed'
+        );
+      })
 
-    }
     return false;
   };
 
