@@ -42,6 +42,8 @@ import {Permissions} from '../../../shared/enums/permissions';
 import {LoadingService} from "../../../shared/services/loading.service";
 import {NzBadgeModule} from "ng-zorro-antd/badge";
 import {BadgeComponent} from "../../../shared/components/badge/badge.component";
+import {NzUploadFile, NzUploadModule} from "ng-zorro-antd/upload";
+import {main_url} from "../../../../environments/environment";
 
 @UntilDestroy()
 @Component({
@@ -69,6 +71,7 @@ import {BadgeComponent} from "../../../shared/components/badge/badge.component";
     NzResizableModule,
     NzBadgeModule,
     BadgeComponent,
+    NzUploadModule,
   ],
   templateUrl: './view-prospect.component.html',
   styleUrls: ['./view-prospect.component.scss'],
@@ -98,7 +101,8 @@ export class ViewProspectComponent {
     new EventEmitter<Prospect>();
   @Output() prospectUnArchived: EventEmitter<Prospect> =
     new EventEmitter<Prospect>();
-  permissions = Permissions
+  permissions = Permissions;
+  prospectListUploadUrl: string = main_url + 'prospects/import_from_excel/'
 
   listOfColumns: ColumnItem[] = [
     {
@@ -207,6 +211,7 @@ export class ViewProspectComponent {
   private filterField: string = '';
   private currentFilterValue: Array<{ key: string; value: NzTableFilterValue }>;
   positions: Position[];
+  fileList: any;
 
   constructor(
     private fb: FormBuilder,
@@ -568,6 +573,21 @@ export class ViewProspectComponent {
         this.setOfCheckedId.has(item.id)
       ) && !this.checked;
   }
+
+  beforeUpload = (file: NzUploadFile): boolean => {
+
+    this.prospectService.uploadProspectList(file).subscribe(e => {
+      console.log(e)
+    })
+    const reader = new FileReader();
+    reader.readAsBinaryString(file as any);
+    reader.onload = () => {
+      console.log(reader.result)
+
+    }
+    return false;
+  };
+
 }
 
 interface ColumnItem {
