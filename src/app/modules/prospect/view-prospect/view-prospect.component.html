@@ -70,6 +70,7 @@
     nzBordered
     nzShowSizeChanger
     nzSize="small"
+    [nzLoading]="loadingService.loading | async"
     nzTableLayout="fixed"
   >
     <thead>

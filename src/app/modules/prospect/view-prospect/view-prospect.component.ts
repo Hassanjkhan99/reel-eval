@@ -495,7 +495,6 @@ export class ViewProspectComponent {
       video_link: '',
     });
     this.showRow = false;
-    console.log(this.prospectForm.value);
     this.cdr.detectChanges();
     this.showRow = true;
     this.cdr.detectChanges();
@@ -581,6 +580,14 @@ export class ViewProspectComponent {
           'Success',
           success.message
         );
+        this.prospectSer.getProspects(this.pageIndex, this.pageSize, null, null, null).subscribe(
+          x => {
+            this.dataSet = x.results
+            this.total = x.count
+            console.log(this.dataSet)
+            this.cdr.detectChanges();
+          }
+        )
       },
       error => {
         this.notificationService.error(
@@ -588,6 +595,8 @@ export class ViewProspectComponent {
           'File upload failed'
         );
       })
+
+    this.cdr.detectChanges();
 
     return false;
   };

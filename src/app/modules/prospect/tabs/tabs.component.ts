@@ -112,7 +112,6 @@ export class TabsComponent implements OnInit {
         this.unArchivedClassificationList = [...new Set(e.results.map(e => e.classification))].map(name => {
           return {name}
         })
-        console.log(this.unArchivedClassificationList)
         this.cdr.detectChanges()
       });
   }
@@ -139,7 +138,6 @@ export class TabsComponent implements OnInit {
         this.archivedClassificationList = [...new Set(e.results.map(e => e.classification))].map(name => {
           return {name}
         })
-        console.log(this.unArchivedClassificationList)
         this.cdr.detectChanges()
 
       });

@@ -249,9 +249,14 @@ export class TableStaffComponent implements OnInit {
   }
 
   handleOk(): void {
+    if (!this.changePass.value) {
+      this.isVisible = false
+      return
+    }
     this.staffSer.changePassword(this.listOfData[this.staffIndex].id, this.changePass.value as ChangePass).subscribe(x => {
-      console.log(this.changePass.value)
     })
+    this.changePass.reset()
+    this.currentEditIndex = -1
     this.isVisible = false;
   }
 

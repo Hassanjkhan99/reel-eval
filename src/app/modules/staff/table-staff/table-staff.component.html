@@ -18,9 +18,9 @@
   <tr>
     <th
       *ngFor="let column of listOfColumns; let i = index"
+      [class]="'text-align-left ' + listOfFilter[i]"
       [nzColumnKey]="listOfFilter[i]"
       [nzSortFn]="true"
-      [class]="'text-align-left ' + listOfFilter[i]"
       [nzWidth]="column == 'Email' ? '300px' : '220px'"
       nzCustomFilter
     >
@@ -67,8 +67,12 @@
         </div>
       </nz-dropdown-menu>
     </th>
-    <th *ngIf="!((authService.currentUser$) | async).reel_eval_admin" class="text-align-left" nzWidth="250px"
-        style="color: white">
+    <th
+      *ngIf="!(authService.currentUser$ | async).reel_eval_admin"
+      class="text-align-left"
+      nzWidth="250px"
+      style="color: white"
+    >
       Permissions
     </th>
     <th
@@ -87,9 +91,9 @@
   <tbody>
   <tr
     *ngFor="let data of borderedTable.data; let i = index"
+    [class.background-primary]="currentEditIndex == i"
     [formGroup]="staffForm"
     class="text-align-left"
-    [class.background-primary]="currentEditIndex == i"
   >
     <td>
         <span *ngIf="currentEditIndex != i">
@@ -135,7 +139,7 @@
           <input class="text-align-center" formControlName="email" nz-input/>
         </span>
     </td>
-    <td *ngIf="!((authService.currentUser$) | async).reel_eval_admin">
+    <td *ngIf="!(authService.currentUser$ | async).reel_eval_admin">
         <span *ngIf="currentEditIndex != i">
           {{ data.group }}
         </span>
@@ -245,21 +249,17 @@
   </tr>
   </tbody>
 </nz-table>
-<nz-modal
-  (nzOnCancel)="handleCancel()"
-  (nzOnOk)="handleOk()"
-  [(nzVisible)]="isVisible"
-  nzTitle="Change Password"
->
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Change Password">
   <ng-container *nzModalContent>
     <form [formGroup]="changePass">
       <span>
-              <nz-form-item nz-row>
+        <nz-form-item nz-row>
           <nz-form-label nz-col nzFor="password1" nzRequired nzSpan="24"
           >New Password</nz-form-label
           >
           <nz-form-control
-            [nzErrorTip]="password1.errors?.['required'] ?  'Please input your Password!' : password1.errors?.['minlength'] ? 'Password length should be 8!' : null">
+            [nzErrorTip]="password1.errors?.['required'] ?  'Please input your Password!' : password1.errors?.['minlength'] ? 'Password length should be 8!' : null"
+          >
             <nz-input-group [nzSuffix]="suffixTemplate1" nz-col nzSpan="24">
               <input
                 [type]="passwordVisible ? 'text' : 'password'"
@@ -278,7 +278,6 @@
             ></i>
           </ng-template>
         </nz-form-item>
-
       </span>
       <span class="p-1">
         <nz-form-item nz-row>
@@ -306,6 +305,9 @@
         </nz-form-item>
       </span>
     </form>
-
+  </ng-container>
+  <ng-container *nzModalFooter>
+    <button (click)="handleCancel()" nz-button nzType="default">Cancel</button>
+    <button (click)="handleOk()" [disabled]="changePass.invalid" nz-button nzType="primary">OK</button>
   </ng-container>
 </nz-modal>

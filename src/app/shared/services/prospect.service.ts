@@ -191,6 +191,8 @@ export class ProspectService {
     let formData = new FormData();
     formData.append("myfile", file);
 
-    return this.http.post(main_url + 'prospects/import_from_excel/', formData);
+    return this.http.post(main_url + 'prospects/import_from_excel/', formData).pipe(tap((val) => {
+      this.loadingService.loading.next(false)
+    }));
   }
 }
