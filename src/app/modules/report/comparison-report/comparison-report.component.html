@@ -27,7 +27,7 @@
   </div>
   <div class="m-2" nz-col nzSpan="12">
 
-    <div class="box-shadow">
+    <div class="box-shadow" id="section">
       <div class="w-100 d-flex justify-content-center">
         <h2 class="overall-heading">Comparison Report</h2>
       </div>
@@ -66,7 +66,7 @@
   </div>
   <div class="m-2" nz-col nzSpan="3">
     <button [disabled]="!(selectedPosition.value && selectedProspects.value)" class="mx-1" nz-button nzSize="small"
-            nzType="primary">Print Report
+            (click)="printWindow('section')" nzType="primary">Print Report
     </button>
   </div>
 </div>

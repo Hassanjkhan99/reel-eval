@@ -195,4 +195,13 @@ export class ProspectService {
       this.loadingService.loading.next(false)
     }));
   }
+
+  downloadProspectListForm() {
+    return this.http.get(
+      `https://reelevalbucket.s3.us-west-2.amazonaws.com/Prospect+Upload+Template.xlsx`,
+      {responseType: 'blob' as 'json'}
+    ).pipe(tap((val) => {
+      this.loadingService.loading.next(false)
+    }));
+  }
 }

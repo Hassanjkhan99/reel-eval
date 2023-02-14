@@ -14,6 +14,7 @@ import {NzInputModule} from 'ng-zorro-antd/input';
 import {PositionsSelectComponent} from '../../../shared/components/positions-select/positions-select.component';
 import {SummaryPipe} from "./summary.pipe";
 import {NzButtonModule} from "ng-zorro-antd/button";
+import {NgxPrintModule} from "ngx-print";
 
 @UntilDestroy()
 @Component({
@@ -30,6 +31,7 @@ import {NzButtonModule} from "ng-zorro-antd/button";
     PositionsSelectComponent,
     SummaryPipe,
     NzButtonModule,
+    NgxPrintModule,
   ],
   templateUrl: './comparison-report.component.html',
   styleUrls: ['./comparison-report.component.scss'],
@@ -46,6 +48,7 @@ export class ComparisonReportComponent implements OnInit {
     layout: {
       padding: {
         top: 30,
+        bottom: 7
       },
     },
     scales: {
@@ -58,7 +61,7 @@ export class ComparisonReportComponent implements OnInit {
     plugins: {
       legend: {
         display: true,
-        position: "bottom"
+        position: "bottom",
       },
       datalabels: {
         anchor: 'end',
@@ -166,4 +169,21 @@ export class ComparisonReportComponent implements OnInit {
     this.cdr.detectChanges()
   }
 
+  printWindow(elem) {
+    let mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+    mywindow.document.write('<html><head><title>' + document.title + '</title>');
+    mywindow.document.write('</head><body >');
+    mywindow.document.write('<h1>' + document.title + '</h1>');
+    mywindow.document.write(document.getElementById(elem).innerHTML);
+    mywindow.document.write('</body></html>');
+
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10*/
+
+    mywindow.print();
+    mywindow.close();
+
+    return true;
+  }
 }

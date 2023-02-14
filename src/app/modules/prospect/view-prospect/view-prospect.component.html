@@ -17,11 +17,21 @@
     *ngIf="(authService.currentUser$ | async).group !== permissions.ViewOnly"
     nz-row
   >
+    <div *ngIf="(authService.currentUser$ | async).reel_eval_admin && !achievedTable"
+         class="p-2 d-flex justify-content-end">
+      <button
+        (click)="downloadProspectList()"
+        nz-button
+        nzType="primary"
+      >
+        Download Prospect List Form
+      </button>
+    </div>
     <div
       *ngIf="(authService.currentUser$ | async).reel_eval_admin && !achievedTable"
       class="p-2 d-flex justify-content-end"
     >
-      <nz-upload [nzAccept]="['.xlsx', '.xls']" [nzBeforeUpload]="beforeUpload">
+      <nz-upload [nzAccept]="'.xlsx'" [nzBeforeUpload]="beforeUpload">
         <button class="d-flex" nz-button nzType="primary">
           <span nz-icon nzType="upload"></span>
           Upload Prospect List

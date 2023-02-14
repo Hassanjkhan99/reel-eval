@@ -151,7 +151,7 @@ export class ViewProspectComponent {
   listOfSort = [
     'first_name',
     'last_name',
-    'position',
+    'position_temp',
     'classification',
     'state',
     'school',
@@ -517,6 +517,12 @@ export class ViewProspectComponent {
     });
   }
 
+  downloadProspectList() {
+    this.prospectSer.downloadProspectListForm().subscribe((response) => {
+      this.download(response);
+    });
+  }
+
   exportListToExcel() {
     this.prospectSer
       .exportToExcel(this.achievedTable, [...this.setOfCheckedId])
@@ -584,16 +590,9 @@ export class ViewProspectComponent {
           x => {
             this.dataSet = x.results
             this.total = x.count
-            console.log(this.dataSet)
             this.cdr.detectChanges();
           }
         )
-      },
-      error => {
-        this.notificationService.error(
-          'Error',
-          'File upload failed'
-        );
       })
 
     this.cdr.detectChanges();
