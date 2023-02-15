@@ -519,7 +519,7 @@ export class ViewProspectComponent {
 
   downloadProspectList() {
     this.prospectSer.downloadProspectListForm().subscribe((response) => {
-      this.downloadProspectForm(response);
+     window.open(response.results[0].direct_url, '_self')
     });
   }
 
@@ -542,13 +542,7 @@ export class ViewProspectComponent {
   }
 
   downloadProspectForm(response) {
-    let binaryData = [];
-    binaryData.push(response);
-    let downloadLink = document.createElement('a');
-    downloadLink.href = window.URL.createObjectURL(new Blob(binaryData));
-    downloadLink.setAttribute('downloadForm', 'ProspectsListFormTemplate.xlsx');
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
+    window.open(response)
   }
 
   updateCheckedSet(id: number, checked: boolean): void {

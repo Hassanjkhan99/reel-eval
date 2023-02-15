@@ -8,6 +8,7 @@ import {map} from 'rxjs/operators';
 import {SchoolApi, Schools} from '../interfaces/school.interface';
 import {StateApi, States} from '../interfaces/state.interface';
 import {LoadingService} from './loading.service';
+import {DownloadFormApi} from "../interfaces/download-form";
 
 @Injectable({
   providedIn: 'root',
@@ -196,12 +197,12 @@ export class ProspectService {
     }));
   }
 
-  downloadProspectListForm() {
-    return this.http.get(
-      `https://reelevalbucket.s3.us-west-2.amazonaws.com/Prospect+Upload+Template.xlsx`,
-      {responseType: 'blob'},
+  downloadProspectListForm(): Observable<DownloadFormApi> {
+    return this.http.get<DownloadFormApi>(
+      main_url + `download_form/`,
     ).pipe(tap((val) => {
       this.loadingService.loading.next(false)
-    }));
+      return val.results
+    }))
   }
 }
