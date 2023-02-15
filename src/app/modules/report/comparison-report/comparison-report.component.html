@@ -1,5 +1,5 @@
 <div class="w-100 d-flex justify-content-center p-2" nz-row>
-  <div class="m-2" nz-col nzSpan="5">
+  <div class="m-2 " nz-col nzSpan="5">
     <div class="mx-2 d-flex justify-content-center" nz-row>
       <app-card class="w-100 text-align-center" headerText="Select Position">
         <app-positions-select [formControl]="selectedPosition"
@@ -25,9 +25,9 @@
 
     </div>
   </div>
-  <div class="m-2" nz-col nzSpan="12">
+  <div class="m-2" id="section" nz-col nzSpan="12">
 
-    <div class="box-shadow" id="section">
+    <div class="">
       <div class="w-100 d-flex justify-content-center">
         <h2 class="overall-heading">Comparison Report</h2>
       </div>
@@ -37,7 +37,6 @@
         [plugins]="barChartPlugins"
         [type]="barChartType"
         baseChart
-        class="chart"
       >
       </canvas>
     </div>
@@ -49,7 +48,8 @@
           <h5 [class.font-size-11]="overallGrade.length === 4"
               [class.font-size-14]="overallGrade.length === 3" [class.font-size-16]="overallGrade.length === 2"
               [class.font-size-18]="overallGrade.length === 1"
-              [ngStyle]="{'background': barChartColors[i].backgroundColor}" class="sum-heading">{{prospect.name}}
+              [ngClass]="barChartColorsClasses[i]"
+              class="sum-heading">{{prospect.name}}
             : {{prospect.grade}}%</h5>
         </div>
         <div>
@@ -57,16 +57,16 @@
           nz-input
           readonly
           rows="3"
-          style="background: rgba(224,221,221,0.61)"
+          style="background: rgba(224,221,221,0.61);border: 1px solid #3f87f5 "
         >{{ (selectedPosition?.value?.id | summary  : selectedProspects?.value?.[i] : prospects || [])| async }}</textarea
         >
         </div>
       </div>
     </div>
   </div>
-  <div class="m-2" nz-col nzSpan="3">
+  <div class="m-2 " nz-col nzSpan="3">
     <button [disabled]="!(selectedPosition.value && selectedProspects.value)" class="mx-1" nz-button nzSize="small"
-            (click)="printWindow('section')" nzType="primary">Print Report
+            (click)="printDiv()" nzType="primary">Print Report
     </button>
   </div>
 </div>

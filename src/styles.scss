@@ -206,5 +206,15 @@ button {
 }
 
 @media print {
-
+  body * {
+    visibility: hidden;
+  }
+  #section * {
+    visibility: visible;
+  }
+  #section {
+    visibility: visible;
+    position: absolute;
+    left: 300px;
+  }
 }

@@ -14,7 +14,6 @@ import {NzInputModule} from 'ng-zorro-antd/input';
 import {PositionsSelectComponent} from '../../../shared/components/positions-select/positions-select.component';
 import {SummaryPipe} from "./summary.pipe";
 import {NzButtonModule} from "ng-zorro-antd/button";
-import {NgxPrintModule} from "ngx-print";
 
 @UntilDestroy()
 @Component({
@@ -31,7 +30,6 @@ import {NgxPrintModule} from "ngx-print";
     PositionsSelectComponent,
     SummaryPipe,
     NzButtonModule,
-    NgxPrintModule,
   ],
   templateUrl: './comparison-report.component.html',
   styleUrls: ['./comparison-report.component.scss'],
@@ -88,6 +86,13 @@ export class ComparisonReportComponent implements OnInit {
     {backgroundColor: 'rgba(0, 135, 245, 0.77)'},
     {backgroundColor: 'rgba(131,208,5,0.66)'},
     {backgroundColor: 'rgba(255, 165, 0, 0.71)'},
+  ]
+
+  public barChartColorsClasses: string[] = [
+    'red',
+    'blue',
+    'green',
+    'orange',
   ]
 
 
@@ -169,21 +174,9 @@ export class ComparisonReportComponent implements OnInit {
     this.cdr.detectChanges()
   }
 
-  printWindow(elem) {
-    let mywindow = window.open('', 'PRINT', 'height=400,width=600');
+  printDiv(): void {
 
-    mywindow.document.write('<html><head><title>' + document.title + '</title>');
-    mywindow.document.write('</head><body >');
-    mywindow.document.write('<h1>' + document.title + '</h1>');
-    mywindow.document.write(document.getElementById(elem).innerHTML);
-    mywindow.document.write('</body></html>');
-
-    mywindow.document.close(); // necessary for IE >= 10
-    mywindow.focus(); // necessary for IE >= 10*/
-
-    mywindow.print();
-    mywindow.close();
-
-    return true;
+    document.getElementsByTagName("body").item(0).setAttribute('class', 'test')
+    window.print()
   }
 }
