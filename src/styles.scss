@@ -216,5 +216,9 @@ button {
     visibility: visible;
     position: absolute;
     left: 300px;
+
+    .box-shadow {
+      box-shadow: none;
+    }
   }
 }
