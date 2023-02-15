@@ -199,7 +199,7 @@ export class ProspectService {
   downloadProspectListForm() {
     return this.http.get(
       `https://reelevalbucket.s3.us-west-2.amazonaws.com/Prospect+Upload+Template.xlsx`,
-      {responseType: 'blob' as 'json'}
+      {responseType: 'blob'},
     ).pipe(tap((val) => {
       this.loadingService.loading.next(false)
     }));

@@ -59,26 +59,26 @@
         </h5>
       </div>
     </div>
-
-    <div class="box-shadow">
-      <div class="w-100 d-flex justify-content-center">
-        <h2 class="overall-heading">Overall Grade:&nbsp;{{ overallGrade }}{{overallGrade ? '%' : ''}}</h2>
+    <div class="w-100" id="sectionProspect">
+      <div class="box-shadow">
+        <div class="w-100 d-flex justify-content-center">
+          <h2 class="overall-heading">Overall Grade:&nbsp;{{ overallGrade }}{{overallGrade ? '%' : ''}}</h2>
+        </div>
+        <canvas
+          [data]="barChartData"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [type]="barChartType"
+          baseChart
+          class="chart"
+        >
+        </canvas>
       </div>
-      <canvas
-        [data]="barChartData"
-        [options]="barChartOptions"
-        [plugins]="barChartPlugins"
-        [type]="barChartType"
-        baseChart
-        class="chart"
-      >
-      </canvas>
-    </div>
-    <div class="w-100">
-      <div>
-        <h5 class="sum-heading">Summary:</h5>
-      </div>
-      <div>
+      <div class="w-100">
+        <div>
+          <h5 class="sum-heading">Summary:</h5>
+        </div>
+        <div>
         <textarea
           nz-input
           readonly
@@ -86,14 +86,16 @@
           style="background: rgba(161, 216, 250, 0.65)"
         >{{ summary }}</textarea
         >
+        </div>
       </div>
     </div>
+
   </div>
   <div class="m-2" nz-col nzSpan="3" style="transform: translateY(75px)">
     <div class="mx-1"
     >
       <button [disabled]="!(selectedProspect.value && selectedPosition.value)" nz-button nzSize="small"
-              nzType="primary">Print Report
+              (click)="printDiv()" nzType="primary">Print Report
       </button>
 
     </div>

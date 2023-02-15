@@ -272,6 +272,11 @@ export class TrajectoryReportComponent {
     this.applyFilters();
   }
 
+  printDiv(): void {
+    document.getElementsByTagName("body").item(0).setAttribute('class', 'test')
+    window.print()
+  }
+
   mouseOnCanvas() {
     this.isMouseOnCanvas = true;
   }

@@ -519,7 +519,7 @@ export class ViewProspectComponent {
 
   downloadProspectList() {
     this.prospectSer.downloadProspectListForm().subscribe((response) => {
-      this.download(response);
+      this.downloadProspectForm(response);
     });
   }
 
@@ -537,6 +537,16 @@ export class ViewProspectComponent {
     let downloadLink = document.createElement('a');
     downloadLink.href = window.URL.createObjectURL(new Blob(binaryData));
     downloadLink.setAttribute('download', 'ProspectsList.xls');
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+  }
+
+  downloadProspectForm(response) {
+    let binaryData = [];
+    binaryData.push(response);
+    let downloadLink = document.createElement('a');
+    downloadLink.href = window.URL.createObjectURL(new Blob(binaryData));
+    downloadLink.setAttribute('downloadForm', 'ProspectsListFormTemplate.xlsx');
     document.body.appendChild(downloadLink);
     downloadLink.click();
   }

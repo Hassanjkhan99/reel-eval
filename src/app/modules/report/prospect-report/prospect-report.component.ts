@@ -165,4 +165,9 @@ export class ProspectReportComponent implements OnInit {
       this.cdr.detectChanges()
     })
   }
+
+  printDiv(): void {
+    document.getElementsByTagName("body").item(0).setAttribute('class', 'test')
+    window.print()
+  }
 }

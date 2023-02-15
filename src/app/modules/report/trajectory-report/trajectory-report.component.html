@@ -81,7 +81,7 @@
         </button>
       </div>
     </div>
-    <div class="w-100 m-1" nz-row>
+    <div class="w-100 m-1" id="sectionTrajectory" nz-row>
       <div class="d-flex justify-content-between w-100">
         <div [class.moveToOriginalPosition]="isMouseOnCanvas" class="quadrant-label-top">
           <div style="color: green;font-weight: bold">Quality Starter</div>
@@ -94,19 +94,22 @@
           <div style="color: green">High floor</div>
         </div>
       </div>
-      <div class="w-100 box-shadow" style="height: 60vh">
-        <canvas
-          (chartClick)="chartClicked($event)"
-          (mouseenter)="mouseOnCanvas()"
-          (mouseleave)="mouseOffCanvas()"
-          [data]="scatterChartData"
-          [options]="scatterChartOptions"
-          [type]="scatterChartType"
-          baseChart
-          class="chart"
-        >
-        </canvas>
+      <div class="w-100">
+        <div class="w-100 box-shadow" style="height: 60vh">
+          <canvas
+            (chartClick)="chartClicked($event)"
+            (mouseenter)="mouseOnCanvas()"
+            (mouseleave)="mouseOffCanvas()"
+            [data]="scatterChartData"
+            [options]="scatterChartOptions"
+            [type]="scatterChartType"
+            baseChart
+            class="chart"
+          >
+          </canvas>
+        </div>
       </div>
+
       <div class="d-flex justify-content-between w-100">
         <div [class.moveToOriginalPosition]="isMouseOnCanvas" class="quadrant-label-bottom">
           <div style="color: red;font-weight: bold">Backup Caliber</div>
@@ -139,7 +142,7 @@
       <button (click)="reset()" class="w-100 m-t-5" nz-button nzType="primary">
         Reset Players Filter
       </button>
-      <button [disabled]="selectedProspects.length < 1" class="w-100 m-t-5" nz-button nzType="primary">Print Report
+      <button (click)="printDiv()" class="w-100 m-t-5" nz-button nzType="primary">Print Report
       </button>
 
     </div>
