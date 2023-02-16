@@ -101,21 +101,29 @@ export const CommonLayout_ROUTES: Routes = [
       path: 'report'
     },
     canActivate: [AuthGuard]
+  }, {
+    path: 'quadrant-report',
+    loadComponent: () => import('../../modules/report/quadrant-report/quadrant-report.component').then(c => c.QuadrantReportComponent),
+    data: {
+      label: 'quadrant-report',
+      path: 'quadrant-report'
+    },
+    canActivate: [AuthGuard]
   },
   {
     path: 'prospect-report',
     loadComponent: () => import('../../modules/report/prospect-report/prospect-report.component').then(c => c.ProspectReportComponent),
     data: {
-      label: 'report',
-      path: 'report'
+      label: 'prospect-report',
+      path: 'prospect-report'
     },
     canActivate: [AuthGuard]
   }, {
     path: 'comparison-report',
     loadComponent: () => import('../../modules/report/comparison-report/comparison-report.component').then(c => c.ComparisonReportComponent),
     data: {
-      label: 'report',
-      path: 'report'
+      label: 'comparison-report',
+      path: 'comparison-report'
     },
     canActivate: [AuthGuard]
   },

@@ -21,6 +21,7 @@ export interface Result {
   iga_score?: number;
   user: number;
   user_full_name: string;
+  quadrant: string;
 }
 
 export interface Report {

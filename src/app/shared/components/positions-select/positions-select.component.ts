@@ -64,7 +64,6 @@ export class PositionsSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    console.log({isDisabled})
     if (isDisabled) {
       this.position.disable()
     } else {
