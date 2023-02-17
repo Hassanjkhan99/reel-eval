@@ -247,4 +247,16 @@ button {
     }
   }
 
+  #print {
+    position: absolute;
+    top: 0;
+    left: 10%;
+    visibility: visible;
+  }
+
+  #print * {
+    visibility: visible;
+    page-break-after: always !important;
+  }
+
 }

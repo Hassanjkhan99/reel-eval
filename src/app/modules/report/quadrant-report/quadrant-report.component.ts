@@ -157,4 +157,8 @@ export class QuadrantReportComponent implements OnInit {
       return staff.includes(item.user_full_name);
     });
   }
+
+  print() {
+    window.print();
+  }
 }

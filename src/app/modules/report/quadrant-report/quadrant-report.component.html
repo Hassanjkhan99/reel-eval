@@ -75,105 +75,109 @@
       </button>
     </div>
   </div>
+  <button (click)="print()">Print</button>
 </div>
 
+<div id="print">
+  <div class="page-break-before box-shadow m-5">
+    <nz-table #borderedTable [nzData]="impactPlayerData" nzBordered nzTitle="Impact Player (High Ceiling & High Floor)">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>IGA Score</th>
+        <th>Staff Score</th>
+        <th>Classification</th>
+        <th>School</th>
+        <th>State</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of borderedTable.data">
+        <td>{{ data.prospect.first_name }} {{data.prospect.last_name}}</td>
+        <td>{{ data.iga_score }}</td>
+        <td>{{ data.score }}</td>
+        <td>{{ data.prospect.classification }}</td>
+        <td>{{ data.prospect.school }}</td>
+        <td>{{ data.prospect.state }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+  <div class="page-break-after box-shadow m-5">
+    <nz-table #borderedTable2 [nzData]="qualityStarterData" nzBordered
+              nzTitle="Quality Starter (High Ceiling & Low Floor)">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>IGA Score</th>
+        <th>Staff Score</th>
+        <th>Classification</th>
+        <th>School</th>
+        <th>State</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of borderedTable2.data">
+        <td>{{ data.prospect.first_name }} {{data.prospect.last_name}}</td>
+        <td>{{ data.iga_score }}</td>
+        <td>{{ data.score }}</td>
+        <td>{{ data.prospect.classification }}</td>
+        <td>{{ data.prospect.school }}</td>
+        <td>{{ data.prospect.state }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+  <div class="page-break-after box-shadow m-5">
+    <nz-table #borderedTable3 [nzData]="adequateStarterData" nzBordered
+              nzTitle="Adequate Starter (Low Ceiling & High Floor)">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>IGA Score</th>
+        <th>Staff Score</th>
+        <th>Classification</th>
+        <th>School</th>
+        <th>State</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of borderedTable3.data">
+        <td>{{ data.prospect.first_name }} {{data.prospect.last_name}}</td>
+        <td>{{ data.iga_score }}</td>
+        <td>{{ data.score }}</td>
+        <td>{{ data.prospect.classification }}</td>
+        <td>{{ data.prospect.school }}</td>
+        <td>{{ data.prospect.state }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+  <div class="page-break-after box-shadow m-5">
+    <nz-table #borderedTable4 [nzData]="backupCalibarData" nzBordered
+              nzTitle="Backup Calibar (Low Ceiling & Low Floor)">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>IGA Score</th>
+        <th>Staff Score</th>
+        <th>Classification</th>
+        <th>School</th>
+        <th>State</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of borderedTable4.data">
+        <td>{{ data.prospect.first_name }} {{data.prospect.last_name}}</td>
+        <td>{{ data.iga_score }}</td>
+        <td>{{ data.score }}</td>
+        <td>{{ data.prospect.classification }}</td>
+        <td>{{ data.prospect.school }}</td>
+        <td>{{ data.prospect.state }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
 
-<div class="box-shadow m-5">
-  <nz-table #borderedTable [nzData]="impactPlayerData" nzBordered nzTitle="Impact Player (High Ceiling & High Floor)">
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>IGA Score</th>
-      <th>Staff Score</th>
-      <th>Classification</th>
-      <th>School</th>
-      <th>State</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let data of borderedTable.data">
-      <td>{{ data.prospect.first_name }} {{data.prospect.last_name}}</td>
-      <td>{{ data.iga_score }}</td>
-      <td>{{ data.score }}</td>
-      <td>{{ data.prospect.classification }}</td>
-      <td>{{ data.prospect.school }}</td>
-      <td>{{ data.prospect.state }}</td>
-    </tr>
-    </tbody>
-  </nz-table>
-</div>
-<div class="box-shadow m-5">
-  <nz-table #borderedTable2 [nzData]="qualityStarterData" nzBordered
-            nzTitle="Quality Starter (High Ceiling & Low Floor)">
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>IGA Score</th>
-      <th>Staff Score</th>
-      <th>Classification</th>
-      <th>School</th>
-      <th>State</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let data of borderedTable2.data">
-      <td>{{ data.prospect.first_name }} {{data.prospect.last_name}}</td>
-      <td>{{ data.iga_score }}</td>
-      <td>{{ data.score }}</td>
-      <td>{{ data.prospect.classification }}</td>
-      <td>{{ data.prospect.school }}</td>
-      <td>{{ data.prospect.state }}</td>
-    </tr>
-    </tbody>
-  </nz-table>
-</div>
-<div class="box-shadow m-5">
-  <nz-table #borderedTable3 [nzData]="adequateStarterData" nzBordered
-            nzTitle="Adequate Starter (Low Ceiling & High Floor)">
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>IGA Score</th>
-      <th>Staff Score</th>
-      <th>Classification</th>
-      <th>School</th>
-      <th>State</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let data of borderedTable3.data">
-      <td>{{ data.prospect.first_name }} {{data.prospect.last_name}}</td>
-      <td>{{ data.iga_score }}</td>
-      <td>{{ data.score }}</td>
-      <td>{{ data.prospect.classification }}</td>
-      <td>{{ data.prospect.school }}</td>
-      <td>{{ data.prospect.state }}</td>
-    </tr>
-    </tbody>
-  </nz-table>
-</div>
-<div class="box-shadow m-5">
-  <nz-table #borderedTable4 [nzData]="backupCalibarData" nzBordered nzTitle="Backup Calibar (Low Ceiling & Low Floor)">
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>IGA Score</th>
-      <th>Staff Score</th>
-      <th>Classification</th>
-      <th>School</th>
-      <th>State</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let data of borderedTable4.data">
-      <td>{{ data.prospect.first_name }} {{data.prospect.last_name}}</td>
-      <td>{{ data.iga_score }}</td>
-      <td>{{ data.score }}</td>
-      <td>{{ data.prospect.classification }}</td>
-      <td>{{ data.prospect.school }}</td>
-      <td>{{ data.prospect.state }}</td>
-    </tr>
-    </tbody>
-  </nz-table>
 </div>
 
