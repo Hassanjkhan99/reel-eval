@@ -1,9 +1,5 @@
 <div class="w-100">
-  <div
-    class="d-flex justify-content-center"
-    nz-row
-    style="margin-bottom: 10px"
-  >
+  <div class="d-flex justify-content-center" nz-row style="margin-bottom: 10px">
     <div nz-col nzSpan="3" style="margin: 5px">
       <h5 class="d-flex justify-content-center">Staff Member</h5>
       <nz-select
@@ -64,7 +60,12 @@
         ></nz-option>
       </nz-select>
     </div>
-    <div class="d-flex justify-content-end align-items-end" nz-col nzSpan="2" style="padding: 7px">
+    <div
+      class="d-flex justify-content-end align-items-end"
+      nz-col
+      nzSpan="2"
+      style="padding: 7px"
+    >
       <button
         (click)="resetFilters()"
         nz-button
@@ -74,13 +75,27 @@
         Reset Filter
       </button>
     </div>
+    <div
+      class="d-flex justify-content-end align-items-end"
+      nz-col
+      nzSpan="2"
+      style="padding: 7px"
+    >
+      <button (click)="print()" nz-button nzSize="small" nzType="primary">
+        Print Report
+      </button>
+    </div>
   </div>
-  <button (click)="print()">Print</button>
 </div>
 
 <div id="print">
   <div class="page-break-before box-shadow m-5">
-    <nz-table #borderedTable [nzData]="impactPlayerData" nzBordered nzTitle="Impact Player (High Ceiling & High Floor)">
+    <nz-table
+      #borderedTable
+      [nzData]="impactPlayerData"
+      nzBordered
+      nzTitle="Impact Player (High Ceiling & High Floor)"
+    >
       <thead>
       <tr>
         <th>Name</th>
@@ -93,7 +108,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let data of borderedTable.data">
-        <td>{{ data.prospect.first_name }} {{data.prospect.last_name}}</td>
+        <td>{{ data.prospect.first_name }} {{ data.prospect.last_name }}</td>
         <td>{{ data.iga_score }}</td>
         <td>{{ data.score }}</td>
         <td>{{ data.prospect.classification }}</td>
@@ -104,8 +119,12 @@
     </nz-table>
   </div>
   <div class="page-break-after box-shadow m-5">
-    <nz-table #borderedTable2 [nzData]="qualityStarterData" nzBordered
-              nzTitle="Quality Starter (High Ceiling & Low Floor)">
+    <nz-table
+      #borderedTable2
+      [nzData]="qualityStarterData"
+      nzBordered
+      nzTitle="Quality Starter (High Ceiling & Low Floor)"
+    >
       <thead>
       <tr>
         <th>Name</th>
@@ -118,7 +137,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let data of borderedTable2.data">
-        <td>{{ data.prospect.first_name }} {{data.prospect.last_name}}</td>
+        <td>{{ data.prospect.first_name }} {{ data.prospect.last_name }}</td>
         <td>{{ data.iga_score }}</td>
         <td>{{ data.score }}</td>
         <td>{{ data.prospect.classification }}</td>
@@ -129,8 +148,12 @@
     </nz-table>
   </div>
   <div class="page-break-after box-shadow m-5">
-    <nz-table #borderedTable3 [nzData]="adequateStarterData" nzBordered
-              nzTitle="Adequate Starter (Low Ceiling & High Floor)">
+    <nz-table
+      #borderedTable3
+      [nzData]="adequateStarterData"
+      nzBordered
+      nzTitle="Adequate Starter (Low Ceiling & High Floor)"
+    >
       <thead>
       <tr>
         <th>Name</th>
@@ -143,7 +166,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let data of borderedTable3.data">
-        <td>{{ data.prospect.first_name }} {{data.prospect.last_name}}</td>
+        <td>{{ data.prospect.first_name }} {{ data.prospect.last_name }}</td>
         <td>{{ data.iga_score }}</td>
         <td>{{ data.score }}</td>
         <td>{{ data.prospect.classification }}</td>
@@ -154,8 +177,12 @@
     </nz-table>
   </div>
   <div class="page-break-after box-shadow m-5">
-    <nz-table #borderedTable4 [nzData]="backupCalibarData" nzBordered
-              nzTitle="Backup Calibar (Low Ceiling & Low Floor)">
+    <nz-table
+      #borderedTable4
+      [nzData]="backupCalibarData"
+      nzBordered
+      nzTitle="Backup Calibar (Low Ceiling & Low Floor)"
+    >
       <thead>
       <tr>
         <th>Name</th>
@@ -168,7 +195,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let data of borderedTable4.data">
-        <td>{{ data.prospect.first_name }} {{data.prospect.last_name}}</td>
+        <td>{{ data.prospect.first_name }} {{ data.prospect.last_name }}</td>
         <td>{{ data.iga_score }}</td>
         <td>{{ data.score }}</td>
         <td>{{ data.prospect.classification }}</td>
@@ -178,6 +205,4 @@
       </tbody>
     </nz-table>
   </div>
-
 </div>
-
