@@ -63,6 +63,7 @@ export class TrajectoryReportComponent {
   };
   private mainData: Result[] = [];
   currentData: Result[] = []
+  ids: string = ''
   public isMouseOnCanvas: boolean = false;
 
   constructor(
@@ -126,6 +127,8 @@ export class TrajectoryReportComponent {
         }
         return 0;
       });
+    this.ids = data.map(e => e.id).join(',')
+
     this.prospectList.sort((a, b) => a.first_name.localeCompare(b.first_name))
   }
 
@@ -326,5 +329,9 @@ export class TrajectoryReportComponent {
         },
       ],
     };
+  }
+
+  exportToPdf() {
+    window.open('https://api.reeleval.com/dev/trajectory_report/export_to_pdf/' + this.ids + '/', '_self')
   }
 }

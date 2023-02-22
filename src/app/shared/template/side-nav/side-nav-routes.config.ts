@@ -130,21 +130,22 @@ export const ROUTES: SideNavInterface[] = [
           Permissions.ViewOnly,
           Permissions.CreateProspects,
         ]
-      }, {
-        path: 'quadrant-report',
-        title: 'Quadrant Report',
-        iconType: '',
-        icon: '',
-        submenu: [],
-        iconTheme: 'fill',
-        permission: [
-          Permissions.clubAdmin,
-          Permissions.CreateGradeProspects,
-          Permissions.GradeProspects,
-          Permissions.ViewOnly,
-          Permissions.CreateProspects,
-        ]
       },
+      // {
+      //   path: 'quadrant-report',
+      //   title: 'Quadrant Report',
+      //   iconType: '',
+      //   icon: '',
+      //   submenu: [],
+      //   iconTheme: 'fill',
+      //   permission: [
+      //     Permissions.clubAdmin,
+      //     Permissions.CreateGradeProspects,
+      //     Permissions.GradeProspects,
+      //     Permissions.ViewOnly,
+      //     Permissions.CreateProspects,
+      //   ]
+      // },
       {
         path: 'prospect-report',
         title: 'Prospect Report',
