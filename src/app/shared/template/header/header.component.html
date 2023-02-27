@@ -26,8 +26,11 @@
   </div>
   <div class="logo logo-white">
     <div routerLink="dashboard/home">
-      <img alt="Logo" src="assets/images/logo/Reel%20Eval-%20logo.png"
-           style="width: 120px; height: 60px; padding: 5px"/>
+      <img
+        alt="Logo"
+        src="assets/images/logo/Reel%20Eval-%20logo.png"
+        style="width: 120px; height: 60px; padding: 5px"
+      />
       <img
         alt="Logo"
         class="logo-fold"
@@ -89,8 +92,44 @@
               </div>
             </li>
 
-            <li (click)="logout()" nz-menu-item
-            >
+            <li *ngIf="!(authService.currentUser$ | async).reel_eval_admin" nz-menu-item>
+              <a (click)="showModal()" class="p-v-5 d-flex align-items-center">
+                Report Bug
+              </a>
+              <nz-modal
+                [(nzVisible)]="isVisible"
+                nzTitle="Report Bug"
+              >
+                <ng-container *nzModalContent>
+                  <div [formGroup]="bugForm">
+                    <div class="m-2">
+                      <h6>Subject:</h6>
+                      <input formControlName="subject" nz-input placeholder="Enter the subject" type="text"/>
+                    </div>
+                    <div class="m-2">
+                      <h6>Message:</h6>
+                      <textarea formControlName="message" nz-input placeholder="Enter the message" rows="4"></textarea>
+                    </div>
+                    <div class="m-2">
+                      <h6>Attachment:</h6>
+                      <nz-upload [(nzFileList)]="fileList" [nzAccept]="['.png','.jpeg']"
+                                 [nzBeforeUpload]="beforeUpload">
+                        <button class="d-flex" nz-button nzType="primary">
+                          <span nz-icon nzType="upload"></span>
+                          Select file
+                        </button>
+                      </nz-upload>
+                    </div>
+                  </div>
+
+                </ng-container>
+                <ng-container *nzModalFooter>
+                  <button (click)="handleCancel()" nz-button nzType="default">Cancel</button>
+                  <button (click)="handleOk()" [disabled]="bugForm.invalid" nz-button nzType="primary">OK</button>
+                </ng-container>
+              </nz-modal>
+            </li>
+            <li (click)="logout()" nz-menu-item>
               <a
                 class="p-v-5 d-flex align-items-center justify-content-between"
               >

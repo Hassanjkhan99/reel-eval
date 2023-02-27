@@ -23,6 +23,9 @@ import {FooterComponent} from "./footer/footer.component";
 import {SideNavDirective} from "../directives/side-nav.directive";
 import {ThemeConstantService} from '../services/theme-constant.service';
 import {NzToolTipModule} from "ng-zorro-antd/tooltip";
+import {NzModalModule} from "ng-zorro-antd/modal";
+import {NzUploadModule} from "ng-zorro-antd/upload";
+import {ReactiveFormsModule} from "@angular/forms";
 
 const antdModule = [
   NzAvatarModule,
@@ -52,7 +55,10 @@ const antdModule = [
       CommonModule,
       SharedModule,
       ...antdModule,
-      NzToolTipModule
+      NzToolTipModule,
+      NzModalModule,
+      NzUploadModule,
+      ReactiveFormsModule
     ],
     declarations: [
         HeaderComponent,

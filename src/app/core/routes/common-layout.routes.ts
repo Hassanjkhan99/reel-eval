@@ -128,7 +128,15 @@ export const CommonLayout_ROUTES: Routes = [
     },
     canActivate: [AuthGuard]
   },
-
+  {
+    path: 'bugs-list',
+    loadComponent: () => import('../../modules/bugs-list/bugs-list.component').then(c => c.BugsListComponent),
+    data: {
+      label: 'Bugs-list',
+      path: 'bugs-list'
+    },
+    canActivate: [AuthGuard]
+  },
   {
     path: '**',
     redirectTo: 'app/dashboard'

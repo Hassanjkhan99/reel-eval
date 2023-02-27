@@ -131,21 +131,6 @@ export const ROUTES: SideNavInterface[] = [
           Permissions.CreateProspects,
         ]
       },
-      // {
-      //   path: 'quadrant-report',
-      //   title: 'Quadrant Report',
-      //   iconType: '',
-      //   icon: '',
-      //   submenu: [],
-      //   iconTheme: 'fill',
-      //   permission: [
-      //     Permissions.clubAdmin,
-      //     Permissions.CreateGradeProspects,
-      //     Permissions.GradeProspects,
-      //     Permissions.ViewOnly,
-      //     Permissions.CreateProspects,
-      //   ]
-      // },
       {
         path: 'prospect-report',
         title: 'Prospect Report',
@@ -176,6 +161,21 @@ export const ROUTES: SideNavInterface[] = [
         ]
       },
     ],
+  },
+  {
+    path: 'bugs-list',
+    title: 'Bugs List',
+    iconTheme: 'fill',
+    submenu: [],
+    icon: 'bug',
+    iconType: 'nzIcon',
+    permission: [
+      Permissions.clubAdmin,
+      Permissions.CreateGradeProspects,
+      Permissions.GradeProspects,
+      Permissions.ViewOnly,
+      Permissions.CreateProspects,
+    ]
   },
 
 ];
