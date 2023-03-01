@@ -57,7 +57,7 @@ export class HeaderComponent {
           nzPlacement: 'bottomRight',
           nzAnimate: true,
           nzPauseOnHover: true,
-          nzDuration: 3000
+          nzDuration: 3000,
         })
       }
     );

@@ -92,13 +92,15 @@
               </div>
             </li>
 
-            <li *ngIf="!(authService.currentUser$ | async).reel_eval_admin" nz-menu-item>
-              <a (click)="showModal()" class="p-v-5 d-flex align-items-center">
-                Report Bug
+            <li (click)="showModal()" *ngIf="!(authService.currentUser$ | async).reel_eval_admin" nz-menu-item>
+              <a class="p-v-5 d-flex align-items-center">
+                Create Support Ticket
               </a>
               <nz-modal
                 [(nzVisible)]="isVisible"
                 nzTitle="Report Bug"
+                nzCentered="true"
+                nzCloseIcon="null"
               >
                 <ng-container *nzModalContent>
                   <div [formGroup]="bugForm">

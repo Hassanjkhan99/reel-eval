@@ -163,8 +163,8 @@ export const ROUTES: SideNavInterface[] = [
     ],
   },
   {
-    path: 'bugs-list',
-    title: 'Bugs List',
+    path: 'ticket-list',
+    title: 'Ticket List',
     iconTheme: 'fill',
     submenu: [],
     icon: 'bug',

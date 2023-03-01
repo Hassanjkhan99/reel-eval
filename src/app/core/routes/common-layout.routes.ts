@@ -129,11 +129,11 @@ export const CommonLayout_ROUTES: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'bugs-list',
+    path: 'ticket-list',
     loadComponent: () => import('../../modules/bugs-list/bugs-list.component').then(c => c.BugsListComponent),
     data: {
-      label: 'Bugs-list',
-      path: 'bugs-list'
+      label: 'Ticket List',
+      path: 'ticket-list'
     },
     canActivate: [AuthGuard]
   },
