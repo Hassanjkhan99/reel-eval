@@ -26,11 +26,13 @@ export class BugsListService {
 
   postBug(value: { subject: string, message: string }, fileList: NzUploadFile[]): Observable<PostBugs> {
     const formData = new FormData();
-    fileList.forEach((file: any) => {
-      formData.append('myfile', file);
+    fileList.forEach((resource: any, i) => {
+      formData.append('myfile', resource);
+
     });
-    console.log(formData)
-    return this.http.post<PostBugs>(main_url + 'support_request/create_request/', {...value, formData})
+    formData.append('subject', value.subject);
+    formData.append('message', value.message);
+    return this.http.post<PostBugs>(main_url + 'support_request/create_request/', formData)
   }
 
 }

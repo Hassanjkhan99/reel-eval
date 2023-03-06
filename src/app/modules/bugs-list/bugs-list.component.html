@@ -7,10 +7,13 @@
 >
   <thead>
   <tr>
+    <th>Ticket #</th>
     <th>Account Name</th>
     <th>Club</th>
     <th>Subject</th>
     <th>Message</th>
+    <th>Created</th>
+    <th>Modified</th>
     <th>Status</th>
     <th *ngIf="(authService.currentUser$ | async).reel_eval_admin" class="text-align-center" nzRight>
       Actions
@@ -19,10 +22,13 @@
   </thead>
   <tbody>
   <tr *ngFor="let data of borderedTable.data; let i = index">
+    <td>{{ data.id }}</td>
     <td>{{ data.account.first_name }} {{ data.account.last_name }}</td>
     <td>{{ data.account.club_name }}</td>
     <td>{{ data.subject }}</td>
     <td>{{ data.message }}</td>
+    <td>{{ data.created | date }}</td>
+    <td>{{ data.modified | date  }}</td>
     <td>
       <div *ngIf="!(authService.currentUser$ | async).reel_eval_admin">
         {{ statusEnum[data.status] }}
