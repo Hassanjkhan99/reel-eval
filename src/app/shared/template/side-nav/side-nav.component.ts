@@ -29,7 +29,7 @@ export class SideNavComponent {
       .subscribe((user) => {
         if (user.reel_eval_admin) {
           this.menuItems = ROUTES.filter((menuItem) => {
-            return menuItem.title === 'Staff' || menuItem.title === 'Prospects' || menuItem.title === 'Customers' || menuItem.title === 'Bugs List'
+            return menuItem.title === 'Staff' || menuItem.title === 'Prospects' || menuItem.title === 'Customers' || menuItem.title === 'Ticket List'
           })
         } else {
           const permission = user.group;
