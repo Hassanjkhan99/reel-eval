@@ -115,6 +115,7 @@
                     <div class="m-2">
                       <h6>Attachment:</h6>
                       <nz-upload [(nzFileList)]="fileList" [nzAccept]="['.png','.jpeg']"
+                                 nzMultiple="true"
                                  [nzBeforeUpload]="beforeUpload">
                         <button class="d-flex" nz-button nzType="primary">
                           <span nz-icon nzType="upload"></span>

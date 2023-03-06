@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit,} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {CustomersService} from '../../shared/services/customers.service';
 import {
@@ -12,13 +12,14 @@ import {LoadingService} from '../../shared/services/loading.service';
 import {Prospect} from '../../shared/interfaces/prospect.interface';
 import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
 import {NzInputModule} from 'ng-zorro-antd/input';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule,} from '@angular/forms';
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
 import {NzSelectModule} from 'ng-zorro-antd/select';
 import {NotificationService} from '../../shared/services/notification.service';
+import {NzDatePickerModule} from 'ng-zorro-antd/date-picker';
 
 @Component({
   selector: 'app-customers',
@@ -35,6 +36,7 @@ import {NotificationService} from '../../shared/services/notification.service';
     NzPopconfirmModule,
     NzSelectModule,
     ReactiveFormsModule,
+    NzDatePickerModule,
   ],
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.scss'],
@@ -43,22 +45,32 @@ export class CustomersComponent implements OnInit {
   customerForm = new FormGroup({
     club_is_active: new FormControl(null),
     reel_eval_customer: new FormControl(null),
+    subscription_expiry_date: new FormControl(null),
   });
-  customers: ({ club_is_active: string; name: string; reel_eval_customer: string; id: number })[] = [];
+  customers: {
+    club_is_active: string;
+    name: string;
+    reel_eval_customer: string;
+    id: number;
+    subscription_expiry_date: string;
+  }[] = [];
   currentEditIndex: number = -1;
   listOfColumns: ColumnItem[] = [
     {
       name: 'Name',
-      sortField: 'name'
+      sortField: 'name',
     },
     {
       name: 'Club is Active',
-      sortField: 'club_is_active'
+      sortField: 'club_is_active',
     },
     {
       name: 'Reel Eval Customer',
-      sortField: 'reel_eval_customer'
-
+      sortField: 'reel_eval_customer',
+    },
+    {
+      name: 'Subscription Expiry Date',
+      sortField: 'subscription_expiry_date',
     },
   ];
   total: number;
@@ -66,6 +78,7 @@ export class CustomersComponent implements OnInit {
     name: false,
     club_is_active: false,
     reel_eval_customer: false,
+    subscription_expiry_date: false,
   };
   searchValue = {
     name: '',
@@ -88,21 +101,23 @@ export class CustomersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.customerService.getCustomers(this.pageIndex, this.pageSize, null, null, null).subscribe((cus) => {
-      this.customers = cus.results.map(customer => {
-        return {
-          id: customer.id,
-          name: customer.name,
-          club_is_active: String(customer.club_is_active),
-          reel_eval_customer: String(customer.reel_eval_customer),
-        }
+    this.customerService
+      .getCustomers(this.pageIndex, this.pageSize, null, null, null)
+      .subscribe((cus) => {
+        this.customers = cus.results.map((customer) => {
+          return {
+            id: customer.id,
+            name: customer.name,
+            club_is_active: String(customer.club_is_active),
+            reel_eval_customer: String(customer.reel_eval_customer),
+            subscription_expiry_date: customer.subscription_expiry_date,
+          };
+        });
+        this.total = cus.count;
       });
-      this.total = cus.count;
-    });
   }
 
   isEdit(i: number) {
-
     if (this.currentEditIndex != i && this.currentEditIndex > -1) {
       this.notificationService.error(
         "Can't edit another row while editing a row",
@@ -115,11 +130,25 @@ export class CustomersComponent implements OnInit {
     this.customerForm.patchValue({
       club_is_active: this.customers[i].club_is_active,
       reel_eval_customer: this.customers[i].reel_eval_customer,
+      subscription_expiry_date: this.customers[i].subscription_expiry_date,
     });
-    this.cdr.detectChanges()
+    this.cdr.detectChanges();
   }
 
   isSave(i: number) {
+    let date = this.customerForm.controls.subscription_expiry_date.value;
+    if (date) {
+      date =
+        date.getMonth() > 8
+          ? date.getMonth() + 1
+          : '0' +
+          (date.getMonth() + 1) +
+          '-' +
+          (date.getDate() > 9 ? date.getDate() : '0' + date.getDate()) +
+          '-' +
+          date.getFullYear();
+      this.customerForm.controls.subscription_expiry_date.setValue(date)
+    }
     this.customerService
       .editCustomer(this.customers[i].id, {
         ...this.customers[i],
@@ -137,11 +166,13 @@ export class CustomersComponent implements OnInit {
               name: customer.name,
               club_is_active: String(customer.club_is_active),
               reel_eval_customer: String(customer.reel_eval_customer),
+              subscription_expiry_date: customer.subscription_expiry_date,
             };
           } else {
             return item;
           }
         });
+        this.customerForm.reset()
         this.currentEditIndex = -1;
         this.cdr.detectChanges();
       });
@@ -192,15 +223,16 @@ export class CustomersComponent implements OnInit {
       )
       .subscribe((result) => {
         console.log({pageIndex, pageSize, sortField, sortOrder, filter});
-        const customer = result.results
-        this.customers = customer.map(cus => {
+        const customer = result.results;
+        this.customers = customer.map((cus) => {
           return {
             id: cus.id,
             name: cus.name,
             club_is_active: String(cus.club_is_active),
             reel_eval_customer: String(cus.reel_eval_customer),
-          }
-        })
+            subscription_expiry_date: cus.subscription_expiry_date,
+          };
+        });
         this.total = result.count;
       });
   }

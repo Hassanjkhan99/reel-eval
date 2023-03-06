@@ -26,8 +26,14 @@ export class AuthGuard implements CanActivate {
   checkUser() {
     return this.authService.checkLogin().pipe(tap(e => {
       localStorage.setItem('user', JSON.stringify(e))
-      this.authService.currentUser$.next(e)
-      return !!e;
+      if (e.club_is_active) {
+        this.authService.currentUser$.next(e)
+        return !!e;
+      } else {
+        this.authService.logout()
+      }
+      return false
+
     }, error => !error))
   }
 }

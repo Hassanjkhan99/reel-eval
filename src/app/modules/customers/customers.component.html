@@ -26,6 +26,7 @@
       >
         {{ column.name }}
         <nz-filter-trigger
+          *ngIf="column.name !== 'Subscription Expiry Date'"
           [(nzVisible)]="visible[listOfFilter[i]]"
           [nzActive]="searchValue[listOfFilter[i]].length > 0"
           [nzDropdownMenu]="column.name === 'Name' ? menu : booleanMenu"
@@ -138,6 +139,15 @@
             </nz-select>
           </span>
       </td>
+      <td>
+          <span *ngIf="currentEditIndex != i">
+            {{ data.subscription_expiry_date }}
+          </span>
+        <span *ngIf="currentEditIndex == i">
+             <nz-date-picker class="w-100" formControlName="subscription_expiry_date"
+                             nzFormat="MM-dd-YYYY"></nz-date-picker>
+          </span>
+      </td>
 
       <td>
         <div class="d-flex justify-content-center">
@@ -145,7 +155,7 @@
             (click)="isEdit(i)"
             *ngIf="currentEditIndex != i"
             [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="'Edit Trait'"
+            [nzTooltipTitle]="'Edit Customer'"
             class="p-2"
             nz-tooltip
           >

@@ -72,7 +72,14 @@ export class HeaderComponent {
     this.bugListService.postBug({
       subject: this.bugForm.controls.subject.value,
       message: this.bugForm.controls.message.value
-    }, this.fileList).subscribe()
+    }, this.fileList).subscribe(e => {
+      this.bugListService.getBugsListData()
+      this.notification.success('Success', 'Your request was successfully submitted, please check the status of your request.', {
+        nzPlacement: 'bottomRight',
+        nzAnimate: true,
+        nzPauseOnHover: true,
+      })
+    })
     this.bugForm.reset()
     this.isVisible = false;
   }
