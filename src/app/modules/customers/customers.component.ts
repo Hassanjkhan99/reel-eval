@@ -130,7 +130,7 @@ export class CustomersComponent implements OnInit {
     this.customerForm.patchValue({
       club_is_active: this.customers[i].club_is_active,
       reel_eval_customer: this.customers[i].reel_eval_customer,
-      subscription_expiry_date: this.customers[i].subscription_expiry_date,
+      subscription_expiry_date: this.customers[i].subscription_expiry_date ? new Date(this.customers[i].subscription_expiry_date) : null,
     });
     this.cdr.detectChanges();
   }
@@ -148,6 +148,7 @@ export class CustomersComponent implements OnInit {
           '-' +
           date.getFullYear();
       this.customerForm.controls.subscription_expiry_date.setValue(date)
+      date = null;
     }
     this.customerService
       .editCustomer(this.customers[i].id, {

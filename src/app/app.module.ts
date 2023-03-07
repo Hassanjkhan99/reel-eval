@@ -22,6 +22,7 @@ import {NzMessageModule} from "ng-zorro-antd/message";
 import {NzCardModule} from "ng-zorro-antd/card";
 import {NzTabsModule} from "ng-zorro-antd/tabs";
 import {NgChartsModule} from "ng2-charts";
+import {NzAlertModule} from "ng-zorro-antd/alert";
 
 registerLocaleData(en);
 
@@ -44,6 +45,7 @@ registerLocaleData(en);
     NzTabsModule,
     NgChartsModule,
     HttpClientModule,
+    NzAlertModule,
   ],
   providers: [
     {

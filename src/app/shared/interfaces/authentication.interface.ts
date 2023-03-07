@@ -28,4 +28,5 @@ export interface UserMe {
   email: string;
   username: string;
   group: string;
+  banner: string;
 }

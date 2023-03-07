@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router, RouterLinkWithHref, RouterOutlet} from "@angular/router";
-import { Observable } from "rxjs";
-import { distinctUntilChanged, filter, map, startWith } from "rxjs/operators";
+import {Observable} from "rxjs";
+import {distinctUntilChanged, filter, map, startWith} from "rxjs/operators";
 import {ThemeConstantService} from "../../../shared/services/theme-constant.service";
 import {IBreadcrumb} from "../../../shared/interfaces/breadcrumb.type";
 import {NzBreadCrumbModule} from "ng-zorro-antd/breadcrumb";
 import {TemplateModule} from "../../../shared/template/template.module";
 import {NzIconModule} from "ng-zorro-antd/icon";
+import {NzAlertModule} from "ng-zorro-antd/alert";
 
 @Component({
   selector: 'app-common-layout',
@@ -16,7 +17,8 @@ import {NzIconModule} from "ng-zorro-antd/icon";
     TemplateModule,
     NzIconModule,
     RouterLinkWithHref,
-    RouterOutlet
+    RouterOutlet,
+    NzAlertModule
   ],
   standalone: true
 })

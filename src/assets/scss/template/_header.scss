@@ -9,19 +9,19 @@
     display: flex;
 
     .logo {
-        width: $side-nav-width;
-        border-right: 1px solid $border-color;
-        @include transition(all 0.2s ease); 
+      width: $side-nav-width;
+      border-right: 1px solid $border-color;
+      @include transition(all 0.2s ease);
 
-        @include screen-laptop-only {
-            width: $side-nav-width-laptop;
-        }
+      @include screen-laptop-only {
+        width: $side-nav-width-laptop;
+      }
 
-        @include screen-tablet {
-            display: none;
-        }
-        
-        > a {
+      @include screen-tablet {
+        display: none;
+      }
+
+      > a {
             display: block;
             text-align: center;
         }
@@ -54,22 +54,22 @@
 
                 > a,
                 nz-dropdown > a {
-                    padding: 5px 15px;
-                    font-size: 18px;
-                    color: $body-color;
-                    display: block;
-                    @include transition(background-color 0.3s); 
-                    border-radius: $border-radius;
+                  padding: 5px 15px;
+                  font-size: 18px;
+                  color: $body-color;
+                  display: block;
+                  @include transition(background-color 0.3s);
+                  border-radius: $border-radius;
 
-                    &:hover,
-                    &:focus,
-                    &:active {
-                        color: $brand-primary;
-                        background-color: rgba($brand-primary, 0.1);
+                  &:hover,
+                  &:focus,
+                  &:active {
+                    color: $brand-primary;
+                    background-color: rgba($brand-primary, 0.1);
 
-                        .ant-badge {
-                            color: $brand-primary; 
-                        }    
+                    .ant-badge {
+                      color: $brand-primary;
+                    }
                     }
 
                     .ant-badge {
@@ -136,7 +136,7 @@
                     display: block;
                 }
             }
-        }    
+        }
     }
 }
 
@@ -177,16 +177,16 @@
                         background-color: rgba($white, 0.15);
 
                         .ant-badge {
-                            color: $white; 
-                        }    
+                          color: $white;
+                        }
                     }
 
                     .ant-badge {
                         color: rgba($white, 0.8);
                     }
-                }    
+                }
             }
-        }        
+        }
     }
 }
 
