@@ -60,9 +60,11 @@
         </a>
       </li>
     </ul>
-    <!--    <div *ngIf="!(authService.currentUser$ | async).reel_eval_admin" class="w-100" style="top: 25%; position: relative">-->
-    <!--      <nz-alert  nzType="info" [nzMessage]="'banner text'" nzShowIcon></nz-alert>-->
-    <!--    </div>-->
+    <div *ngIf="!(authService.currentUser$ | async).reel_eval_admin" class="banner">
+      <div>
+        You subscription will expire in 24 days!
+      </div>
+    </div>
     <ul class="nav-right">
       <li>
         <span
