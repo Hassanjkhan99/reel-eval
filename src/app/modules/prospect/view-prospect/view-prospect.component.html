@@ -76,14 +76,14 @@
       [nzPageIndex]="pageIndex"
       [nzPageSizeOptions]="[10, 20, 30, 40, 50]"
       [nzPageSize]="pageSize"
-      [nzScroll]="{ x: '1100px', y: '400px' }"
-    [nzTotal]="total"
-    class="w-100"
-    nzBordered
-    nzShowSizeChanger
-    nzSize="small"
-    [nzLoading]="loadingService.loading | async"
-    nzTableLayout="fixed"
+      [nzScroll]="{ x: '1100px'}"
+      [nzTotal]="total"
+      class="w-100"
+      nzBordered
+      nzShowSizeChanger
+      nzSize="small"
+      [nzLoading]="loadingService.loading | async"
+      nzTableLayout="fixed"
   >
     <thead>
     <tr class="align-content-center">

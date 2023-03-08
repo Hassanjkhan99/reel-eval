@@ -1,37 +1,39 @@
-<div class="bg-white " nz-row nzJustify="center">
-  <div [nzGutter]="24" class="w-100" nz-row nzJustify="center">
-    <div
-      class="text-center"
-      nz-col
-      nzLg="7"
-      nzMd="7"
-      nzSm="24"
-      nzXl="7"
-      nzXs="24"
-    >
-      <app-card headerText="Select Prospect">
-        <app-player-select [formControl]="selectProspect"></app-player-select>
-      </app-card>
-      <app-card headerText="Choose Position">
-        <app-positions-select [formControl]="selectedPosition"></app-positions-select>
-      </app-card>
-    </div>
-    <div
-      class="text-center"
-      nz-col
-      nzLg="8"
-      nzMd="8"
-      nzSm="24"
-      nzXl="8"
-      nzXs="24"
-    >
-      <app-card headerText="Traits">
-        <app-assign-weights
-          [position]="selectedPosition.value"
-          [list]="traits"
-          [total]="total"
-        ></app-assign-weights>
-      </app-card>
+<div class="bg-white" nz-row nzJustify="center">
+  <div style="width:1000px !important;">
+    <div [nzGutter]="24" class="w-100" nz-row nzJustify="center">
+      <div
+        class="text-center"
+        nz-col
+        nzLg="7"
+        nzMd="7"
+        nzSm="24"
+        nzXl="7"
+        nzXs="24"
+      >
+        <app-card headerText="Select Prospect">
+          <app-player-select [formControl]="selectProspect"></app-player-select>
+        </app-card>
+        <app-card headerText="Choose Position">
+          <app-positions-select [formControl]="selectedPosition"></app-positions-select>
+        </app-card>
+      </div>
+      <div
+        class="text-center"
+        nz-col
+        nzLg="8"
+        nzMd="8"
+        nzSm="24"
+        nzXl="8"
+        nzXs="24"
+      >
+        <app-card headerText="Traits">
+          <app-assign-weights
+            [list]="traits"
+            [position]="selectedPosition.value"
+            [total]="total"
+          ></app-assign-weights>
+        </app-card>
+      </div>
     </div>
   </div>
 </div>
