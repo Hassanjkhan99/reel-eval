@@ -1,14 +1,16 @@
-<div class="w-100 d-flex justify-content-between">
-  <div
-    *ngIf="(authService.currentUser$ | async).group !== permissions.ViewOnly"
-    class="p-2 d-flex justify-content-end"
-  >
-    <button
-      (click)="exportListToExcel()"
-      [disabled]="checkedIds.length < 1"
-      nz-button
-      nzType="primary"
+<div class="d-flex justify-content-center align-items-center flex-column">
+
+  <div class="w-100 d-flex justify-content-between width-table">
+    <div
+      *ngIf="(authService.currentUser$ | async).group !== permissions.ViewOnly"
+      class="p-2 d-flex justify-content-end"
     >
+      <button
+        (click)="exportListToExcel()"
+        [disabled]="checkedIds.length < 1"
+        nz-button
+        nzType="primary"
+      >
       Export Selected
     </button>
   </div>
@@ -64,17 +66,17 @@
   </div>
 </div>
 
-<div class="m-2 box-shadow">
-  <nz-table
-    #borderedTable
-    (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
-    (nzQueryParams)="onQueryParamsChange($event)"
-    [nzData]="dataSet"
-    [nzFrontPagination]="false"
-    [nzPageIndex]="pageIndex"
-    [nzPageSizeOptions]="[10, 20, 30, 40, 50]"
-    [nzPageSize]="pageSize"
-    [nzScroll]="{ x: '1100px', y: '400px' }"
+  <div class="m-2 box-shadow width-table">
+    <nz-table
+      #borderedTable
+      (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+      (nzQueryParams)="onQueryParamsChange($event)"
+      [nzData]="dataSet"
+      [nzFrontPagination]="false"
+      [nzPageIndex]="pageIndex"
+      [nzPageSizeOptions]="[10, 20, 30, 40, 50]"
+      [nzPageSize]="pageSize"
+      [nzScroll]="{ x: '1100px', y: '400px' }"
     [nzTotal]="total"
     class="w-100"
     nzBordered
@@ -569,5 +571,7 @@
       </td>
     </tr>
     </tbody>
-  </nz-table>
+    </nz-table>
+  </div>
+
 </div>

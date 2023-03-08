@@ -1,10 +1,9 @@
 <div class="d-flex justify-content-center align-items-center flex-column">
   <div
     *ngIf="(authService.currentUser$ | async).group === permissions.clubAdmin"
-    class="p-1 w-70 d-flex justify-content-center"
+    class="p-1 w-70 d-flex justify-content-center width-table"
     nz-row
     nzJustify="space-between"
-    style="width: 700px;"
   >
 
     <div nz-col nzSpan="20">
@@ -65,7 +64,7 @@
     </div>
 
   </div>
-  <div style="width: 700px">
+  <div class="width-table">
     <nz-table
       #table
       (nzQueryParams)="onQueryParamsChange($event)"
