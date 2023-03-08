@@ -60,9 +60,10 @@
         </a>
       </li>
     </ul>
-    <div *ngIf="!(authService.currentUser$ | async).reel_eval_admin" class="banner">
+    <div *ngIf="(authService.currentUser$ | async).banner && !(authService.currentUser$ | async).reel_eval_admin"
+         class="banner">
       <div>
-        You subscription will expire in 24 days!
+        {{(authService.currentUser$ | async).banner}}
       </div>
     </div>
     <ul class="nav-right">
