@@ -4,6 +4,7 @@
     class="p-1 w-70 d-flex justify-content-center"
     nz-row
     nzJustify="space-between"
+    style="width: 700px;"
   >
 
     <div nz-col nzSpan="20">
@@ -64,255 +65,258 @@
     </div>
 
   </div>
-  <nz-table
-    #table
-    (nzQueryParams)="onQueryParamsChange($event)"
-    [nzData]="traits"
-    [nzFrontPagination]="false"
-    [nzPageIndex]="pageIndex"
-    [nzPageSizeOptions]="[8, 10, 20, 30, 40, 50]"
-    [nzPageSize]="pageSize"
-    [nzScroll]="{ y: '400px' }"
-    [nzTotal]="total"
-    nzBordered
-    nzShowSizeChanger
-    nzTableLayout="fixed"
-    style="width: 70%"
-    class="box-shadow"
-    [nzLoading]="loadingService.loading | async"
-  >
-    <thead>
-    <tr>
-      <th
-        *ngFor="let column of listOfColumns; let i = index"
-        [nzColumnKey]="column.name"
-        [nzSortFn]="true"
-        nzCustomFilter
-      >
-        {{ column.name }}
-        <nz-filter-trigger
-          [(nzVisible)]="visible[listOfFilter[i]]"
-          [nzActive]="searchValue[listOfFilter[i]].length > 0"
-          [nzDropdownMenu]="menu"
+  <div style="width: 700px">
+    <nz-table
+      #table
+      (nzQueryParams)="onQueryParamsChange($event)"
+      [nzData]="traits"
+      [nzFrontPagination]="false"
+      [nzLoading]="loadingService.loading | async"
+      [nzPageIndex]="pageIndex"
+      [nzPageSizeOptions]="[8, 10, 20, 30, 40, 50]"
+      [nzPageSize]="pageSize"
+      [nzScroll]="{ y: '400px' }"
+      [nzTotal]="total"
+      class="box-shadow"
+      nzBordered
+      nzShowSizeChanger
+      nzTableLayout="fixed"
+      style="width: 1000px"
+    >
+      <thead>
+      <tr>
+        <th
+          *ngFor="let column of listOfColumns; let i = index"
+          [nzColumnKey]="column.name"
+          [nzSortFn]="true"
+          nzCustomFilter
         >
-          <span nz-icon nzType="search"></span>
-        </nz-filter-trigger>
-        <nz-dropdown-menu #menu="nzDropdownMenu">
-          <div class="ant-table-filter-dropdown">
-            <div class="search-box">
-              <input
-                [(ngModel)]="searchValue[listOfFilter[i]]"
-                [placeholder]="'Search ' + column.name"
-                nz-input
-                type="text"
-              />
-              <div class="d-flex justify-content-center">
-                <button
-                  (click)="search(listOfFilter[i])"
-                  class="search-button"
-                  nz-button
-                  nzSize="small"
-                  nzType="primary"
-                >
-                  Search
-                </button>
-                <button
-                  (click)="reset(listOfFilter[i])"
-                  [nzTooltipColor]="'blue'"
-                  [nzTooltipTitle]="'Clear Search'"
-                  nz-button
-                  nz-tooltip
-                  nzSize="small"
-                >
-                  Reset
-                </button>
+          {{ column.name }}
+          <nz-filter-trigger
+            [(nzVisible)]="visible[listOfFilter[i]]"
+            [nzActive]="searchValue[listOfFilter[i]].length > 0"
+            [nzDropdownMenu]="menu"
+          >
+            <span nz-icon nzType="search"></span>
+          </nz-filter-trigger>
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <div class="ant-table-filter-dropdown">
+              <div class="search-box">
+                <input
+                  [(ngModel)]="searchValue[listOfFilter[i]]"
+                  [placeholder]="'Search ' + column.name"
+                  nz-input
+                  type="text"
+                />
+                <div class="d-flex justify-content-center">
+                  <button
+                    (click)="search(listOfFilter[i])"
+                    class="search-button"
+                    nz-button
+                    nzSize="small"
+                    nzType="primary"
+                  >
+                    Search
+                  </button>
+                  <button
+                    (click)="reset(listOfFilter[i])"
+                    [nzTooltipColor]="'blue'"
+                    [nzTooltipTitle]="'Clear Search'"
+                    nz-button
+                    nz-tooltip
+                    nzSize="small"
+                  >
+                    Reset
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </nz-dropdown-menu>
-      </th>
+          </nz-dropdown-menu>
+        </th>
 
-      <th
-        *ngIf="
+        <th
+          *ngIf="
             (authService.currentUser$ | async).group ===
             permissions.clubAdmin
           "
-        class="Action text-align-center"
-        nzWidth="120px"
+          class="Action text-align-center"
+          nzWidth="120px"
+        >
+          Action
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngIf="showRow" [formGroup]="traitForm" class="background-primary">
+        <td>
+          <input
+            formControlName="trait"
+            nz-input
+            nzSize="large"
+            placeholder="Trait"
+          />
+        </td>
+        <td>
+          <input
+            formControlName="description"
+            nz-input
+            nzSize="large"
+            placeholder="Description"
+          />
+        </td>
+        <td>
+          <div class="d-flex justify-content-center">
+            <a
+              (click)="isSaveNew(false)"
+              [nzTooltipColor]="'blue'"
+              [nzTooltipTitle]="'Save Trait'"
+              class="p-2"
+              nz-tooltip
+            >
+              <i
+                [nzTheme]="'twotone'"
+                [nzTwotoneColor]="'#46c40a'"
+                nz-icon
+                nzType="save"
+              ></i>
+            </a>
+            <a
+              (nzOnCancel)="cancel()"
+              (nzOnConfirm)="confirm()"
+              [nzTooltipColor]="'blue'"
+              [nzTooltipTitle]="'Discard Changes'"
+              class="p-2"
+              nz-popconfirm
+              nz-tooltip
+              nzPopconfirmPlacement="top"
+              nzPopconfirmTitle="Are you sure you want to discard changes?"
+            >
+              <i
+                [nzTheme]="'twotone'"
+                [nzTwotoneColor]="'#c00206'"
+                nz-icon
+                nzType="close-circle"
+              ></i>
+            </a>
+            <a
+              (click)="isSaveNew(true)"
+              [nzTooltipColor]="'blue'"
+              [nzTooltipTitle]="'Add New Trait'"
+              class="p-2"
+              nz-tooltip
+            >
+              <i
+                [nzTheme]="'twotone'"
+                [nzTwotoneColor]="'#f5d50a'"
+                nz-icon
+                nzType="plus-circle"
+              ></i>
+            </a>
+          </div>
+        </td>
+      </tr>
+      <tr
+        *ngFor="let data of table.data; let i = index"
+        [class.background-primary]="currentEditIndex == i"
+        [formGroup]="traitForm"
       >
-        Action
-      </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngIf="showRow" [formGroup]="traitForm" class="background-primary">
-      <td>
-        <input
-          formControlName="trait"
-          nz-input
-          nzSize="large"
-          placeholder="Trait"
-        />
-      </td>
-      <td>
-        <input
-          formControlName="description"
-          nz-input
-          nzSize="large"
-          placeholder="Description"
-        />
-      </td>
-      <td>
-        <div class="d-flex justify-content-center">
-          <a
-            (click)="isSaveNew(false)"
-            [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="'Save Trait'"
-            class="p-2"
-            nz-tooltip
-          >
-            <i
-              [nzTheme]="'twotone'"
-              [nzTwotoneColor]="'#46c40a'"
-              nz-icon
-              nzType="save"
-            ></i>
-          </a>
-          <a
-            (nzOnCancel)="cancel()"
-            (nzOnConfirm)="confirm()"
-            [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="'Discard Changes'"
-            class="p-2"
-            nz-popconfirm
-            nz-tooltip
-            nzPopconfirmPlacement="top"
-            nzPopconfirmTitle="Are you sure you want to discard changes?"
-          >
-            <i
-              [nzTheme]="'twotone'"
-              [nzTwotoneColor]="'#c00206'"
-              nz-icon
-              nzType="close-circle"
-            ></i>
-          </a>
-          <a
-            (click)="isSaveNew(true)"
-            [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="'Add New Trait'"
-            class="p-2"
-            nz-tooltip
-          >
-            <i
-              [nzTheme]="'twotone'"
-              [nzTwotoneColor]="'#f5d50a'"
-              nz-icon
-              nzType="plus-circle"
-            ></i>
-          </a>
-        </div>
-      </td>
-    </tr>
-    <tr
-      *ngFor="let data of table.data; let i = index"
-      [class.background-primary]="currentEditIndex == i"
-      [formGroup]="traitForm"
-    >
-      <td>
+        <td>
           <span *ngIf="currentEditIndex != i">
             {{ data.trait }}
           </span>
-        <span *ngIf="currentEditIndex == i">
+          <span *ngIf="currentEditIndex == i">
             <input formControlName="trait" nz-input/>
           </span>
-      </td>
+        </td>
 
-      <td>
+        <td>
           <span *ngIf="currentEditIndex != i">
             {{ data.description }}
           </span>
-        <span *ngIf="currentEditIndex == i">
+          <span *ngIf="currentEditIndex == i">
             <input
               formControlName="description"
               nz-input
               placeholder="Description"
             />
           </span>
-      </td>
+        </td>
 
-      <td
-        *ngIf="
+        <td
+          *ngIf="
             (authService.currentUser$ | async).group ===
             permissions.clubAdmin
           "
-      >
-        <div class="d-flex justify-content-center">
-          <a
-            (click)="isEdit(i)"
-            *ngIf="currentEditIndex != i"
-            [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="'Edit Trait'"
-            class="p-2"
-            nz-tooltip
-          >
-            <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
-          </a>
-          <a
-            (click)="isSave(i)"
-            *ngIf="currentEditIndex == i"
-            [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="'Save changes'"
-            class="p-2"
-            nz-tooltip
-          >
-            <i
-              [nzTheme]="'twotone'"
-              [nzTwotoneColor]="'#46c40a'"
-              nz-icon
-              nzType="save"
-            ></i>
-          </a>
-          <a
-            (nzOnCancel)="cancel()"
-            (nzOnConfirm)="confirm()"
-            *ngIf="currentEditIndex == i"
-            [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="'Discard Changes'"
-            class="p-2"
-            nz-popconfirm
-            nz-tooltip
-            nzPopconfirmPlacement="top"
-            nzPopconfirmTitle="Are you sure you want to discard changes?"
-          >
-            <i
-              [nzTheme]="'twotone'"
-              [nzTwotoneColor]="'#c00206'"
-              nz-icon
-              nzType="close-circle"
-            ></i>
-          </a>
-          <a
-            (nzOnCancel)="cancel()"
-            (nzOnConfirm)="isDelete(i)"
-            *ngIf="currentEditIndex != i"
-            [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="'Delete Trait'"
-            class="p-2"
-            nz-popconfirm
-            nz-tooltip
-            nzPopconfirmPlacement="top"
-            nzPopconfirmTitle="Are you sure you want to delete trait?"
-          >
-            <i
-              [nzTheme]="'twotone'"
-              [nzTwotoneColor]="'#c00206'"
-              nz-icon
-              nzType="delete"
-            ></i>
-          </a>
-        </div>
-      </td>
-    </tr>
-    </tbody>
-  </nz-table>
+        >
+          <div class="d-flex justify-content-center">
+            <a
+              (click)="isEdit(i)"
+              *ngIf="currentEditIndex != i"
+              [nzTooltipColor]="'blue'"
+              [nzTooltipTitle]="'Edit Trait'"
+              class="p-2"
+              nz-tooltip
+            >
+              <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
+            </a>
+            <a
+              (click)="isSave(i)"
+              *ngIf="currentEditIndex == i"
+              [nzTooltipColor]="'blue'"
+              [nzTooltipTitle]="'Save changes'"
+              class="p-2"
+              nz-tooltip
+            >
+              <i
+                [nzTheme]="'twotone'"
+                [nzTwotoneColor]="'#46c40a'"
+                nz-icon
+                nzType="save"
+              ></i>
+            </a>
+            <a
+              (nzOnCancel)="cancel()"
+              (nzOnConfirm)="confirm()"
+              *ngIf="currentEditIndex == i"
+              [nzTooltipColor]="'blue'"
+              [nzTooltipTitle]="'Discard Changes'"
+              class="p-2"
+              nz-popconfirm
+              nz-tooltip
+              nzPopconfirmPlacement="top"
+              nzPopconfirmTitle="Are you sure you want to discard changes?"
+            >
+              <i
+                [nzTheme]="'twotone'"
+                [nzTwotoneColor]="'#c00206'"
+                nz-icon
+                nzType="close-circle"
+              ></i>
+            </a>
+            <a
+              (nzOnCancel)="cancel()"
+              (nzOnConfirm)="isDelete(i)"
+              *ngIf="currentEditIndex != i"
+              [nzTooltipColor]="'blue'"
+              [nzTooltipTitle]="'Delete Trait'"
+              class="p-2"
+              nz-popconfirm
+              nz-tooltip
+              nzPopconfirmPlacement="top"
+              nzPopconfirmTitle="Are you sure you want to delete trait?"
+            >
+              <i
+                [nzTheme]="'twotone'"
+                [nzTwotoneColor]="'#c00206'"
+                nz-icon
+                nzType="delete"
+              ></i>
+            </a>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+
+  </div>
 </div>
