@@ -1,5 +1,5 @@
 <div class="w-100 d-flex justify-content-center p-2" nz-row>
-  <div class="m-2 " nz-col nzSpan="5">
+  <div class="m-2 " nz-col style="width:250px !important;">
     <div class="mx-2 d-flex justify-content-center" nz-row>
       <app-card class="w-100 text-align-center" headerText="Select Position">
         <app-positions-select [formControl]="selectedPosition"
@@ -64,7 +64,7 @@
       </div>
     </div>
   </div>
-  <div class="m-2 " nz-col nzSpan="3">
+  <div class="m-2 " nz-col nzSpan="2">
     <button [disabled]="!(selectedPosition.value && selectedProspects.value)" class="mx-1" nz-button nzSize="small"
             (click)="printDiv()" nzType="primary">Print Report
     </button>

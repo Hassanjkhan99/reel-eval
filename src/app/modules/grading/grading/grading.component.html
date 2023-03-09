@@ -1,47 +1,49 @@
 <div class="d-flex justify-content-center">
-  <nz-table
-    #table
-    [nzData]="grading"
-    [nzScroll]="{ x: '400px', y: '420px' }"
-    nzBordered
-    nzShowSizeChanger
-    [nzPageSize]="100"
-    nzTableLayout="fixed"
-    [nzTitle]="content"
-    class="box-shadow w-100"
-    nzSize="small"
-  >
-    <thead>
-    <tr>
-      <th class="text-align-center" nzLeft nzWidth="100px">Play</th>
-      <th
-        *ngFor="let column of listOfColumns; let i = index"
-        class="text-align-center"
-        nzWidth="200px"
+  <div style="width: 1200px !important; transform: translateY(20px)">
+    <div class="d-flex justify-content-center">
+      <nz-table
+        #table
+        [nzData]="grading"
+        [nzPageSize]="100"
+        [nzScroll]="{ x: '400px', y: '420px' }"
+        [nzTitle]="content"
+        class="box-shadow w-100"
+        nzBordered
+        nzShowSizeChanger
+        nzSize="small"
+        nzTableLayout="fixed"
       >
-        <div
-          class="d-flex justify-content-center align-items-center flex-column"
-        >
-          <span> {{ listOfColumns[i].trait }} </span>
-          <span
-            [class.darkGreen-pill-grading]="
+        <thead>
+        <tr>
+          <th class="text-align-center" nzLeft nzWidth="100px">Play</th>
+          <th
+            *ngFor="let column of listOfColumns; let i = index"
+            class="text-align-center"
+            nzWidth="200px"
+          >
+            <div
+              class="d-flex justify-content-center align-items-center flex-column"
+            >
+              <span> {{ listOfColumns[i].trait }} </span>
+              <span
+                [class.darkGreen-pill-grading]="
                 columnValue[column.id] >= 90 && columnValue[column.id] <= 100
               "
-            [class.green-pill-grading]="
+                [class.green-pill-grading]="
                 columnValue[column.id] >= 80 && columnValue[column.id] < 90
               "
-            [class.grey-pill-grading]="
+                [class.grey-pill-grading]="
                  columnValue[column.id] === null
               "
-            [class.orange-pill-grading]="
+                [class.orange-pill-grading]="
                 columnValue[column.id] >= 60 && columnValue[column.id] < 70
               "
-            [class.red-pill-grading]="columnValue[column.id] < 60"
-            [class.yellow-pill-grading]="
+                [class.red-pill-grading]="columnValue[column.id] < 60"
+                [class.yellow-pill-grading]="
                 columnValue[column.id] >= 70 && columnValue[column.id] < 80
               "
-            class="pill-grading"
-          >
+                class="pill-grading"
+              >
               <span
                 [class.disabled]="
                   columnValue[column.id] === null
@@ -54,23 +56,23 @@
                 }}
               </span>
             </span>
-        </div>
-      </th>
-      <th class="text-align-center" nzRight nzWidth="150px">Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr
-      *ngFor="let data of table.data; let i = index"
-      class="text-align-center"
-    >
-      <td nzLeft>
+            </div>
+          </th>
+          <th class="text-align-center" nzRight nzWidth="150px">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+          *ngFor="let data of table.data; let i = index"
+          class="text-align-center"
+        >
+          <td nzLeft>
           <span style="font-size: 30px; font-weight: bold">
             {{ data.number}}
           </span>
-      </td>
-      <td *ngFor="let column of data.grade">
-        <div class="d-flex justify-content-center">
+          </td>
+          <td *ngFor="let column of data.grade">
+            <div class="d-flex justify-content-center">
             <span (click)="increment(column, i)" class="p-1"
             ><i
               [nzTwotoneColor]="column.score === 1 ? '#5bd703' : 'grey'"
@@ -79,20 +81,20 @@
               nzType="plus-circle"
             ></i
             ></span>
-          <span (click)="decrement(column, i)" class="p-1"
-          ><i
-            [nzTwotoneColor]="
+              <span (click)="decrement(column, i)" class="p-1"
+              ><i
+                [nzTwotoneColor]="
                   column.score === 0 ? '#e10428' : 'grey'
                 "
-            nz-icon
-            nzTheme="twotone"
-            nzType="minus-circle"
-          ></i
-          ></span>
-        </div>
-      </td>
-      <td nzRight>
-        <div class="d-flex justify-content-center">
+                nz-icon
+                nzTheme="twotone"
+                nzType="minus-circle"
+              ></i
+              ></span>
+            </div>
+          </td>
+          <td nzRight>
+            <div class="d-flex justify-content-center">
             <span
               (click)="clear(data.id)"
               [nzTooltipColor]="'blue'"
@@ -106,76 +108,76 @@
               nzType="close-circle"
             ></i
             ></span>
-          <span
-            (click)="removeRow(data.id)"
-            [class.disabled]="grading.length < 2"
-            [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="'Delete Play'"
-            class="p-2"
-            nz-tooltip
-          ><i
-            [nzTwotoneColor]="'#c00206'"
-            nz-icon
-            nzTheme="twotone"
-            nzType="delete"
-          ></i
-          ></span>
-          <span
-            (click)="addRow()"
-            [class.disabled]="i < this.grading.length - 1"
-            [nzTooltipColor]="'blue'"
-            [nzTooltipTitle]="'Next Play'"
-            class="p-2"
-            nz-tooltip
-          ><i nz-icon nzTheme="outline" nzType="arrow-right"></i
-          ></span>
+              <span
+                (click)="removeRow(data.id)"
+                [class.disabled]="grading.length < 2"
+                [nzTooltipColor]="'blue'"
+                [nzTooltipTitle]="'Delete Play'"
+                class="p-2"
+                nz-tooltip
+              ><i
+                [nzTwotoneColor]="'#c00206'"
+                nz-icon
+                nzTheme="twotone"
+                nzType="delete"
+              ></i
+              ></span>
+              <span
+                (click)="addRow()"
+                [class.disabled]="i < this.grading.length - 1"
+                [nzTooltipColor]="'blue'"
+                [nzTooltipTitle]="'Next Play'"
+                class="p-2"
+                nz-tooltip
+              ><i nz-icon nzTheme="outline" nzType="arrow-right"></i
+              ></span>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </div>
+    <div class="p-3 d-flex justify-content-end" style="font-size: 15px">
+      <div class="text-align-center">
+        <span>Last modified date and time stamp: </span>
+        <p style="font-weight: bold">{{ today | date : "medium" }}</p>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <button (click)="showModal()" nz-button nzType="primary">
+        Finish Grading
+      </button>
+    </div>
+    <ng-template #content>
+      <div class="d-flex justify-content-between align-items-center">
+        <div></div>
+        <div style="color: white; font-size: 22px; font-weight: bold">
+          {{ prospect.first_name }} {{ prospect.last_name }} &nbsp; • &nbsp;
+          {{position }} &nbsp; • &nbsp; {{ prospect.state }} &nbsp; • &nbsp;
+          {{ prospect.school }} &nbsp; • &nbsp; {{ prospect.classification }}
         </div>
-      </td>
-    </tr>
-    </tbody>
-  </nz-table>
-</div>
-<div class="p-3 d-flex justify-content-end" style="font-size: 15px">
-  <div class="text-align-center">
-    <span>Last modified date and time stamp: </span>
-    <p style="font-weight: bold">{{ today | date : "medium" }}</p>
-  </div>
-</div>
-<div class="d-flex justify-content-center">
-  <button (click)="showModal()" nz-button nzType="primary">
-    Finish Grading
-  </button>
-</div>
-<ng-template #content>
-  <div class="d-flex justify-content-between align-items-center">
-    <div></div>
-    <div style="color: white; font-size: 22px; font-weight: bold">
-      {{ prospect.first_name }} {{ prospect.last_name }} &nbsp; • &nbsp;
-      {{position }} &nbsp; • &nbsp; {{ prospect.state }} &nbsp; • &nbsp;
-      {{ prospect.school }} &nbsp; • &nbsp; {{ prospect.classification }}
-    </div>
-    <div class="overall-pill text-align-center">
-      <span class="p-1">Overall Grade</span>
-      <span
-        [class.darkGreen-pill-grading]="totalValue >= 90 && totalValue <= 100"
-        [class.green-pill-grading]="totalValue >= 80 && totalValue < 90"
-        [class.grey-pill-grading]="totalValue === null"
-        [class.orange-pill-grading]="totalValue >= 60 && totalValue < 70"
-        [class.red-pill-grading]="totalValue < 60"
-        [class.yellow-pill-grading]="totalValue >= 70 && totalValue < 80"
-        class="pill-grading"
-      >{{ totalValue ? totalValue?.toFixed(1) + '%' : '-' }}
+        <div class="overall-pill text-align-center">
+          <span class="p-1">Overall Grade</span>
+          <span
+            [class.darkGreen-pill-grading]="totalValue >= 90 && totalValue <= 100"
+            [class.green-pill-grading]="totalValue >= 80 && totalValue < 90"
+            [class.grey-pill-grading]="totalValue === null"
+            [class.orange-pill-grading]="totalValue >= 60 && totalValue < 70"
+            [class.red-pill-grading]="totalValue < 60"
+            [class.yellow-pill-grading]="totalValue >= 70 && totalValue < 80"
+            class="pill-grading"
+          >{{ totalValue ? totalValue?.toFixed(1) + '%' : '-' }}
       </span>
-    </div>
-  </div>
-</ng-template>
-<nz-modal
-  (nzOnCancel)="handleCancel()"
-  (nzOnOk)="handleOk()"
-  [(nzVisible)]="isVisible"
-  [nzOkLoading]="isOkLoading"
-  nzTitle="Evaluation Summary(Optional)"
->
+        </div>
+      </div>
+    </ng-template>
+    <nz-modal
+      (nzOnCancel)="handleCancel()"
+      (nzOnOk)="handleOk()"
+      [(nzVisible)]="isVisible"
+      [nzOkLoading]="isOkLoading"
+      nzTitle="Evaluation Summary(Optional)"
+    >
   <textarea
     *nzModalContent
     class="w-100 box-shadow"
@@ -183,4 +185,7 @@
     rows="7"
     [formControl]="summary"
   >{{gradeSummary}}</textarea>
-</nz-modal>
+    </nz-modal>
+  </div>
+</div>
+
