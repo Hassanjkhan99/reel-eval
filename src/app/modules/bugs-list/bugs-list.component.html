@@ -1,101 +1,114 @@
-<nz-table
-  #borderedTable
-  [nzData]="bugsListService.listData"
-  [nzScroll]="{ x: '1100px' }"
-  [nzLoading]="loadingService.loading | async"
-  class="m-2 box-shadow"
-  nzBordered
->
-  <thead>
-  <tr>
-    <th>Ticket #</th>
-    <th>Account Name</th>
-    <th>Club</th>
-    <th>Subject</th>
-    <th>Message</th>
-    <th>Created</th>
-    <th>Modified</th>
-    <th>Status</th>
-    <th class="text-align-center" nzRight>
-      Actions
-    </th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let data of borderedTable.data; let i = index">
-    <td>{{ data.id }}</td>
-    <td>{{ data.account.first_name }} {{ data.account.last_name }}</td>
-    <td>{{ data.account.club_name }}</td>
-    <td>{{ data.subject }}</td>
-    <td>{{ data.message }}</td>
-    <td>{{ data.created | date }}</td>
-    <td>{{ data.modified | date  }}</td>
-    <td>
-      <div *ngIf="!(authService.currentUser$ | async).reel_eval_admin">
-        {{ statusEnum[data.status] }}
-      </div>
-      <div *ngIf="(authService.currentUser$ | async).reel_eval_admin">
-          <span *ngIf="currentEditIndex != i">
+<div class="d-flex justify-content-center">
+  <div style="width: 1200px !important">
+    <nz-table
+      #borderedTable
+      [nzData]="bugsListService.listData"
+      [nzLoading]="loadingService.loading | async"
+      [nzScroll]="{ x: '1100px' }"
+      class="m-2 box-shadow"
+      nzBordered
+      style="transform: translateY(40px);"
+    >
+      <thead>
+      <tr>
+        <th>Ticket #</th>
+        <th>Account Name</th>
+        <th>Club</th>
+        <th>Subject</th>
+        <th>Message</th>
+        <th>Created</th>
+        <th>Modified</th>
+        <th>Status</th>
+        <th class="text-align-center" nzRight>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of borderedTable.data; let i = index">
+        <td>{{ data.id }}</td>
+        <td>{{ data.account.first_name }} {{ data.account.last_name }}</td>
+        <td>{{ data.account.club_name }}</td>
+        <td>{{ data.subject }}</td>
+        <td>{{ data.message }}</td>
+        <td>{{ data.created | date }}</td>
+        <td>{{ data.modified | date }}</td>
+        <td>
+          <div *ngIf="!(authService.currentUser$ | async).reel_eval_admin">
             {{ statusEnum[data.status] }}
-          </span>
-        <span *ngIf="currentEditIndex == i">
-            <nz-select [formControl]="status" class="w-100">
-              <nz-option nzLabel="Submitted" nzValue="S"></nz-option>
-              <nz-option nzLabel="In Progress" nzValue="P"></nz-option>
-              <nz-option nzLabel="Resolved" nzValue="R"></nz-option>
-              <nz-option nzLabel="Declined" nzValue="D"></nz-option>
-            </nz-select>
-          </span>
-      </div>
-    </td>
-    <td nzRight>
-      <div class="d-flex justify-content-center">
-          <span (click)="isEdit(i)" *ngIf="currentEditIndex != i && (authService.currentUser$ | async).reel_eval_admin"
-                class="p-2">
-            <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
-          </span>
-        <span (click)="isSave(i)" *ngIf="currentEditIndex == i" class="p-2">
-            <i
-              [nzTheme]="'twotone'"
-              [nzTwotoneColor]="'#46c40a'"
-              nz-icon
-              nzType="save"
-            ></i>
-          </span>
-        <span
-          (nzOnCancel)="cancel()"
-          (nzOnConfirm)="confirm()"
-          *ngIf="currentEditIndex == i"
-          class="p-2"
-          nz-popconfirm
-          nzPopconfirmPlacement="top"
-          nzPopconfirmTitle="Are you sure you want to discard changes?"
-        >
-            <i
-              [nzTheme]="'twotone'"
-              [nzTwotoneColor]="'#c00206'"
-              nz-icon
-              nzType="close-circle"
-            ></i>
-          </span>
-        <span
-          (nzOnCancel)="cancel()"
-          (nzOnConfirm)="isDelete(i)"
-          *ngIf="currentEditIndex != i"
-          class="p-2"
-          nz-popconfirm
-          nzPopconfirmPlacement="top"
-          nzPopconfirmTitle="Are you sure you want to delete this ticket?"
-        >
-          <i
-            [nzTheme]="'twotone'"
-            [nzTwotoneColor]="'#c00206'"
-            nz-icon
-            nzType="delete"
-          ></i>
-        </span>
-      </div>
-    </td>
-  </tr>
-  </tbody>
-</nz-table>
+          </div>
+          <div *ngIf="(authService.currentUser$ | async).reel_eval_admin">
+              <span *ngIf="currentEditIndex != i">
+                {{ statusEnum[data.status] }}
+              </span>
+            <span *ngIf="currentEditIndex == i">
+                <nz-select [formControl]="status" class="w-100">
+                  <nz-option nzLabel="Submitted" nzValue="S"></nz-option>
+                  <nz-option nzLabel="In Progress" nzValue="P"></nz-option>
+                  <nz-option nzLabel="Resolved" nzValue="R"></nz-option>
+                  <nz-option nzLabel="Declined" nzValue="D"></nz-option>
+                </nz-select>
+              </span>
+          </div>
+        </td>
+        <td nzRight>
+          <div class="d-flex justify-content-center">
+              <span
+                (click)="isEdit(i)"
+                *ngIf="
+                  currentEditIndex != i &&
+                  (authService.currentUser$ | async).reel_eval_admin
+                "
+                class="p-2"
+              >
+                <i [nzTheme]="'twotone'" nz-icon nzType="edit"></i>
+              </span>
+            <span
+              (click)="isSave(i)"
+              *ngIf="currentEditIndex == i"
+              class="p-2"
+            >
+                <i
+                  [nzTheme]="'twotone'"
+                  [nzTwotoneColor]="'#46c40a'"
+                  nz-icon
+                  nzType="save"
+                ></i>
+              </span>
+            <span
+              (nzOnCancel)="cancel()"
+              (nzOnConfirm)="confirm()"
+              *ngIf="currentEditIndex == i"
+              class="p-2"
+              nz-popconfirm
+              nzPopconfirmPlacement="top"
+              nzPopconfirmTitle="Are you sure you want to discard changes?"
+            >
+                <i
+                  [nzTheme]="'twotone'"
+                  [nzTwotoneColor]="'#c00206'"
+                  nz-icon
+                  nzType="close-circle"
+                ></i>
+              </span>
+            <span
+              (nzOnCancel)="cancel()"
+              (nzOnConfirm)="isDelete(i)"
+              *ngIf="currentEditIndex != i"
+              class="p-2"
+              nz-popconfirm
+              nzPopconfirmPlacement="top"
+              nzPopconfirmTitle="Are you sure you want to delete this ticket?"
+            >
+                <i
+                  [nzTheme]="'twotone'"
+                  [nzTwotoneColor]="'#c00206'"
+                  nz-icon
+                  nzType="delete"
+                ></i>
+              </span>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
