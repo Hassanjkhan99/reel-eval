@@ -119,23 +119,23 @@
 
         <td>
           <span *ngIf="currentEditIndex != i">
-            {{ data.club_is_active }}
+            {{ data.club_is_active === 'true' ? 'yes' : 'no' }}
           </span>
           <span *ngIf="currentEditIndex == i">
             <nz-select class="w-100" formControlName="club_is_active">
-              <nz-option nzLabel="true" nzValue=true></nz-option>
-              <nz-option nzLabel="false" nzValue=false></nz-option>
+              <nz-option nzLabel="yes" nzValue=true></nz-option>
+              <nz-option nzLabel="no" nzValue=false></nz-option>
             </nz-select>
           </span>
         </td>
         <td>
           <span *ngIf="currentEditIndex != i">
-            {{ data.reel_eval_customer }}
+            {{ data.reel_eval_customer === 'true' ? 'yes' : 'no' }}
           </span>
           <span *ngIf="currentEditIndex == i">
             <nz-select class="w-100" formControlName="reel_eval_customer">
-              <nz-option nzLabel="true" nzValue=true></nz-option>
-              <nz-option nzLabel="false" nzValue=false></nz-option>
+              <nz-option nzLabel="yes" nzValue=true></nz-option>
+              <nz-option nzLabel="no" nzValue=false></nz-option>
             </nz-select>
           </span>
         </td>
