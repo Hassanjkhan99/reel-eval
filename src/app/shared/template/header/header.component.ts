@@ -68,7 +68,6 @@ export class HeaderComponent {
   }
 
   handleOk(): void {
-
     this.bugListService.postBug({
       subject: this.bugForm.controls.subject.value,
       message: this.bugForm.controls.message.value
@@ -79,13 +78,15 @@ export class HeaderComponent {
         nzAnimate: true,
         nzPauseOnHover: true,
       })
+      this.bugForm.reset()
+      this.fileList = []
     })
-    this.bugForm.reset()
     this.isVisible = false;
   }
 
   handleCancel(): void {
     this.bugForm.reset()
+    this.fileList = []
     this.isVisible = false;
   }
 

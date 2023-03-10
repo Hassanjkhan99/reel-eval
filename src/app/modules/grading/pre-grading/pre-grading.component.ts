@@ -19,6 +19,7 @@ import {CardComponent} from "../../../shared/components/card/card.component";
 import {PlayerSelectComponent} from "../../../shared/components/player-select/player-select.component";
 import {Prospect} from "../../../shared/interfaces/prospect.interface";
 import {GradingService} from "../../../shared/services/grading.service";
+import {NzSelectModule} from "ng-zorro-antd/select";
 
 @UntilDestroy()
 @Component({
@@ -38,6 +39,7 @@ import {GradingService} from "../../../shared/services/grading.service";
     DragDropModule,
     CardComponent,
     PlayerSelectComponent,
+    NzSelectModule,
   ],
   templateUrl: './pre-grading.component.html',
   styleUrls: ['./pre-grading.component.scss'],
@@ -46,19 +48,23 @@ export class PreGradingComponent implements OnInit {
   selectProspect = new FormControl<Prospect>(null);
   selectedPosition = new FormControl<Position>({value: null, disabled: true});
   total: number = 0;
-
   traits: TraitByPos[] = [];
+  positions: Position[] = []
 
   constructor(private traitsService: TraitsService, private notificationService: NotificationService, private cdr: ChangeDetectorRef, private gradingService: GradingService) {
   }
 
   ngOnInit(): void {
-
     this.selectProspect.valueChanges.pipe(untilDestroyed(this)).subscribe({
       next: (value) => {
+        this.positions = []
+        this.selectedPosition.reset()
+        this.total = 0;
+        this.traits = []
         if (value) {
           this.gradingService.selectedProspect = value
           this.selectedPosition.enable()
+          this.positions = value.pos
         } else {
           this.selectedPosition.disable()
         }

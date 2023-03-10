@@ -14,7 +14,19 @@
           <app-player-select [formControl]="selectProspect"></app-player-select>
         </app-card>
         <app-card headerText="Choose Position">
-          <app-positions-select [formControl]="selectedPosition"></app-positions-select>
+          <nz-select
+            [formControl]="selectedPosition"
+            class="w-100"
+            nzPlaceHolder="Choose Position"
+          >
+            <nz-option
+              *ngFor="
+              let position of positions
+            "
+              [nzLabel]="position.position_name"
+              [nzValue]="position"
+            ></nz-option>
+          </nz-select>
         </app-card>
       </div>
       <div
