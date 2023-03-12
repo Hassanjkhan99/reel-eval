@@ -180,7 +180,7 @@
             </a>
             <a
               (click)="showModal(i)"
-              *ngIf="currentEditIndex == i"
+              *ngIf="currentEditIndex != i"
               [nzTooltipColor]="'blue'"
               [nzTooltipTitle]="'Change Password'"
               class="p-2"
@@ -252,7 +252,7 @@
       </tr>
       </tbody>
     </nz-table>
-    <nz-modal [(nzVisible)]="isVisible" nzTitle="Change Password">
+    <nz-modal (nzOnCancel)="handleCancel()" [(nzVisible)]="isVisible" nzTitle="Change Password">
       <ng-container *nzModalContent>
         <form [formGroup]="changePass">
       <span>

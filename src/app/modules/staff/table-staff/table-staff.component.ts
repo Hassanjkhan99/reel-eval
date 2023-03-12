@@ -245,7 +245,6 @@ export class TableStaffComponent implements OnInit {
   showModal(i: number): void {
     this.isVisible = true;
     this.staffIndex = i;
-
   }
 
   handleOk(): void {
@@ -254,7 +253,15 @@ export class TableStaffComponent implements OnInit {
       return
     }
     this.staffSer.changePassword(this.listOfData[this.staffIndex].id, this.changePass.value as ChangePass).subscribe(x => {
-    })
+        this.notificationService.success('Success',
+          x.message
+        )
+      },
+      error => {
+        this.notificationService.error('Error',
+          error.message
+        )
+      })
     this.changePass.reset()
     this.currentEditIndex = -1
     this.isVisible = false;

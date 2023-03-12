@@ -71,8 +71,8 @@ export class StaffService {
     }));
   }
 
-  changePassword(id: number, payload: ChangePass): Observable<ChangePass> {
-    return this.http.post<ChangePass>(`${main_url}accounts/${id}/change_password/`, payload).pipe(tap((val) => {
+  changePassword(id: number, payload: ChangePass): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(`${main_url}accounts/${id}/change_password/`, payload).pipe(tap((val) => {
       this.loadingService.loading.next(false)
     }));
   }

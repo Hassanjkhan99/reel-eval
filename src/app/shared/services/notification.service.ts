@@ -9,7 +9,7 @@ export class NotificationService {
   constructor(private notification: NzNotificationService) {
   }
 
-  success(title: string = 'Success', message: string = 'Action successful', placement: NzNotificationPlacement = 'bottomRight', pauseOnHover: boolean = true, duration: number = 2000) {
+  success(title: string = 'Success', message: string = 'Action successful', placement: NzNotificationPlacement = 'bottomRight', pauseOnHover: boolean = true, duration: number = 3000) {
     this.notification.success(title, message, {
       nzPlacement: placement,
       nzAnimate: true,
@@ -18,7 +18,7 @@ export class NotificationService {
     })
   }
 
-  error(title: string = 'Failed', message: string = 'An error occurred', placement: NzNotificationPlacement = 'bottomRight', pauseOnHover: boolean = true, duration: number = 2000) {
+  error(title: string = 'Failed', message: string = 'An error occurred', placement: NzNotificationPlacement = 'bottomRight', pauseOnHover: boolean = true, duration: number = 3000) {
     this.notification.error(title, message, {
       nzPlacement: placement,
       nzAnimate: true,
@@ -27,7 +27,7 @@ export class NotificationService {
     })
   }
 
-  info(title: string = 'Info', message: string, placement: NzNotificationPlacement = 'bottomRight', pauseOnHover: boolean = true, duration: number = 2000) {
+  info(title: string = 'Info', message: string, placement: NzNotificationPlacement = 'bottomRight', pauseOnHover: boolean = true, duration: number = 3000) {
     this.notification.info(title, message, {
       nzPlacement: placement,
       nzAnimate: true,
@@ -36,7 +36,7 @@ export class NotificationService {
     })
   }
 
-  warning(title: string = 'Warning', message: string, placement: NzNotificationPlacement = 'bottomRight', pauseOnHover: boolean = true, duration: number = 2000) {
+  warning(title: string = 'Warning', message: string, placement: NzNotificationPlacement = 'bottomRight', pauseOnHover: boolean = true, duration: number = 3000) {
     this.notification.info(title, message, {
       nzPlacement: placement,
       nzAnimate: true,

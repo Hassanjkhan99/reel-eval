@@ -38,9 +38,7 @@ export class JwtInterceptor implements HttpInterceptor {
           if (status == 404) {
             console.log(request.url);
 
-            if (
-              request.url.includes('grade/overall_summary/')
-            ) {
+            if (request.url.includes('grade/overall_summary/')) {
               return;
             } else if (
               request.url.includes('grade/grade_by_position_prospect/')
@@ -56,14 +54,27 @@ export class JwtInterceptor implements HttpInterceptor {
               'There might be a problem. Please, try again.'
             );
             this.router.navigateByUrl('app/authentication/login');
-          } else if (status == 500 &&
+          } else if (
+            status == 500 &&
             request.url.includes('prospects/import_from_excel/')
           ) {
-            return
+            return;
           } else if (status == 500) {
             this.notification.warning(
               'warning',
               'An unexpected error occurred.'
+            );
+          } else if (
+            status == 400 &&
+            'non_field_errors' in error.error &&
+            request.url.includes('dj-rest-auth/login/')
+          ) {
+            this.notification.error(
+              'Error',
+              error.error['non_field_errors'],
+              'bottomRight',
+              true,
+              20000
             );
           } else if (status == 400 && 'non_field_errors' in error.error) {
             this.notification.error('Error', error.error['non_field_errors']);
