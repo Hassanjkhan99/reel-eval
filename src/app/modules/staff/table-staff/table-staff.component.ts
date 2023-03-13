@@ -102,7 +102,6 @@ export class TableStaffComponent implements OnInit {
     this.staffSer
       .getStaff(this.pageIndex, this.pageSize, null, null, null)
       .subscribe((x) => {
-        console.log(x);
         this.cdr.detectChanges();
         this.listOfData = x.results;
         this.originalListOfData = x.results;
@@ -159,8 +158,6 @@ export class TableStaffComponent implements OnInit {
       groups: this.listOfData[i].groups[0],
     });
     this.cdr.detectChanges();
-    console.log(this.staffForm.value);
-    console.log(this.listOfData[i]);
   }
 
   isSave(i: number) {
@@ -236,7 +233,6 @@ export class TableStaffComponent implements OnInit {
         this.filterField
       )
       .subscribe((e) => {
-        console.log({pageIndex, pageSize, sortField, sortOrder, filter});
         this.listOfData = e.results;
         this.total = e.count;
       });
