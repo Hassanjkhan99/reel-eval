@@ -1,7 +1,7 @@
 .sum-heading {
   color: darkblue;
   width: max-content;
-  padding: 6px 0 0 0;;
+  padding: 6px 0 0 0;
   margin-top: 8px;
 }
 
@@ -31,4 +31,8 @@ nz-select {
 
 .ant-select.ant-select-show-arrow.ant-select-single:hover {
   border: 0px;
+}
+
+#date-stamp {
+  visibility: hidden;
 }

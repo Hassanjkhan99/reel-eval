@@ -16,6 +16,7 @@ import {StaffSelectComponent} from '../../../shared/components/staff-select/staf
 import {Position, Result} from '../../../shared/interfaces/report';
 import {ProspectListComponent, ProspectWithScore,} from './prospect-list/prospect-list.component';
 import {NzButtonModule} from 'ng-zorro-antd/button';
+import {main_url} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-trajectory-report',
@@ -332,6 +333,6 @@ export class TrajectoryReportComponent {
   }
 
   exportToPdf() {
-    window.open('https://api.reeleval.com/dev/trajectory_report/export_to_pdf/' + this.ids + '/', '_self')
+    window.open(`${main_url}trajectory_report/export_to_pdf/${this.ids}/`, '_self')
   }
 }

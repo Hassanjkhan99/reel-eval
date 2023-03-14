@@ -36,6 +36,7 @@ export class ProspectReportComponent implements OnInit {
   position: Position = null;
   prospects: Prospect[] = [];
   summary: string = ''
+  modified: string = ''
   selectedProspect = new FormControl(null);
   selectedPosition = new FormControl(null);
   overallGrade: number = null;
@@ -162,6 +163,7 @@ export class ProspectReportComponent implements OnInit {
     });
     this.reportService.getSummaryBarReport(posId, prosId).subscribe(sum => {
       this.summary = sum.summary
+      this.modified = sum.modified
       this.cdr.detectChanges()
     })
   }
