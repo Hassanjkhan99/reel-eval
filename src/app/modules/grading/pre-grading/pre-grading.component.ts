@@ -11,15 +11,16 @@ import {TraitsService} from '../../../shared/services/traits.service';
 import {TraitByPos} from '../../../shared/interfaces/trait';
 import {TraitsSelectComponent} from '../../../shared/components/traits-select/traits-select.component';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
-import {AssignWeightsComponent} from "./assign-weights/assign-weights.component";
-import {DragDropModule} from "@angular/cdk/drag-drop";
-import {Position} from "../../../shared/interfaces/positions.interface";
-import {NotificationService} from "../../../shared/services/notification.service";
-import {CardComponent} from "../../../shared/components/card/card.component";
-import {PlayerSelectComponent} from "../../../shared/components/player-select/player-select.component";
-import {Prospect} from "../../../shared/interfaces/prospect.interface";
-import {GradingService} from "../../../shared/services/grading.service";
-import {NzSelectModule} from "ng-zorro-antd/select";
+import {AssignWeightsComponent} from './assign-weights/assign-weights.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {Position} from '../../../shared/interfaces/positions.interface';
+import {NotificationService} from '../../../shared/services/notification.service';
+import {CardComponent} from '../../../shared/components/card/card.component';
+import {PlayerSelectComponent} from '../../../shared/components/player-select/player-select.component';
+import {Prospect} from '../../../shared/interfaces/prospect.interface';
+import {GradingService} from '../../../shared/services/grading.service';
+import {NzSelectModule} from 'ng-zorro-antd/select';
+import {AuthenticationService} from "../../../shared/services/authentication.service";
 
 @UntilDestroy()
 @Component({
@@ -49,45 +50,57 @@ export class PreGradingComponent implements OnInit {
   selectedPosition = new FormControl<Position>({value: null, disabled: true});
   total: number = 0;
   traits: TraitByPos[] = [];
-  positions: Position[] = []
+  positions: Position[] = [];
 
-  constructor(private traitsService: TraitsService, private notificationService: NotificationService, private cdr: ChangeDetectorRef, private gradingService: GradingService) {
+  constructor(
+    private traitsService: TraitsService,
+    private notificationService: NotificationService,
+    private cdr: ChangeDetectorRef,
+    private gradingService: GradingService,
+    public authService: AuthenticationService,
+  ) {
   }
 
   ngOnInit(): void {
     this.selectProspect.valueChanges.pipe(untilDestroyed(this)).subscribe({
       next: (value) => {
-        this.positions = []
-        this.selectedPosition.reset()
+        this.positions = [];
+        this.selectedPosition.reset();
         this.total = 0;
-        this.traits = []
+        this.traits = [];
         if (value) {
-          this.gradingService.selectedProspect = value
-          this.selectedPosition.enable()
-          this.positions = value.pos
+          this.gradingService.selectedProspect = value;
+          this.selectedPosition.enable();
+          this.positions = value.pos;
         } else {
-          this.selectedPosition.disable()
+          this.selectedPosition.disable();
         }
       },
-    })
-    this.selectedPosition.valueChanges.pipe(untilDestroyed(this)).subscribe(
-      x => {
+    });
+    this.selectedPosition.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe((x) => {
         if (!x) {
-          return
+          return;
         }
-        this.gradingService.selectedPosition = x
-        this.traitsService.getTraitByPosition(this.selectedPosition.value.id).subscribe((e) => {
-          this.total = parseInt((e.map(e => e.weight).reduce((prev, curr) => prev + curr, 0) * 100).toFixed(0));
-          this.traits = e
-          if (e.length > 0 && this.total < 100) {
-            this.notificationService.error('Weights of assigned trait(s) does not equal 100');
-          }
-          this.cdr.detectChanges();
-
-        });
-      }
-    )
-
+        this.gradingService.selectedPosition = x;
+        this.traitsService
+          .getTraitByPosition(this.selectedPosition.value.id)
+          .subscribe((e) => {
+            this.total = parseInt(
+              (
+                e.map((e) => e.weight).reduce((prev, curr) => prev + curr, 0) *
+                100
+              ).toFixed(0)
+            );
+            this.traits = e;
+            if (e.length > 0 && this.total < 100) {
+              this.notificationService.error(
+                'Weights of assigned trait(s) does not equal 100'
+              );
+            }
+            this.cdr.detectChanges();
+          });
+      });
   }
-
 }

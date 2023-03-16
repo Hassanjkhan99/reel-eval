@@ -27,6 +27,7 @@ import {NzModalModule} from "ng-zorro-antd/modal";
 import {NzUploadModule} from "ng-zorro-antd/upload";
 import {ReactiveFormsModule} from "@angular/forms";
 import {NzAlertModule} from "ng-zorro-antd/alert";
+import {NzFormModule} from "ng-zorro-antd/form";
 
 const antdModule = [
   NzAvatarModule,
@@ -60,7 +61,8 @@ const antdModule = [
       NzModalModule,
       NzUploadModule,
       ReactiveFormsModule,
-      NzAlertModule
+      NzAlertModule,
+      NzFormModule
     ],
     declarations: [
         HeaderComponent,

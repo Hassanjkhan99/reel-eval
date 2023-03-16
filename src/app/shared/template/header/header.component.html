@@ -60,10 +60,15 @@
         </a>
       </li>
     </ul>
-    <div *ngIf="(authService.currentUser$ | async).banner && !(authService.currentUser$ | async).reel_eval_admin"
-         class="banner">
+    <div
+      *ngIf="
+        (authService.currentUser$ | async).banner &&
+        !(authService.currentUser$ | async).reel_eval_admin
+      "
+      class="banner"
+    >
       <div>
-        {{(authService.currentUser$ | async).banner}}
+        {{ (authService.currentUser$ | async).banner }}
       </div>
     </div>
     <ul class="nav-right">
@@ -98,7 +103,144 @@
               </div>
             </li>
 
-            <li (click)="showModal()" *ngIf="!(authService.currentUser$ | async).reel_eval_admin" nz-menu-item>
+            <li
+              (click)="showModalPassword()"
+              *ngIf="!(authService.currentUser$ | async).reel_eval_admin"
+              nz-menu-item
+            >
+              <a class="p-v-5 d-flex align-items-center">
+                Change Your Password
+              </a>
+              <nz-modal
+                [(nzVisible)]="isVisiblePass"
+                nzCentered="true"
+                nzCloseIcon="null"
+                nzTitle="Change Your Password"
+              >
+                <ng-container *nzModalContent>
+                  <form [formGroup]="changePasswordForm">
+                    <span>
+                      <nz-form-item nz-row>
+                        <nz-form-label nz-col nzRequired nzSpan="24"
+                        >Old Password</nz-form-label
+                        >
+                        <nz-form-control
+                          [nzErrorTip]="old_password.errors?.['required'] ?  'Please input your old password!' : old_password.errors?.['minlength'] ? 'Password length should be 8!' : null"
+                        >
+                          <nz-input-group
+                            [nzSuffix]="suffixTemplate1"
+                            nz-col
+                            nzSpan="24"
+                          >
+                            <input
+                              [type]="oldPassVisible ? 'text' : 'password'"
+                              formControlName="old_password"
+                              nz-input
+                              placeholder="Enter your old password"
+                            />
+                          </nz-input-group>
+                        </nz-form-control>
+                        <ng-template #suffixTemplate1>
+                          <i
+                            (click)="oldPassVisible = !oldPassVisible"
+                            [nzType]="oldPassVisible ? 'eye-invisible' : 'eye'"
+                            nz-icon
+                          ></i>
+                        </ng-template>
+                      </nz-form-item>
+                    </span>
+                    <span>
+                      <nz-form-item nz-row>
+                        <nz-form-label
+                          nz-col
+                          nzFor="new_password1"
+                          nzRequired
+                          nzSpan="24"
+                        >New Password</nz-form-label
+                        >
+                        <nz-form-control
+                          [nzErrorTip]="new_password1.errors?.['required'] ?  'Please input your new Password!' : new_password1.errors?.['minlength'] ? 'Password length should be 8!' : null"
+                        >
+                          <nz-input-group
+                            [nzSuffix]="suffixTemplate3"
+                            nz-col
+                            nzSpan="24"
+                          >
+                            <input
+                              [type]="newPassVisible1 ? 'text' : 'password'"
+                              formControlName="new_password1"
+                              id="new_password1"
+                              nz-input
+                              placeholder="Enter your new password"
+                            />
+                          </nz-input-group>
+                        </nz-form-control>
+                        <ng-template #suffixTemplate3>
+                          <i
+                            (click)="newPassVisible1 = !newPassVisible1"
+                            [nzType]="newPassVisible1 ? 'eye-invisible' : 'eye'"
+                            nz-icon
+                          ></i>
+                        </ng-template>
+                      </nz-form-item>
+                    </span>
+                    <span>
+                      <nz-form-item nz-row>
+                        <nz-form-label
+                          nz-col
+                          nzFor="newPass2"
+                          nzRequired
+                          nzSpan="24"
+                        >Confirm Password</nz-form-label
+                        >
+                        <nz-form-control
+                          nzErrorTip="Please confirm your password!"
+                        >
+                          <nz-input-group
+                            [nzSuffix]="suffixTemplate2"
+                            nz-col
+                            nzSpan="24"
+                          >
+                            <input
+                              [type]="newPassVisible2 ? 'text' : 'password'"
+                              formControlName="new_password2"
+                              id="newPass2"
+                              nz-input
+                              placeholder="Confirm Password"
+                            />
+                          </nz-input-group>
+                        </nz-form-control>
+                        <ng-template #suffixTemplate2>
+                          <i
+                            (click)="newPassVisible2 = !newPassVisible2"
+                            [nzType]="newPassVisible2 ? 'eye-invisible' : 'eye'"
+                            nz-icon
+                          ></i>
+                        </ng-template>
+                      </nz-form-item>
+                    </span>
+                  </form>
+                </ng-container>
+                <ng-container *nzModalFooter>
+                  <button (click)="cancelPassword()" nz-button nzType="default">
+                    Cancel
+                  </button>
+                  <button
+                    (click)="okPassword()"
+                    [disabled]="changePasswordForm.invalid"
+                    nz-button
+                    nzType="primary"
+                  >
+                    OK
+                  </button>
+                </ng-container>
+              </nz-modal>
+            </li>
+            <li
+              (click)="showModal()"
+              *ngIf="!(authService.currentUser$ | async).reel_eval_admin"
+              nz-menu-item
+            >
               <a class="p-v-5 d-flex align-items-center">
                 Create Support Ticket
               </a>
@@ -112,17 +254,30 @@
                   <div [formGroup]="bugForm">
                     <div class="m-2">
                       <h6>Subject:</h6>
-                      <input formControlName="subject" nz-input placeholder="Enter the subject" type="text"/>
+                      <input
+                        formControlName="subject"
+                        nz-input
+                        placeholder="Enter the subject"
+                        type="text"
+                      />
                     </div>
                     <div class="m-2">
                       <h6>Message:</h6>
-                      <textarea formControlName="message" nz-input placeholder="Enter the message" rows="4"></textarea>
+                      <textarea
+                        formControlName="message"
+                        nz-input
+                        placeholder="Enter the message"
+                        rows="4"
+                      ></textarea>
                     </div>
                     <div class="m-2">
                       <h6>Attachment:</h6>
-                      <nz-upload [(nzFileList)]="fileList" [nzAccept]="['.png','.jpeg']"
-                                 nzMultiple="true"
-                                 [nzBeforeUpload]="beforeUpload">
+                      <nz-upload
+                        [(nzFileList)]="fileList"
+                        [nzAccept]="['.png', '.jpeg']"
+                        [nzBeforeUpload]="beforeUpload"
+                        nzMultiple="true"
+                      >
                         <button class="d-flex" nz-button nzType="primary">
                           <span nz-icon nzType="upload"></span>
                           Select file
@@ -130,11 +285,19 @@
                       </nz-upload>
                     </div>
                   </div>
-
                 </ng-container>
                 <ng-container *nzModalFooter>
-                  <button (click)="handleCancel()" nz-button nzType="default">Cancel</button>
-                  <button (click)="handleOk()" [disabled]="bugForm.invalid" nz-button nzType="primary">OK</button>
+                  <button (click)="handleCancel()" nz-button nzType="default">
+                    Cancel
+                  </button>
+                  <button
+                    (click)="handleOk()"
+                    [disabled]="bugForm.invalid"
+                    nz-button
+                    nzType="primary"
+                  >
+                    OK
+                  </button>
                 </ng-container>
               </nz-modal>
             </li>

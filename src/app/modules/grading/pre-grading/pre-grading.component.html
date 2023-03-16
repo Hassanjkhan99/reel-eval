@@ -1,5 +1,10 @@
 <div class="bg-white" nz-row nzJustify="center">
+
   <div style="width:1000px !important;">
+    <div class="text-align-center d-flex justify-content-center">
+      <h2>      {{(authService.currentUser$ | async).club_name}}
+      </h2>
+    </div>
     <div [nzGutter]="24" class="w-100" nz-row nzJustify="center">
       <div
         class="text-center"

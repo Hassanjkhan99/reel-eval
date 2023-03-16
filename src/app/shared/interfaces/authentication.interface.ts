@@ -14,6 +14,12 @@ export interface Login {
 
 }
 
+export interface changeUserPass {
+  old_password: string;
+  new_password1: string;
+  new_password2: string;
+}
+
 
 export interface UserMe {
   reel_eval_admin: boolean;
