@@ -14,7 +14,6 @@
       <a *ngIf="item.submenu.length > 0" class="ant-menu-submenu-title" href="javascript:void(0);">
         <i *ngIf="item.iconType == 'nzIcon'" [nzType]="item.icon" [theme]="item.iconTheme" nz-icon></i>
         <i *ngIf="item.iconType == 'fontawesome'" [ngClass]="[item.iconTheme , item.icon]" class="m-r-10"></i>
-        <img *ngIf="item.iconType == 'svg'" src="assets/grading.svg">
         <span>{{item.title}}</span>
         <i class="ant-menu-submenu-arrow"></i>
       </a>
