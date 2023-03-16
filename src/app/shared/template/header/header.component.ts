@@ -64,11 +64,11 @@ export class HeaderComponent {
         Validators.required,
         Validators.minLength(8),
       ]),
-      new_password1: new FormControl('', [
+      new_password2: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
       ]),
-      new_password2: new FormControl('', [
+      new_password1: new FormControl('', [
         Validators.required,
         this.confirmationValidator,
       ]),
@@ -135,6 +135,8 @@ export class HeaderComponent {
       .subscribe(
         (x) => {
           this.notification.success('Success', x.detail);
+          this.changePasswordForm.reset();
+          this.isVisiblePass = false;
         },
         (error) => {
           error = error.error;
@@ -146,10 +148,10 @@ export class HeaderComponent {
               this.notification.error('Failed', msg);
             });
           }
+          this.changePasswordForm.controls.new_password1.reset()
         }
       );
-    this.changePasswordForm.reset();
-    this.isVisiblePass = false;
+
   }
 
   cancelPassword(): void {
@@ -168,7 +170,7 @@ export class HeaderComponent {
     if (!control.value) {
       return {required: true};
     } else if (
-      control.value !== this.changePasswordForm.controls.new_password1.value
+      control.value !== this.changePasswordForm.controls.new_password2.value
     ) {
       return {confirm: true, error: true};
     }

@@ -3,24 +3,24 @@
     <a routerLink="dashboard/home">
       <img
         alt="Logo"
-        src="assets/images/logo/Reel%20Eval-%20logo.png"
-        style="width: 120px; height: 60px; padding: 5px"
+        src="assets/images/finalized-images/Logo.png"
+        style="width: 160px; height: 75px; padding: 5px"
       />
       <img
         alt="Logo"
         class="logo-fold"
-        src="assets/images/logo/logo-fold.png"
+        src="assets/images/finalized-images/Logo.png"
       />
     </a>
   </div>
   <div class="logo logo-white">
     <div routerLink="dashboard/home">
-      <img alt="Logo" src="assets/images/logo/logo-white.png"/>
+      <img alt="Logo" src="assets/images/finalized-images/Logo.png"/>
       <img
         alt="Logo"
         class="logo-fold"
-        src="assets/images/logo/Reel%20Eval-%20logo.png"
-        style="width: 120px; height: 60px; padding: 5px"
+        src="assets/images/finalized-images/Logo.png"
+        style="width: 160px; height: 75px; padding: 5px"
       />
     </div>
   </div>
@@ -28,14 +28,14 @@
     <div routerLink="dashboard/home">
       <img
         alt="Logo"
-        src="assets/images/logo/Reel%20Eval-%20logo.png"
-        style="width: 120px; height: 60px; padding: 5px"
+        src="assets/images/finalized-images/Logo.png"
+        style="width: 160px; height: 75px; padding: 5px"
       />
       <img
         alt="Logo"
         class="logo-fold"
-        src="assets/images/logo/Reel%20Eval-%20logo.png"
-        style="width: 120px; height: 60px; padding: 5px"
+        src="assets/images/finalized-images/Logo.png"
+        style="width: 160px; height: 75px; padding: 5px"
       />
     </div>
   </div>
@@ -125,7 +125,7 @@
                         >Old Password</nz-form-label
                         >
                         <nz-form-control
-                          [nzErrorTip]="old_password.errors?.['required'] ?  'Please input your old password!' : old_password.errors?.['minlength'] ? 'Password length should be 8!' : null"
+                          [nzErrorTip]="old_password.errors?.['msg'] ?  old_password.errors?.['msg'] : 'Please input your old password!'"
                         >
                           <nz-input-group
                             [nzSuffix]="suffixTemplate1"
@@ -153,13 +153,13 @@
                       <nz-form-item nz-row>
                         <nz-form-label
                           nz-col
-                          nzFor="new_password1"
+                          nzFor="new_password2"
                           nzRequired
                           nzSpan="24"
                         >New Password</nz-form-label
                         >
                         <nz-form-control
-                          [nzErrorTip]="new_password1.errors?.['required'] ?  'Please input your new Password!' : new_password1.errors?.['minlength'] ? 'Password length should be 8!' : null"
+                          [nzErrorTip]="new_password2.errors?.['msg'] ?  new_password2.errors?.['msg'] : 'Please input your new Password!'"
                         >
                           <nz-input-group
                             [nzSuffix]="suffixTemplate3"
@@ -168,8 +168,8 @@
                           >
                             <input
                               [type]="newPassVisible1 ? 'text' : 'password'"
-                              formControlName="new_password1"
-                              id="new_password1"
+                              formControlName="new_password2"
+                              id="new_password2"
                               nz-input
                               placeholder="Enter your new password"
                             />
@@ -203,7 +203,7 @@
                           >
                             <input
                               [type]="newPassVisible2 ? 'text' : 'password'"
-                              formControlName="new_password2"
+                              formControlName="new_password1"
                               id="newPass2"
                               nz-input
                               placeholder="Confirm Password"
