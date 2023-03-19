@@ -247,7 +247,10 @@ button {
       box-shadow: none;
     }
   }
-
+  #date-stamp {
+    display: flex !important;
+    visibility: visible;
+  }
   #print {
     position: absolute;
     top: 0;

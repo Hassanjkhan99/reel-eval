@@ -20,8 +20,9 @@
       <a (click)="closeMobileMenu()" *ngIf="item.submenu.length === 0" [routerLink]="item.path">
         <i *ngIf="item.iconType == 'nzIcon'" [nzType]="item.icon" [theme]="item.iconTheme" nz-icon></i>
         <i *ngIf="item.iconType == 'fontawesome'" [ngClass]="[item.iconTheme , item.icon]" class="m-r-10"></i>
-        <img *ngIf="item.iconType == 'svg'" class="m-r-10" src="assets/grading.svg" style="width: 19px; height: 19px">
-        <span>{{item.title}}</span>
+        <img *ngIf="item.iconType == 'svg'" src="assets/grading.svg"
+             style="width: 20px; height: 20px;margin-right: 10px">
+        <span [ngClass]="isFolded ? 'folded' : null">{{item.title}}</span>
       </a>
 
       <!-- Second Level -->
