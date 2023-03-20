@@ -240,7 +240,7 @@ button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    right: 30%;
+    right: 65%;
     top: 0;
 
     .box-shadow {
@@ -250,6 +250,7 @@ button {
   #date-stamp {
     display: flex !important;
     visibility: visible;
+    margin-left: 10px;
   }
   #print {
     position: absolute;

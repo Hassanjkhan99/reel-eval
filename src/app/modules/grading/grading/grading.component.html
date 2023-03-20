@@ -166,7 +166,7 @@
             [class.red-pill-grading]="totalValue < 60"
             [class.yellow-pill-grading]="totalValue >= 70 && totalValue < 80"
             class="pill-grading"
-          >{{ totalValue ? totalValue?.toFixed(1) + '%' : '-' }}
+          >{{ totalValue === null ? '-' : totalValue?.toFixed(1) + '%' }}
       </span>
         </div>
       </div>
