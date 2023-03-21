@@ -250,7 +250,14 @@ button {
   #date-stamp {
     display: flex !important;
     visibility: visible;
-    margin-left: 10px;
+    margin-left: 30px;
+    width: 400px;
+  }
+  #summary-print {
+    width: 600px;
+  }
+  #chart-print {
+    height: 400px !important;
   }
   #print {
     position: absolute;
