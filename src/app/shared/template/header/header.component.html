@@ -65,14 +65,19 @@
         </a>
       </li>
     </ul>
-    <div
-      *ngIf="
-        (authService.currentUser$ | async).banner &&
-        !(authService.currentUser$ | async).reel_eval_admin
-      "
-      class="banner"
-    >
-      <div>
+    <div>
+      <div class="club-heading banner"
+      >
+        {{ (authService.currentUser$ | async).club_name }}
+      </div>
+      <div
+        *ngIf="
+          (authService.currentUser$ | async).banner &&
+          !(authService.currentUser$ | async).reel_eval_admin
+        "
+        class="banner"
+        style="color: red;"
+      >
         {{ (authService.currentUser$ | async).banner }}
       </div>
     </div>
