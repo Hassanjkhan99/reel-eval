@@ -87,6 +87,10 @@ export class SignUp2Component {
     );
   }
 
+  navToLogin() {
+    this.router.navigateByUrl('authentication/login');
+  }
+
   async ngOnInit(): Promise<void> {
     const isAuth = await this.checkUser()
     if (isAuth) {
