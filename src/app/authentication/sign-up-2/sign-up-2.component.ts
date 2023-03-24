@@ -8,6 +8,7 @@ import {UserMe} from "../../shared/interfaces/authentication.interface";
 
 @Component({
   templateUrl: './sign-up-2.component.html',
+  styleUrls: ['./sign-up-2.component.scss']
 })
 export class SignUp2Component {
   signUpForm: FormGroup;
