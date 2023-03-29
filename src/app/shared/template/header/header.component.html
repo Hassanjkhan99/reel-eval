@@ -65,8 +65,8 @@
         </a>
       </li>
     </ul>
-    <div>
-      <div class="club-heading banner"
+    <div class="banner">
+      <div class="club-heading"
       >
         {{ (authService.currentUser$ | async).club_name }}
       </div>
@@ -75,7 +75,6 @@
           (authService.currentUser$ | async).banner &&
           !(authService.currentUser$ | async).reel_eval_admin
         "
-        class="banner"
         style="color: red;"
       >
         {{ (authService.currentUser$ | async).banner }}

@@ -6,9 +6,10 @@
 .banner {
   text-align: center;
   width: 75vw;
-  display: flex;
+  display: grid;
   justify-content: center;
   align-items: center;
+  align-content: center;
 }
 
 .club-heading {
