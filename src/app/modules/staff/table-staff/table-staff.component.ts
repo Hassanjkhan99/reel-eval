@@ -267,6 +267,10 @@ export class TableStaffComponent implements OnInit {
     this.isVisible = false;
   }
 
+  validateConfirmPassword(): void {
+    setTimeout(() => this.changePass.controls.password2.updateValueAndValidity());
+  }
+
   private confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
     if (!control.value) {
       return {required: true};

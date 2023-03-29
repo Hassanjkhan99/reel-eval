@@ -176,6 +176,7 @@
                             nzSpan="24"
                           >
                             <input
+                              (ngModelChange)="validateConfirmPassword()"
                               [type]="newPassVisible1 ? 'text' : 'password'"
                               formControlName="new_password2"
                               id="new_password2"

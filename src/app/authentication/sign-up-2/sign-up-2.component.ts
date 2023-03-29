@@ -50,10 +50,8 @@ export class SignUp2Component {
     return this.signUpForm.controls.club_name;
   }
 
-  updateConfirmValidator(): void {
-    Promise.resolve().then(() =>
-      this.signUpForm.controls.password2.updateValueAndValidity()
-    );
+  validateConfirmPassword(): void {
+    setTimeout(() => this.signUpForm.controls.password2.updateValueAndValidity());
   }
 
   confirmationValidator = (control: FormControl): { [s: string]: boolean } => {

@@ -98,6 +98,7 @@
                 >
                   <nz-input-group [nzSuffix]="suffixTemplate">
                     <input
+                      (ngModelChange)="validateConfirmPassword()"
                       [type]="passwordVisible ? 'text' : 'password'"
                       formControlName="password1"
                       id="password1"

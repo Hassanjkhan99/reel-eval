@@ -164,6 +164,10 @@ export class HeaderComponent {
     return false;
   };
 
+  validateConfirmPassword(): void {
+    setTimeout(() => this.changePasswordForm.controls.new_password1.updateValueAndValidity());
+  }
+
   private confirmationValidator = (
     control: FormControl
   ): { [s: string]: boolean } => {
