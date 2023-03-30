@@ -28,7 +28,7 @@ export class SignUp2Component {
       last_name: ['', [Validators.required]],
       club_name: ['', [Validators.required]],
       email: ['', [Validators.email, Validators.required]],
-      password1: ['', [Validators.required, Validators.minLength(8)]],
+      password1: ['', [Validators.required, Validators.minLength(8), this.confirmationValidator2]],
       password2: ['', [Validators.required, this.confirmationValidator]],
       agree: [false],
     });
@@ -46,6 +46,10 @@ export class SignUp2Component {
     return this.signUpForm.controls.password1;
   }
 
+  get password2() {
+    return this.signUpForm.controls.password2;
+  }
+
   get club_name() {
     return this.signUpForm.controls.club_name;
   }
@@ -57,8 +61,15 @@ export class SignUp2Component {
   confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
     if (!control.value) {
       return {required: true};
-    } else if (control.value !== this.signUpForm.controls.password1.value) {
+    } else if (control.value !== this.signUpForm.controls.password1.value || control.value !== this.signUpForm.controls.password2.value) {
       return {confirm: true, error: true};
+    }
+  };
+  confirmationValidator2 = (control: FormControl): { [s: string]: boolean } => {
+    if (!control.value) {
+      return {required: true};
+    } else if (control.value !== this.signUpForm.controls.password2.value) {
+      this.password2.setErrors({confirm: true});
     }
   };
 
@@ -68,9 +79,9 @@ export class SignUp2Component {
       this.signUpForm.controls[i].updateValueAndValidity();
     }
     this.authService.signup(this.signUpForm.value).subscribe(
-      (x) => {
+      () => {
         this.notification.success('Success', 'Your Account has been created!');
-        this.router.navigateByUrl('authentication/login');
+        this.router.navigateByUrl('authentication/login').then();
       },
       (error) => {
         error = error.error;
@@ -87,13 +98,13 @@ export class SignUp2Component {
   }
 
   navToLogin() {
-    this.router.navigateByUrl('authentication/login');
+    this.router.navigateByUrl('authentication/login').then();
   }
 
   async ngOnInit(): Promise<void> {
     const isAuth = await this.checkUser()
     if (isAuth) {
-      this.router.navigate(['app/dashboard']);
+      this.router.navigate(['app/dashboard']).then();
     }
   }
 

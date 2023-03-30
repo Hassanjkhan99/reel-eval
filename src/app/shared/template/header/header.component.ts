@@ -14,8 +14,6 @@ import {NotificationService} from '../../services/notification.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  searchVisible: boolean = false;
-  quickViewVisible: boolean = false;
   isFolded: boolean;
   isExpand: boolean;
   isVisible = false;
@@ -28,7 +26,6 @@ export class HeaderComponent {
     message: new FormControl('', Validators.required),
   });
   changePasswordForm: FormGroup;
-  uploading = false;
   fileList: NzUploadFile[] = [];
 
   constructor(
@@ -42,10 +39,6 @@ export class HeaderComponent {
 
   get old_password() {
     return this.changePasswordForm.controls.old_password;
-  }
-
-  get new_password1() {
-    return this.changePasswordForm.controls.new_password1;
   }
 
   get new_password2() {
@@ -111,7 +104,7 @@ export class HeaderComponent {
         },
         this.fileList
       )
-      .subscribe((e) => {
+      .subscribe(() => {
         this.bugListService.getBugsListData();
         this.notification.success(
           'Success',
