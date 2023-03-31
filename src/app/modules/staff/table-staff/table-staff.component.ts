@@ -167,22 +167,32 @@ export class TableStaffComponent implements OnInit {
         ...this.staffForm.value,
         groups: [this.groupsFC.value],
       })
-      .subscribe((x) => {
-        this.notificationService.success(
-          'Success',
-          'Your changes has been saved!'
-        );
-        this.listOfData = this.listOfData.map((item) => {
-          if (item.id === x.id) {
-            return x;
-          } else {
-            return item;
+      .subscribe({
+        next: x => {
+          this.notificationService.success(
+            'Success',
+            'Your changes has been saved!'
+          );
+          this.listOfData = this.listOfData.map((item) => {
+            if (item.id === x.id) {
+              return x;
+            } else {
+              return item;
+            }
+          });
+          this.currentEditIndex = -1;
+          this.cdr.detectChanges();
+        },
+        error: err => {
+          for (const errKey in err.error) {
+            (err.error[errKey]).forEach(e => {
+              this.notificationService.error(errKey, e)
+            })
           }
-        });
-        this.currentEditIndex = -1;
-        this.cdr.detectChanges();
+        }
       });
   }
+
 
   isDelete(i: number) {
     this.staffSer.deleteStaff(this.listOfData[i].id).subscribe((x) => {
