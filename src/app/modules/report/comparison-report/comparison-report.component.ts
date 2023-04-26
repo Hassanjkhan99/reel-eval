@@ -46,7 +46,7 @@ export class ComparisonReportComponent implements OnInit {
     layout: {
       padding: {
         top: 30,
-        bottom: 7
+        bottom: 7,
       },
     },
     scales: {
@@ -59,7 +59,7 @@ export class ComparisonReportComponent implements OnInit {
     plugins: {
       legend: {
         display: true,
-        position: "bottom",
+        position: "bottom"
       },
       datalabels: {
         anchor: 'end',
