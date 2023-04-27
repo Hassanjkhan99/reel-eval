@@ -50,7 +50,14 @@ export class ComparisonReportComponent implements OnInit {
       },
     },
     scales: {
-      x: {},
+      x: {
+        ticks: {
+          font: {
+            size: 13,
+            weight: 'bold'
+          }
+        }
+      },
       y: {
         min: 0,
         max: 100,
@@ -59,7 +66,14 @@ export class ComparisonReportComponent implements OnInit {
     plugins: {
       legend: {
         display: true,
-        position: "bottom"
+        position: "bottom",
+        labels: {
+          padding: 25,
+          font: {
+            weight: 'bold',
+            size: 13,
+          }
+        }
       },
       datalabels: {
         anchor: 'end',

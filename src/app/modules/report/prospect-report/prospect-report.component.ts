@@ -52,6 +52,12 @@ export class ProspectReportComponent implements OnInit {
     },
     scales: {
       x: {
+        ticks: {
+          font: {
+            size: 13,
+            weight: 'bold'
+          }
+        }
       },
       y: {
         min: 0,
