@@ -42,7 +42,7 @@
       </canvas>
     </div>
     <div *ngIf="selectedProspects.value?.length > 0" class="d-flex flex-column" style="margin-top: 10px">
-      <div *ngFor="let prospect of overallGrade;let i = index" class="m-1">
+      <div *ngFor="let prospect of overallGrade;let i = index" class="m-1" id="comparison-sum">
         <div>
           <h5 [class.font-size-10]="overallGrade.length === 4"
               [class.font-size-13]="overallGrade.length === 3" [class.font-size-15]="overallGrade.length === 2"
