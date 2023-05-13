@@ -98,7 +98,7 @@ export class AddStaffComponent implements OnInit {
   ngOnInit(): void {
     this.staffService.getStaff(0, 10, null, null, null).subscribe(e => {
       this.staffCount = e.count;
-      if (e.count >= 20) {
+      if (e.count >= 20 && this.authService.currentUser$.value.academy_status === false) {
         this.coachForm.disable()
       }
     }, (error) => {

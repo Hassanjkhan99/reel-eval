@@ -81,11 +81,17 @@ export class JwtInterceptor implements HttpInterceptor {
           } else if (status == 204) {
             this.notification.warning('Warning', 'No Data Found');
           } else if (status == 403 && request.url.includes('accounts/me/')) {
-            this.authService.logout().subscribe(e => {
-              this.notification.info('Session Expired', 'Your session has been expired, retry login');
-            })
+            if (this.router.url.includes('/login') || this.router.url.includes('/sign-up') || this.router.url.includes('/forget-password')) {
+              this.loadingService.loading.next(false);
+              return
+            } else {
+              this.authService.logout().subscribe(e => {
+                this.notification.info('Session Expired', 'Your session has been expired, retry login');
+              })
+              this.loadingService.loading.next(false);
+
+            }
           }
-          this.loadingService.loading.next(false);
 
           return throwError(error);
         }

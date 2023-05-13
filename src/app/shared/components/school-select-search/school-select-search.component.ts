@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, forwardRef, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ProspectService} from "../../services/prospect.service";
 import {Schools} from "../../interfaces/school.interface";
@@ -25,7 +25,6 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
     useExisting: forwardRef(() => SchoolSelectSearchComponent),
     multi: true,
   }],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SchoolSelectSearchComponent implements OnInit, ControlValueAccessor {
   schoolsList: Schools[] = [];
@@ -39,7 +38,7 @@ export class SchoolSelectSearchComponent implements OnInit, ControlValueAccessor
 
 
   search(searchValue: string) {
-    if (searchValue === '') {
+    if (searchValue === '' || searchValue === 'null' || searchValue === 'undefined') {
       this.schoolsList = []
       return
     }

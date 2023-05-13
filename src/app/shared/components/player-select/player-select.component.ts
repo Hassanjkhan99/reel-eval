@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, OnInit,} from '@angular/core';
+import {ChangeDetectorRef, Component, forwardRef, OnInit,} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ProspectService} from '../../services/prospect.service';
 import {NzSelectModule} from 'ng-zorro-antd/select';
@@ -19,7 +19,6 @@ import {Prospect} from '../../interfaces/prospect.interface';
   imports: [CommonModule, NzSelectModule, ReactiveFormsModule],
   templateUrl: './player-select.component.html',
   styleUrls: ['./player-select.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

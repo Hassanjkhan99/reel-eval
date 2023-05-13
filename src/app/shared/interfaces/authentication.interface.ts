@@ -6,6 +6,7 @@ export interface SignUp {
   password1: string;
   password2: string;
   club_name: string;
+  academy_status: boolean;
 }
 
 export interface Login {
@@ -35,4 +36,5 @@ export interface UserMe {
   username: string;
   group: string;
   banner: string;
+  academy_status: boolean;
 }

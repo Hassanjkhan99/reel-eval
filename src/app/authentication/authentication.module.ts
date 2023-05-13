@@ -14,6 +14,7 @@ import {Login2Component} from './login-2/login-2.component';
 import {SignUp2Component} from './sign-up-2/sign-up-2.component';
 import {Error2Component} from './error-2/error-2.component';
 import {ForgetPasswordComponent} from "./forget-password/forget-password.component";
+import {NzRadioModule} from "ng-zorro-antd/radio";
 
 const antdModule = [
   NzFormModule,
@@ -30,6 +31,7 @@ const antdModule = [
       ReactiveFormsModule,
       AuthenticationRoutingModule,
       ...antdModule,
+      NzRadioModule,
     ],
     declarations: [
       Login2Component,

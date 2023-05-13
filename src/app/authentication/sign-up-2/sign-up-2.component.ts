@@ -30,6 +30,7 @@ export class SignUp2Component {
       email: ['', [Validators.email, Validators.required]],
       password1: ['', [Validators.required, Validators.minLength(8), this.confirmationValidator2]],
       password2: ['', [Validators.required, this.confirmationValidator]],
+      academy_status: [false, [Validators.required]],
       agree: [false],
     });
   }

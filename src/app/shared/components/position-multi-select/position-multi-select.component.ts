@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, forwardRef, Input, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
   ControlValueAccessor,
@@ -27,7 +27,6 @@ import {Position} from "../../interfaces/prospect.interface";
     useExisting: forwardRef(() => PositionMultiSelectComponent),
     multi: true,
   }],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PositionMultiSelectComponent implements OnInit, ControlValueAccessor {
 

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, OnInit,} from '@angular/core';
+import {ChangeDetectorRef, Component, forwardRef, OnInit,} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ProspectService} from '../../services/prospect.service';
 import {States} from '../../interfaces/state.interface';
@@ -20,7 +20,6 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
       multi: true,
     },
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatesSelectSearchComponent
   implements OnInit, ControlValueAccessor {
@@ -37,7 +36,7 @@ export class StatesSelectSearchComponent
   }
 
   async search(searchValue: string) {
-    if (searchValue === '') {
+    if (searchValue === '' || searchValue == 'null' || searchValue == 'undefined') {
       this.list = []
       return
     }
