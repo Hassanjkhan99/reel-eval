@@ -17,6 +17,7 @@ import {Position, Result} from '../../../shared/interfaces/report';
 import {ProspectListComponent, ProspectWithScore,} from './prospect-list/prospect-list.component';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import {main_url} from '../../../../environments/environment';
+import {AuthenticationService} from "../../../shared/services/authentication.service";
 
 @Component({
   selector: 'app-trajectory-report',
@@ -69,7 +70,8 @@ export class TrajectoryReportComponent {
 
   constructor(
     private reportService: ReportService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authService: AuthenticationService,
   ) {
   }
 

@@ -1,0 +1,39 @@
+
+h5 {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.quadrant-label-top {
+  padding: 10px;
+  border: 1px solid black;
+  transform: translateY(85px);
+  -webkit-transition: 1s ease-in-out;
+  -moz-transition: 1s ease-in-out;
+  -o-transition: 1s ease-in-out;
+  transition: 1s ease-in-out;
+}
+
+.moveToOriginalPosition {
+  transform: translateY(0px) !important;
+  -webkit-transform: translateY(0px) !important;
+  -moz-transform: translateY(0px) !important;
+  -o-transform: translateY(0px) !important;
+  -ms-transform: translateY(0px) !important;
+
+
+}
+
+.quadrant-label-bottom {
+  padding: 10px;
+  border: 1px solid black;
+  transform: translateY(-85px);
+  -webkit-transition: 1s ease-in-out;
+  -moz-transition: 1s ease-in-out;
+  -o-transition: 1s ease-in-out;
+  transition: 1s ease-in-out;
+}
+
+.chart {
+  width: 100%;
+}

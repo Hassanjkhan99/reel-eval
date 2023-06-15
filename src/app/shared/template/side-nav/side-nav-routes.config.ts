@@ -130,6 +130,16 @@ export const ROUTES: SideNavInterface[] = [
           Permissions.ViewOnly,
           Permissions.CreateProspects,
         ]
+      }, {
+        path: 'academy-trajectory-report',
+        title: 'Trajectory Report',
+        iconType: '',
+        icon: '',
+        submenu: [],
+        iconTheme: 'fill',
+        permission: [
+          Permissions.clubAdmin,
+        ]
       },
       {
         path: 'prospect-report',

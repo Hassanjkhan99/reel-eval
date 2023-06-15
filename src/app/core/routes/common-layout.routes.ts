@@ -102,6 +102,15 @@ export const CommonLayout_ROUTES: Routes = [
     },
     canActivate: [AuthGuard]
   },
+  {
+    path: 'academy-trajectory-report',
+    loadComponent: () => import('../../modules/report/academy-trajectory-report/academy-trajectory-report.component').then(c => c.AcademyTrajectoryReportComponent),
+    data: {
+      label: 'academy-trajectory-report',
+      path: 'academy-trajectory-report'
+    },
+    canActivate: [AuthGuard]
+  },
   // {
   //   path: 'quadrant-report',
   //   loadComponent: () => import('../../modules/report/quadrant-report/quadrant-report.component').then(c => c.QuadrantReportComponent),

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {Report, Result} from '../interfaces/report';
+import {AcademyUsername, Report, Result} from '../interfaces/report';
 import {main_url} from '../../../environments/environment';
 import {map} from 'rxjs/operators';
 import {BarReport, BarReportApi, GetSummary, PositionProspect, PositionProspectApi,} from '../interfaces/bar-report';
@@ -17,6 +17,17 @@ export class ReportService {
     return this.http
       .get<Report>(`${main_url}trajectory_report/`)
       .pipe(map((e) => e.results));
+  }
+
+  getAcademyTrajectoryReportData(userId: number): Observable<Result[]> {
+    return this.http
+      .get<Report>(`${main_url}trajectory_report/by_user_id/${userId}/`)
+      .pipe(map((e) => e.results));
+  }
+
+  getAcademyUsernames(): Observable<AcademyUsername[]> {
+    return this.http
+      .get<AcademyUsername[]>(`${main_url}position_prospect/username_list/`);
   }
 
   getPositionProspects(positionId?: number): Observable<PositionProspect[]> {

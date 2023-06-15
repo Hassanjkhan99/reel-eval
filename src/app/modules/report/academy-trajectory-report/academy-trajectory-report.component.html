@@ -1,0 +1,69 @@
+<div class="d-flex justify-content-between p-1" nz-row>
+  <div></div>
+  <div class="w-100" nz-col nzSpan="16">
+    <div
+      class="d-flex justify-content-center"
+      nz-row
+      style="margin-bottom: 10px"
+    >
+      <div nz-col nzSpan="6" style="margin: 5px">
+        <h5 class="d-flex justify-content-center">Prospect</h5>
+        <nz-select
+          [formControl]="selectedProspect"
+          class="w-100"
+          nzPlaceHolder="select prospect"
+        >
+          <nz-option
+            *ngFor="let prospect of prospects"
+            [nzLabel]="prospect.first_name + ' ' + prospect.last_name"
+            [nzValue]="prospect.id"
+          ></nz-option>
+        </nz-select>
+      </div>
+    </div>
+    <div class="w-100 m-1" nz-row>
+      <div class="d-flex justify-content-between w-100">
+        <div [class.moveToOriginalPosition]="isMouseOnCanvas" class="quadrant-label-top">
+          <div style="color: green;font-weight: bold">Quality Starter</div>
+          <div style="color: green">High Ceiling</div>
+          <div style="color: red">Low Floor</div>
+        </div>
+        <div [class.moveToOriginalPosition]="isMouseOnCanvas" class="quadrant-label-top text-align-right">
+          <div style="color: green;font-weight: bold">Impact Player</div>
+          <div style="color: green">High Ceiling</div>
+          <div style="color: green">High floor</div>
+        </div>
+      </div>
+      <div class="w-100">
+        <div class="w-100 box-shadow" style="height: 60vh">
+          <canvas
+            (chartClick)="chartClicked($event)"
+            (mouseenter)="mouseOnCanvas()"
+            (mouseleave)="mouseOffCanvas()"
+            [data]="scatterChartData"
+            [options]="scatterChartOptions"
+            [type]="scatterChartType"
+            baseChart
+            class="chart"
+          >
+          </canvas>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between w-100">
+        <div [class.moveToOriginalPosition]="isMouseOnCanvas" class="quadrant-label-bottom">
+          <div style="color: red;font-weight: bold">Backup Caliber</div>
+          <div style="color: red">Low Ceiling</div>
+          <div style="color: red">Low Floor</div>
+        </div>
+        <div [class.moveToOriginalPosition]="isMouseOnCanvas" class="quadrant-label-bottom text-align-right">
+          <div style="color: green;font-weight: bold">Adequate Starter</div>
+          <div style="color: red">Low Ceiling</div>
+          <div style="color: green">High floor</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div></div>
+</div>

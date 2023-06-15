@@ -37,10 +37,16 @@ export class SideNavComponent {
             return menuItem.permission.includes(permission) && menuItem.title !== 'Customers'
             }
           );
+
           this.menuItems.forEach(
             (menuItem, index) =>
               (this.menuItems[index].submenu = menuItem.submenu.filter((item) => {
-                  return item.permission.includes(permission)
+                  const academy = user.academy_status
+                  if (!academy) {
+                    return item.permission.includes(permission) && item.path !== 'academy-trajectory-report'
+                  }
+                  return item.permission.includes(permission) && item.path !== 'report'
+
                 }
               ))
           );

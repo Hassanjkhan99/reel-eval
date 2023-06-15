@@ -142,8 +142,8 @@
                 <nz-form-control>
                   <nz-form-label style="margin-right: 10px">Type of user:</nz-form-label>
                   <nz-radio-group formControlName="academy_status">
-                    <label nz-radio nzValue=true>Academy User</label>
-                    <label nz-radio nzValue=false>Club User</label>
+                    <label [nzValue]='true' nz-radio>Academy User</label>
+                    <label [nzValue]='false' nz-radio>Club User</label>
                   </nz-radio-group>
                 </nz-form-control>
               </nz-form-item>
