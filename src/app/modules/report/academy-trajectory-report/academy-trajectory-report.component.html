@@ -6,11 +6,12 @@
       nz-row
       style="margin-bottom: 10px"
     >
-      <div nz-col nzSpan="6" style="margin: 5px">
+      <div nz-col nzSpan="8" style="margin: 5px">
         <h5 class="d-flex justify-content-center">Prospect</h5>
         <nz-select
-          [formControl]="selectedProspect"
+          [formControl]="selectedProspects"
           class="w-100"
+          nzMode="multiple"
           nzPlaceHolder="select prospect"
         >
           <nz-option

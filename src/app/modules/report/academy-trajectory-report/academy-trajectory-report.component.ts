@@ -6,7 +6,6 @@ import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {AcademyUsername, Result} from "../../../shared/interfaces/report";
 import {ReportService} from "../../../shared/services/report.service";
 import {AuthenticationService} from "../../../shared/services/authentication.service";
-import {main_url} from "../../../../environments/environment";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzGridModule} from "ng-zorro-antd/grid";
 import {NgChartsModule} from "ng2-charts";
@@ -29,13 +28,12 @@ export class AcademyTrajectoryReportComponent implements OnInit {
   public scatterChartType: ChartType = 'scatter';
 
 
-  selectedProspect: FormControl = new FormControl<number>(-1);
+  selectedProspects: FormControl = new FormControl<number[]>([]);
   prospects: AcademyUsername[] = [];
   currentData: Result[] = []
   ids: string = ''
   public isMouseOnCanvas: boolean = false;
   private reportData: { x: number; y: number }[] = [];
-  private mainData: Result[] = [];
 
   constructor(
     private reportService: ReportService,
@@ -49,12 +47,23 @@ export class AcademyTrajectoryReportComponent implements OnInit {
     this.reportService.getAcademyUsernames().subscribe(usernames => {
       this.prospects = usernames
     })
-    this.selectedProspect.valueChanges.subscribe((prospect) => {
-      this.reportService.getAcademyTrajectoryReportData(prospect).subscribe((e) => {
-        this.mainData = e;
-        this.assignDataToPlot(e);
+
+    this.reportService.getAcademyTrajectoryReportData(user.id).subscribe((e) => {
+      this.selectedProspects.setValue([user.id])
+      this.assignDataToPlot(e);
+      this.cdr.detectChanges();
+    });
+
+    this.selectedProspects.valueChanges.subscribe((prospects) => {
+      if (prospects.length > 0) {
+        this.reportService.getAcademyTrajectoryReportData(prospects).subscribe((e) => {
+          this.assignDataToPlot(e);
+          this.cdr.detectChanges();
+        });
+      } else {
+        this.assignDataToPlot([])
         this.cdr.detectChanges();
-      });
+      }
     });
   }
 
@@ -83,18 +92,6 @@ export class AcademyTrajectoryReportComponent implements OnInit {
   }
 
 
-  filterStaff(staff: string[], data: Result[]): Result[] {
-    if (staff.length < 1) {
-      return data;
-    }
-
-
-    return data.filter((item) => {
-      return staff.includes(item.user_full_name);
-    });
-  }
-
-
   // events
   public chartClicked(event): void {
     console.log(event);
@@ -118,9 +115,6 @@ export class AcademyTrajectoryReportComponent implements OnInit {
     this.isMouseOnCanvas = false;
   }
 
-  exportToPdf() {
-    window.open(`${main_url}trajectory_report/export_to_pdf/${this.ids}/`, '_self')
-  }
 
   private RenderScatterChart(
     reportData: { x: number; y: number }[],
