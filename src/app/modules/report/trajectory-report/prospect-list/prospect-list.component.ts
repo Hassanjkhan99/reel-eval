@@ -44,5 +44,6 @@ export class ProspectListComponent implements OnInit {
 export interface ProspectWithScore extends Prospect {
   iga_score: number;
   score: number;
-  position: Position
+  position: Position;
+  evaluator?: string;
 }

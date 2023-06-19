@@ -7,17 +7,17 @@
       style="margin-bottom: 10px"
     >
       <div nz-col nzSpan="8" style="margin: 5px">
-        <h5 class="d-flex justify-content-center">Prospect</h5>
+        <h5 class="d-flex justify-content-center">Evaluator</h5>
         <nz-select
-          [formControl]="selectedProspects"
+          [formControl]="selectedEvaluators"
           class="w-100"
           nzMode="multiple"
-          nzPlaceHolder="select prospect"
+          nzPlaceHolder="select evaluator"
         >
           <nz-option
-            *ngFor="let prospect of prospects"
-            [nzLabel]="prospect.first_name + ' ' + prospect.last_name"
-            [nzValue]="prospect.id"
+            *ngFor="let evaluator of evaluators"
+            [nzLabel]="evaluator.first_name + ' ' + evaluator.last_name"
+            [nzValue]="evaluator.id"
           ></nz-option>
         </nz-select>
       </div>
@@ -63,6 +63,25 @@
           <div style="color: green">High floor</div>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="w-100 m-1" nz-col nzSpan="4" style="height: 100%">
+    <div style="width: 250px !important;">
+      <div class="d-flex justify-content-center">
+        <h4 class="prospect-box">Prospect List</h4>
+      </div>
+      <div class="container-list w-100">
+        <span *ngFor="let prospect of prospectList; let i = index">
+          <app-prospect-list
+            (click)="filterProspect(prospect)"
+            [prospect]="prospect"
+            [selectedProspects]="selectedProspects"
+          ></app-prospect-list>
+        </span>
+      </div>
+      <button (click)="reset()" class="w-100 m-t-5" nz-button nzType="primary">
+        Reset Players Filter
+      </button>
     </div>
   </div>
 

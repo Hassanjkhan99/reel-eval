@@ -30,8 +30,9 @@ export class Login2Component implements OnInit {
     this.authService.login(this.loginForm.value).subscribe(
       response => {
         this.notification.success('Success', 'Login Successful!')
-        console.log(response);
         this.router.navigateByUrl(`app/dashboard/home`);
+      }, error => {
+        this.loadingService.loading.next(false);
       }
     );
   }
