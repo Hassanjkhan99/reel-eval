@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {ProspectListComponent, ProspectWithScore} from "../trajectory-report/prospect-list/prospect-list.component";
 import {ChartConfiguration, ChartData, ChartEvent, ChartType} from "chart.js";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
-import {AcademyUsername, Result} from "../../../shared/interfaces/report";
+import {AcademyUsername, Position, Prospect, Result} from "../../../shared/interfaces/report";
 import {ReportService} from "../../../shared/services/report.service";
 import {AuthenticationService} from "../../../shared/services/authentication.service";
 import {NzButtonModule} from "ng-zorro-antd/button";
@@ -22,15 +22,26 @@ import {NzSelectModule} from "ng-zorro-antd/select";
 export class AcademyTrajectoryReportComponent implements OnInit {
   prospectList: ProspectWithScore[] = [];
   selectedProspects: { id: number, position: number, evaluator: string }[] = [];
+  classification: string[] = [];
+  positions: Position[] = [];
+  prospects: Prospect[] = [];
   // scatter
   public scatterChartOptions: ChartConfiguration['options'];
   public scatterChartLabels: string[] = [];
   public scatterChartData: ChartData<'scatter'>;
   public scatterChartType: ChartType = 'scatter';
   selectedEvaluators: FormControl = new FormControl<number[]>([]);
+  selectedPositions: FormControl = new FormControl<number[]>([]);
+  selected_Prospects: FormControl = new FormControl<number[]>([]);
+  selectedClassifications: FormControl = new FormControl<string[]>([]);
   evaluators: AcademyUsername[] = [];
   private mainData: Result[] = [];
   currentData: Result[] = []
+  activeFilter = {
+    selectedPositions: [],
+    selectedClassifications: [],
+    selected_Prospects: [],
+  };
   ids: string = ''
   public isMouseOnCanvas: boolean = false;
   private reportData: { x: number; y: number }[] = [];
@@ -48,31 +59,115 @@ export class AcademyTrajectoryReportComponent implements OnInit {
       this.evaluators = usernames
     })
 
-    this.reportService.getAcademyTrajectoryReportData(user.id).subscribe((e) => {
-      this.selectedEvaluators.setValue([user.id])
-      this.setProspects(e)
-      this.assignDataToPlot(e);
-      this.cdr.detectChanges();
-    });
+    this.setData(user.id)
+    this.selectedEvaluators.setValue([user.id])
 
-    this.selectedEvaluators.valueChanges.subscribe((prospects) => {
-      if (prospects.length > 0) {
-        this.reportService.getAcademyTrajectoryReportData(prospects).subscribe((e) => {
-          this.setProspects(e)
-          this.mainData = e;
-          this.assignDataToPlot(e);
-          this.reset()
-          this.cdr.detectChanges();
-        });
+
+    this.selectedEvaluators.valueChanges.subscribe((evaluators) => {
+      evaluators = evaluators.filter(e => e !== 'all')
+      if (evaluators.length > 0) {
+        this.setData(evaluators)
+        this.resetFilters()
       } else {
         this.mainData = [];
+        this.prospects = [];
+        this.positions = [];
+        this.classification = [];
+        this.selectedPositions.disable();
+        this.selected_Prospects.disable();
+        this.selectedClassifications.disable();
         this.assignDataToPlot([])
         this.reset()
         this.cdr.detectChanges();
       }
     });
+    this.selected_Prospects.valueChanges.subscribe((ids) => {
+      this.activeFilter.selected_Prospects = ids || [];
+      this.applyFilters();
+    });
+    this.selectedPositions.valueChanges.subscribe((ids) => {
+      this.activeFilter.selectedPositions = ids || [];
+      this.applyFilters();
+    });
+    this.selectedClassifications.valueChanges.subscribe((years) => {
+      this.activeFilter.selectedClassifications = years || [];
+      this.applyFilters();
+    });
   }
 
+  filterPosition(ids: number[], data: Result[]): Result[] {
+    if (ids.length < 1) {
+      return data;
+    }
+    this.cdr.detectChanges();
+    return data.filter((item) => {
+      return ids.includes(item.position.id);
+    });
+  }
+
+  filterProspectSelect(ids: number[], data: Result[]): Result[] {
+    if (ids.length < 1) {
+      return data;
+    }
+    this.cdr.detectChanges();
+    return data.filter((item) => {
+      return ids.includes(item.prospect.id);
+    });
+  }
+
+  filterClassification(year: string[], data: Result[]): Result[] {
+    if (year.length < 1) {
+      return data;
+    }
+    this.cdr.detectChanges();
+    return data.filter((item) => {
+      return year.includes(item.prospect.classification);
+    });
+  }
+
+  applyFilters() {
+    let data = this.mainData;
+    for (const activeFilterKey in this.activeFilter) {
+      if (activeFilterKey === 'selectedClassifications') {
+        data = this.filterClassification(
+          this.activeFilter.selectedClassifications,
+          data
+        );
+      }
+      if (activeFilterKey === 'selectedPositions') {
+        data = this.filterPosition(this.activeFilter.selectedPositions, data);
+      }
+      if (activeFilterKey === 'selected_Prospects') {
+        data = this.filterProspectSelect(this.activeFilter.selected_Prospects, data);
+      }
+    }
+    this.assignDataToPlot(data);
+  }
+
+  setData(id: number) {
+    this.reportService.getAcademyTrajectoryReportData(id).subscribe((e) => {
+      this.mainData = e;
+      this.classification = e.map((x) => x.prospect.classification);
+      this.positions = e.map((x) => x.position);
+      this.prospects = e.map((x) => x.prospect);
+      const classArr = [...new Set(this.classification)];
+      const idArr = [...new Set(this.positions.map((e) => e.id))];
+      const prosArr = [...new Set(this.prospects.map((e) => e.id))];
+      this.classification = classArr;
+      this.positions = idArr.map((id) => {
+        return this.positions.find((pos) => pos.id === id);
+      });
+      this.prospects = prosArr.map((id) => {
+        return this.prospects.find((pos) => pos.id === id);
+      });
+      this.setProspects(e)
+      this.assignDataToPlot(e);
+      this.cdr.detectChanges();
+    });
+    this.selectedPositions.enable();
+    this.selected_Prospects.enable();
+    this.selectedClassifications.enable();
+  }
 
   assignDataToPlot(report: Result[]) {
     this.reportData = report.map((player) => {
@@ -123,6 +218,7 @@ export class AcademyTrajectoryReportComponent implements OnInit {
     this.ids = data.map(e => e.id).join(',')
 
     this.prospectList.sort((a, b) => a.first_name.localeCompare(b.first_name))
+
   }
 
   filterProspect(prospect: ProspectWithScore) {
@@ -149,6 +245,20 @@ export class AcademyTrajectoryReportComponent implements OnInit {
     this.selectedProspects = [];
     this.assignDataToPlot(this.mainData);
   }
+
+  resetFilters() {
+    this.selectedClassifications.reset();
+    this.selectedPositions.reset();
+    this.selected_Prospects.reset();
+    this.reset()
+  }
+
+  selectAllOptions(selectedValue: string[]): void {
+    if (selectedValue.includes('all')) {
+      this.selectedEvaluators.setValue(this.evaluators.map(evaluator => evaluator.id));
+    }
+  }
+
 
   // events
   public chartClicked(event): void {

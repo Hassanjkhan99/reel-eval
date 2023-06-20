@@ -6,14 +6,16 @@
       nz-row
       style="margin-bottom: 10px"
     >
-      <div nz-col nzSpan="8" style="margin: 5px">
+      <div nz-col nzSpan="4" style="margin: 5px">
         <h5 class="d-flex justify-content-center">Evaluator</h5>
         <nz-select
           [formControl]="selectedEvaluators"
           class="w-100"
           nzMode="multiple"
           nzPlaceHolder="select evaluator"
+          (ngModelChange)="selectAllOptions($event)"
         >
+          <nz-option [nzValue]="'all'" nzLabel="Select All"></nz-option>
           <nz-option
             *ngFor="let evaluator of evaluators"
             [nzLabel]="evaluator.first_name + ' ' + evaluator.last_name"
@@ -21,6 +23,62 @@
           ></nz-option>
         </nz-select>
       </div>
+      <div nz-col nzSpan="4" style="margin: 5px">
+        <h5 class="d-flex justify-content-center">Prospect</h5>
+        <nz-select
+          [formControl]="selected_Prospects"
+          class="w-100"
+          nzMode="multiple"
+          nzPlaceHolder="select prospect"
+        >
+          <nz-option
+            *ngFor="let prospect of prospects"
+            [nzLabel]="prospect.first_name + ' ' + prospect.last_name"
+            [nzValue]="prospect.id"
+          ></nz-option>
+        </nz-select>
+      </div>
+      <div nz-col nzSpan="4" style="margin: 5px">
+        <h5 class="d-flex justify-content-center">Position</h5>
+        <nz-select
+          [formControl]="selectedPositions"
+          class="w-100"
+          nzMode="multiple"
+          nzPlaceHolder="select position"
+        >
+          <nz-option
+            *ngFor="let position of positions"
+            [nzLabel]="position.position_name"
+            [nzValue]="position.id"
+          ></nz-option>
+        </nz-select>
+      </div>
+      <div nz-col nzSpan="5" style="margin: 5px">
+        <h5 class="d-flex justify-content-center">Classification</h5>
+        <nz-select
+          [formControl]="selectedClassifications"
+          class="w-100"
+          nzMode="multiple"
+          nzPlaceHolder="Select Classification"
+        >
+          <nz-option
+            *ngFor="let item of classification"
+            [nzLabel]="item"
+            [nzValue]="item"
+          ></nz-option>
+        </nz-select>
+      </div>
+      <div class="d-flex justify-content-end align-items-end" nz-col style="padding: 7px">
+        <button
+          (click)="resetFilters()"
+          nz-button
+          nzSize="small"
+          nzType="primary"
+        >
+          Reset Filter
+        </button>
+      </div>
+
     </div>
     <div class="w-100 m-1" nz-row>
       <div class="d-flex justify-content-between w-100">
