@@ -6,7 +6,7 @@
       nz-row
       style="margin-bottom: 10px"
     >
-      <div nz-col nzSpan="4" style="margin: 5px">
+      <div nz-col nzSpan="5" style="margin: 5px">
         <h5 class="d-flex justify-content-center">Evaluator</h5>
         <nz-select
           [formControl]="selectedEvaluators"
@@ -14,6 +14,8 @@
           nzMode="multiple"
           nzPlaceHolder="select evaluator"
           (ngModelChange)="selectAllOptions($event)"
+          [nzMaxTagCount]="1"
+          [nzMaxTagPlaceholder]="tagPlaceHolder"
         >
           <nz-option [nzValue]="'all'" nzLabel="Select All"></nz-option>
           <nz-option
@@ -21,6 +23,7 @@
             [nzLabel]="evaluator.first_name + ' ' + evaluator.last_name"
             [nzValue]="evaluator.id"
           ></nz-option>
+          <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
         </nz-select>
       </div>
       <div nz-col nzSpan="4" style="margin: 5px">
@@ -140,6 +143,7 @@
       <button (click)="reset()" class="w-100 m-t-5" nz-button nzType="primary">
         Reset Players Filter
       </button>
+      <button (click)="exportToPdf()" class="w-100 m-t-5" nz-button nzType="primary">Export Report</button>
     </div>
   </div>
 

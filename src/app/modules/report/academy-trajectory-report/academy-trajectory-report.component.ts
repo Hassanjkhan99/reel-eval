@@ -10,6 +10,7 @@ import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzGridModule} from "ng-zorro-antd/grid";
 import {NgChartsModule} from "ng2-charts";
 import {NzSelectModule} from "ng-zorro-antd/select";
+import {main_url} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-academy-trajectory-report',
@@ -153,13 +154,13 @@ export class AcademyTrajectoryReportComponent implements OnInit {
       const classArr = [...new Set(this.classification)];
       const idArr = [...new Set(this.positions.map((e) => e.id))];
       const prosArr = [...new Set(this.prospects.map((e) => e.id))];
-      this.classification = classArr;
+      this.classification = classArr.sort((a, b) => a.localeCompare(b));
       this.positions = idArr.map((id) => {
         return this.positions.find((pos) => pos.id === id);
       });
       this.prospects = prosArr.map((id) => {
         return this.prospects.find((pos) => pos.id === id);
-      });
+      }).sort((a, b) => a.first_name.localeCompare(b.first_name));
       this.setProspects(e)
       this.assignDataToPlot(e);
       this.cdr.detectChanges();
@@ -217,7 +218,7 @@ export class AcademyTrajectoryReportComponent implements OnInit {
       });
     this.ids = data.map(e => e.id).join(',')
 
-    this.prospectList.sort((a, b) => a.first_name.localeCompare(b.first_name))
+    this.prospectList.sort((a, b) => a.first_name.localeCompare(b.first_name) || (b.score - a.score))
 
   }
 
@@ -259,6 +260,9 @@ export class AcademyTrajectoryReportComponent implements OnInit {
     }
   }
 
+  exportToPdf() {
+    window.open(`${main_url}trajectory_report/export_to_pdf/${this.ids}/`, '_self')
+  }
 
   // events
   public chartClicked(event): void {
