@@ -115,6 +115,10 @@ export class CustomersComponent implements OnInit {
         });
         this.total = cus.count;
       });
+
+    this.customerForm.controls.subscription_expiry_date.valueChanges.subscribe(e => {
+      console.log({e})
+    })
   }
 
   isEdit(i: number) {
@@ -138,15 +142,8 @@ export class CustomersComponent implements OnInit {
   isSave(i: number) {
     let date = this.customerForm.controls.subscription_expiry_date.value;
     if (date) {
-      date =
-        date.getMonth() > 8
-          ? date.getMonth() + 1
-          : '0' +
-          (date.getMonth() + 1) +
-          '-' +
-          (date.getDate() > 9 ? date.getDate() : '0' + date.getDate()) +
-          '-' +
-          date.getFullYear();
+      date = new Date(date).toLocaleDateString().replace('/', '-').replace('/', '-');
+
       this.customerForm.controls.subscription_expiry_date.setValue(date)
       date = null;
     }

@@ -144,7 +144,7 @@
             {{ data.subscription_expiry_date ? data.subscription_expiry_date : '(No exp)'}}
           </span>
           <span *ngIf="currentEditIndex == i">
-             <nz-date-picker class="w-100" formControlName="subscription_expiry_date"
+             <nz-date-picker class="w-100" formControlName="subscription_expiry_date" nzMode="date"
                              nzFormat="MM-dd-YYYY"></nz-date-picker>
           </span>
         </td>
